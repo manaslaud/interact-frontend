@@ -1,20 +1,39 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      width: {
+        "108": "32rem",
+      },
+      height: {
+        "108": "32rem",
+      },
+      boxShadow: {
+        custom: "0 25px 100px -30px rgb(0 0 0 / 0.25);",
+        inner: "inset 0px 0px 200px 100px rgb(0,0,0,0.8);",
+      },
+      extend: {
+        fontFamily: {
+          PoiretOne: ["Poiret One"],
+          Impact: ["Impact"],
+          Helvetica: ["Helvetica"],
+          Inconsolata: ["Inconsolata"],
+          Imprima: ["Imprima"],
+        },
+        fontSize: {
+          xxs: "0.5rem",
+        },
+        lineClamp: {
+          7: "7",
+          8: "8",
+          9: "9",
+          10: "10",
+        },
       },
     },
   },
-  plugins: [],
-}
-export default config
+  plugins: [require("@tailwindcss/line-clamp")],
+};
+export default config;

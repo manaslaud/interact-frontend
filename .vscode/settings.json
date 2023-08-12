@@ -1,0 +1,25 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+    },
+    "[css]":{
+        "editor.suggest.insertMode": "replace"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "node_modules":true,
+    },
+    "cSpell.words": [
+        "Imprima",
+        "Inconsolata",
+        "interactnow",
+        "Unfollowing"
+    ],
+    "editor.fontLigatures": false
+}
