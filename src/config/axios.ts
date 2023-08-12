@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { BACKEND_URL, FRONTEND_URL } from './routes';
 import Cookies from 'js-cookie';
-// import { store } from '@/store';
-// import { resetConfig } from '@/slices/configSlice';
+import { store } from '@/store';
+import { resetConfig } from '@/slices/configSlice';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -53,7 +53,7 @@ configuredAxios.interceptors.response.use(
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
 
-          // store.dispatch(resetConfig)
+          store.dispatch(resetConfig);
 
           onTokenRefreshed(newAccessToken);
 
