@@ -1,5 +1,5 @@
 export interface TypingStatus {
-  user: userType;
+  user: User;
   chatID: string;
 }
 
@@ -21,7 +21,7 @@ export interface PostBookmarkItem {
   id: string;
   postBookmarkID: string;
   postID: string;
-  post: postType;
+  post: Post;
 }
 
 export interface ProjectBookmark {
@@ -36,7 +36,7 @@ export interface ProjectBookmarkItem {
   id: string;
   projectBookmarkID: string;
   projectID: string;
-  project: projectType;
+  project: Project;
 }
 
 export interface Achievement {
@@ -48,9 +48,9 @@ export interface Achievement {
 export interface Membership {
   id: string;
   projectID: string;
-  project: projectType;
+  project: Project;
   userID: string;
-  user: userType;
+  user: User;
   role: string;
   title: string;
   active: boolean;
@@ -60,9 +60,9 @@ export interface Membership {
 export interface Opening {
   id: string;
   projectID: string;
-  project: projectType;
+  project: Project;
   userID: string;
-  user: userType;
+  user: User;
   title: string;
   description: string;
   applications: [];
@@ -72,7 +72,7 @@ export interface Opening {
   createdAt: Date;
 }
 
-export interface userType {
+export interface User {
   id: string;
   tags: string[];
   email: string;
@@ -87,19 +87,19 @@ export interface userType {
   tagline: string;
   education: Education[];
   achievements: Achievement[];
-  followers: userType[];
-  following: userType[];
+  followers: User[];
+  following: User[];
   memberships: Membership[];
-  posts: postType[];
-  projects: projectType[];
+  posts: Post[];
+  projects: Project[];
   noFollowers: number;
   noFollowing: number;
   isFollowing?: boolean;
   passwordChangedAt: Date;
-  lastViewed: projectType[];
+  lastViewed: Project[];
 }
 
-export interface projectType {
+export interface Project {
   id: string;
   userID: string;
   title: string;
@@ -107,9 +107,9 @@ export interface projectType {
   coverPic: '';
   description: string;
   page: string;
-  user: userType;
-  likedBy: userType[];
-  comments: commentType[];
+  user: User;
+  likedBy: User[];
+  comments: Comment[];
   noLikes: number;
   noShares: number;
   noComments: number;
@@ -125,12 +125,12 @@ export interface projectType {
   links: string[];
 }
 
-export interface postType {
+export interface Post {
   id: string;
   userID: string;
   images: string[];
   content: string;
-  user: userType;
+  user: User;
   likedBy: string[];
   noLikes: number;
   noShares: number;
@@ -142,26 +142,26 @@ export interface postType {
   edited: boolean;
 }
 
-export interface commentType {
+export interface Comment {
   id: string;
   userID: string;
-  user: userType;
+  user: User;
   content: string;
   noLikes: number;
   noReplies: number;
   createdAt: Date;
   likedBy: string[];
-  replies: commentType[];
+  replies: Comment[];
   isRepliedComment: boolean;
 }
 
-export interface applicationType {
+export interface Application {
   id: string;
   openingID: string;
   opening: Opening;
-  project: projectType;
+  project: Project;
   userID: string;
-  user: userType;
+  user: User;
   status: number;
   content: string;
   resume: string;
@@ -169,135 +169,133 @@ export interface applicationType {
   createdAt: Date;
 }
 
-export interface NotificationType {
+export interface Notification {
   id: string;
   notificationType: number;
   projectID: string;
-  project: projectType;
+  project: Project;
   postID: string;
-  post: postType;
+  post: Post;
   userID: string;
-  user: userType;
+  user: User;
   senderID: string;
-  sender: userType;
+  sender: User;
   openingID: string;
   opening: Opening;
   applicationID: string;
-  application: applicationType;
+  application: Application;
   isRead: boolean;
   createdAt: Date;
 }
 
-export interface MessageType {
+export interface Message {
   id: string;
   content: string;
   chatID: string;
-  // chat: ChatType;
   userID: string;
-  user: userType;
+  user: User;
   createdAt: Date;
   read: boolean;
   postID: string;
-  post: postType;
+  post: Post;
   projectID: string;
-  project: projectType;
+  project: Project;
 }
 
-export interface GroupMessageType {
+export interface GroupMessage {
   id: string;
   content: string;
   chatID: string;
-  chat: GroupChatType;
+  chat: GroupChat;
   userID: string;
-  user: userType;
+  user: User;
   createdAt: Date;
   read: boolean;
-  readBy: userType[];
+  readBy: User[];
 }
 
-export interface ProjectMessageType {
+export interface ProjectMessage {
   id: string;
   content: string;
   projectChatID: string;
-  // projectChat: ProjectChatType;
   userID: string;
-  user: userType;
+  user: User;
   createdAt: Date;
   read: boolean;
-  readBy: userType[];
+  readBy: User[];
 }
 
-export interface ChatType {
+export interface Chat {
   id: string;
   title: string;
   description: string;
   createdByID: string;
-  createdBy: userType;
+  createdBy: User;
   acceptedByID: string;
-  acceptedBy: userType;
+  acceptedBy: User;
   createdAt: Date;
-  messages: MessageType[];
-  latestMessage: MessageType;
+  messages: Message[];
+  latestMessage: Message;
   accepted: boolean;
 }
 
-export interface GroupChatType {
+export interface GroupChat {
   id: string;
   title: string;
   description: string;
   createdByID: string;
-  createdBy: userType;
-  members: userType[];
+  createdBy: User;
+  members: User[];
   createdAt: Date;
-  messages: GroupChatType[];
-  latestMessage: GroupChatType;
+  messages: GroupChat[];
+  latestMessage: GroupChat;
   accepted: boolean;
-  // invitations:chatInvitations
 }
 
-export interface ProjectChatType {
+export interface ProjectChat {
   id: string;
   title: string;
   description: string;
   createdByID: string;
-  createdBy: userType;
+  createdBy: User;
   projectID: string;
-  project: projectType;
+  project: Project;
   memberships: ProjectChatMembership[];
   createdAt: Date;
-  messages: ProjectMessageType[];
-  latestMessage: ProjectMessageType;
+  messages: ProjectMessage[];
+  latestMessage: ProjectMessage;
   accepted: boolean;
 }
 
 export interface ProjectChatMembership {
   id: string;
   userID: string;
-  user: userType;
+  user: User;
   projectID: string;
-  project: projectType;
+  project: Project;
   projectChatID: string;
-  projectChat: ProjectChatType;
+  projectChat: ProjectChat;
   createdAt: Date;
 }
 
 export interface ProjectInvitation {
   id: string;
   projectID: string;
-  project: projectType;
+  project: Project;
   userID: string;
-  user: userType;
+  user: User;
   title: string;
   status: number;
   isRead: boolean;
   createdAt: Date;
 }
 
-export interface BookmarkItemType {
+export interface BookmarkItem {
   typeOfItem: string;
-  item: projectType | postType;
+  item: Project | Post;
 }
-export interface BookmarkType {
+
+export interface Bookmark {
   title: string;
-  items: BookmarkItemType[];
+  items: BookmarkItem[];
 }

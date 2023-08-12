@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
-import { postType } from '@/types';
+import { Post } from '@/types';
 
 export interface FeedState {
-  feed: postType[];
+  feed: Post[];
   unreadNotifications: number;
   unreadInvitations: number;
 }
@@ -19,7 +19,7 @@ export const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {
-    setFeed: (state, action: PayloadAction<postType[]>) => {
+    setFeed: (state, action: PayloadAction<Post[]>) => {
       state.feed = action.payload;
     },
     setUnreadNotifications: (state, action: PayloadAction<number>) => {

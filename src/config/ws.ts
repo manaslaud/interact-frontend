@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { SOCKET_URL } from './routes';
 import { ChatSetupEvent, MeStopTyping, MeTyping, SendMessageEvent, getWSEvent, sendEvent } from '@/helpers/ws';
-import { MessageType, userType } from '@/types';
+import { Message, User } from '@/types';
 import { messageToastSettings } from '@/helpers/toaster';
 import { toast } from 'react-toastify';
 
@@ -49,14 +49,14 @@ class SocketService {
     }
   }
 
-  public sendMessage(message: string, chatID: string, userID: string, self: userType) {
+  public sendMessage(message: string, chatID: string, userID: string, self: User) {
     if (this.socket) {
       const outgoingMessageEvent = new SendMessageEvent(message, chatID, userID, self);
       sendEvent('send_message', outgoingMessageEvent, this.socket);
     }
   }
 
-  public sendTypingStatus(self: userType, chatID: string, status: number) {
+  public sendTypingStatus(self: User, chatID: string, status: number) {
     if (this.socket) {
       if (status == 0) {
         const outgoingStopTypingEvent = new MeStopTyping(self, chatID);
@@ -78,7 +78,7 @@ class SocketService {
 
         switch (event.type) {
           case 'new_message':
-            const messageEventPayload: MessageType = event.payload;
+            const messageEventPayload: Message = event.payload;
             toast.info('New Message from: ' + messageEventPayload.user.name, {
               ...messageToastSettings,
               toastId: messageEventPayload.chatID,

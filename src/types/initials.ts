@@ -1,19 +1,19 @@
 import {
-  Achievement,
-  ChatType,
   Education,
-  Membership,
-  MessageType,
+  Achievement,
+  Project,
   Opening,
-  ProjectChatMembership,
-  ProjectChatType,
+  Membership,
+  Post,
+  Application,
   ProjectInvitation,
-  ProjectMessageType,
-  applicationType,
-  commentType,
-  postType,
-  projectType,
-  userType,
+  ProjectChatMembership,
+  User,
+  ProjectMessage,
+  Chat,
+  Message,
+  ProjectChat,
+  Comment,
 } from '.';
 
 export const initialEducation: Education = {
@@ -28,7 +28,7 @@ export const initialAchievement: Achievement = {
   skills: [],
 };
 
-export const initialUserType: userType = {
+export const initialUser: User = {
   id: '',
   tags: [],
   email: '',
@@ -55,7 +55,7 @@ export const initialUserType: userType = {
   lastViewed: [],
 };
 
-export const initialProjectType: projectType = {
+export const initialProject: Project = {
   id: '',
   userID: '',
   title: '',
@@ -63,7 +63,7 @@ export const initialProjectType: projectType = {
   coverPic: '',
   description: '',
   page: '',
-  user: initialUserType,
+  user: initialUser,
   likedBy: [],
   comments: [],
   noLikes: 0,
@@ -84,9 +84,9 @@ export const initialProjectType: projectType = {
 export const initialOpening: Opening = {
   id: '',
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   title: '',
   description: '',
   applications: [],
@@ -99,21 +99,21 @@ export const initialOpening: Opening = {
 export const initialMembership: Membership = {
   id: '',
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   role: '',
   title: '',
   active: false,
   createdAt: new Date(),
 };
 
-export const initialPostType: postType = {
+export const initialPost: Post = {
   id: '',
   userID: '',
   images: [],
   content: '',
-  user: initialUserType,
+  user: initialUser,
   likedBy: [],
   noLikes: 0,
   noShares: 0,
@@ -125,10 +125,10 @@ export const initialPostType: postType = {
   edited: false,
 };
 
-export const initialCommentType: commentType = {
+export const initialComment: Comment = {
   id: '',
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   content: '',
   noLikes: 0,
   noReplies: 0,
@@ -138,13 +138,13 @@ export const initialCommentType: commentType = {
   isRepliedComment: false,
 };
 
-export const initialApplicationType: applicationType = {
+export const initialApplication: Application = {
   id: '',
   openingID: '',
   opening: initialOpening,
   userID: '',
-  user: initialUserType,
-  project: initialProjectType,
+  user: initialUser,
+  project: initialProject,
   status: 0,
   content: '',
   resume: '',
@@ -152,53 +152,53 @@ export const initialApplicationType: applicationType = {
   createdAt: new Date(),
 };
 
-export const initialMessage: MessageType = {
+export const initialMessage: Message = {
   id: '',
   content: '',
   chatID: '',
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   createdAt: new Date(),
   read: false,
   postID: '',
-  post: initialPostType,
+  post: initialPost,
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
 };
 
-export const initialProjectMessage: ProjectMessageType = {
+export const initialProjectMessage: ProjectMessage = {
   id: '',
   content: '',
   projectChatID: '',
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   createdAt: new Date(),
   read: false,
   readBy: [],
 };
 
-export const initialChat: ChatType = {
+export const initialChat: Chat = {
   id: '',
   title: '',
   description: '',
   createdByID: '',
-  createdBy: initialUserType,
+  createdBy: initialUser,
   acceptedByID: '',
-  acceptedBy: initialUserType,
+  acceptedBy: initialUser,
   createdAt: new Date(),
   messages: [],
   latestMessage: initialMessage,
   accepted: false,
 };
 
-export const initialProjectChat: ProjectChatType = {
+export const initialProjectChat: ProjectChat = {
   id: '',
   title: '',
   description: '',
   createdByID: '',
-  createdBy: initialUserType,
+  createdBy: initialUser,
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
   memberships: [],
   createdAt: new Date(),
   messages: [],
@@ -209,9 +209,9 @@ export const initialProjectChat: ProjectChatType = {
 export const initialProjectInvitation: ProjectInvitation = {
   id: '',
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   title: '',
   status: 0,
   isRead: false,
@@ -221,9 +221,9 @@ export const initialProjectInvitation: ProjectInvitation = {
 export const initialProjectChatMembership: ProjectChatMembership = {
   id: '',
   userID: '',
-  user: initialUserType,
+  user: initialUser,
   projectID: '',
-  project: initialProjectType,
+  project: initialProject,
   projectChatID: '',
   projectChat: initialProjectChat,
   createdAt: new Date(),

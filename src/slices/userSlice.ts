@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
-import { PostBookmark, ProjectBookmark } from '@/types';
+import { PostBookmark, ProjectBookmark, User } from '@/types';
 
 export interface ChatSlice {
   userID: string;
@@ -49,22 +49,14 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserState>) => {
+    setUser: (state, action: PayloadAction<User>) => {
+      state = initialState;
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.username = action.payload.username;
       state.email = action.payload.email;
-      state.isLoggedIn = action.payload.isLoggedIn;
       state.profilePic = action.payload.profilePic;
-      state.following = action.payload.following;
-      state.likedPosts = action.payload.likedPosts;
-      state.likedProjects = action.payload.likedProjects;
-      state.likedPostComments = action.payload.likedPostComments;
-      state.likedProjectComments = action.payload.likedProjectComments;
-      state.postBookmarks = action.payload.postBookmarks;
-      state.contributingProjects = action.payload.contributingProjects;
-      state.projectBookmarks = action.payload.projectBookmarks;
-      state.chats = action.payload.chats;
+      state.isLoggedIn = true;
     },
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;

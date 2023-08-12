@@ -2,7 +2,7 @@ import { WORKSPACE_URL } from '@/config/routes';
 import getHandler from '@/handlers/getHandler';
 import { configSelector, setFetchedContributingProjects } from '@/slices/configSlice';
 import { setContributingProjects } from '@/slices/userSlice';
-import { projectType } from '@/types';
+import { Project } from '@/types';
 import Toaster from '@/helpers/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,7 +18,7 @@ const useContributingProjectsFetcher = () => {
       .then(res => {
         if (res.statusCode === 200) {
           const projects: string[] = [];
-          res.data.projects?.forEach((project: projectType) => {
+          res.data.projects?.forEach((project: Project) => {
             projects.push(project.id);
           });
           dispatch(setContributingProjects(projects));

@@ -22,9 +22,6 @@ const getIcon = (str: string): ReactElement => {
     case 'applepodcasts':
       IconComponent = require('@phosphor-icons/react/lib/ApplePodcastsLogo').ApplePodcastsLogo;
       break;
-    case 'atom':
-      IconComponent = require('@phosphor-icons/react/lib/Atom').Atom;
-      break;
     case 'behance':
       IconComponent = require('@phosphor-icons/react/lib/BehanceLogo').BehanceLogo;
       break;
@@ -120,6 +117,9 @@ const getIcon = (str: string): ReactElement => {
       break;
     case 'pinterest':
       IconComponent = require('@phosphor-icons/react/lib/PinterestLogo').PinterestLogo;
+      break;
+    case 'react':
+      IconComponent = require('@phosphor-icons/react/lib/Atom').Atom;
       break;
     case 'reddit':
       IconComponent = require('@phosphor-icons/react/lib/RedditLogo').RedditLogo;

@@ -1,6 +1,6 @@
 import { TypingStatus } from '@/types';
-import { ChatType, MessageType, userType } from '@/types';
-import { initialMessage, initialUserType } from '@/types/initials';
+import { Chat, Message, User } from '@/types';
+import { initialMessage, initialUser } from '@/types/initials';
 import { toast } from 'react-toastify';
 import { messageToastSettings } from './toaster';
 
@@ -21,10 +21,10 @@ export const getWSEvent = (evt: MessageEvent<any>) => {
 export class SendMessageEvent {
   content = '';
   chatID = '';
-  user = initialUserType;
+  user = initialUser;
   userID = '';
 
-  constructor(content: string, chatID: string, userID: string, user: userType) {
+  constructor(content: string, chatID: string, userID: string, user: User) {
     this.content = content;
     this.chatID = chatID;
     this.userID = userID;
@@ -35,12 +35,12 @@ export class SendMessageEvent {
 export class NewMessageEvent {
   content = '';
   chatID = '';
-  user = initialUserType;
+  user = initialUser;
   userID = '';
   createdAt: Date | string = '';
   read = false;
 
-  constructor(content: string, chatID: string, userID: string, user: userType, createdAt: Date) {
+  constructor(content: string, chatID: string, userID: string, user: User, createdAt: Date) {
     this.content = content;
     this.chatID = chatID;
     this.userID = userID;
@@ -64,18 +64,18 @@ export class ChangeChatRoomEvent {
 }
 
 export class MeTyping {
-  user = initialUserType;
+  user = initialUser;
   chatID = '';
-  constructor(user: userType, chatID: string) {
+  constructor(user: User, chatID: string) {
     this.user = user;
     this.chatID = chatID;
   }
 }
 
 export class MeStopTyping {
-  user = initialUserType;
+  user = initialUser;
   chatID = '';
-  constructor(user: userType, chatID: string) {
+  constructor(user: User, chatID: string) {
     this.user = user;
     this.chatID = chatID;
   }
@@ -84,7 +84,7 @@ export class MeStopTyping {
 export function routeMessagingWindowEvents(
   event: WSEvent,
   currentChatID: string,
-  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>,
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>,
   typingStatus: TypingStatus,
   setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
 ) {
@@ -94,7 +94,7 @@ export function routeMessagingWindowEvents(
 
   switch (event.type) {
     case 'new_message':
-      const messageEventPayload: MessageType = event.payload;
+      const messageEventPayload: Message = event.payload;
       if (messageEventPayload.chatID == currentChatID) setMessages(prev => [messageEventPayload, ...prev]);
       else {
         toast.info(messageEventPayload.user.name + ': ' + messageEventPayload.content, {
@@ -119,7 +119,7 @@ export function routeMessagingWindowEvents(
       const userStopTypingEventPayload: TypingStatus = event.payload;
       if (userStopTypingEventPayload.user.id !== typingStatus.user.id) {
         const initialTypingStatus: TypingStatus = {
-          user: initialUserType,
+          user: initialUser,
           chatID: typingStatus.chatID,
         };
         setTypingStatus(initialTypingStatus);
@@ -133,7 +133,7 @@ export function routeMessagingWindowEvents(
 
 export function routeChatListEvents(
   event: WSEvent,
-  setChats: React.Dispatch<React.SetStateAction<ChatType[]>>
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>
   // typingStatus: TypingStatus,
   // setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
 ) {
@@ -143,7 +143,7 @@ export function routeChatListEvents(
 
   switch (event.type) {
     case 'new_message':
-      const messageEventPayload: MessageType = event.payload;
+      const messageEventPayload: Message = event.payload;
       setChats(prev =>
         prev.map(chat => {
           if (chat.id == messageEventPayload.chatID) {
