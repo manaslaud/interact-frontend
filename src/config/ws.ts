@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
 import { SOCKET_URL } from './routes';
-import { ChatSetupEvent, MeStopTyping, MeTyping, SendMessageEvent, getWSEvent, sendEvent } from '@/utils/ws';
+import { ChatSetupEvent, MeStopTyping, MeTyping, SendMessageEvent, getWSEvent, sendEvent } from '@/helpers/ws';
 import { MessageType, userType } from '@/types';
-import { messageToastSettings } from '@/utils/toaster';
+import { messageToastSettings } from '@/helpers/toaster';
 import { toast } from 'react-toastify';
 
 class SocketService {
@@ -27,9 +27,8 @@ class SocketService {
     return this.chatIDs;
   }
 
-  public connect(): void {
+  public connect(userID: string | undefined = Cookies.get('id')): void {
     if (!this.socket) {
-      const userID = Cookies.get('id');
       if (!userID || userID == '') return;
       this.socket = new WebSocket(`${SOCKET_URL}?userID=${userID}`);
     }
@@ -72,7 +71,6 @@ class SocketService {
   public setupChatNotifications() {
     if (this.socket) {
       this.socket.onmessage = function (evt) {
-        alert('here');
         const event = getWSEvent(evt);
         if (event.type === undefined) {
           alert('No Type in the Event');
