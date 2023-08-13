@@ -1,12 +1,11 @@
 import configuredAxios from '@/config/axios';
-import Cookies from 'js-cookie';
 
-const postHandler = async (URL: string, formData: object, protect: boolean, type: string = 'application/json') => {
+const postHandler = async (URL: string, formData: object, type: string = 'application/json') => {
   const headers = {
     'Content-Type': type,
     Authorization: '',
   };
-  if (protect) headers.Authorization = `Bearer ${Cookies.get('token')}`;
+
   const response: any = {
     status: 0,
     data: {},

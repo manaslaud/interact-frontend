@@ -106,6 +106,9 @@ export const userSlice = createSlice({
     setPhoneNumber: (state, action: PayloadAction<string>) => {
       state.phoneNo = action.payload;
     },
+    setVerificationStatus: (state, action: PayloadAction<boolean>) => {
+      state.isVerified = action.payload;
+    },
   },
 });
 
@@ -123,6 +126,7 @@ export const {
   setContributingProjects,
   setEmail,
   setPhoneNumber,
+  setVerificationStatus,
 } = userSlice.actions;
 
 export default userSlice.reducer;

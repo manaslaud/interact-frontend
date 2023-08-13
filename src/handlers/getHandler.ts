@@ -1,16 +1,11 @@
 import configuredAxios from '@/config/axios';
-import Cookies from 'js-cookie';
 
 //* -1 for no protect, 0 for partial protect and 1 for protect
 
-const getHandler = async (URL: string, protect: number) => {
+const getHandler = async (URL: string) => {
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: '',
   };
-  const token = Cookies.get('token');
-  if (protect === 1) headers.Authorization = `Bearer ${token}`;
-  if (protect === 0 && token && token != '') headers.Authorization = `Bearer ${token}`;
 
   const response: any = {
     status: 0,

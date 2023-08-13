@@ -29,6 +29,21 @@ function onTokenRefreshed(newToken: string) {
   refreshSubscribers = [];
 }
 
+configuredAxios.interceptors.request.use(
+  config => {
+    const token = Cookies.get('token');
+
+    if (token && token !== '') {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
 configuredAxios.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
