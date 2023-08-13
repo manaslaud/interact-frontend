@@ -53,6 +53,7 @@ export const initialUser: User = {
   isFollowing: false,
   passwordChangedAt: new Date(),
   lastViewed: [],
+  isVerified: false,
 };
 
 export const initialProject: Project = {

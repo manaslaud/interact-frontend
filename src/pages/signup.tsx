@@ -16,32 +16,70 @@ import { resetConfig } from '@/slices/configSlice';
 import { setFeed } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
+import isEmail from 'validator/lib/isEmail';
+import isStrongPassword from 'validator/lib/isStrongPassword';
 
-const Login = () => {
+const SignUp = () => {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [mutex, setMutex] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
     el.preventDefault();
+    if (name.trim().length == 0 || !/^[a-z][a-z\s]*/.test(name.trim().toLowerCase())) {
+      Toaster.error('Enter a Valid Name');
+      return;
+    }
+    if (!isEmail(email)) {
+      Toaster.error('Enter a Valid Email');
+      return;
+    }
+    if (!/^[a-z][a-z0-9_]{3,}/.test(name.trim().toLowerCase())) {
+      Toaster.error('Enter a Valid Username');
+      return;
+    }
+    if (
+      !isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      Toaster.error('Enter a strong Password');
+      return;
+    }
+
+    if (password != confirmPassword) {
+      Toaster.error('Passwords do not match');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
     const formData = {
-      username,
+      email,
+      name: name.trim(),
+      username: username.toLowerCase(),
       password,
+      confirmPassword,
     };
-    const toaster = Toaster.startLoad('Logging In');
+    const toaster = Toaster.startLoad('Creating your Account...');
 
     await configuredAxios
-      .post(`${BACKEND_URL}/login`, formData, {
+      .post(`${BACKEND_URL}/signup`, formData, {
         withCredentials: true,
       })
       .then(res => {
         if (res.status === 200) {
-          Toaster.stopLoad(toaster, 'Logged In!', 1);
+          Toaster.stopLoad(toaster, 'Account created!', 1);
           const user: User = res.data.user;
           Cookies.set('token', res.data.token, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
@@ -53,7 +91,7 @@ const Login = () => {
           dispatch(resetConfig());
           dispatch(setFeed([]));
           socketService.connect(user.id);
-          // router.replace('/feed');
+          // router.replace('/verify');
         }
         setMutex(false);
       })
@@ -69,10 +107,10 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | Interact</title>
+        <title>SignUp | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-Inter py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-md:w-full h-full overflow-y-auto font-Inter gap-12 py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/logo.svg" />
           </div>
@@ -85,7 +123,7 @@ const Login = () => {
               <div>
                 <ReactSVG src="/assets/google.svg" />
               </div>
-              <div className="font-medium">Log in with Google</div>
+              <div className="font-medium">Sign in with Google</div>
             </div>
             <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
@@ -94,6 +132,15 @@ const Login = () => {
             </div>
 
             <div className="w-full flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="font-medium">Name</div>
+                <input
+                  value={name}
+                  onChange={el => setName(el.target.value)}
+                  type="text"
+                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                />
+              </div>
               <div className="flex flex-col gap-2">
                 <div className="font-medium">Username</div>
                 <input
@@ -104,10 +151,28 @@ const Login = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
+                <div className="font-medium">Email</div>
+                <input
+                  value={email}
+                  onChange={el => setEmail(el.target.value)}
+                  type="email"
+                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
                 <div className="font-medium">Password</div>
                 <input
                   value={password}
                   onChange={el => setPassword(el.target.value)}
+                  type="password"
+                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="font-medium">Confirm Password</div>
+                <input
+                  value={confirmPassword}
+                  onChange={el => setConfirmPassword(el.target.value)}
                   type="password"
                   className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
                 />
@@ -121,8 +186,8 @@ const Login = () => {
                 <div> Continue</div>
                 <ArrowRight size={20} weight="regular" />
               </button>
-              <div onClick={() => router.push('/signup')} className="text-gray-400 text-sm cursor-pointer">
-                Don&apos;t have an Account? <span className="font-medium underline underline-offset-2">Sign Up</span>
+              <div onClick={() => router.push('/login')} className="text-gray-400 text-sm cursor-pointer">
+                Already have an Account? <span className="font-medium underline underline-offset-2">Login</span>
               </div>
             </div>
           </form>
@@ -154,4 +219,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-export default Login;
+export default SignUp;

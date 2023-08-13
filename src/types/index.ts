@@ -97,6 +97,7 @@ export interface User {
   isFollowing?: boolean;
   passwordChangedAt: Date;
   lastViewed: Project[];
+  isVerified: boolean;
 }
 
 export interface Project {

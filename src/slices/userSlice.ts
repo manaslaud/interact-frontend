@@ -24,6 +24,7 @@ interface UserState {
   chats: ChatSlice[];
   profilePic: string;
   isLoggedIn: boolean;
+  isVerified: boolean;
 }
 
 const initialState: UserState = {
@@ -43,6 +44,7 @@ const initialState: UserState = {
   projectBookmarks: [],
   chats: [],
   contributingProjects: [],
+  isVerified: false,
 };
 
 export const userSlice = createSlice({
@@ -57,6 +59,7 @@ export const userSlice = createSlice({
       state.profilePic = action.payload.profilePic;
       state.isLoggedIn = true;
       state.phoneNo = action.payload.phoneNo;
+      state.isVerified = action.payload.isVerified;
       state.chats = [];
       state.contributingProjects = [];
       state.following = [];
