@@ -1,7 +1,7 @@
 import getHandler from '@/handlers/getHandler';
 import { configSelector, setLastFetchedUnreadInvitations } from '@/slices/configSlice';
 import { setUnreadInvitations } from '@/slices/feedSlice';
-import Toaster from '@/helpers/toaster';
+import Toaster from '@/utils/toaster';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 

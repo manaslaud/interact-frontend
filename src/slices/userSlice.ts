@@ -12,7 +12,7 @@ interface UserState {
   name: string;
   username: string;
   email: string;
-  phoneNumber: string;
+  phoneNo: string;
   following: string[];
   likedPosts: string[];
   likedProjects: string[];
@@ -31,7 +31,7 @@ const initialState: UserState = {
   name: '',
   username: '',
   email: '',
-  phoneNumber: '',
+  phoneNo: '',
   isLoggedIn: false,
   profilePic: '',
   following: [],
@@ -50,13 +50,22 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
-      state = initialState;
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.profilePic = action.payload.profilePic;
       state.isLoggedIn = true;
+      state.phoneNo = action.payload.phoneNo;
+      state.chats = [];
+      state.contributingProjects = [];
+      state.following = [];
+      state.likedPostComments = [];
+      state.likedPosts = [];
+      state.likedProjectComments = [];
+      state.likedProjects = [];
+      state.postBookmarks = [];
+      state.projectBookmarks = [];
     },
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;
@@ -92,7 +101,7 @@ export const userSlice = createSlice({
       state.email = action.payload;
     },
     setPhoneNumber: (state, action: PayloadAction<string>) => {
-      state.phoneNumber = action.payload;
+      state.phoneNo = action.payload;
     },
   },
 });

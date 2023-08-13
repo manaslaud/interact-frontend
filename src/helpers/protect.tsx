@@ -1,7 +1,7 @@
 import React, { ComponentType, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import Toaster from './toaster';
+import Toaster from '../utils/toaster';
 // import BaseTemplate from '@/screens/baseTemplate';
 
 const Protect = <Props extends Object>(Component: ComponentType<Props>) => {

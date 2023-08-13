@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ToastContainer containerId="main" limit={1} />
+          <ToastContainer containerId="main" />
           <ToastContainer containerId="messaging" limit={5} />
           <Component {...pageProps} />
         </PersistGate>

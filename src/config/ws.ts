@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { SOCKET_URL } from './routes';
 import { ChatSetupEvent, MeStopTyping, MeTyping, SendMessageEvent, getWSEvent, sendEvent } from '@/helpers/ws';
 import { Message, User } from '@/types';
-import { messageToastSettings } from '@/helpers/toaster';
+import { messageToastSettings } from '@/utils/toaster';
 import { toast } from 'react-toastify';
 
 class SocketService {

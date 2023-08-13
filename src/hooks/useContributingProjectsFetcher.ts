@@ -3,7 +3,7 @@ import getHandler from '@/handlers/getHandler';
 import { configSelector, setFetchedContributingProjects } from '@/slices/configSlice';
 import { setContributingProjects } from '@/slices/userSlice';
 import { Project } from '@/types';
-import Toaster from '@/helpers/toaster';
+import Toaster from '@/utils/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useContributingProjectsFetcher = () => {

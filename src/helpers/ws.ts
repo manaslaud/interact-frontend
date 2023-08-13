@@ -2,7 +2,7 @@ import { TypingStatus } from '@/types';
 import { Chat, Message, User } from '@/types';
 import { initialMessage, initialUser } from '@/types/initials';
 import { toast } from 'react-toastify';
-import { messageToastSettings } from './toaster';
+import { messageToastSettings } from '../utils/toaster';
 
 export class WSEvent {
   type = '';
