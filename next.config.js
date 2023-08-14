@@ -4,7 +4,8 @@ const nextConfig = {
   images:{
     unoptimized: false,
     domains:['localhost', process.env.NEXT_PUBLIC_BACKEND_URL]
-  }
+  },
+  optimizeFonts:true,
 }
 
 module.exports = nextConfig

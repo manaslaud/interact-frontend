@@ -8,8 +8,14 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import NProgressConfig from '@/config/nprogress';
 import socketService from '@/config/ws';
+import { Inter } from 'next/font/google';
 
 NProgressConfig();
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--inter-font',
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -21,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <>
+    <main className={`${inter.variable}`}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ToastContainer containerId="main" />
@@ -29,6 +35,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </PersistGate>
       </Provider>
-    </>
+    </main>
   );
 }

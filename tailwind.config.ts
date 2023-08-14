@@ -18,7 +18,7 @@ const config: Config = {
         onboarding: "url('/assets/onboarding.png')",
       },
       fontFamily: {
-        Inter: ['Inter'],
+        Inter: ['var(--inter-font)'],
       },
       fontSize: {
         xxs: '0.5rem',
