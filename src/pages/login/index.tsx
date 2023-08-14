@@ -54,7 +54,8 @@ const Login = () => {
           dispatch(resetConfig());
           dispatch(setFeed([]));
           socketService.connect(user.id);
-          // router.replace('/feed');
+          if (user.isVerified) router.replace('/feed');
+          else router.push('/verification');
         }
         setMutex(false);
       })
@@ -151,7 +152,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (token && process.env.NODE_ENV != 'development') {
     return {
       redirect: {
-        permanent: true, //! check
+        permanent: true,
         destination: '/feed',
       },
       props: { token },
