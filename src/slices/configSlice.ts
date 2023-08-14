@@ -48,6 +48,19 @@ export const configSlice = createSlice({
     resetConfig: state => {
       state = initialState;
     },
+    setConfig: state => {
+      state.fetchedFollowing = true;
+      state.fetchedLikedPosts = true;
+      state.fetchedLikedProjects = true;
+      state.fetchedLikedPostComments = true;
+      state.fetchedLikedProjectComments = true;
+      state.fetchedPostBookmarks = true;
+      state.fetchedProjectBookmarks = true;
+      state.fetchedChats = true;
+      state.fetchedContributingProjects = true;
+      state.lastFetchedUnreadNotifications = new Date().toUTCString();
+      state.lastFetchedUnreadInvitations = new Date().toUTCString();
+    },
     setFetchedFollowing: state => {
       state.fetchedFollowing = true;
     },
@@ -86,6 +99,7 @@ export const configSlice = createSlice({
 
 export const {
   resetConfig,
+  setConfig,
   setFetchedChats,
   setFetchedFollowing,
   setFetchedLikedPostComments,

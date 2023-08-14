@@ -3,6 +3,7 @@ import { BACKEND_URL, FRONTEND_URL } from './routes';
 import Cookies from 'js-cookie';
 import { store } from '@/store';
 import { resetConfig } from '@/slices/configSlice';
+import useUserStateFetcher from '@/hooks/useUserStateFetcher';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -69,6 +70,8 @@ configuredAxios.interceptors.response.use(
           });
 
           store.dispatch(resetConfig);
+          const userStateFetcher = useUserStateFetcher();
+          userStateFetcher();
 
           onTokenRefreshed(newAccessToken);
 

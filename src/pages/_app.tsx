@@ -14,7 +14,7 @@ NProgressConfig();
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     socketService.connect();
-    // socketService.setupChatNotifications();
+    socketService.setupChatNotifications();
     return () => {
       socketService.disconnect();
     };

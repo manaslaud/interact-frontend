@@ -13,6 +13,7 @@ import Cookies from 'js-cookie';
 import { BACKEND_URL } from '@/config/routes';
 import nookies from 'nookies';
 import { SERVER_ERROR } from '@/config/errors';
+import useUserStateFetcher from '@/hooks/useUserStateFetcher';
 
 interface Props {
   token: string;
@@ -22,6 +23,8 @@ const LoginCallback = ({ token }: Props) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+
+  const userStateFetcher = useUserStateFetcher();
 
   useEffect(() => {
     axios
@@ -40,6 +43,7 @@ const LoginCallback = ({ token }: Props) => {
           dispatch(resetConfig());
           dispatch(setFeed([]));
           socketService.connect(user.id);
+          userStateFetcher();
           // router.replace('/feed');
         }
       })

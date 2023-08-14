@@ -12,13 +12,14 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
-import { resetConfig } from '@/slices/configSlice';
-import { setFeed } from '@/slices/feedSlice';
+import { setConfig } from '@/slices/configSlice';
+import { setFeed, setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import { SERVER_ERROR } from '@/config/errors';
+import Info from '@phosphor-icons/react/dist/icons/Info';
 
 const SignUp = () => {
   const router = useRouter();
@@ -89,7 +90,8 @@ const SignUp = () => {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
           dispatch(setUser(user));
-          dispatch(resetConfig());
+          dispatch(setConfig());
+          dispatch(setUnreadNotifications(1)); //welcome notification
           dispatch(setFeed([]));
           socketService.connect(user.id);
           router.push('/verification');
@@ -115,7 +117,7 @@ const SignUp = () => {
         <title>SignUp | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full overflow-y-auto font-Inter gap-12 py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-md:w-full h-screen font-Inter gap-12 py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/logo.svg" />
           </div>
@@ -131,7 +133,7 @@ const SignUp = () => {
               <div>
                 <ReactSVG src="/assets/google.svg" />
               </div>
-              <div className="font-medium">Sign in with Google</div>
+              <div className="font-medium">Sign up with Google</div>
             </div>
             <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
@@ -140,24 +142,27 @@ const SignUp = () => {
             </div>
 
             <div className="w-full flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <div className="font-medium">Name</div>
-                <input
-                  value={name}
-                  onChange={el => setName(el.target.value)}
-                  type="text"
-                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
-                />
+              <div className="w-full flex justify-between gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="font-medium">Name</div>
+                  <input
+                    value={name}
+                    onChange={el => setName(el.target.value)}
+                    type="text"
+                    className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="font-medium">Username</div>
+                  <input
+                    value={username}
+                    onChange={el => setUsername(el.target.value)}
+                    type="text"
+                    className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="font-medium">Username</div>
-                <input
-                  value={username}
-                  onChange={el => setUsername(el.target.value)}
-                  type="text"
-                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
-                />
-              </div>
+
               <div className="flex flex-col gap-2">
                 <div className="font-medium">Email</div>
                 <input
@@ -167,23 +172,29 @@ const SignUp = () => {
                   className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="font-medium">Password</div>
-                <input
-                  value={password}
-                  onChange={el => setPassword(el.target.value)}
-                  type="password"
-                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="font-medium">Confirm Password</div>
-                <input
-                  value={confirmPassword}
-                  onChange={el => setConfirmPassword(el.target.value)}
-                  type="password"
-                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
-                />
+
+              <div className="w-full flex justify-between gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 font-medium">
+                    <div>Password</div>
+                    <Info className="cursor-pointer" size={18} weight="light" />
+                  </div>
+                  <input
+                    value={password}
+                    onChange={el => setPassword(el.target.value)}
+                    type="password"
+                    className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="font-medium">Confirm Password</div>
+                  <input
+                    value={confirmPassword}
+                    onChange={el => setConfirmPassword(el.target.value)}
+                    type="password"
+                    className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
+                  />
+                </div>
               </div>
             </div>
             <div className="w-full flex flex-col gap-2 items-center">

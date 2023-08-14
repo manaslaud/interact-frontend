@@ -10,8 +10,8 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/slices/userSlice';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
-import { resetConfig } from '@/slices/configSlice';
-import { setFeed } from '@/slices/feedSlice';
+import { setConfig } from '@/slices/configSlice';
+import { setFeed, setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import axios from 'axios';
@@ -51,7 +51,8 @@ const SignUpCallback = ({ token }: Props) => {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
           dispatch(setUser(user));
-          dispatch(resetConfig());
+          dispatch(setConfig());
+          dispatch(setUnreadNotifications(1));
           dispatch(setFeed([]));
           socketService.connect(user.id);
           // router.replace('/feed');

@@ -17,6 +17,7 @@ import { setFeed } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
+import useUserStateFetcher from '@/hooks/useUserStateFetcher';
 
 const Login = () => {
   const router = useRouter();
@@ -25,6 +26,8 @@ const Login = () => {
   const [mutex, setMutex] = useState(false);
 
   const dispatch = useDispatch();
+
+  const userStateFetcher = useUserStateFetcher();
 
   const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
     el.preventDefault();
@@ -54,6 +57,7 @@ const Login = () => {
           dispatch(resetConfig());
           dispatch(setFeed([]));
           socketService.connect(user.id);
+          userStateFetcher();
           if (user.isVerified) router.replace('/feed');
           else router.push('/verification');
         }
