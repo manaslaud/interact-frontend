@@ -5,9 +5,8 @@ import {
   setFetchedChats,
   setFetchedContributingProjects,
   setFetchedFollowing,
-  setFetchedLikedPostComments,
+  setFetchedLikedComments,
   setFetchedLikedPosts,
-  setFetchedLikedProjectComments,
   setFetchedLikedProjects,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
@@ -19,9 +18,8 @@ import {
   setChats,
   setContributingProjects,
   setFollowing,
-  setLikedPostComments,
+  setLikedComments,
   setLikedPosts,
-  setLikedProjectComments,
   setLikedProjects,
   setPostBookmarks,
   setProjectBookmarks,
@@ -90,29 +88,14 @@ const useUserStateFetcher = () => {
       });
   };
 
-  const fetchLikedPostComments = () => {
-    if (config.fetchedLikedPostComments) return;
-    const URL = `/comments/post/me/likes`;
+  const fetchLikedComments = () => {
+    if (config.fetchedLikedComments) return;
+    const URL = `/comments/me/likes`;
     getHandler(URL)
       .then(res => {
         const likedCommentsData: string[] = res.data.comments || [];
-        dispatch(setLikedPostComments(likedCommentsData));
-        dispatch(setFetchedLikedPostComments());
-      })
-      .catch(err => {
-        Toaster.error(SERVER_ERROR);
-        console.log(err);
-      });
-  };
-
-  const fetchLikedProjectComments = () => {
-    if (config.fetchedLikedProjectComments) return;
-    const URL = `/comments/project/me/likes`;
-    getHandler(URL)
-      .then(res => {
-        const likedCommentsData: string[] = res.data.comments || [];
-        dispatch(setLikedProjectComments(likedCommentsData));
-        dispatch(setFetchedLikedProjectComments());
+        dispatch(setLikedComments(likedCommentsData));
+        dispatch(setFetchedLikedComments());
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR);
@@ -216,8 +199,7 @@ const useUserStateFetcher = () => {
     fetchFollowing();
     fetchLikedPosts();
     fetchLikedProjects();
-    fetchLikedPostComments();
-    fetchLikedProjectComments();
+    fetchLikedComments();
     fetchBookmarks();
     fetchChats();
     fetchContributingProjects();

@@ -16,8 +16,7 @@ interface UserState {
   following: string[];
   likedPosts: string[];
   likedProjects: string[];
-  likedPostComments: string[];
-  likedProjectComments: string[];
+  likedComments: string[];
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   contributingProjects: string[];
@@ -38,8 +37,7 @@ const initialState: UserState = {
   following: [],
   likedPosts: [],
   likedProjects: [],
-  likedPostComments: [],
-  likedProjectComments: [],
+  likedComments: [],
   postBookmarks: [],
   projectBookmarks: [],
   chats: [],
@@ -63,9 +61,8 @@ export const userSlice = createSlice({
       state.chats = [];
       state.contributingProjects = [];
       state.following = [];
-      state.likedPostComments = [];
+      state.likedComments = [];
       state.likedPosts = [];
-      state.likedProjectComments = [];
       state.likedProjects = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
@@ -82,11 +79,8 @@ export const userSlice = createSlice({
     setLikedProjects: (state, action: PayloadAction<string[]>) => {
       state.likedProjects = action.payload;
     },
-    setLikedPostComments: (state, action: PayloadAction<string[]>) => {
-      state.likedPostComments = action.payload;
-    },
-    setLikedProjectComments: (state, action: PayloadAction<string[]>) => {
-      state.likedProjectComments = action.payload;
+    setLikedComments: (state, action: PayloadAction<string[]>) => {
+      state.likedComments = action.payload;
     },
     setPostBookmarks: (state, action: PayloadAction<PostBookmark[]>) => {
       state.postBookmarks = action.payload;
@@ -118,8 +112,7 @@ export const {
   setFollowing,
   setLikedPosts,
   setLikedProjects,
-  setLikedPostComments,
-  setLikedProjectComments,
+  setLikedComments,
   setPostBookmarks,
   setProjectBookmarks,
   setChats,

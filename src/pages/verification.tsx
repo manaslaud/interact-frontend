@@ -86,7 +86,7 @@ const Verification = () => {
         <title>Verification | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-Inter py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/logo.svg" />
           </div>

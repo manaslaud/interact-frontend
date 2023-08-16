@@ -44,7 +44,7 @@ const LoginCallback = ({ token }: Props) => {
           dispatch(setFeed([]));
           socketService.connect(user.id);
           userStateFetcher();
-          // router.replace('/feed');
+          router.replace('/feed');
         }
       })
       .catch(err => {

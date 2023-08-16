@@ -55,7 +55,7 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setUnreadNotifications(1));
           dispatch(setFeed([]));
           socketService.connect(user.id);
-          // router.replace('/feed');
+          router.replace('/feed');
         }
         setMutex(false);
       })
@@ -79,9 +79,9 @@ const SignUpCallback = ({ token }: Props) => {
         <title>SignUp | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-Inter py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
-            <ReactSVG src="/logo.svg" />
+            <ReactSVG src="/onboarding_logo.svg" />
           </div>
           <form onSubmit={handleSubmit} className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             <div className="flex flex-col gap-2 text-center">

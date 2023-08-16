@@ -1,6 +1,8 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 import ArrowRight from '@phosphor-icons/react/dist/icons/ArrowRight';
+import Eye from '@phosphor-icons/react/dist/icons/Eye';
+import EyeClosed from '@phosphor-icons/react/dist/icons/EyeClosed';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Toaster from '@/utils/toaster';
@@ -24,6 +26,8 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [mutex, setMutex] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -82,9 +86,9 @@ const Login = () => {
         <title>Login | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-Inter py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
-            <ReactSVG src="/logo.svg" />
+            <ReactSVG src="/onboarding_logo.svg" />
           </div>
           <form onSubmit={handleSubmit} className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             <div className="flex flex-col gap-2 text-center">
@@ -110,6 +114,7 @@ const Login = () => {
               <div className="flex flex-col gap-2">
                 <div className="font-medium">Username</div>
                 <input
+                  name="username"
                   value={username}
                   onChange={el => setUsername(el.target.value)}
                   type="text"
@@ -118,18 +123,37 @@ const Login = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <div className="font-medium">Password</div>
-                <input
-                  value={password}
-                  onChange={el => setPassword(el.target.value)}
-                  type="password"
-                  className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
-                />
+                <div className="w-full relative">
+                  <input
+                    name="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={el => setPassword(el.target.value)}
+                    type={showPassword ? 'text' : 'password'}
+                    className="w-full bg-white p-2 rounded-xl focus:outline-none focus:bg-white border-2 text-gray-400 pr-10"
+                  />
+                  {showPassword ? (
+                    <Eye
+                      onClick={() => setShowPassword(false)}
+                      className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
+                      size={20}
+                      weight="regular"
+                    />
+                  ) : (
+                    <EyeClosed
+                      onClick={() => setShowPassword(true)}
+                      className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
+                      size={20}
+                      weight="regular"
+                    />
+                  )}
+                </div>
               </div>
             </div>
-            <div className="w-full flex flex-col gap-2 items-center">
+            <div className="w-full p-1 flex flex-col gap-2 items-center">
               <button
                 type="submit"
-                className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#3D6DB3] hover:bg-[#345C98] active:bg-[#2D5185] border-[#d1d1d1] text-white py-2 rounded-xl border-2 font-semibold"
+                className="w-full relative p-2 border-2 after:absolute after:-top-[3px] after:-left-[3px] after:-right-[3px] after:-bottom-[3.5px] after:-z-10 after:bg-[#395887] after:rounded-xl flex items-center cursor-pointer justify-center gap-2 bg-[#3D6DB3] hover:bg-[#345C98] active:bg-[#2D5185] border-[#d1d1d1a7] text-white py-2 rounded-xl font-semibold"
               >
                 <div> Continue</div>
                 <ArrowRight size={20} weight="regular" />
@@ -141,8 +165,9 @@ const Login = () => {
           </form>
           <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
-            Interact&apos;s <span className="underline underline-offset-2 font-medium">Term & Conditions</span> and{' '}
-            <span className="underline underline-offset-2 font-medium">Privacy Policy.</span>
+            Interact&apos;s{' '}
+            <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
+            <span className="underline underline-offset-2 font-medium cursor-pointer">Privacy Policy.</span>
           </div>
         </div>
         <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>

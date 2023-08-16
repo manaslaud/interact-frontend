@@ -5,8 +5,7 @@ interface ConfigState {
   fetchedFollowing: boolean;
   fetchedLikedPosts: boolean;
   fetchedLikedProjects: boolean;
-  fetchedLikedPostComments: boolean;
-  fetchedLikedProjectComments: boolean;
+  fetchedLikedComments: boolean;
   fetchedPostBookmarks: boolean;
   fetchedProjectBookmarks: boolean;
   fetchedChats: boolean;
@@ -31,8 +30,7 @@ const initialState: ConfigState = {
   fetchedFollowing: false,
   fetchedLikedPosts: false,
   fetchedLikedProjects: false,
-  fetchedLikedPostComments: false,
-  fetchedLikedProjectComments: false,
+  fetchedLikedComments: false,
   fetchedPostBookmarks: false,
   fetchedProjectBookmarks: false,
   fetchedChats: false,
@@ -52,8 +50,7 @@ export const configSlice = createSlice({
       state.fetchedFollowing = true;
       state.fetchedLikedPosts = true;
       state.fetchedLikedProjects = true;
-      state.fetchedLikedPostComments = true;
-      state.fetchedLikedProjectComments = true;
+      state.fetchedLikedComments = true;
       state.fetchedPostBookmarks = true;
       state.fetchedProjectBookmarks = true;
       state.fetchedChats = true;
@@ -70,11 +67,8 @@ export const configSlice = createSlice({
     setFetchedLikedProjects: state => {
       state.fetchedLikedProjects = true;
     },
-    setFetchedLikedPostComments: state => {
-      state.fetchedLikedPostComments = true;
-    },
-    setFetchedLikedProjectComments: state => {
-      state.fetchedLikedProjectComments = true;
+    setFetchedLikedComments: state => {
+      state.fetchedLikedComments = true;
     },
     setFetchedPostBookmarks: state => {
       state.fetchedPostBookmarks = true;
@@ -102,9 +96,8 @@ export const {
   setConfig,
   setFetchedChats,
   setFetchedFollowing,
-  setFetchedLikedPostComments,
+  setFetchedLikedComments,
   setFetchedLikedPosts,
-  setFetchedLikedProjectComments,
   setFetchedLikedProjects,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
