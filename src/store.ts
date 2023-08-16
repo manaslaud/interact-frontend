@@ -13,12 +13,18 @@ const persistConfig = {
   whitelist: ['user', 'config'],
 };
 
+const configPersistConfig = {
+  key: 'config',
+  storage,
+  blacklist: ['lastFetchedUnreadNotifications', 'lastFetchedUnreadInvitations'],
+};
+
 const rootReducer = combineReducers({
   feed: feedReducer,
   explore: exploreReducer,
   user: userReducer,
   messaging: messagingReducer,
-  config: configReducer,
+  config: persistReducer(configPersistConfig, configReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

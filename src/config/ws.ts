@@ -1,9 +1,19 @@
 import Cookies from 'js-cookie';
 import { SOCKET_URL } from './routes';
-import { ChatSetupEvent, MeStopTyping, MeTyping, SendMessageEvent, getWSEvent, sendEvent } from '@/helpers/ws';
+import {
+  ChatSetupEvent,
+  MeStopTyping,
+  MeTyping,
+  SendMessageEvent,
+  SendNotificationEvent,
+  getWSEvent,
+  sendEvent,
+} from '@/helpers/ws';
 import { Message, User } from '@/types';
 import { messageToastSettings } from '@/utils/toaster';
 import { toast } from 'react-toastify';
+import { store } from '@/store';
+import { incrementUnreadNotifications, setUnreadNotifications } from '@/slices/feedSlice';
 
 class SocketService {
   private static instance: SocketService | null = null;
@@ -31,6 +41,10 @@ class SocketService {
     if (!this.socket) {
       if (!userID || userID == '') return;
       this.socket = new WebSocket(`${SOCKET_URL}?userID=${userID}`);
+      this.socket.addEventListener('open', event => {
+        this.setupChatNotifications();
+        this.setupPushNotifications();
+      });
     }
   }
 
@@ -68,6 +82,13 @@ class SocketService {
     }
   }
 
+  public sendNotification(userID: string, content: string) {
+    if (this.socket) {
+      const outgoingNotificationEvent = new SendNotificationEvent(userID, content);
+      sendEvent('send_notification', outgoingNotificationEvent, this.socket);
+    }
+  }
+
   public setupChatNotifications() {
     if (this.socket) {
       this.socket.onmessage = function (evt) {
@@ -92,6 +113,34 @@ class SocketService {
               //   />
               // ),
             });
+            break;
+          default:
+            break;
+        }
+      };
+    }
+  }
+
+  public setupPushNotifications() {
+    if (this.socket) {
+      this.socket.onmessage = function (evt) {
+        const event = getWSEvent(evt);
+        if (event.type === undefined) {
+          alert('No Type in the Event');
+        }
+
+        switch (event.type) {
+          case 'receive_notification':
+            type WS_Notification = {
+              userID: string;
+              content: string;
+            };
+            const notificationEventPayload: WS_Notification = event.payload;
+            toast.info(notificationEventPayload.content, {
+              ...messageToastSettings,
+              icon: '🐵',
+            });
+            store.dispatch(incrementUnreadNotifications());
             break;
           default:
             break;

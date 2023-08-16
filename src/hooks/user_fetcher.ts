@@ -1,5 +1,14 @@
-import { MESSAGING_URL, WORKSPACE_URL } from '@/config/routes';
-import getHandler from '@/handlers/getHandler';
+import {
+  BOOKMARK_URL,
+  COMMENT_URL,
+  INVITATION_URL,
+  MESSAGING_URL,
+  NOTIFICATION_URL,
+  POST_URL,
+  PROJECT_URL,
+  WORKSPACE_URL,
+} from '@/config/routes';
+import getHandler from '@/handlers/get_handler';
 import {
   configSelector,
   setFetchedChats,
@@ -60,7 +69,7 @@ const useUserStateFetcher = () => {
 
   const fetchLikedPosts = () => {
     if (config.fetchedLikedPosts) return;
-    const URL = `/posts/me/likes`;
+    const URL = `${POST_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
         const likedPostsData: string[] = res.data.posts || [];
@@ -75,7 +84,7 @@ const useUserStateFetcher = () => {
 
   const fetchLikedProjects = () => {
     if (config.fetchedLikedProjects) return;
-    const URL = `/projects/me/likes`;
+    const URL = `${PROJECT_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
         const likedProjectsData: string[] = res.data.projects || [];
@@ -90,7 +99,7 @@ const useUserStateFetcher = () => {
 
   const fetchLikedComments = () => {
     if (config.fetchedLikedComments) return;
-    const URL = `/comments/me/likes`;
+    const URL = `${COMMENT_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
         const likedCommentsData: string[] = res.data.comments || [];
@@ -105,7 +114,7 @@ const useUserStateFetcher = () => {
 
   const fetchBookmarks = () => {
     if (config.fetchedPostBookmarks && config.fetchedProjectBookmarks) return;
-    const URL = `/bookmarks`;
+    const URL = `${BOOKMARK_URL}`;
     getHandler(URL)
       .then(res => {
         const postBookmarksData: PostBookmark[] = res.data.postBookmarks || [];
@@ -163,7 +172,7 @@ const useUserStateFetcher = () => {
 
   const fetchUnreadNotifications = () => {
     if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
-    const URL = `/notifications/unread`;
+    const URL = `${NOTIFICATION_URL}/unread`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -180,7 +189,7 @@ const useUserStateFetcher = () => {
 
   const fetchUnreadInvitations = () => {
     if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
-    const URL = `/invitations/unread`;
+    const URL = `${INVITATION_URL}/unread`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {

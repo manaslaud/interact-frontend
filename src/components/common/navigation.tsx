@@ -10,7 +10,7 @@ const Navigation = ({ index }: Props) => {
   const [active, setActive] = useState(index);
   return (
     <div className="w-navigation h-full pl-[120px] pr-6 py-6 flex flex-col gap-2 border-r-2">
-      <NavigationItem index={1} title="Feed" icon={<HouseLine size={24} />} active={active} setActive={setActive} />
+      <NavigationItem index={1} title="Home" icon={<HouseLine size={24} />} active={active} setActive={setActive} />
       <NavigationItem
         index={2}
         title="Projects"

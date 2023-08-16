@@ -49,6 +49,16 @@ export class NewMessageEvent {
   }
 }
 
+export class SendNotificationEvent {
+  content = '';
+  userID = '';
+
+  constructor(userID: string, content: string) {
+    this.content = content;
+    this.userID = userID;
+  }
+}
+
 export class ChatSetupEvent {
   chats: string[] = [];
   constructor(chats: string[]) {

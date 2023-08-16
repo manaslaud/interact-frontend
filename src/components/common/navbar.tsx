@@ -5,11 +5,17 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
+import { unreadNotificationsSelector } from '@/slices/feedSlice';
+import useUserStateFetcher from '@/hooks/user_fetcher';
 
 const Navbar = () => {
   let profilePic = useSelector(userSelector).profilePic;
 
+  const userStateFetcher = useUserStateFetcher();
+
+  const notifications = useSelector(unreadNotificationsSelector);
   useEffect(() => {
+    userStateFetcher();
     profilePic = profilePic == '' ? 'default.jpg' : profilePic;
   }, []);
   return (
@@ -19,7 +25,10 @@ const Navbar = () => {
         <div className="w-8 h-8 rounded-full flex-center border-2 border-[#D4D9E1] hover:bg-[#00000010] cursor-pointer">
           <MagnifyingGlass size={18} className="text-[#67788E]" />
         </div>
-        <div className="w-8 h-8 rounded-full flex-center border-2 border-[#D4D9E1] hover:bg-[#00000010] cursor-pointer">
+        <div className="w-8 h-8 relative rounded-full flex-center border-2 border-[#D4D9E1] hover:bg-[#00000010] cursor-pointer">
+          <div className="absolute top-0 right-0 rounded-full bg-[#9f9f9f] w-5 h-5 flex-center translate-x-1/2 -translate-y-1/2">
+            {notifications}
+          </div>
           <Bell size={18} className="text-[#67788E]" />
         </div>
         <Image

@@ -9,8 +9,8 @@ import { setVerificationStatus, userSelector } from '@/slices/userSlice';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
-import getHandler from '@/handlers/getHandler';
-import postHandler from '@/handlers/postHandler';
+import getHandler from '@/handlers/get_handler';
+import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
 
 const Verification = () => {

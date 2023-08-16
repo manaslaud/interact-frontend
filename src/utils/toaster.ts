@@ -3,7 +3,6 @@ import { toast, Id, ToastOptions, UpdateOptions } from 'react-toastify';
 class Toaster {
   static toastSettings: ToastOptions = {
     containerId: 'main',
-    // toastId: 'default',
     position: 'top-center',
     autoClose: 2000,
     hideProgressBar: false,
@@ -14,16 +13,16 @@ class Toaster {
     theme: 'light',
   };
 
-  static success(message: string): Id {
-    return toast.success(message, this.toastSettings);
+  static success(message: string, toastId: string = 'default'): Id {
+    return toast.success(message, { ...this.toastSettings, toastId });
   }
 
-  static error(message: string): Id {
-    return toast.error(message, this.toastSettings);
+  static error(message: string, toastId: string = 'default'): Id {
+    return toast.error(message, { ...this.toastSettings, toastId });
   }
 
-  static startLoad(message = 'Loading...'): Id {
-    return toast.loading(message, this.toastSettings);
+  static startLoad(message: string = 'Loading...', toastId: string = 'default'): Id {
+    return toast.loading(message, { ...this.toastSettings, toastId });
   }
 
   static stopLoad(loader: Id, message: string, res: number): void {

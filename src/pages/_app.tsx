@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     socketService.connect();
     socketService.setupChatNotifications();
+    socketService.setupPushNotifications();
     return () => {
       socketService.disconnect();
     };

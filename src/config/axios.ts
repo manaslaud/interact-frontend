@@ -3,7 +3,7 @@ import { BACKEND_URL, FRONTEND_URL } from './routes';
 import Cookies from 'js-cookie';
 import { store } from '@/store';
 import { resetConfig } from '@/slices/configSlice';
-import useUserStateFetcher from '@/hooks/useUserStateFetcher';
+import useUserStateFetcher from '@/hooks/user_fetcher';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;

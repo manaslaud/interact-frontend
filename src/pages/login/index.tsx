@@ -19,7 +19,7 @@ import { setFeed } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
-import useUserStateFetcher from '@/hooks/useUserStateFetcher';
+import useUserStateFetcher from '@/hooks/user_fetcher';
 
 const Login = () => {
   const router = useRouter();

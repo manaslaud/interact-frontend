@@ -13,7 +13,7 @@ import Cookies from 'js-cookie';
 import { BACKEND_URL } from '@/config/routes';
 import nookies from 'nookies';
 import { SERVER_ERROR } from '@/config/errors';
-import useUserStateFetcher from '@/hooks/useUserStateFetcher';
+import useUserStateFetcher from '@/hooks/user_fetcher';
 
 interface Props {
   token: string;
