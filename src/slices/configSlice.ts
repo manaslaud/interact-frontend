@@ -3,9 +3,7 @@ import { RootState } from '@/store';
 
 interface ConfigState {
   fetchedFollowing: boolean;
-  fetchedLikedPosts: boolean;
-  fetchedLikedProjects: boolean;
-  fetchedLikedComments: boolean;
+  fetchedLikes: boolean;
   fetchedPostBookmarks: boolean;
   fetchedProjectBookmarks: boolean;
   fetchedChats: boolean;
@@ -28,9 +26,7 @@ const getInitialInvitationDate = (): string => {
 
 const initialState: ConfigState = {
   fetchedFollowing: false,
-  fetchedLikedPosts: false,
-  fetchedLikedProjects: false,
-  fetchedLikedComments: false,
+  fetchedLikes: false,
   fetchedPostBookmarks: false,
   fetchedProjectBookmarks: false,
   fetchedChats: false,
@@ -48,9 +44,7 @@ export const configSlice = createSlice({
     },
     setConfig: state => {
       state.fetchedFollowing = true;
-      state.fetchedLikedPosts = true;
-      state.fetchedLikedProjects = true;
-      state.fetchedLikedComments = true;
+      state.fetchedLikes = true;
       state.fetchedPostBookmarks = true;
       state.fetchedProjectBookmarks = true;
       state.fetchedChats = true;
@@ -61,14 +55,8 @@ export const configSlice = createSlice({
     setFetchedFollowing: state => {
       state.fetchedFollowing = true;
     },
-    setFetchedLikedPosts: state => {
-      state.fetchedLikedPosts = true;
-    },
-    setFetchedLikedProjects: state => {
-      state.fetchedLikedProjects = true;
-    },
-    setFetchedLikedComments: state => {
-      state.fetchedLikedComments = true;
+    setFetchedLikes: state => {
+      state.fetchedLikes = true;
     },
     setFetchedPostBookmarks: state => {
       state.fetchedPostBookmarks = true;
@@ -96,9 +84,7 @@ export const {
   setConfig,
   setFetchedChats,
   setFetchedFollowing,
-  setFetchedLikedComments,
-  setFetchedLikedPosts,
-  setFetchedLikedProjects,
+  setFetchedLikes,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setFetchedContributingProjects,

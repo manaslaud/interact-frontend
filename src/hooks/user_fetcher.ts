@@ -1,11 +1,9 @@
 import {
   BOOKMARK_URL,
-  COMMENT_URL,
   INVITATION_URL,
   MESSAGING_URL,
   NOTIFICATION_URL,
-  POST_URL,
-  PROJECT_URL,
+  USER_URL,
   WORKSPACE_URL,
 } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
@@ -14,9 +12,7 @@ import {
   setFetchedChats,
   setFetchedContributingProjects,
   setFetchedFollowing,
-  setFetchedLikedComments,
-  setFetchedLikedPosts,
-  setFetchedLikedProjects,
+  setFetchedLikes,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setLastFetchedUnreadInvitations,
@@ -27,9 +23,7 @@ import {
   setChats,
   setContributingProjects,
   setFollowing,
-  setLikedComments,
-  setLikedPosts,
-  setLikedProjects,
+  setLikes,
   setPostBookmarks,
   setProjectBookmarks,
 } from '@/slices/userSlice';
@@ -67,44 +61,14 @@ const useUserStateFetcher = () => {
       });
   };
 
-  const fetchLikedPosts = () => {
-    if (config.fetchedLikedPosts) return;
-    const URL = `${POST_URL}/me/likes`;
+  const fetchLikes = () => {
+    if (config.fetchedLikes) return;
+    const URL = `${USER_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
-        const likedPostsData: string[] = res.data.posts || [];
-        dispatch(setLikedPosts(likedPostsData));
-        dispatch(setFetchedLikedPosts());
-      })
-      .catch(err => {
-        Toaster.error(SERVER_ERROR);
-        console.log(err);
-      });
-  };
-
-  const fetchLikedProjects = () => {
-    if (config.fetchedLikedProjects) return;
-    const URL = `${PROJECT_URL}/me/likes`;
-    getHandler(URL)
-      .then(res => {
-        const likedProjectsData: string[] = res.data.projects || [];
-        dispatch(setLikedProjects(likedProjectsData));
-        dispatch(setFetchedLikedProjects());
-      })
-      .catch(err => {
-        Toaster.error(SERVER_ERROR);
-        console.log(err);
-      });
-  };
-
-  const fetchLikedComments = () => {
-    if (config.fetchedLikedComments) return;
-    const URL = `${COMMENT_URL}/me/likes`;
-    getHandler(URL)
-      .then(res => {
-        const likedCommentsData: string[] = res.data.comments || [];
-        dispatch(setLikedComments(likedCommentsData));
-        dispatch(setFetchedLikedComments());
+        const likesData: string[] = res.data.likes || [];
+        dispatch(setLikes(likesData));
+        dispatch(setFetchedLikes());
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR);
@@ -206,9 +170,7 @@ const useUserStateFetcher = () => {
 
   const fetchUserState = () => {
     fetchFollowing();
-    fetchLikedPosts();
-    fetchLikedProjects();
-    fetchLikedComments();
+    fetchLikes();
     fetchBookmarks();
     fetchChats();
     fetchContributingProjects();

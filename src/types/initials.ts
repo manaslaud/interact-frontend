@@ -6,14 +6,16 @@ import {
   Membership,
   Post,
   Application,
-  ProjectInvitation,
-  ProjectChatMembership,
+  Invitation,
+  GroupChatMembership,
   User,
-  ProjectMessage,
+  GroupChatMessage,
   Chat,
   Message,
-  ProjectChat,
+  GroupChat,
   Comment,
+  OrganizationMembership,
+  Organization,
 } from '.';
 
 export const initialEducation: Education = {
@@ -54,6 +56,7 @@ export const initialUser: User = {
   passwordChangedAt: new Date(),
   lastViewed: [],
   isVerified: false,
+  isOrganization: false,
 };
 
 export const initialProject: Project = {
@@ -124,6 +127,26 @@ export const initialPost: Post = {
   tags: [],
   hashes: [],
   edited: false,
+  usersTagged: [],
+};
+
+export const initialOrganization: Organization = {
+  id: '',
+  userID: '',
+  user: initialUser,
+  title: '',
+  memberships: [],
+  createdAt: new Date(),
+};
+
+export const initialOrganizationMembership: OrganizationMembership = {
+  id: '',
+  organizationID: '',
+  organization: initialOrganization,
+  userID: '',
+  user: initialUser,
+  role: '',
+  createdAt: new Date(),
 };
 
 export const initialComment: Comment = {
@@ -132,11 +155,12 @@ export const initialComment: Comment = {
   user: initialUser,
   content: '',
   noLikes: 0,
-  noReplies: 0,
   createdAt: new Date(),
   likedBy: [],
-  replies: [],
-  isRepliedComment: false,
+  postID: '',
+  post: initialPost,
+  projectID: '',
+  project: initialProject,
 };
 
 export const initialApplication: Application = {
@@ -145,6 +169,7 @@ export const initialApplication: Application = {
   opening: initialOpening,
   userID: '',
   user: initialUser,
+  projectID: '',
   project: initialProject,
   status: 0,
   content: '',
@@ -157,6 +182,7 @@ export const initialMessage: Message = {
   id: '',
   content: '',
   chatID: '',
+  chat: null,
   userID: '',
   user: initialUser,
   createdAt: new Date(),
@@ -165,17 +191,25 @@ export const initialMessage: Message = {
   post: initialPost,
   projectID: '',
   project: initialProject,
+  messageID: '',
+  message: null,
 };
 
-export const initialProjectMessage: ProjectMessage = {
+export const initialGroupChatMessage: GroupChatMessage = {
   id: '',
   content: '',
-  projectChatID: '',
+  chatID: '',
+  chat: null,
   userID: '',
   user: initialUser,
   createdAt: new Date(),
   read: false,
-  readBy: [],
+  postID: '',
+  post: initialPost,
+  projectID: '',
+  project: initialProject,
+  messageID: '',
+  message: null,
 };
 
 export const initialChat: Chat = {
@@ -188,44 +222,52 @@ export const initialChat: Chat = {
   acceptedBy: initialUser,
   createdAt: new Date(),
   messages: [],
+  latestMessageID: '',
   latestMessage: initialMessage,
+  lastReadMessageByAcceptingUserID: '',
+  lastReadMessageByCreatingUserID: '',
   accepted: false,
 };
 
-export const initialProjectChat: ProjectChat = {
+export const initialGroupChat: GroupChat = {
   id: '',
   title: '',
   description: '',
-  createdByID: '',
-  createdBy: initialUser,
+  userID: '',
+  user: initialUser,
   projectID: '',
   project: initialProject,
+  organizationID: '',
+  organization: initialOrganization,
   memberships: [],
   createdAt: new Date(),
   messages: [],
-  latestMessage: initialProjectMessage,
-  accepted: false,
+  latestMessageID: '',
+  latestMessage: initialGroupChatMessage,
 };
 
-export const initialProjectInvitation: ProjectInvitation = {
+export const initialInvitation: Invitation = {
   id: '',
-  projectID: '',
-  project: initialProject,
   userID: '',
   user: initialUser,
+  projectID: '',
+  project: initialProject,
+  organizationID: '',
+  organization: initialOrganization,
+  chatID: '',
+  chat: initialGroupChat,
   title: '',
   status: 0,
   isRead: false,
   createdAt: new Date(),
 };
 
-export const initialProjectChatMembership: ProjectChatMembership = {
+export const initialGroupChatMembership: GroupChatMembership = {
   id: '',
   userID: '',
   user: initialUser,
-  projectID: '',
-  project: initialProject,
-  projectChatID: '',
-  projectChat: initialProjectChat,
+  groupChatID: '',
+  groupChat: initialGroupChat,
+  role: '',
   createdAt: new Date(),
 };

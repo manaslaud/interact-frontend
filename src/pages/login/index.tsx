@@ -62,7 +62,7 @@ const Login = () => {
           dispatch(setFeed([]));
           socketService.connect(user.id);
           userStateFetcher();
-          if (user.isVerified) router.replace('/feed');
+          if (user.isVerified) router.replace('/home');
           else router.push('/verification');
         }
         setMutex(false);
@@ -182,7 +182,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return {
       redirect: {
         permanent: true,
-        destination: '/feed',
+        destination: '/home',
       },
       props: { token },
     };

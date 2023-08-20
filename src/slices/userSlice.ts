@@ -14,12 +14,10 @@ interface UserState {
   email: string;
   phoneNo: string;
   following: string[];
-  likedPosts: string[];
-  likedProjects: string[];
-  likedComments: string[];
+  likes: string[];
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
-  contributingProjects: string[];
+  contributingProjects: string[]; //TODO remove is not required
   chats: ChatSlice[];
   profilePic: string;
   isLoggedIn: boolean;
@@ -35,9 +33,7 @@ const initialState: UserState = {
   isLoggedIn: false,
   profilePic: '',
   following: [],
-  likedPosts: [],
-  likedProjects: [],
-  likedComments: [],
+  likes: [],
   postBookmarks: [],
   projectBookmarks: [],
   chats: [],
@@ -61,9 +57,7 @@ export const userSlice = createSlice({
       state.chats = [];
       state.contributingProjects = [];
       state.following = [];
-      state.likedComments = [];
-      state.likedPosts = [];
-      state.likedProjects = [];
+      state.likes = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
     },
@@ -73,14 +67,8 @@ export const userSlice = createSlice({
     setFollowing: (state, action: PayloadAction<string[]>) => {
       state.following = action.payload;
     },
-    setLikedPosts: (state, action: PayloadAction<string[]>) => {
-      state.likedPosts = action.payload;
-    },
-    setLikedProjects: (state, action: PayloadAction<string[]>) => {
-      state.likedProjects = action.payload;
-    },
-    setLikedComments: (state, action: PayloadAction<string[]>) => {
-      state.likedComments = action.payload;
+    setLikes: (state, action: PayloadAction<string[]>) => {
+      state.likes = action.payload;
     },
     setPostBookmarks: (state, action: PayloadAction<PostBookmark[]>) => {
       state.postBookmarks = action.payload;
@@ -110,9 +98,7 @@ export const {
   setUser,
   setProfilePic,
   setFollowing,
-  setLikedPosts,
-  setLikedProjects,
-  setLikedComments,
+  setLikes,
   setPostBookmarks,
   setProjectBookmarks,
   setChats,

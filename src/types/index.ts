@@ -98,6 +98,26 @@ export interface User {
   passwordChangedAt: Date;
   lastViewed: Project[];
   isVerified: boolean;
+  isOrganization: boolean;
+}
+
+export interface OrganizationMembership {
+  id: string;
+  organizationID: string;
+  organization: Organization;
+  userID: string;
+  user: User;
+  role: string;
+  createdAt: Date;
+}
+
+export interface Organization {
+  id: string;
+  userID: string;
+  user: User;
+  title: string;
+  memberships: OrganizationMembership[];
+  createdAt: Date;
 }
 
 export interface Project {
@@ -114,7 +134,6 @@ export interface Project {
   noLikes: number;
   noShares: number;
   noComments: number;
-  createdAt: Date;
   tags: string[];
   category: string;
   memberships: Membership[];
@@ -124,8 +143,15 @@ export interface Project {
   views: number;
   privateLinks: string[];
   links: string[];
+  createdAt: Date;
 }
 
+export interface PostTag {
+  id: string;
+  userID: string;
+  user: User;
+  postID: string;
+}
 export interface Post {
   id: string;
   userID: string;
@@ -141,25 +167,28 @@ export interface Post {
   tags: string[];
   hashes: string[];
   edited: boolean;
+  usersTagged: PostTag[];
 }
 
 export interface Comment {
   id: string;
   userID: string;
   user: User;
+  postID: string;
+  post: Post;
+  projectID: string;
+  project: Project;
   content: string;
   noLikes: number;
-  noReplies: number;
-  createdAt: Date;
   likedBy: string[];
-  replies: Comment[];
-  isRepliedComment: boolean;
+  createdAt: Date;
 }
 
 export interface Application {
   id: string;
   openingID: string;
   opening: Opening;
+  projectID: string;
   project: Project;
   userID: string;
   user: User;
@@ -193,37 +222,34 @@ export interface Message {
   id: string;
   content: string;
   chatID: string;
+  chat: Chat | null;
   userID: string;
   user: User;
-  createdAt: Date;
   read: boolean;
   postID: string;
   post: Post;
   projectID: string;
   project: Project;
+  messageID: string;
+  message: Message | null;
+  createdAt: Date;
 }
 
-export interface GroupMessage {
+export interface GroupChatMessage {
   id: string;
   content: string;
   chatID: string;
-  chat: GroupChat;
+  chat: GroupChat | null;
   userID: string;
   user: User;
-  createdAt: Date;
   read: boolean;
-  readBy: User[];
-}
-
-export interface ProjectMessage {
-  id: string;
-  content: string;
-  projectChatID: string;
-  userID: string;
-  user: User;
+  postID: string;
+  post: Post;
+  projectID: string;
+  project: Project;
+  messageID: string;
+  message: GroupChatMessage | null;
   createdAt: Date;
-  read: boolean;
-  readBy: User[];
 }
 
 export interface Chat {
@@ -236,7 +262,10 @@ export interface Chat {
   acceptedBy: User;
   createdAt: Date;
   messages: Message[];
+  latestMessageID: string;
   latestMessage: Message;
+  lastReadMessageByCreatingUserID: string;
+  lastReadMessageByAcceptingUserID: string;
   accepted: boolean;
 }
 
@@ -244,59 +273,41 @@ export interface GroupChat {
   id: string;
   title: string;
   description: string;
-  createdByID: string;
-  createdBy: User;
-  members: User[];
-  createdAt: Date;
-  messages: GroupChat[];
-  latestMessage: GroupChat;
-  accepted: boolean;
-}
-
-export interface ProjectChat {
-  id: string;
-  title: string;
-  description: string;
-  createdByID: string;
-  createdBy: User;
+  userID: string;
+  user: User;
+  organizationID: string;
+  organization: Organization;
   projectID: string;
   project: Project;
-  memberships: ProjectChatMembership[];
+  memberships: GroupChatMembership[];
+  messages: GroupChatMessage[];
+  latestMessageID: string;
+  latestMessage: GroupChatMessage;
   createdAt: Date;
-  messages: ProjectMessage[];
-  latestMessage: ProjectMessage;
-  accepted: boolean;
 }
 
-export interface ProjectChatMembership {
+export interface GroupChatMembership {
+  id: string;
+  userID: string;
+  user: User;
+  groupChatID: string;
+  groupChat: GroupChat;
+  role: string;
+  createdAt: Date;
+}
+
+export interface Invitation {
   id: string;
   userID: string;
   user: User;
   projectID: string;
   project: Project;
-  projectChatID: string;
-  projectChat: ProjectChat;
-  createdAt: Date;
-}
-
-export interface ProjectInvitation {
-  id: string;
-  projectID: string;
-  project: Project;
-  userID: string;
-  user: User;
+  organizationID: string;
+  organization: Organization;
+  chatID: string;
+  chat: GroupChat;
   title: string;
   status: number;
   isRead: boolean;
   createdAt: Date;
-}
-
-export interface BookmarkItem {
-  typeOfItem: string;
-  item: Project | Post;
-}
-
-export interface Bookmark {
-  title: string;
-  items: BookmarkItem[];
 }

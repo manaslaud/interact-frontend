@@ -44,7 +44,7 @@ const LoginCallback = ({ token }: Props) => {
           dispatch(setFeed([]));
           socketService.connect(user.id);
           userStateFetcher();
-          router.replace('/feed');
+          router.replace('/home');
         }
       })
       .catch(err => {
@@ -67,7 +67,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: true,
-        destination: '/feed',
+        destination: '/home',
       },
       props: { access_token },
     };

@@ -274,7 +274,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return {
       redirect: {
         permanent: true,
-        destination: '/feed',
+        destination: '/home',
       },
       props: { token },
     };

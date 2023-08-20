@@ -55,7 +55,7 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setUnreadNotifications(1));
           dispatch(setFeed([]));
           socketService.connect(user.id);
-          router.replace('/feed');
+          router.replace('/home');
         }
         setMutex(false);
       })
@@ -126,7 +126,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: true,
-        destination: '/feed',
+        destination: '/home',
       },
       props: { access_token },
     };
