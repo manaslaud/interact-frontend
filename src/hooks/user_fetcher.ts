@@ -135,7 +135,10 @@ const useUserStateFetcher = () => {
   };
 
   const fetchUnreadNotifications = () => {
-    if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
+    const lastFetchedTime = new Date(config.lastFetchedUnreadNotifications);
+
+    // if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
+    if ((new Date().getTime() - lastFetchedTime.getTime()) / 1000 < 30) return; //! check for utc conversion
     const URL = `${NOTIFICATION_URL}/unread`;
     getHandler(URL)
       .then(res => {
@@ -152,7 +155,10 @@ const useUserStateFetcher = () => {
   };
 
   const fetchUnreadInvitations = () => {
-    if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
+    const lastFetchedTime = new Date(config.lastFetchedUnreadInvitations);
+
+    // if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
+    if ((new Date().getTime() - lastFetchedTime.getTime()) / (1000 * 60) < 2) return;
     const URL = `${INVITATION_URL}/unread`;
     getHandler(URL)
       .then(res => {

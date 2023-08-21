@@ -6,13 +6,11 @@ const config: Config = {
     extend: {
       width: {
         108: '32rem',
-        navigation: '347px',
-        base: 'calc(100vw - 694px)',
+        navigation_open: '347px',
+        navigation_close: '100px',
       },
       height: {
         108: '32rem',
-        navbar: '55px',
-        base: 'calc(100vh - 55px)',
       },
       boxShadow: {
         custom: '0 25px 100px -30px rgb(0 0 0 / 0.25);',
@@ -26,6 +24,15 @@ const config: Config = {
       },
       fontSize: {
         xxs: '0.5rem',
+      },
+      animation: {
+        fade: 'fade 1s ease-in-out',
+      },
+      keyframes: {
+        fade: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       lineClamp: {
         7: '7',

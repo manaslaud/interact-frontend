@@ -1,47 +1,79 @@
-import { Bell, MagnifyingGlass } from '@phosphor-icons/react';
-import React, { useEffect } from 'react';
-import { ReactSVG } from 'react-svg';
-import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
-import { userSelector } from '@/slices/userSlice';
-import { useSelector } from 'react-redux';
-import { unreadNotificationsSelector } from '@/slices/feedSlice';
-import useUserStateFetcher from '@/hooks/user_fetcher';
+import React, { useState } from 'react';
+import NavigationItem from './navbar_item';
+import { BookmarkSimple, Chats, Envelope, HouseLine, RocketLaunch, Wrench } from '@phosphor-icons/react';
 
-const Navbar = () => {
-  let profilePic = useSelector(userSelector).profilePic;
+interface Props {
+  index: number;
+}
 
-  const userStateFetcher = useUserStateFetcher();
-
-  const notifications = useSelector(unreadNotificationsSelector);
-  useEffect(() => {
-    userStateFetcher();
-    profilePic = profilePic == '' ? 'default.jpg' : profilePic;
-  }, []);
+const Navigation = ({ index }: Props) => {
+  const [active, setActive] = useState(index);
+  const [open, setOpen] = useState(true);
   return (
-    <div className="w-full h-navbar px-[120px] flex items-center justify-between py-2 border-b-2">
-      <ReactSVG src="/logo.svg" />
-      <div className="flex gap-[12px] ">
-        <div className="w-8 h-8 rounded-full flex-center border-2 border-[#D4D9E1] hover:bg-[#00000010] cursor-pointer">
-          <MagnifyingGlass size={18} className="text-[#67788E]" />
-        </div>
-        <div className="w-8 h-8 relative rounded-full flex-center border-2 border-[#D4D9E1] hover:bg-[#00000010] cursor-pointer">
-          <div className="absolute top-0 right-0 rounded-full bg-[#9f9f9f] w-5 h-5 flex-center translate-x-1/2 -translate-y-1/2">
-            {notifications}
-          </div>
-          <Bell size={18} className="text-[#67788E]" />
-        </div>
-        <Image
-          crossOrigin="anonymous"
-          className="w-8 h-8 rounded-full cursor-pointer"
-          width={10000}
-          height={10000}
-          alt="user"
-          src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-        />
-      </div>
+    <div
+      className={`${
+        open ? 'w-navigation_open' : 'w-navigation_close'
+      } h-full py-6 flex flex-col items-center gap-2 border-r-2 transition-ease-200`}
+    >
+      <NavigationItem
+        index={1}
+        title="Home"
+        icon={<HouseLine size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={2}
+        title="Explore"
+        icon={<RocketLaunch size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={3}
+        title="Workspace"
+        icon={<Wrench size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={4}
+        title="Message"
+        icon={<Chats size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={5}
+        title="Invitations"
+        icon={<Envelope size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={6}
+        title="Bookmarks"
+        icon={<BookmarkSimple size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={6}
+        title="Messages"
+        icon={<BookmarkSimple size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <div onClick={() => setOpen(prev => !prev)}>Toggle</div>
     </div>
   );
 };
 
-export default Navbar;
+export default Navigation;
