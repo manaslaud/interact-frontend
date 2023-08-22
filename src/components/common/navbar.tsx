@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import NavigationItem from './navbar_item';
 import { BookmarkSimple, Chats, Envelope, HouseLine, RocketLaunch, Wrench } from '@phosphor-icons/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 interface Props {
   index: number;
 }
 
 const Navigation = ({ index }: Props) => {
   const [active, setActive] = useState(index);
-  const [open, setOpen] = useState(true);
+
+  const dispatch = useDispatch();
+  const open = useSelector(navbarOpenSelector);
 
   return (
     <div
@@ -79,7 +83,7 @@ const Navigation = ({ index }: Props) => {
         setActive={setActive}
         open={open}
       />
-      <div onClick={() => setOpen(prev => !prev)}>Toggle</div>
+      <div onClick={() => dispatch(setNavbarOpen(!open))}>Toggle</div>
     </div>
   );
 };

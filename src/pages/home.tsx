@@ -2,20 +2,22 @@ import Navbar from '@/components/common/navbar';
 import TabMenu from '@/components/tab_menu';
 import Discover from '@/screens/home_screens/discover';
 import Feed from '@/screens/home_screens/feed';
+import { homeTabSelector, setHomeTab } from '@/slices/feedSlice';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import SideWrapper from '@/wrappers/side';
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const [active, setActive] = useState(0);
+  const active = useSelector(homeTabSelector);
   return (
     <BaseWrapper>
       <Navbar index={1} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
-          <TabMenu items={['Feed', 'Discover']} active={active} setActive={setActive} />
+          <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           {active == 0 ? <Feed /> : active == 1 ? <Discover /> : <></>}
         </div>
       </MainWrapper>

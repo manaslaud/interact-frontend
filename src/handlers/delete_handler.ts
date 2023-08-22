@@ -19,7 +19,7 @@ const deleteHandler = async (URL: string) => {
     })
     .catch(err => {
       response.status = 0;
-      response.data = err.response.data;
+      response.data = err.response?.data || '';
       response.statusCode = 500;
     });
   return response;

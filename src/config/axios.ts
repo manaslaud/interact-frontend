@@ -69,9 +69,9 @@ configuredAxios.interceptors.response.use(
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
 
-          store.dispatch(resetConfig);
-          const userStateFetcher = useUserStateFetcher();
-          userStateFetcher();
+          // store.dispatch(resetConfig);
+          // const userStateFetcher = useUserStateFetcher();
+          // userStateFetcher();
 
           onTokenRefreshed(newAccessToken);
 

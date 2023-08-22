@@ -5,17 +5,32 @@ import { RootState } from '@/store';
 export interface FeedState {
   unreadNotifications: number;
   unreadInvitations: number;
+  navbarOpen: boolean;
+  homeTab: number;
+  exploreTab: number;
 }
 
 const initialState: FeedState = {
   unreadNotifications: 0,
   unreadInvitations: 0,
+  navbarOpen: true,
+  homeTab: 0,
+  exploreTab: 0,
 };
 
 export const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {
+    setNavbarOpen: (state, action: PayloadAction<boolean>) => {
+      state.navbarOpen = action.payload;
+    },
+    setHomeTab: (state, action: PayloadAction<number>) => {
+      state.homeTab = action.payload;
+    },
+    setExploreTab: (state, action: PayloadAction<number>) => {
+      state.exploreTab = action.payload;
+    },
     setUnreadNotifications: (state, action: PayloadAction<number>) => {
       state.unreadNotifications = action.payload;
     },
@@ -32,6 +47,9 @@ export const feedSlice = createSlice({
 });
 
 export const {
+  setNavbarOpen,
+  setHomeTab,
+  setExploreTab,
   setUnreadNotifications,
   incrementUnreadNotifications,
   setUnreadInvitations,
@@ -40,5 +58,8 @@ export const {
 
 export default feedSlice.reducer;
 
+export const navbarOpenSelector = (state: RootState) => state.feed.navbarOpen;
+export const homeTabSelector = (state: RootState) => state.feed.homeTab;
+export const exploreTabSelector = (state: RootState) => state.feed.exploreTab;
 export const unreadNotificationsSelector = (state: RootState) => state.feed.unreadNotifications;
 export const unreadInvitationsSelector = (state: RootState) => state.feed.unreadInvitations;

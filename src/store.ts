@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import feedReducer from '@/slices/feedSlice';
-import exploreReducer from '@/slices/exploreSlice';
 import userReducer from '@/slices/userSlice';
 import messagingReducer from '@/slices/messagingSlice';
 import configReducer from './slices/configSlice';
@@ -21,7 +20,6 @@ const configPersistConfig = {
 
 const rootReducer = combineReducers({
   feed: feedReducer,
-  explore: exploreReducer,
   user: userReducer,
   messaging: messagingReducer,
   config: persistReducer(configPersistConfig, configReducer),

@@ -61,6 +61,7 @@ export const initialUser: User = {
 
 export const initialProject: Project = {
   id: '',
+  slug: '',
   userID: '',
   title: '',
   tagline: '',

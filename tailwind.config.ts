@@ -8,6 +8,8 @@ const config: Config = {
         108: '32rem',
         navbar_open: '347px',
         navbar_close: '100px',
+        base_open: 'calc(100vw - 694px)',
+        base_close: 'calc(100vw - 447px)',
       },
       height: {
         108: '32rem',

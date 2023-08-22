@@ -122,6 +122,7 @@ export interface Organization {
 
 export interface Project {
   id: string;
+  slug: string;
   userID: string;
   title: string;
   tagline: string;
