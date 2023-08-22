@@ -9,20 +9,14 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'config'],
-};
-
-const configPersistConfig = {
-  key: 'config',
-  storage,
-  blacklist: ['lastFetchedUnreadNotifications', 'lastFetchedUnreadInvitations'],
+  whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({
   feed: feedReducer,
   user: userReducer,
   messaging: messagingReducer,
-  config: persistReducer(configPersistConfig, configReducer),
+  config: configReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

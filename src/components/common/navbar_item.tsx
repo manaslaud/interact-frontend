@@ -20,7 +20,7 @@ const NavigationItem = ({ title, icon, active, setActive, index, open }: Props) 
       } flex gap-4 font-primary font-medium items-center ${open ? 'rounded-lg' : 'rounded-full'} transition-ease-200`}
     >
       {icon}
-      {open ? <div>{title}</div> : <></>}{' '}
+      {open ? <div>{title}</div> : <></>}
     </Link>
   );
 };

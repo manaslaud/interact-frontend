@@ -20,7 +20,15 @@ const Explore = () => {
       <MainWrapper>
         <div className={`${navbarOpen ? 'w-base_open' : 'w-base_close'} flex flex-col gap-4 transition-ease-200`}>
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
-          {active == 0 ? <Projects /> : active == 1 ? <Openings /> : active == 2 ? <Users /> : <></>}
+          <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+            <Projects />
+          </div>
+          <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+            <Openings />
+          </div>
+          <div className={`${active === 2 ? 'block' : 'hidden'} `}>
+            <Users />
+          </div>{' '}
         </div>
       </MainWrapper>
       <SideWrapper>

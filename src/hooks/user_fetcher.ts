@@ -36,6 +36,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import moment from 'moment';
 
 const useUserStateFetcher = () => {
+  //! Implement time config for all instead of boolean configs
   const dispatch = useDispatch();
 
   const config = useSelector(configSelector);
@@ -135,10 +136,7 @@ const useUserStateFetcher = () => {
   };
 
   const fetchUnreadNotifications = () => {
-    const lastFetchedTime = new Date(config.lastFetchedUnreadNotifications);
-
-    // if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
-    if ((new Date().getTime() - lastFetchedTime.getTime()) / 1000 < 30) return; //! check for utc conversion
+    if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
     const URL = `${NOTIFICATION_URL}/unread`;
     getHandler(URL)
       .then(res => {
@@ -155,10 +153,7 @@ const useUserStateFetcher = () => {
   };
 
   const fetchUnreadInvitations = () => {
-    const lastFetchedTime = new Date(config.lastFetchedUnreadInvitations);
-
-    // if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
-    if ((new Date().getTime() - lastFetchedTime.getTime()) / (1000 * 60) < 2) return;
+    if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
     const URL = `${INVITATION_URL}/unread`;
     getHandler(URL)
       .then(res => {

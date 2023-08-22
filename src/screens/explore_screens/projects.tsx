@@ -5,7 +5,6 @@ import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
-import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import SearchBar from '@/components/explore/searchbar';
 import ProjectView from './project_view';
@@ -17,12 +16,11 @@ const Projects = () => {
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
-  const router = useRouter();
-  const { search } = router.query;
+  const search = new URLSearchParams(window.location.search).get('search');
 
   const fetchProjects = async () => {
     setLoading(true);
-    const URL = `${EXPLORE_URL}/projects/recently_added${search && search != '' ? '?search=' + search : ''}`;
+    const URL = `${EXPLORE_URL}/projects/recommended${search && search != '' ? '?search=' + search : ''}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setProjects(res.data.projects);
@@ -39,7 +37,7 @@ const Projects = () => {
 
   return (
     <>
-      <SearchBar />
+      <SearchBar initialValue={search && search != '' ? search : ''} />
       {loading ? (
         <Loader />
       ) : (
