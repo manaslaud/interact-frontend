@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import socketService from '@/config/ws';
 import { resetConfig } from '@/slices/configSlice';
-import { setFeed } from '@/slices/feedSlice';
 import { setUser } from '@/slices/userSlice';
 import { User } from '@/types';
 import Cookies from 'js-cookie';
@@ -41,7 +40,6 @@ const LoginCallback = ({ token }: Props) => {
           });
           dispatch(setUser(user));
           dispatch(resetConfig());
-          dispatch(setFeed([]));
           socketService.connect(user.id);
           userStateFetcher();
           router.replace('/home');

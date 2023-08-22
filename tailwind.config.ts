@@ -31,7 +31,10 @@ const config: Config = {
         xxs: '0.5rem',
       },
       animation: {
-        fade: 'fade 1s ease-in-out',
+        fade_third: 'fade 0.3s ease-in-out',
+        fade_half: 'fade 0.5s ease-in-out',
+        fade_1: 'fade 1s ease-in-out',
+        fade_2: 'fade 2s ease-in-out',
       },
       keyframes: {
         fade: {

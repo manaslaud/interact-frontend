@@ -1,8 +1,7 @@
 import configuredAxios from '@/config/axios';
+import { GenericAbortSignal } from 'axios';
 
-//* -1 for no protect, 0 for partial protect and 1 for protect
-
-const getHandler = async (URL: string) => {
+const getHandler = async (URL: string, signal?: GenericAbortSignal) => {
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -13,14 +12,15 @@ const getHandler = async (URL: string) => {
     statusCode: 500,
   };
   await configuredAxios
-    .get(URL, { headers })
+    .get(URL, { headers, signal })
     .then(res => {
       response.status = 1;
       response.data = res.data;
       response.statusCode = res.status;
     })
     .catch(err => {
-      response.status = 0;
+      if (err.name == 'CanceledError') response.status = -1;
+      else response.status = 0;
       response.data = err.response?.data || '';
       response.statusCode = 500;
     });

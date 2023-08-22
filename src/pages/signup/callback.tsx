@@ -11,7 +11,7 @@ import { setUser } from '@/slices/userSlice';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import { setConfig } from '@/slices/configSlice';
-import { setFeed, setUnreadNotifications } from '@/slices/feedSlice';
+import { setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import axios from 'axios';
@@ -53,7 +53,6 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setUser(user));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1));
-          dispatch(setFeed([]));
           socketService.connect(user.id);
           router.replace('/home');
         }

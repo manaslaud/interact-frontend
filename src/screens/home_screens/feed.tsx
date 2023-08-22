@@ -1,3 +1,4 @@
+import Loader from '@/components/common/loader';
 import getHandler from '@/handlers/get_handler';
 import NewPost from '@/sections/home_sections/new_post';
 import { Post } from '@/types';
@@ -41,7 +42,7 @@ const Feed = () => {
   return (
     <div className="w-full flex flex-col gap-2">
       <NewPost />
-      <div className="w-full h-108 bg-slate-200"></div>
+      {loading ? <Loader /> : <div className="w-full h-108 bg-slate-200"></div>}
     </div>
   );
 };

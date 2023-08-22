@@ -15,7 +15,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
 import { setConfig } from '@/slices/configSlice';
-import { setFeed, setUnreadNotifications } from '@/slices/feedSlice';
+import { setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import isEmail from 'validator/lib/isEmail';
@@ -97,7 +97,6 @@ const SignUp = () => {
           dispatch(setUser(user));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
-          dispatch(setFeed([]));
           socketService.connect(user.id);
           router.push('/verification');
         }

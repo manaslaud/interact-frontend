@@ -18,7 +18,12 @@ const Home = () => {
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
-          {active == 0 ? <Feed /> : active == 1 ? <Discover /> : <></>}
+          <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+            <Feed />
+          </div>
+          <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+            <Discover />
+          </div>
         </div>
       </MainWrapper>
       <SideWrapper>

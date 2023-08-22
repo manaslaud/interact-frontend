@@ -17,7 +17,7 @@ const Navigation = ({ index }: Props) => {
     <div
       className={`${
         open ? 'w-navbar_open' : 'w-navbar_close'
-      } h-full py-6 flex flex-col items-center gap-2 border-r-2 transition-ease-200`}
+      } h-full py-6 flex flex-col items-center gap-2 border-r-2 transition-ease-200 max-md:hidden`}
     >
       <NavigationItem
         index={1}

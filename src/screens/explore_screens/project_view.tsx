@@ -5,6 +5,7 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
 import Toaster from '@/utils/toaster';
+import axios, { CancelToken, CancelTokenSource } from 'axios';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
@@ -18,29 +19,35 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
   const [project, setProject] = useState<Project>(initialProject);
   const [loading, setLoading] = useState(true);
 
-  const fetchProject = async () => {
+  const fetchProject = async (abortController: AbortController) => {
     setLoading(true);
     let slug = '';
     try {
       slug = projectSlugs[clickedProjectIndex];
     } finally {
       const URL = `${EXPLORE_URL}/projects/${slug}`;
-      const res = await getHandler(URL);
+      const res = await getHandler(URL, abortController.signal);
       if (res.statusCode == 200) {
         setProject(res.data.project);
         setLoading(false);
       } else {
-        if (res.data.message) Toaster.error(res.data.message);
-        else Toaster.error(SERVER_ERROR);
+        if (res.status != -1) {
+          if (res.data.message) Toaster.error(res.data.message);
+          else Toaster.error(SERVER_ERROR);
+        }
       }
     }
   };
 
   useEffect(() => {
-    fetchProject();
+    const abortController = new AbortController();
+    fetchProject(abortController);
+    return () => {
+      abortController.abort();
+    };
   }, [clickedProjectIndex]);
   return (
-    <div className="w-screen h-screen absolute top-0 left-0 flex bg-[#000000a5] backdrop-blur-sm">
+    <div className="w-screen h-screen absolute top-0 left-0 z-50 flex bg-[#000000a5] backdrop-blur-sm">
       <div className="w-16 h-screen flex flex-col items-center justify-between">
         <div className="w-12 h-12 rounded-full bg-white"></div>
         {clickedProjectIndex != 0 ? (
@@ -58,9 +65,9 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
           <div>{project.title}</div>
           <div>{project.user.name}</div>
         </div>
-        <div className="w-full h-[calc(100vh-64px)] flex bg-white">
-          <div className="w-3/4 h-full">{loading ? <Loader /> : <></>}</div>
-          <div className="w-1/4 h-full bg-slate-200"></div>
+        <div className="w-full h-[calc(100vh-64px)] flex bg-white max-md:flex-col">
+          <div className="w-3/4 max-md:w-full h-full">{loading ? <Loader /> : <></>}</div>
+          <div className="w-1/4 max-md:w-full h-full bg-slate-200"></div>
         </div>
       </div>
 
@@ -68,12 +75,17 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
         <div onClick={() => setClickedOnProject(false)} className="w-12 h-12 rounded-full bg-red-400 cursor-pointer">
           X
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="w-12 h-12 rounded-full bg-white"></div>
-          <div className="w-12 h-12 rounded-full bg-white"></div>
-          <div className="w-12 h-12 rounded-full bg-white"></div>
-          <div className="w-12 h-12 rounded-full bg-white"></div>
-        </div>
+        {loading ? (
+          <></>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {project.openings.length > 0 ? <div className="w-12 h-12 rounded-full bg-white">C</div> : <></>}
+            <div className="w-12 h-12 rounded-full bg-white"></div>
+            <div className="w-12 h-12 rounded-full bg-white"></div>
+            <div className="w-12 h-12 rounded-full bg-white"></div>
+          </div>
+        )}
+
         {clickedProjectIndex != projectSlugs.length - 1 ? (
           <div
             onClick={() => setClickedProjectIndex(prev => prev + 1)}

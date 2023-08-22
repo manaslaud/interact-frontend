@@ -15,7 +15,6 @@ import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
 import { resetConfig } from '@/slices/configSlice';
-import { setFeed } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
@@ -59,7 +58,6 @@ const Login = () => {
           });
           dispatch(setUser(user));
           dispatch(resetConfig());
-          dispatch(setFeed([]));
           socketService.connect(user.id);
           userStateFetcher();
           if (user.isVerified) router.replace('/home');

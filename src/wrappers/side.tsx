@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const SideWrapper: React.FC<WrapperProps> = ({ children }) => {
-  return <div className="w-navbar_open h-full py-6 flex flex-col gap-2 border-l-2">{children}</div>;
+  return <div className="w-navbar_open h-full py-6 flex flex-col gap-2 border-l-2 max-md:hidden">{children}</div>;
 };
 
 export default SideWrapper;
