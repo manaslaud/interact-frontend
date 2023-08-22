@@ -1,5 +1,7 @@
 import Navbar from '@/components/common/navbar';
-import Feed from '@/screens/feed';
+import TabMenu from '@/components/tab_menu';
+import Discover from '@/screens/home_screens/discover';
+import Feed from '@/screens/home_screens/feed';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -13,21 +15,8 @@ const Home = () => {
       <Navbar index={1} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
-          <div className="w-5/6 m-auto bg-slate-100 flex justify-around">
-            <div
-              onClick={() => setActive(0)}
-              className={`${active == 0 ? 'bg-slate-300' : 'bg-slate-200'} w-1/2 text-center`}
-            >
-              Feed
-            </div>
-            <div
-              onClick={() => setActive(1)}
-              className={`${active == 1 ? 'bg-slate-300' : 'bg-slate-200'} w-1/2 text-center`}
-            >
-              Discover
-            </div>
-          </div>
-          {active == 0 ? <Feed /> : <></>}
+          <TabMenu items={['Feed', 'Discover']} active={active} setActive={setActive} />
+          {active == 0 ? <Feed /> : active == 1 ? <Discover /> : <></>}
         </div>
       </MainWrapper>
       <SideWrapper>

@@ -1,5 +1,8 @@
 import Navbar from '@/components/common/navbar';
-import Feed from '@/screens/feed';
+import TabMenu from '@/components/tab_menu';
+import { Openings } from '@/screens/explore_screens/openings';
+import Projects from '@/screens/explore_screens/projects';
+import Users from '@/screens/explore_screens/users';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -13,27 +16,19 @@ const Explore = () => {
       <Navbar index={2} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
-          <div className="w-5/6 m-auto bg-slate-100 flex justify-around">
-            <div
-              onClick={() => setActive(0)}
-              className={`${active == 0 ? 'bg-slate-300' : 'bg-slate-200'} w-1/2 text-center`}
-            >
-              Projects
-            </div>
-            <div
-              onClick={() => setActive(1)}
-              className={`${active == 1 ? 'bg-slate-300' : 'bg-slate-200'} w-1/2 text-center`}
-            >
-              Openings
-            </div>
-            <div
-              onClick={() => setActive(2)}
-              className={`${active == 2 ? 'bg-slate-300' : 'bg-slate-200'} w-1/2 text-center`}
-            >
-              Users
-            </div>
-          </div>
-          {active == 0 ? <Feed /> : <></>}
+          <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setActive={setActive} />
+          {(() => {
+            switch (active) {
+              case 0:
+                return <Projects />;
+              case 1:
+                return <Openings />;
+              case 2:
+                return <Users />;
+              default:
+                return <></>;
+            }
+          })()}
         </div>
       </MainWrapper>
       <SideWrapper>

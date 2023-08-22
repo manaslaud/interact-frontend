@@ -6,8 +6,8 @@ const config: Config = {
     extend: {
       width: {
         108: '32rem',
-        navigation_open: '347px',
-        navigation_close: '100px',
+        navbar_open: '347px',
+        navbar_close: '100px',
       },
       height: {
         108: '32rem',
@@ -18,6 +18,9 @@ const config: Config = {
       },
       backgroundImage: {
         onboarding: "url('/assets/onboarding.png')",
+      },
+      backgroundColor: {
+        backdrop: '#000000',
       },
       fontFamily: {
         primary: ['var(--inter-font)'],

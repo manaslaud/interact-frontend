@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import NavigationItem from './navbar_item';
 import { BookmarkSimple, Chats, Envelope, HouseLine, RocketLaunch, Wrench } from '@phosphor-icons/react';
-
 interface Props {
   index: number;
 }
@@ -9,10 +8,11 @@ interface Props {
 const Navigation = ({ index }: Props) => {
   const [active, setActive] = useState(index);
   const [open, setOpen] = useState(true);
+
   return (
     <div
       className={`${
-        open ? 'w-navigation_open' : 'w-navigation_close'
+        open ? 'w-navbar_open' : 'w-navbar_close'
       } h-full py-6 flex flex-col items-center gap-2 border-r-2 transition-ease-200`}
     >
       <NavigationItem
@@ -64,8 +64,16 @@ const Navigation = ({ index }: Props) => {
         open={open}
       />
       <NavigationItem
-        index={6}
-        title="Messages"
+        index={7}
+        title="Notifications"
+        icon={<BookmarkSimple size={24} />}
+        active={active}
+        setActive={setActive}
+        open={open}
+      />
+      <NavigationItem
+        index={8}
+        title="Organizations"
         icon={<BookmarkSimple size={24} />}
         active={active}
         setActive={setActive}

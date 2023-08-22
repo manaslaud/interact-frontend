@@ -57,7 +57,7 @@ const NewPost = ({ setValue }: Props) => {
       <div className="absolute top-12 w-1/2 h-52 bg-slate-100 z-10">NewPost</div>
       <div
         onClick={() => setValue(false)}
-        className=" bg-black opacity-50 w-screen h-screen absolute top-0 left-0"
+        className=" bg-backdrop opacity-50 w-screen h-screen absolute top-0 left-0"
       ></div>
     </>
   );

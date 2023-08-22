@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 interface Props {
@@ -11,16 +12,18 @@ interface Props {
 
 const NavigationItem = ({ title, icon, active, setActive, index, open }: Props) => {
   return (
-    <a
+    <Link
       href={`/${title.toLowerCase()}`}
       onClick={() => setActive(index)}
       className={`${open ? 'w-5/6' : 'w-10'} h-10 p-[8.5px] ${
         active == index ? 'text-[#4278c8] bg-[#3d6cb33a]' : 'text-gray-500 hover:bg-[#00000012]'
-      } flex gap-4 font-primary font-medium items-center ${open ? 'rounded-lg' : 'rounded-full'}`}
+      } flex gap-4 font-primary font-medium items-center ${
+        open ? 'rounded-lg' : 'rounded-full'
+      } transition-ease-200 delay-150`}
     >
       {icon}
-      {open ? <div>{title}</div> : <></>}
-    </a>
+      {open ? <div>{title}</div> : <></>}{' '}
+    </Link>
   );
 };
 
