@@ -69,3 +69,11 @@
       transform: rotate(360deg);
     }
   }
+
+  /* quill */
+
+  .ql-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

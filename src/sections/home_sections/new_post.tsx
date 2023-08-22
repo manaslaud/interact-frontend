@@ -15,7 +15,10 @@ const NewPost = () => {
   }, []);
   return (
     <>
-      {clicked ? <NewPostComponent setValue={setClicked} /> : <></>}
+      <div className={`${clicked ? 'block' : 'hidden'}`}>
+        <NewPostComponent setShow={setClicked} />
+      </div>
+
       <div
         onClick={() => setClicked(true)}
         className="w-full h-16 px-4 py-3 border-2 rounded-xl transition-ease-200 hover:shadow-md flex justify-between items-center"

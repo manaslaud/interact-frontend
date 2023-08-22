@@ -5,7 +5,6 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
 import Toaster from '@/utils/toaster';
-import axios, { CancelToken, CancelTokenSource } from 'axios';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
