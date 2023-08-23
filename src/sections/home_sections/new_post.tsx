@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import Plus from '@phosphor-icons/react/dist/icons/Plus';
-import NewPostComponent from '@/components/new_post';
+import NewPostComponent from '@/components/home/new_post';
 
 const NewPost = () => {
   let profilePic = useSelector(userSelector).profilePic;
@@ -15,9 +15,10 @@ const NewPost = () => {
   }, []);
   return (
     <>
-      <div className={`${clicked ? 'block' : 'hidden'}`}>
+      {/* <div className={`${clicked ? 'block' : 'hidden'}`}>
         <NewPostComponent setShow={setClicked} />
-      </div>
+      </div> */}
+      {clicked ? <NewPostComponent setShow={setClicked} /> : <></>}
 
       <div
         onClick={() => setClicked(true)}

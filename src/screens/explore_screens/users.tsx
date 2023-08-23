@@ -1,9 +1,12 @@
+import SearchBar from '@/components/explore/searchbar';
 import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
+import Loader from '@/components/common/loader';
+import UserCard from '@/components/explore/user_card';
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -27,7 +30,26 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, [search]);
-  return <div>Users</div>;
+  return (
+    <>
+      <SearchBar initialValue={search && search != '' ? search : ''} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {users.length > 0 ? (
+            <div className="w-full px-16 flex flex-wrap justify-evenly">
+              {users.map(user => {
+                return <UserCard key={user.id} user={user} />;
+              })}
+            </div>
+          ) : (
+            <div>No Users found</div>
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
 export default Users;

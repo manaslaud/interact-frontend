@@ -1,5 +1,5 @@
 import Navbar from '@/components/common/navbar';
-import TabMenu from '@/components/tab_menu';
+import TabMenu from '@/components/common/tab_menu';
 import { Openings } from '@/screens/explore_screens/openings';
 import Projects from '@/screens/explore_screens/projects';
 import Users from '@/screens/explore_screens/users';

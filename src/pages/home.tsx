@@ -1,5 +1,5 @@
 import Navbar from '@/components/common/navbar';
-import TabMenu from '@/components/tab_menu';
+import TabMenu from '@/components/common/tab_menu';
 import Discover from '@/screens/home_screens/discover';
 import Feed from '@/screens/home_screens/feed';
 import { homeTabSelector, setHomeTab } from '@/slices/feedSlice';
