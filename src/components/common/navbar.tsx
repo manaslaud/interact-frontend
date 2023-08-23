@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavigationItem from './navbar_item';
 import { BookmarkSimple, Chats, Envelope, HouseLine, RocketLaunch, Wrench } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
+import useUserStateFetcher from '@/hooks/user_fetcher';
 interface Props {
   index: number;
 }
@@ -12,6 +13,12 @@ const Navigation = ({ index }: Props) => {
 
   const dispatch = useDispatch();
   const open = useSelector(navbarOpenSelector);
+
+  const userFetcher = useUserStateFetcher();
+
+  useEffect(() => {
+    userFetcher();
+  }, []);
 
   return (
     <div

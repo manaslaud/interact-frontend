@@ -4,6 +4,7 @@ import { userSelector, setFollowing } from '@/slices/userSlice';
 import Cookies from 'js-cookie';
 import Toaster from '@/utils/toaster';
 import getHandler from '@/handlers/get_handler';
+import { configSelector, setFetchingFollowing } from '@/slices/configSlice';
 
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;
@@ -12,9 +13,9 @@ interface Props {
 
 const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
-  const [mutex, setMutex] = useState(false);
 
   const following = useSelector(userSelector).following;
+  const updatingFollowing = useSelector(configSelector).fetchingFollowing;
   const dispatch = useDispatch();
 
   const userID = Cookies.get('id');
@@ -23,9 +24,41 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
     if (following.includes(toFollowID)) setIsFollowing(true);
   }, [toFollowID]);
 
+  class Semaphore {
+    private waiting: Array<() => void>;
+
+    constructor() {
+      this.waiting = [];
+    }
+
+    async acquire() {
+      if (!updatingFollowing) {
+        dispatch(setFetchingFollowing(true));
+      } else {
+        await new Promise<void>(resolve =>
+          this.waiting.push(() => {
+            this.acquire();
+            resolve();
+            this.release();
+          })
+        );
+      }
+    }
+
+    release() {
+      dispatch(setFetchingFollowing(false));
+      const next = this.waiting.shift();
+      if (next) {
+        next(); //! not working
+      }
+    }
+  }
+
+  const globalSemaphore = new Semaphore();
+
   const submitHandler = async () => {
-    if (mutex) return;
-    setMutex(true);
+    await globalSemaphore.acquire();
+
     const newFollowing = [...following];
     if (setFollowerCount) {
       if (isFollowing) {
@@ -55,7 +88,8 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
       setIsFollowing(prev => !prev);
       Toaster.error(res.data.message);
     }
-    setMutex(false);
+
+    globalSemaphore.release();
   };
 
   return (

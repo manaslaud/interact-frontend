@@ -19,7 +19,7 @@ const Users = () => {
     const URL = `${EXPLORE_URL}/users/recommended${search && search != '' ? '?search=' + search : ''}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setUsers(res.data.users);
+      setUsers(res.data.users || []);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message);

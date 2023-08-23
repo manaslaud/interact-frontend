@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
 
 interface ConfigState {
+  fetchingFollowing: boolean;
   fetchedFollowing: boolean;
   fetchedLikes: boolean;
   fetchedPostBookmarks: boolean;
@@ -25,6 +26,7 @@ const getInitialInvitationDate = (): string => {
 };
 
 const initialState: ConfigState = {
+  fetchingFollowing: false,
   fetchedFollowing: false,
   fetchedLikes: false,
   fetchedPostBookmarks: false,
@@ -41,6 +43,9 @@ export const configSlice = createSlice({
   reducers: {
     resetConfig: state => {
       state = initialState;
+    },
+    setFetchingFollowing: (state, action: PayloadAction<boolean>) => {
+      state.fetchingFollowing = action.payload;
     },
     setConfig: state => {
       state.fetchedFollowing = true;
@@ -81,6 +86,7 @@ export const configSlice = createSlice({
 
 export const {
   resetConfig,
+  setFetchingFollowing,
   setConfig,
   setFetchedChats,
   setFetchedFollowing,

@@ -16,7 +16,7 @@ export const Openings = () => {
     const URL = `${EXPLORE_URL}/openings/recommended${search && search != '' ? '?search=' + search : ''}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setOpenings(res.data.openings);
+      setOpenings(res.data.openings || []);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message);

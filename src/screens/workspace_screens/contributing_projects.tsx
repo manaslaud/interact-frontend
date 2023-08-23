@@ -1,43 +1,45 @@
-import ProjectCard from '@/components/explore/project_card';
 import Loader from '@/components/common/loader';
-import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL } from '@/config/routes';
+import ProjectCard from '@/components/explore/project_card';
+import { WORKSPACE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
-import React, { useState, useEffect } from 'react';
-import SearchBar from '@/components/explore/searchbar';
+import React, { useEffect, useState } from 'react';
 import ProjectView from './project_view';
 
-const Projects = () => {
+const ContributingProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
-  const search = new URLSearchParams(window.location.search).get('search');
-
-  const fetchProjects = async () => {
-    setLoading(true);
-    const URL = `${EXPLORE_URL}/projects/recommended${search && search != '' ? '?search=' + search : ''}`;
-    const res = await getHandler(URL);
-    if (res.statusCode == 200) {
-      setProjects(res.data.projects || []);
-      setLoading(false);
-    } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
-    }
+  const getProjects = () => {
+    const URL = `${WORKSPACE_URL}/contributing`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          setProjects(res.data.projects || []);
+          setLoading(false);
+        } else {
+          if (res.data.message) Toaster.error(res.data.message);
+          else {
+            Toaster.error('Internal Server Error');
+            console.log(res);
+          }
+        }
+      })
+      .catch(err => {
+        Toaster.error('Internal Server Error');
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    fetchProjects();
-  }, [search]);
-
+    getProjects();
+  }, []);
   return (
-    <>
-      <SearchBar initialValue={search && search != '' ? search : ''} />
+    <div>
       {loading ? (
         <Loader />
       ) : (
@@ -71,8 +73,8 @@ const Projects = () => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };
 
-export default Projects;
+export default ContributingProjects;
