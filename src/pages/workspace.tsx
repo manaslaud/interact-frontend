@@ -33,9 +33,6 @@ const Workspace = () => {
           </div>
         </div>
       </MainWrapper>
-      <SideWrapper>
-        <div></div>
-      </SideWrapper>
     </BaseWrapper>
   );
 };

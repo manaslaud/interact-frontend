@@ -15,12 +15,12 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
         setClickedOnProject(true);
         setClickedProjectIndex(index);
       }}
-      className="w-48 h-72 relative group cursor-pointer"
+      className="w-[280px] h-96 relative group cursor-pointer"
     >
       <div className="w-full absolute top-0 hidden group-hover:flex animate-fade_third justify-end">
         <div className="w-4 h-4 rounded-full bg-black"></div>
       </div>
-      <div className="w-full h-48 bg-slate-200"></div>
+      <div className="w-full h-[280px] bg-slate-200"></div>
       <div className="w-full flex flex-col">
         <div className="w-full flex items-center justify-between">
           <div>{project.title}</div>

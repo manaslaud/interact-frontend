@@ -21,7 +21,7 @@ const Explore = () => {
         <div
           className={`${
             navbarOpen ? 'w-base_open' : 'w-base_close'
-          } max-lg:w-full flex flex-col gap-4 transition-ease-200`}
+          } max-lg:w-full flex flex-col gap-4 transition-ease-out-500`}
         >
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>

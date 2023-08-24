@@ -1,11 +1,11 @@
 import Loader from '@/components/common/loader';
-import ProjectCard from '@/components/explore/project_card';
+import ProjectCard from '@/components/workspace/project_card';
 import { WORKSPACE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import ProjectView from './project_view';
+import ProjectView from '../../sections/workspace_sections/project_view';
 
 const ContributingProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);

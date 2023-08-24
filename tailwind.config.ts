@@ -32,6 +32,7 @@ const config: Config = {
       },
       animation: {
         fade_third: 'fade 0.3s ease-in-out',
+        fade_third_delay: 'fade 0.3s ease-in-out 0.5s',
         fade_half: 'fade 0.5s ease-in-out',
         fade_1: 'fade 1s ease-in-out',
         fade_2: 'fade 2s ease-in-out',

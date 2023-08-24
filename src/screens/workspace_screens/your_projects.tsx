@@ -1,11 +1,11 @@
 import Loader from '@/components/common/loader';
-import ProjectCard from '@/components/explore/project_card';
+import ProjectCard from '@/components/workspace/project_card';
 import { WORKSPACE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import ProjectView from './project_view';
+import ProjectView from '../../sections/workspace_sections/project_view';
 
 const YourProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -39,14 +39,14 @@ const YourProjects = () => {
     getProjects();
   }, []);
   return (
-    <>
+    <div className="w-full px-2">
       <div>Create a new Project</div>
       {loading ? (
         <Loader />
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full flex flex-wrap justify-evenly">
+            <div className="w-full grid grid-cols-4 gap-1 justify-items-center">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -68,13 +68,24 @@ const YourProjects = () => {
                   />
                 );
               })}
+              {projects.map((project, index) => {
+                return (
+                  <ProjectCard
+                    key={project.id}
+                    index={index}
+                    project={project}
+                    setClickedOnProject={setClickedOnProject}
+                    setClickedProjectIndex={setClickedProjectIndex}
+                  />
+                );
+              })}
             </div>
           ) : (
             <div>No projects found</div>
           )}
         </>
       )}
-    </>
+    </div>
   );
 };
 
