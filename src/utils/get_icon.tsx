@@ -1,177 +1,172 @@
 import React, { ReactElement } from 'react';
+import {
+  AmazonLogo,
+  AndroidLogo,
+  AngularLogo,
+  AppleLogo,
+  AppStoreLogo,
+  Atom,
+  BehanceLogo,
+  CodepenLogo,
+  CodesandboxLogo,
+  DiscordLogo,
+  DribbbleLogo,
+  DropboxLogo,
+  FacebookLogo,
+  FigmaLogo,
+  FramerLogo,
+  GitBranch,
+  GithubLogo,
+  GitlabLogo,
+  GoogleChromeLogo,
+  GoogleDriveLogo,
+  GoogleLogo,
+  GooglePhotosLogo,
+  GooglePlayLogo,
+  Link,
+  LinkedinLogo,
+  LinuxLogo,
+  MediumLogo,
+  MessengerLogo,
+  MetaLogo,
+  MicrosoftExcelLogo,
+  MicrosoftOutlookLogo,
+  MicrosoftPowerpointLogo,
+  MicrosoftTeamsLogo,
+  MicrosoftWordLogo,
+  NotionLogo,
+  PatreonLogo,
+  PaypalLogo,
+  PhosphorLogo,
+  PinterestLogo,
+  RedditLogo,
+  SlackLogo,
+  SnapchatLogo,
+  SoundcloudLogo,
+  SpotifyLogo,
+  StackOverflowLogo,
+  StripeLogo,
+  TelegramLogo,
+  TiktokLogo,
+  TwitchLogo,
+  TwitterLogo,
+  WebhooksLogo,
+  WhatsappLogo,
+  WindowsLogo,
+  YoutubeLogo,
+} from '@phosphor-icons/react';
 
 const getIcon = (str: string): ReactElement => {
-  let IconComponent;
-
   switch (str.toLowerCase()) {
     case 'amazon':
-      IconComponent = require('@phosphor-icons/react/lib/AmazonLogo').AmazonLogo;
-      break;
+      return <AmazonLogo size={32} weight="duotone" />;
     case 'android':
-      IconComponent = require('@phosphor-icons/react/lib/AndroidLogo').AndroidLogo;
-      break;
+      return <AndroidLogo size={32} weight="duotone" />;
     case 'angular':
-      IconComponent = require('@phosphor-icons/react/lib/AngularLogo').AngularLogo;
-      break;
+      return <AngularLogo size={32} weight="duotone" />;
     case 'apple':
-      IconComponent = require('@phosphor-icons/react/lib/AppleLogo').AppleLogo;
-      break;
+      return <AppleLogo size={32} weight="duotone" />;
     case 'appstore':
-      IconComponent = require('@phosphor-icons/react/lib/AppStoreLogo').AppStoreLogo;
-      break;
-    case 'applepodcasts':
-      IconComponent = require('@phosphor-icons/react/lib/ApplePodcastsLogo').ApplePodcastsLogo;
-      break;
+      return <AppStoreLogo size={32} weight="duotone" />;
     case 'behance':
-      IconComponent = require('@phosphor-icons/react/lib/BehanceLogo').BehanceLogo;
-      break;
+      return <BehanceLogo size={32} weight="duotone" />;
     case 'codepen':
-      IconComponent = require('@phosphor-icons/react/lib/CodepenLogo').CodepenLogo;
-      break;
+      return <CodepenLogo size={32} weight="duotone" />;
     case 'codesandbox':
-      IconComponent = require('@phosphor-icons/react/lib/CodesandboxLogo').CodesandboxLogo;
-      break;
+      return <CodesandboxLogo size={32} weight="duotone" />;
     case 'discord':
-      IconComponent = require('@phosphor-icons/react/lib/DiscordLogo').DiscordLogo;
-      break;
+      return <DiscordLogo size={32} weight="duotone" />;
     case 'dribbble':
-      IconComponent = require('@phosphor-icons/react/lib/DribbbleLogo').DribbbleLogo;
-      break;
+      return <DribbbleLogo size={32} weight="duotone" />;
     case 'dropbox':
-      IconComponent = require('@phosphor-icons/react/lib/DropboxLogo').DropboxLogo;
-      break;
+      return <DropboxLogo size={32} weight="duotone" />;
     case 'facebook':
-      IconComponent = require('@phosphor-icons/react/lib/FacebookLogo').FacebookLogo;
-      break;
+      return <FacebookLogo size={32} weight="duotone" />;
     case 'figma':
-      IconComponent = require('@phosphor-icons/react/lib/FigmaLogo').FigmaLogo;
-      break;
+      return <FigmaLogo size={32} weight="duotone" />;
     case 'framer':
-      IconComponent = require('@phosphor-icons/react/lib/FramerLogo').FramerLogo;
-      break;
+      return <FramerLogo size={32} weight="duotone" />;
     case 'git':
-      IconComponent = require('@phosphor-icons/react/lib/GitBranch').GitBranch;
-      break;
+      return <GitBranch size={32} weight="duotone" />;
     case 'github':
-      IconComponent = require('@phosphor-icons/react/lib/GithubLogo').GithubLogo;
-      break;
+      return <GithubLogo size={32} weight="duotone" />;
     case 'gitlab':
-      IconComponent = require('@phosphor-icons/react/lib/GitlabLogo').GitlabLogo;
-      break;
+      return <GitlabLogo size={32} weight="duotone" />;
     case 'google':
-      IconComponent = require('@phosphor-icons/react/lib/GoogleLogo').GoogleLogo;
-      break;
+      return <GoogleLogo size={32} weight="duotone" />;
     case 'chrome':
-      IconComponent = require('@phosphor-icons/react/lib/GoogleChromeLogo').GoogleChromeLogo;
-      break;
+      return <GoogleChromeLogo size={32} weight="duotone" />;
     case 'drive':
-      IconComponent = require('@phosphor-icons/react/lib/GoogleDriveLogo').GoogleDriveLogo;
-      break;
+      return <GoogleDriveLogo size={32} weight="duotone" />;
     case 'photos':
-      IconComponent = require('@phosphor-icons/react/lib/GooglePhotosLogo').GooglePhotosLogo;
-      break;
+      return <GooglePhotosLogo size={32} weight="duotone" />;
     case 'play':
-      IconComponent = require('@phosphor-icons/react/lib/GooglePlayLogo').GooglePlayLogo;
-      break;
+      return <GooglePlayLogo size={32} weight="duotone" />;
     case 'linkedin':
-      IconComponent = require('@phosphor-icons/react/lib/LinkedinLogo').LinkedinLogo;
-      break;
+      return <LinkedinLogo size={32} weight="duotone" />;
     case 'linux':
-      IconComponent = require('@phosphor-icons/react/lib/LinuxLogo').LinuxLogo;
-      break;
+      return <LinuxLogo size={32} weight="duotone" />;
     case 'medium':
-      IconComponent = require('@phosphor-icons/react/lib/MediumLogo').MediumLogo;
-      break;
+      return <MediumLogo size={32} weight="duotone" />;
     case 'messenger':
-      IconComponent = require('@phosphor-icons/react/lib/MessengerLogo').MessengerLogo;
-      break;
+      return <MessengerLogo size={32} weight="duotone" />;
     case 'meta':
-      IconComponent = require('@phosphor-icons/react/lib/MetaLogo').MetaLogo;
-      break;
+      return <MetaLogo size={32} weight="duotone" />;
     case 'microsoftexcel':
-      IconComponent = require('@phosphor-icons/react/lib/MicrosoftExcelLogo').MicrosoftExcelLogo;
-      break;
+      return <MicrosoftExcelLogo size={32} weight="duotone" />;
     case 'microsoftoutlook':
-      IconComponent = require('@phosphor-icons/react/lib/MicrosoftOutlookLogo').MicrosoftOutlookLogo;
-      break;
+      return <MicrosoftOutlookLogo size={32} weight="duotone" />;
     case 'microsoftpowerpoint':
-      IconComponent = require('@phosphor-icons/react/lib/MicrosoftPowerpointLogo').MicrosoftPowerpointLogo;
-      break;
+      return <MicrosoftPowerpointLogo size={32} weight="duotone" />;
     case 'microsoftteams':
-      IconComponent = require('@phosphor-icons/react/lib/MicrosoftTeamsLogo').MicrosoftTeamsLogo;
-      break;
+      return <MicrosoftTeamsLogo size={32} weight="duotone" />;
     case 'microsoftword':
-      IconComponent = require('@phosphor-icons/react/lib/MicrosoftWordLogo').MicrosoftWordLogo;
-      break;
+      return <MicrosoftWordLogo size={32} weight="duotone" />;
     case 'notion':
-      IconComponent = require('@phosphor-icons/react/lib/NotionLogo').NotionLogo;
-      break;
+      return <NotionLogo size={32} weight="duotone" />;
     case 'patreon':
-      IconComponent = require('@phosphor-icons/react/lib/PatreonLogo').PatreonLogo;
-      break;
+      return <PatreonLogo size={32} weight="duotone" />;
     case 'paypal':
-      IconComponent = require('@phosphor-icons/react/lib/PaypalLogo').PaypalLogo;
-      break;
+      return <PaypalLogo size={32} weight="duotone" />;
     case 'phosphor':
-      IconComponent = require('@phosphor-icons/react/lib/PhosphorLogo').PhosphorLogo;
-      break;
+      return <PhosphorLogo size={32} weight="duotone" />;
     case 'pinterest':
-      IconComponent = require('@phosphor-icons/react/lib/PinterestLogo').PinterestLogo;
-      break;
+      return <PinterestLogo size={32} weight="duotone" />;
     case 'react':
-      IconComponent = require('@phosphor-icons/react/lib/Atom').Atom;
-      break;
+      return <Atom size={32} weight="duotone" />;
     case 'reddit':
-      IconComponent = require('@phosphor-icons/react/lib/RedditLogo').RedditLogo;
-      break;
+      return <RedditLogo size={32} weight="duotone" />;
     case 'slack':
-      IconComponent = require('@phosphor-icons/react/lib/SlackLogo').SlackLogo;
-      break;
+      return <SlackLogo size={32} weight="duotone" />;
     case 'snapchat':
-      IconComponent = require('@phosphor-icons/react/lib/SnapchatLogo').SnapchatLogo;
-      break;
+      return <SnapchatLogo size={32} weight="duotone" />;
     case 'soundcloud':
-      IconComponent = require('@phosphor-icons/react/lib/SoundcloudLogo').SoundcloudLogo;
-      break;
+      return <SoundcloudLogo size={32} weight="duotone" />;
     case 'spotify':
-      IconComponent = require('@phosphor-icons/react/lib/SpotifyLogo').SpotifyLogo;
-      break;
+      return <SpotifyLogo size={32} weight="duotone" />;
     case 'stackoverflow':
-      IconComponent = require('@phosphor-icons/react/lib/StackOverflowLogo').StackOverflowLogo;
-      break;
+      return <StackOverflowLogo size={32} weight="duotone" />;
     case 'stripe':
-      IconComponent = require('@phosphor-icons/react/lib/StripeLogo').StripeLogo;
-      break;
+      return <StripeLogo size={32} weight="duotone" />;
     case 'telegram':
-      IconComponent = require('@phosphor-icons/react/lib/TelegramLogo').TelegramLogo;
-      break;
+      return <TelegramLogo size={32} weight="duotone" />;
     case 'tiktok':
-      IconComponent = require('@phosphor-icons/react/lib/TiktokLogo').TiktokLogo;
-      break;
+      return <TiktokLogo size={32} weight="duotone" />;
     case 'twitch':
-      IconComponent = require('@phosphor-icons/react/lib/TwitchLogo').TwitchLogo;
-      break;
+      return <TwitchLogo size={32} weight="duotone" />;
     case 'twitter':
-      IconComponent = require('@phosphor-icons/react/lib/TwitterLogo').TwitterLogo;
-      break;
+      return <TwitterLogo size={32} weight="duotone" />;
     case 'webhooks':
-      IconComponent = require('@phosphor-icons/react/lib/WebhooksLogo').WebhooksLogo;
-      break;
+      return <WebhooksLogo size={32} weight="duotone" />;
     case 'whatsapp':
-      IconComponent = require('@phosphor-icons/react/lib/WhatsappLogo').WhatsappLogo;
-      break;
+      return <WhatsappLogo size={32} weight="duotone" />;
     case 'windows':
-      IconComponent = require('@phosphor-icons/react/lib/WindowsLogo').WindowsLogo;
-      break;
+      return <WindowsLogo size={32} weight="duotone" />;
     case 'youtube':
-      IconComponent = require('@phosphor-icons/react/lib/YoutubeLogo').YoutubeLogo;
-      break;
+      return <YoutubeLogo size={32} weight="duotone" />;
     default:
-      IconComponent = require('@phosphor-icons/react/lib/Link').Link;
-      break;
+      return <Link size={32} weight="duotone" />;
   }
-
-  return <IconComponent size={32} weight="duotone" />;
 };
 
 export default getIcon;

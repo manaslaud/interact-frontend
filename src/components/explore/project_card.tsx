@@ -1,5 +1,7 @@
-import { Project } from '@/types';
 import React from 'react';
+import { Project } from '@/types';
+import Image from 'next/image';
+import { PROJECT_PIC_URL } from '@/config/routes';
 
 interface Props {
   index: number;
@@ -20,7 +22,15 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
       <div className="w-full absolute top-0 hidden group-hover:flex animate-fade_third justify-end">
         <div className="w-4 h-4 rounded-full bg-black"></div>
       </div>
-      <div className="w-full h-48 bg-slate-200"></div>
+      <div className="w-full h-48 absolute top-0 left-0 opacity-0 group-hover:opacity-20 transition-ease-300 bg-black"></div>
+      <Image
+        crossOrigin="anonymous"
+        className="w-full h-48 object-cover"
+        src={`${PROJECT_PIC_URL}/${project.coverPic}`}
+        alt="Project Cover"
+        width={10000}
+        height={10000}
+      />
       <div className="w-full flex flex-col">
         <div className="w-full flex items-center justify-between">
           <div>{project.title}</div>

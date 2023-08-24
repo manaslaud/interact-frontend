@@ -22,8 +22,7 @@ interface Props {
 
 const NewPost = ({ setShow }: Props) => {
   const [content, setContent] = useState<string>('');
-  const [selectedImageUrls, setSelectedImageUrls] = useState<string[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [images, setImages] = useState<File[]>([]);
 
   const submitHandler = async () => {
     if (content.trim() == '') {
@@ -47,7 +46,7 @@ const NewPost = ({ setShow }: Props) => {
     const toaster = Toaster.startLoad('Adding your Post..');
     const formData = new FormData();
 
-    selectedFiles.forEach(file => {
+    images.forEach(file => {
       formData.append('images', file);
     });
     formData.append('content', content);
@@ -93,51 +92,7 @@ const NewPost = ({ setShow }: Props) => {
       <div className="absolute top-12 w-1/2 max-md:w-5/6 h-max bg-slate-100 z-10 right-1/2 translate-x-1/2">
         <div>New Post</div>
         <div onClick={submitHandler}>submit</div>
-        <input
-          type="file"
-          className="hidden"
-          id="image"
-          multiple={true}
-          onChange={async ({ target }) => {
-            if (target.files && target.files.length > 0) {
-              if (target.files.length > 5) {
-                Toaster.error('Can add at most 5 photos.');
-                return;
-              }
-              const resizedImages = await Promise.all(
-                Array.from(target.files).map(async file => {
-                  if (file.type.split('/')[0] === 'image') {
-                    try {
-                      const resizedPic = await resizeImage(file, 1280, 720);
-                      return resizedPic;
-                    } catch (error) {
-                      console.error('Error while resizing image:', error);
-                      return null;
-                    }
-                  } else {
-                    Toaster.error('Only Images allowed');
-                    return null;
-                  }
-                })
-              );
-
-              const filteredResizedImages = resizedImages.filter(img => img !== null);
-
-              setSelectedImageUrls(filteredResizedImages.map(img => URL.createObjectURL(img as File)));
-              setSelectedFiles(filteredResizedImages.filter(img => img !== null) as File[]);
-            }
-          }}
-        />
-        <label htmlFor="image">
-          <div
-            className={
-              'rounded-full w-12 h-12 bg-[#292929] flex flex-col items-center justify-center transition-all ease-in-out duration-500 cursor-pointer hover:scale-110 hover:bg-[#3b3b3b]'
-            }
-          >
-            add Image
-          </div>
-        </label>
-        <NewPostImages imageURLs={selectedImageUrls} />
+        <NewPostImages setSelectedFiles={setImages} />
         <ReactQuill
           theme="snow"
           modules={modules}
