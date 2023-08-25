@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const BaseWrapper: React.FC<WrapperProps> = ({ children }) => {
-  return <div className="w-full flex h-screen">{children}</div>;
+  return <div className="w-full flex">{children}</div>;
 };
 
 export default BaseWrapper;

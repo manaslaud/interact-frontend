@@ -38,7 +38,7 @@ const Users = () => {
       ) : (
         <>
           {users.length > 0 ? (
-            <div className="w-full px-16 flex flex-wrap justify-evenly">
+            <div className="w-full px-16 flex flex-col gap-2">
               {users.map(user => {
                 return <UserCard key={user.id} user={user} />;
               })}

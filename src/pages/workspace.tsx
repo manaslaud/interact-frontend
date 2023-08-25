@@ -4,7 +4,6 @@ import TabMenu from '@/components/common/tab_menu';
 import { setWorkspaceTab, workspaceTabSelector } from '@/slices/feedSlice';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import SideWrapper from '@/wrappers/side';
 import { useSelector } from 'react-redux';
 import YourProjects from '@/screens/workspace_screens/your_projects';
 import ContributingProjects from '@/screens/workspace_screens/contributing_projects';

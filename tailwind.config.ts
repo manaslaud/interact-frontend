@@ -22,7 +22,7 @@ const config: Config = {
         onboarding: "url('/assets/onboarding.png')",
       },
       backgroundColor: {
-        backdrop: '#000000',
+        backdrop: '#0000007f',
       },
       fontFamily: {
         primary: ['var(--inter-font)'],

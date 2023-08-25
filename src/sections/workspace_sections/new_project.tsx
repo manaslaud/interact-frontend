@@ -1,9 +1,10 @@
-import Links from '@/components/common/edit_links';
-import Tags from '@/components/common/edit_tags';
+import Links from '@/components/utils/edit_links';
+import Tags from '@/components/utils/edit_tags';
 import Images from '@/components/workspace/new_project_images';
 import { VERIFICATION_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
+import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
 import router from 'next/router';
@@ -11,9 +12,10 @@ import React, { useState } from 'react';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
 }
 
-const NewProject = ({ setShow }: Props) => {
+const NewProject = ({ setShow, setProjects }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tagline, setTagline] = useState('');
@@ -26,8 +28,18 @@ const NewProject = ({ setShow }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const handleSubmit = async () => {
+    if (title.trim() == '') {
+      Toaster.error('Enter Title');
+      return;
+    }
+    if (category.trim() == '') {
+      Toaster.error('Select Category');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
+
     const toaster = Toaster.startLoad('Adding your project...');
 
     const formData = new FormData();
@@ -46,13 +58,15 @@ const NewProject = ({ setShow }: Props) => {
     const res = await postHandler(PROJECT_URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 201) {
+      const project = res.data.project;
+      if (setProjects) setProjects(prev => [...prev, project]);
       Toaster.stopLoad(toaster, 'Project Added', 1);
       setShow(false);
     } else {
       if (res.data.message) {
         if (res.data.message == VERIFICATION_ERROR) {
           Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
-          router.push('/verification');
+          router.push('/verification'); //TODO use window location instead
         } else Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
         Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
@@ -63,7 +77,7 @@ const NewProject = ({ setShow }: Props) => {
   };
 
   return (
-    <div className="w-screen h-screen flex absolute top-0 left-0 bg-[#ffffff] z-50">
+    <div className="w-screen h-screen flex fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
       <div className="w-1/3 bg-slate-100">
         <Images setSelectedFiles={setImages} />
       </div>

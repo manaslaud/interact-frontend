@@ -1,9 +1,11 @@
 import Loader from '@/components/common/loader';
+import PostComponent from '@/components/home/post';
 import getHandler from '@/handlers/get_handler';
 import NewPost from '@/sections/home_sections/new_post';
 import { Post } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -42,7 +44,22 @@ const Feed = () => {
   return (
     <div className="w-full flex flex-col gap-2">
       <NewPost />
-      {loading ? <Loader /> : <div className="w-full h-108 bg-slate-200"></div>}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {feed.length === 0 ? (
+            // <NoFeed />
+            <></>
+          ) : (
+            <InfiniteScroll dataLength={feed.length} next={getFeed} hasMore={hasMore} loader={<Loader />}>
+              {feed.map(post => {
+                return <PostComponent key={post.id} post={post} />;
+              })}
+            </InfiniteScroll>
+          )}
+        </>
+      )}
     </div>
   );
 };

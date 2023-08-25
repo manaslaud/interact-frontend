@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import Toaster from '@/utils/toaster';
 import getHandler from '@/handlers/get_handler';
 import { configSelector, setFetchingFollowing } from '@/slices/configSlice';
+import Semaphore from '@/utils/semaphore';
 
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;
@@ -24,40 +25,10 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
     if (following.includes(toFollowID)) setIsFollowing(true);
   }, [toFollowID]);
 
-  class Semaphore {
-    private waiting: Array<() => void>;
-
-    constructor() {
-      this.waiting = [];
-    }
-
-    async acquire() {
-      if (!updatingFollowing) {
-        dispatch(setFetchingFollowing(true));
-      } else {
-        await new Promise<void>(resolve =>
-          this.waiting.push(() => {
-            this.acquire();
-            resolve();
-            this.release();
-          })
-        );
-      }
-    }
-
-    release() {
-      dispatch(setFetchingFollowing(false));
-      const next = this.waiting.shift();
-      if (next) {
-        next(); //! not working
-      }
-    }
-  }
-
-  const globalSemaphore = new Semaphore();
+  const semaphore = new Semaphore(updatingFollowing, setFetchingFollowing);
 
   const submitHandler = async () => {
-    await globalSemaphore.acquire();
+    await semaphore.acquire();
 
     const newFollowing = [...following];
     if (setFollowerCount) {
@@ -89,7 +60,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
       Toaster.error(res.data.message);
     }
 
-    globalSemaphore.release();
+    semaphore.release();
   };
 
   return (

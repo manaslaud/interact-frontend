@@ -2,7 +2,7 @@ import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import { POST_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import * as DOMPurify from 'dompurify';
@@ -23,6 +23,16 @@ interface Props {
 const NewPost = ({ setShow }: Props) => {
   const [content, setContent] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
+
+  useEffect(() => {
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
 
   const submitHandler = async () => {
     if (content.trim() == '') {
@@ -89,7 +99,7 @@ const NewPost = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="absolute top-12 w-1/2 max-md:w-5/6 h-max bg-slate-100 z-10 right-1/2 translate-x-1/2">
+      <div className="fixed top-12 w-1/2 max-md:w-5/6 h-max bg-slate-100 right-1/2 translate-x-1/2 animate-fade_third z-20">
         <div>New Post</div>
         <div onClick={submitHandler}>submit</div>
         <NewPostImages setSelectedFiles={setImages} />
@@ -104,7 +114,7 @@ const NewPost = ({ setShow }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop opacity-50 w-screen h-screen absolute top-0 left-0"
+        className=" bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-10"
       ></div>
     </>
   );

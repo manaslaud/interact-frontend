@@ -41,11 +41,11 @@ const YourProjects = () => {
 
   useEffect(() => {
     getProjects();
-  }, [clickedOnNewProject]);
+  }, []);
   return (
     <div className="w-full px-2">
       {clickedOnNewProject ? (
-        <NewProject setShow={setClickedOnNewProject} />
+        <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} />
       ) : (
         <>
           <div onClick={() => setClickedOnNewProject(true)}>Create a new Project</div>

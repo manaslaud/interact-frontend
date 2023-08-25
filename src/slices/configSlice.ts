@@ -3,6 +3,7 @@ import { RootState } from '@/store';
 
 interface ConfigState {
   fetchingFollowing: boolean;
+  fetchingLikes: boolean;
   fetchedFollowing: boolean;
   fetchedLikes: boolean;
   fetchedPostBookmarks: boolean;
@@ -27,6 +28,7 @@ const getInitialInvitationDate = (): string => {
 
 const initialState: ConfigState = {
   fetchingFollowing: false,
+  fetchingLikes: false,
   fetchedFollowing: false,
   fetchedLikes: false,
   fetchedPostBookmarks: false,
@@ -46,6 +48,9 @@ export const configSlice = createSlice({
     },
     setFetchingFollowing: (state, action: PayloadAction<boolean>) => {
       state.fetchingFollowing = action.payload;
+    },
+    setFetchingLikes: (state, action: PayloadAction<boolean>) => {
+      state.fetchingLikes = action.payload;
     },
     setConfig: state => {
       state.fetchedFollowing = true;
@@ -87,6 +92,7 @@ export const configSlice = createSlice({
 export const {
   resetConfig,
   setFetchingFollowing,
+  setFetchingLikes,
   setConfig,
   setFetchedChats,
   setFetchedFollowing,
