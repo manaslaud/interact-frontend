@@ -13,6 +13,7 @@ const config: Config = {
       },
       height: {
         108: '32rem',
+        base: 'calc(100vh - 40px)',
       },
       boxShadow: {
         custom: '0 25px 100px -30px rgb(0 0 0 / 0.25);',

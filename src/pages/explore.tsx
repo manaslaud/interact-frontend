@@ -1,4 +1,4 @@
-import Navbar from '@/components/common/navbar';
+import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import { Openings } from '@/screens/explore_screens/openings';
 import Projects from '@/screens/explore_screens/projects';
@@ -16,7 +16,7 @@ const Explore = () => {
   const navbarOpen = useSelector(navbarOpenSelector);
   return (
     <BaseWrapper>
-      <Navbar index={2} />
+      <Sidebar index={2} />
       <MainWrapper>
         <div
           className={`${

@@ -10,7 +10,7 @@ interface Props {
   open: boolean;
 }
 
-const NavigationItem = ({ title, icon, active, setActive, index, open }: Props) => {
+const SidebarItem = ({ title, icon, active, setActive, index, open }: Props) => {
   return (
     <Link
       href={`/${title.toLowerCase()}`}
@@ -25,4 +25,4 @@ const NavigationItem = ({ title, icon, active, setActive, index, open }: Props) 
   );
 };
 
-export default NavigationItem;
+export default SidebarItem;

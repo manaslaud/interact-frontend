@@ -1,4 +1,4 @@
-import Navbar from '@/components/common/navbar';
+import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import Discover from '@/screens/home_screens/discover';
 import Feed from '@/screens/home_screens/feed';
@@ -15,12 +15,12 @@ const Home = () => {
   const navbarOpen = useSelector(navbarOpenSelector);
   return (
     <BaseWrapper>
-      <Navbar index={1} />
+      <Sidebar index={1} />
       <MainWrapper>
         <div
           className={`${
             navbarOpen ? 'w-base_open' : 'w-base_close'
-          } max-lg:w-full flex flex-col gap-4 transition-ease-out-500`}
+          } max-lg:w-full flex flex-col relative gap-4 transition-ease-out-500`}
         >
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>

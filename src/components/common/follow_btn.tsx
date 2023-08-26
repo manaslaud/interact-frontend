@@ -7,6 +7,7 @@ import getHandler from '@/handlers/get_handler';
 import { configSelector, setFetchingFollowing } from '@/slices/configSlice';
 import Semaphore from '@/utils/semaphore';
 import { CONNECTION_URL } from '@/config/routes';
+import socketService from '@/config/ws';
 
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;
@@ -47,6 +48,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
         newFollowing.splice(newFollowing.indexOf(toFollowID), 1);
       } else {
         newFollowing.push(toFollowID);
+        socketService.sendNotification(toFollowID, 'New Follower.');
       }
       dispatch(setFollowing(newFollowing));
     } else {

@@ -1,4 +1,4 @@
-import Navbar from '@/components/common/navbar';
+import Navbar from '@/components/common/sidebar';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import SideWrapper from '@/wrappers/side';

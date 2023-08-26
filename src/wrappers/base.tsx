@@ -1,3 +1,4 @@
+import Navbar from '@/components/common/navbar';
 import React, { ReactNode } from 'react';
 
 interface WrapperProps {
@@ -5,7 +6,12 @@ interface WrapperProps {
 }
 
 const BaseWrapper: React.FC<WrapperProps> = ({ children }) => {
-  return <div className="w-full flex">{children}</div>;
+  return (
+    <div className="w-full">
+      <Navbar />
+      <div className="w-full flex"> {children}</div>
+    </div>
+  );
 };
 
 export default BaseWrapper;

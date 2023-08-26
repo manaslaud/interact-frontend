@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '@/components/common/navbar';
+import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import { setWorkspaceTab, workspaceTabSelector } from '@/slices/feedSlice';
 import BaseWrapper from '@/wrappers/base';
@@ -13,7 +13,7 @@ const Workspace = () => {
   const active = useSelector(workspaceTabSelector);
   return (
     <BaseWrapper>
-      <Navbar index={3} />
+      <Sidebar index={3} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
           <TabMenu

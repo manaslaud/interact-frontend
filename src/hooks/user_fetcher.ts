@@ -1,5 +1,6 @@
 import {
   BOOKMARK_URL,
+  CONNECTION_URL,
   INVITATION_URL,
   MESSAGING_URL,
   NOTIFICATION_URL,
@@ -45,16 +46,18 @@ const useUserStateFetcher = () => {
 
   const fetchFollowing = () => {
     if (config.fetchedFollowing) return;
-    const URL = `/following/${userID}`;
+    const URL = `${CONNECTION_URL}/following/${userID}`;
     getHandler(URL)
       .then(res => {
-        const followingObjArr: User[] = res.data.following || [];
-        const following: string[] = [];
-        followingObjArr.forEach(el => {
-          following.push(el.id);
-        });
-        dispatch(setFollowing(following));
-        dispatch(setFetchedFollowing());
+        if (res.statusCode == 200) {
+          const followingObjArr: User[] = res.data.following || [];
+          const following: string[] = [];
+          followingObjArr.forEach(el => {
+            following.push(el.id);
+          });
+          dispatch(setFollowing(following));
+          dispatch(setFetchedFollowing());
+        }
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR);
@@ -67,9 +70,11 @@ const useUserStateFetcher = () => {
     const URL = `${USER_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
-        const likesData: string[] = res.data.likes || [];
-        dispatch(setLikes(likesData));
-        dispatch(setFetchedLikes());
+        if (res.statusCode == 200) {
+          const likesData: string[] = res.data.likes || [];
+          dispatch(setLikes(likesData));
+          dispatch(setFetchedLikes());
+        }
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR);
@@ -82,12 +87,14 @@ const useUserStateFetcher = () => {
     const URL = `${BOOKMARK_URL}`;
     getHandler(URL)
       .then(res => {
-        const postBookmarksData: PostBookmark[] = res.data.postBookmarks || [];
-        const projectBookmarksData: ProjectBookmark[] = res.data.projectBookmarks || [];
-        dispatch(setPostBookmarks(postBookmarksData));
-        dispatch(setProjectBookmarks(projectBookmarksData));
-        dispatch(setFetchedPostBookmarks());
-        dispatch(setFetchedProjectBookmarks());
+        if (res.statusCode == 200) {
+          const postBookmarksData: PostBookmark[] = res.data.postBookmarks || [];
+          const projectBookmarksData: ProjectBookmark[] = res.data.projectBookmarks || [];
+          dispatch(setPostBookmarks(postBookmarksData));
+          dispatch(setProjectBookmarks(projectBookmarksData));
+          dispatch(setFetchedPostBookmarks());
+          dispatch(setFetchedProjectBookmarks());
+        }
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR);
