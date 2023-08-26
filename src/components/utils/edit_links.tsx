@@ -7,10 +7,9 @@ import getIcon from '@/utils/get_icon';
 interface Props {
   links: string[];
   setLinks: React.Dispatch<React.SetStateAction<string[]>>;
-  isPublic?: boolean;
 }
 
-const Links = ({ links, setLinks, isPublic = true }: Props) => {
+const Links = ({ links, setLinks }: Props) => {
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
@@ -29,6 +28,16 @@ const Links = ({ links, setLinks, isPublic = true }: Props) => {
     } else Toaster.error('Enter a valid URL');
   };
 
+  const getDomainName = (link: string) => {
+    return new URL(link).hostname
+      .replace('.com', '')
+      .replace('.co', '')
+      .replace('.in', '')
+      .replace('.org', '')
+      .replace('.net', '')
+      .replace('www.', '');
+  };
+
   return (
     <>
       <div className="w-full bg-white flex flex-col ">
@@ -43,8 +52,8 @@ const Links = ({ links, setLinks, isPublic = true }: Props) => {
                       className={`flex items-center gap-2 ${showURL === index ? 'hidden' : ''}`}
                       onMouseEnter={() => setShowURL(index)}
                     >
-                      {getIcon(new URL(link).hostname.replace('.com', '').replace('www.', ''))}
-                      <div className="capitalize">{new URL(link).hostname.replace('.com', '').replace('www.', '')}</div>
+                      {getIcon(getDomainName(link))}
+                      <div className="capitalize">{getDomainName(link)}</div>
                     </div>
                     <Link
                       className={`text-xs border-[1px] border-black border-dashed rounded-lg px-2 py-1 ${

@@ -6,6 +6,7 @@ import Toaster from '@/utils/toaster';
 import getHandler from '@/handlers/get_handler';
 import { configSelector, setFetchingFollowing } from '@/slices/configSlice';
 import Semaphore from '@/utils/semaphore';
+import { CONNECTION_URL } from '@/config/routes';
 
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;
@@ -40,7 +41,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
     }
     setIsFollowing(prev => !prev);
 
-    const res = await getHandler(`/${isFollowing ? 'un' : ''}follow/${toFollowID}`);
+    const res = await getHandler(`${CONNECTION_URL}/${isFollowing ? 'un' : ''}follow/${toFollowID}`);
     if (res.statusCode === 200) {
       if (isFollowing) {
         newFollowing.splice(newFollowing.indexOf(toFollowID), 1);

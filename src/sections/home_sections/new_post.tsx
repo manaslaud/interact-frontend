@@ -1,46 +1,119 @@
-import { userSelector } from '@/slices/userSlice';
+import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { POST_URL } from '@/config/routes';
+import postHandler from '@/handlers/post_handler';
+import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
-import Plus from '@phosphor-icons/react/dist/icons/Plus';
-import NewPostComponent from '@/components/home/new_post';
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+import * as DOMPurify from 'dompurify';
+import NewPostImages from '@/components/home/new_post_images';
 
-const NewPost = () => {
-  let profilePic = useSelector(userSelector).profilePic;
-  const [clicked, setClicked] = useState(false);
+const ReactQuill = dynamic(
+  () => {
+    return import('react-quill');
+  },
+  { ssr: false }
+);
+
+interface Props {
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NewPost = ({ setShow }: Props) => {
+  const [content, setContent] = useState<string>('');
+  const [images, setImages] = useState<File[]>([]);
 
   useEffect(() => {
-    profilePic = profilePic == '' ? 'default.jpg' : profilePic;
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
   }, []);
+
+  const submitHandler = async () => {
+    if (content.trim() == '') {
+      Toaster.error('Caption cannot be empty!');
+      return;
+    }
+    if (content.length > 1000) {
+      Toaster.error('Caption can only be 1000 characters long!');
+      return;
+    }
+
+    const purifiedHTML = DOMPurify.sanitize(content, {
+      USE_PROFILES: { html: true },
+      ALLOW_ARIA_ATTR: false,
+      ALLOW_DATA_ATTR: false,
+      ALLOW_UNKNOWN_PROTOCOLS: false,
+    });
+
+    console.log(purifiedHTML);
+
+    const toaster = Toaster.startLoad('Adding your Post..');
+    const formData = new FormData();
+
+    images.forEach(file => {
+      formData.append('images', file);
+    });
+    formData.append('content', purifiedHTML);
+
+    const res = await postHandler(POST_URL, formData, 'multipart/form-data');
+
+    if (res.statusCode === 201) {
+      setContent('');
+      setImages([]);
+      setShow(false);
+      Toaster.stopLoad(toaster, 'Posted!', 1);
+    } else {
+      if (res.data.message) {
+        if (res.data.message == VERIFICATION_ERROR) {
+          Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
+          window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verification`;
+        } else Toaster.stopLoad(toaster, res.data.message, 0);
+      } else {
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+        console.log(res);
+      }
+    }
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link'],
+      // ['clean'],
+    ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false,
+    },
+  };
+
   return (
     <>
-      {/* <div className={`${clicked ? 'block' : 'hidden'}`}>
-        <NewPostComponent setShow={setClicked} />
-      </div> */}
-      {clicked ? <NewPostComponent setShow={setClicked} /> : <></>}
-
-      <div
-        onClick={() => setClicked(true)}
-        className="w-full h-16 px-4 py-3 border-2 rounded-xl transition-ease-200 hover:shadow-md flex justify-between items-center"
-      >
-        <div className="flex gap-2 items-center">
-          <Image
-            crossOrigin="anonymous"
-            className="w-8 h-8 rounded-full cursor-pointer"
-            width={10000}
-            height={10000}
-            alt="user"
-            src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-          />
-          <div className="font-primary text-gray-400">Create a new post</div>
-        </div>
-        <Plus
-          size={32}
-          className="text-gray-400 flex-center rounded-full hover:bg-[#478EE133] p-2 hover:text-[#478EE1] transition-ease-200 cursor-pointer"
-          weight="regular"
+      <div className="fixed top-12 w-1/2 max-md:w-5/6 h-max bg-slate-100 right-1/2 translate-x-1/2 animate-fade_third z-20">
+        <div>New Post</div>
+        <div onClick={submitHandler}>submit</div>
+        <NewPostImages setSelectedFiles={setImages} />
+        <ReactQuill
+          theme="snow"
+          modules={modules}
+          value={content}
+          onChange={setContent}
+          className=""
+          placeholder="Enter Caption"
         />
       </div>
+      <div
+        onClick={() => setShow(false)}
+        className=" bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-10"
+      ></div>
     </>
   );
 };

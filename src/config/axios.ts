@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { BACKEND_URL, FRONTEND_URL } from './routes';
 import Cookies from 'js-cookie';
+import { TOKEN_EXPIRATION_ERROR } from './errors';
+import Toaster from '@/utils/toaster';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -77,7 +79,8 @@ configuredAxios.interceptors.response.use(
           // Handle the error when the refresh request itself fails
           const errorResponse = refreshError as RefreshError;
 
-          if (errorResponse.response?.data?.message == 'Session Expired, Log In Again') {
+          if (errorResponse.response?.data?.message == TOKEN_EXPIRATION_ERROR) {
+            Toaster.error('Session Expired, Log in again');
             refreshSubscribers = [];
             Cookies.remove('token');
             window.location.assign(`${FRONTEND_URL}/login`);

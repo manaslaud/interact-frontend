@@ -45,6 +45,17 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
       abortController.abort();
     };
   }, [clickedProjectIndex]);
+
+  useEffect(() => {
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
+
   return (
     <div className="w-screen h-screen absolute top-0 left-0 z-50 flex bg-[#000000a5] backdrop-blur-sm animate-fade_third">
       <div className="w-16 h-screen flex flex-col items-center justify-between">
