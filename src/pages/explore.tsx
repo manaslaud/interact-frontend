@@ -1,8 +1,8 @@
 import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
-import { Openings } from '@/screens/explore_screens/openings';
-import Projects from '@/screens/explore_screens/projects';
-import Users from '@/screens/explore_screens/users';
+import Openings from '@/screens/explore/openings';
+import Projects from '@/screens/explore/projects';
+import Users from '@/screens/explore/users';
 import { exploreTabSelector, navbarOpenSelector, setExploreTab } from '@/slices/feedSlice';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';

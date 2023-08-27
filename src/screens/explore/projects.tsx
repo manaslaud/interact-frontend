@@ -7,7 +7,7 @@ import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState, useEffect } from 'react';
 import SearchBar from '@/components/explore/searchbar';
-import ProjectView from '../../sections/explore_sections/project_view';
+import ProjectView from '../../sections/explore/project_view';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 
@@ -47,7 +47,7 @@ const Projects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className={`w-full grid ${navbarOpen ? 'grid-cols-4' : 'grid-cols-5'} gap-2 justify-items-center`}>
+            <div className={`w-full grid ${navbarOpen ? 'grid-cols-4' : 'grid-cols-5'} gap-2`}>
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -58,17 +58,6 @@ const Projects = () => {
               ) : (
                 <></>
               )}
-              {projects.map((project, index) => {
-                return (
-                  <ProjectCard
-                    key={project.id}
-                    index={index}
-                    project={project}
-                    setClickedOnProject={setClickedOnProject}
-                    setClickedProjectIndex={setClickedProjectIndex}
-                  />
-                );
-              })}
               {projects.map((project, index) => {
                 return (
                   <ProjectCard

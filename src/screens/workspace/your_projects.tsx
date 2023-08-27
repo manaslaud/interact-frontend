@@ -5,8 +5,8 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import ProjectView from '../../sections/workspace_sections/project_view';
-import NewProject from '@/sections/workspace_sections/new_project';
+import ProjectView from '../../sections/workspace/project_view';
+import NewProject from '@/sections/workspace/new_project';
 
 const YourProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);

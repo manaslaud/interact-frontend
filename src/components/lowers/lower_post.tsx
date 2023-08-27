@@ -13,7 +13,7 @@ import Gear from '@phosphor-icons/react/dist/icons/Gear';
 import Export from '@phosphor-icons/react/dist/icons/Export';
 import Heart from '@phosphor-icons/react/dist/icons/Heart';
 import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
-import BookmarkPost from '../bookmarks/bookmark_post';
+import BookmarkPost from '../../sections/lowers/bookmark_post';
 import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setFetchingLikes } from '@/slices/configSlice';

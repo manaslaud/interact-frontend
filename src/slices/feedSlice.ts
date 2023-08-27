@@ -9,6 +9,7 @@ export interface FeedState {
   homeTab: number;
   exploreTab: number;
   workspaceTab: number;
+  bookmarksTab: number;
 }
 
 const initialState: FeedState = {
@@ -18,6 +19,7 @@ const initialState: FeedState = {
   homeTab: 0,
   exploreTab: 0,
   workspaceTab: 0,
+  bookmarksTab: 0,
 };
 
 export const feedSlice = createSlice({
@@ -35,6 +37,9 @@ export const feedSlice = createSlice({
     },
     setWorkspaceTab: (state, action: PayloadAction<number>) => {
       state.workspaceTab = action.payload;
+    },
+    setBookmarksTab: (state, action: PayloadAction<number>) => {
+      state.bookmarksTab = action.payload;
     },
     setUnreadNotifications: (state, action: PayloadAction<number>) => {
       state.unreadNotifications = action.payload;
@@ -56,6 +61,7 @@ export const {
   setHomeTab,
   setExploreTab,
   setWorkspaceTab,
+  setBookmarksTab,
   setUnreadNotifications,
   incrementUnreadNotifications,
   setUnreadInvitations,
@@ -68,5 +74,6 @@ export const navbarOpenSelector = (state: RootState) => state.feed.navbarOpen;
 export const homeTabSelector = (state: RootState) => state.feed.homeTab;
 export const workspaceTabSelector = (state: RootState) => state.feed.workspaceTab;
 export const exploreTabSelector = (state: RootState) => state.feed.exploreTab;
+export const bookmarksTabSelector = (state: RootState) => state.feed.bookmarksTab;
 export const unreadNotificationsSelector = (state: RootState) => state.feed.unreadNotifications;
 export const unreadInvitationsSelector = (state: RootState) => state.feed.unreadInvitations;

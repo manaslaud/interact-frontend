@@ -16,6 +16,8 @@ import {
   Comment,
   OrganizationMembership,
   Organization,
+  ProjectBookmark,
+  PostBookmark,
 } from '.';
 
 export const initialEducation: Education = {
@@ -270,5 +272,21 @@ export const initialGroupChatMembership: GroupChatMembership = {
   groupChatID: '',
   groupChat: initialGroupChat,
   role: '',
+  createdAt: new Date(),
+};
+
+export const initialProjectBookmark: ProjectBookmark = {
+  id: '',
+  title: '',
+  userID: '',
+  projectItems: [],
+  createdAt: new Date(),
+};
+
+export const initialPostBookmark: PostBookmark = {
+  id: '',
+  title: '',
+  userID: '',
+  postItems: [],
   createdAt: new Date(),
 };

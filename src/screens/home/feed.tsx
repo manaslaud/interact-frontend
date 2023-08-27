@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
-import NewPost from '@/sections/home_sections/new_post';
+import NewPost from '@/sections/home/new_post';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);

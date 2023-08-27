@@ -5,9 +5,9 @@ import { setWorkspaceTab, workspaceTabSelector } from '@/slices/feedSlice';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import { useSelector } from 'react-redux';
-import YourProjects from '@/screens/workspace_screens/your_projects';
-import ContributingProjects from '@/screens/workspace_screens/contributing_projects';
-import Applications from '@/screens/workspace_screens/applications';
+import YourProjects from '@/screens/workspace/your_projects';
+import ContributingProjects from '@/screens/workspace/contributing_projects';
+import Applications from '@/screens/workspace/applications';
 
 const Workspace = () => {
   const active = useSelector(workspaceTabSelector);

@@ -5,7 +5,7 @@ import { Opening } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 
-export const Openings = () => {
+const Openings = () => {
   const [openings, setOpenings] = useState<Opening[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,3 +30,5 @@ export const Openings = () => {
 
   return <div>Openings</div>;
 };
+
+export default Openings;

@@ -94,7 +94,7 @@ const Notifications = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-2/5 h-96 max-md:w-full overflow-y-auto absolute top-[40px] right-0 flex flex-col items-center bg-white z-10">
+      <div className="w-96 h-108 max-md:w-full overflow-y-auto absolute top-[50px] max-md:top-[40px] max-md:h-[95vh] right-5 max-md:right-0 flex flex-col items-center bg-white z-20">
         {loading ? (
           <Loader />
         ) : (
@@ -110,12 +110,12 @@ const Notifications = ({ setShow }: Props) => {
                 </div>
               </div>
             ) : (
-              <InfiniteScroll
+              <InfiniteScroll //! Not working
                 dataLength={notifications.length}
                 next={getNotifications}
                 hasMore={hasMore}
                 loader={<Loader />}
-                className="w-full flex flex-col gap-2"
+                className="w-full h-full flex flex-col gap-2"
               >
                 {notifications.map((notification, index) => {
                   switch (notification.notificationType) {
