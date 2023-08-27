@@ -18,6 +18,7 @@ import {
   Organization,
   ProjectBookmark,
   PostBookmark,
+  OpeningBookmark,
 } from '.';
 
 export const initialEducation: Education = {
@@ -275,6 +276,14 @@ export const initialGroupChatMembership: GroupChatMembership = {
   createdAt: new Date(),
 };
 
+export const initialPostBookmark: PostBookmark = {
+  id: '',
+  title: '',
+  userID: '',
+  postItems: [],
+  createdAt: new Date(),
+};
+
 export const initialProjectBookmark: ProjectBookmark = {
   id: '',
   title: '',
@@ -283,10 +292,10 @@ export const initialProjectBookmark: ProjectBookmark = {
   createdAt: new Date(),
 };
 
-export const initialPostBookmark: PostBookmark = {
+export const initialOpeningBookmark: OpeningBookmark = {
   id: '',
   title: '',
   userID: '',
-  postItems: [],
+  openingItems: [],
   createdAt: new Date(),
 };

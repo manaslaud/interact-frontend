@@ -14,6 +14,7 @@ import {
   setFetchedContributingProjects,
   setFetchedFollowing,
   setFetchedLikes,
+  setFetchedOpeningBookmarks,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setLastFetchedUnreadInvitations,
@@ -25,11 +26,12 @@ import {
   setContributingProjects,
   setFollowing,
   setLikes,
+  setOpeningBookmarks,
   setPostBookmarks,
   setProjectBookmarks,
 } from '@/slices/userSlice';
 import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
-import { Chat, PostBookmark, Project, ProjectBookmark, User } from '@/types';
+import { Chat, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
@@ -84,7 +86,8 @@ const useUserStateFetcher = () => {
   const fetchBookmarks = () => {
     if (
       moment().utc().diff(config.lastFetchedPostBookmarks, 'minute') < 30 &&
-      moment().utc().diff(config.lastFetchedProjectBookmarks, 'minute') < 30
+      moment().utc().diff(config.lastFetchedProjectBookmarks, 'minute') < 30 &&
+      moment().utc().diff(config.lastFetchedOpeningBookmarks, 'minute') < 30
     )
       return;
 
@@ -94,10 +97,13 @@ const useUserStateFetcher = () => {
         if (res.statusCode == 200) {
           const postBookmarksData: PostBookmark[] = res.data.postBookmarks || [];
           const projectBookmarksData: ProjectBookmark[] = res.data.projectBookmarks || [];
+          const openingBookmarksData: OpeningBookmark[] = res.data.openingBookmarks || [];
           dispatch(setPostBookmarks(postBookmarksData));
           dispatch(setProjectBookmarks(projectBookmarksData));
+          dispatch(setOpeningBookmarks(openingBookmarksData));
           dispatch(setFetchedPostBookmarks(new Date().toUTCString()));
           dispatch(setFetchedProjectBookmarks(new Date().toUTCString()));
+          dispatch(setFetchedOpeningBookmarks(new Date().toUTCString()));
         }
       })
       .catch(err => {

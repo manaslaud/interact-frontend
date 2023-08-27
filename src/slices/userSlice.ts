@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
-import { PostBookmark, ProjectBookmark, User } from '@/types';
+import { OpeningBookmark, PostBookmark, ProjectBookmark, User } from '@/types';
 
 export interface ChatSlice {
   userID: string;
@@ -17,7 +17,8 @@ interface UserState {
   likes: string[];
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
-  contributingProjects: string[]; //TODO remove is not required
+  openingBookmarks: OpeningBookmark[];
+  contributingProjects: string[]; //TODO remove if not required
   chats: ChatSlice[];
   profilePic: string;
   isLoggedIn: boolean;
@@ -36,6 +37,7 @@ const initialState: UserState = {
   likes: [],
   postBookmarks: [],
   projectBookmarks: [],
+  openingBookmarks: [],
   chats: [],
   contributingProjects: [],
   isVerified: false,
@@ -60,6 +62,7 @@ export const userSlice = createSlice({
       state.likes = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
+      state.openingBookmarks = [];
     },
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;
@@ -75,6 +78,9 @@ export const userSlice = createSlice({
     },
     setProjectBookmarks: (state, action: PayloadAction<ProjectBookmark[]>) => {
       state.projectBookmarks = action.payload;
+    },
+    setOpeningBookmarks: (state, action: PayloadAction<OpeningBookmark[]>) => {
+      state.openingBookmarks = action.payload;
     },
     setChats: (state, action: PayloadAction<ChatSlice[]>) => {
       state.chats = action.payload;
@@ -101,6 +107,7 @@ export const {
   setLikes,
   setPostBookmarks,
   setProjectBookmarks,
+  setOpeningBookmarks,
   setChats,
   setContributingProjects,
   setEmail,

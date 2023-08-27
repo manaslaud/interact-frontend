@@ -39,6 +39,21 @@ export interface ProjectBookmarkItem {
   project: Project;
 }
 
+export interface OpeningBookmark {
+  id: string;
+  userID: string;
+  title: string;
+  createdAt: Date;
+  openingItems: OpeningBookmarkItem[];
+}
+
+export interface OpeningBookmarkItem {
+  id: string;
+  openingBookmarkID: string;
+  openingID: string;
+  opening: Opening;
+}
+
 export interface Achievement {
   id: string;
   title: string;

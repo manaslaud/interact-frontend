@@ -8,6 +8,7 @@ interface ConfigState {
   lastFetchedLikes: string;
   lastFetchedPostBookmarks: string;
   lastFetchedProjectBookmarks: string;
+  lastFetchedOpeningBookmarks: string;
   lastFetchedChats: string;
   lastFetchedContributingProjects: string;
   lastFetchedUnreadNotifications: string;
@@ -38,6 +39,7 @@ const initialState: ConfigState = {
   lastFetchedLikes: getInitialDate(),
   lastFetchedPostBookmarks: getInitialDate(),
   lastFetchedProjectBookmarks: getInitialDate(),
+  lastFetchedOpeningBookmarks: getInitialDate(),
   lastFetchedChats: getInitialDate(),
   lastFetchedContributingProjects: getInitialDate(),
   lastFetchedUnreadNotifications: getInitialNotificationDate(),
@@ -62,6 +64,7 @@ export const configSlice = createSlice({
       state.lastFetchedLikes = new Date().toUTCString();
       state.lastFetchedPostBookmarks = new Date().toUTCString();
       state.lastFetchedProjectBookmarks = new Date().toUTCString();
+      state.lastFetchedOpeningBookmarks = new Date().toUTCString();
       state.lastFetchedChats = new Date().toUTCString();
       state.lastFetchedContributingProjects = new Date().toUTCString();
       state.lastFetchedUnreadNotifications = new Date().toUTCString();
@@ -78,6 +81,9 @@ export const configSlice = createSlice({
     },
     setFetchedProjectBookmarks: (state, action: PayloadAction<string>) => {
       state.lastFetchedProjectBookmarks = action.payload;
+    },
+    setFetchedOpeningBookmarks: (state, action: PayloadAction<string>) => {
+      state.lastFetchedOpeningBookmarks = action.payload;
     },
     setFetchedChats: (state, action: PayloadAction<string>) => {
       state.lastFetchedChats = action.payload;
@@ -104,6 +110,7 @@ export const {
   setFetchedLikes,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
+  setFetchedOpeningBookmarks,
   setFetchedContributingProjects,
   setLastFetchedUnreadNotifications,
   setLastFetchedUnreadInvitations,
