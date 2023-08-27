@@ -37,7 +37,6 @@ import { SERVER_ERROR } from '@/config/errors';
 import moment from 'moment';
 
 const useUserStateFetcher = () => {
-  //! Implement time config for all instead of boolean configs
   const dispatch = useDispatch();
 
   const config = useSelector(configSelector);
@@ -45,7 +44,7 @@ const useUserStateFetcher = () => {
   const userID = Cookies.get('id');
 
   const fetchFollowing = () => {
-    if (config.fetchedFollowing) return;
+    if (moment().utc().diff(config.lastFetchedFollowing, 'minute') < 30) return;
     const URL = `${CONNECTION_URL}/following/${userID}`;
     getHandler(URL)
       .then(res => {
@@ -56,7 +55,7 @@ const useUserStateFetcher = () => {
             following.push(el.id);
           });
           dispatch(setFollowing(following));
-          dispatch(setFetchedFollowing());
+          dispatch(setFetchedFollowing(new Date().toUTCString()));
         }
       })
       .catch(err => {
@@ -66,14 +65,14 @@ const useUserStateFetcher = () => {
   };
 
   const fetchLikes = () => {
-    if (config.fetchedLikes) return;
+    if (moment().utc().diff(config.lastFetchedLikes, 'minute') < 30) return;
     const URL = `${USER_URL}/me/likes`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode == 200) {
           const likesData: string[] = res.data.likes || [];
           dispatch(setLikes(likesData));
-          dispatch(setFetchedLikes());
+          dispatch(setFetchedLikes(new Date().toUTCString()));
         }
       })
       .catch(err => {
@@ -83,7 +82,12 @@ const useUserStateFetcher = () => {
   };
 
   const fetchBookmarks = () => {
-    if (config.fetchedPostBookmarks && config.fetchedProjectBookmarks) return;
+    if (
+      moment().utc().diff(config.lastFetchedPostBookmarks, 'minute') < 30 &&
+      moment().utc().diff(config.lastFetchedProjectBookmarks, 'minute') < 30
+    )
+      return;
+
     const URL = `${BOOKMARK_URL}`;
     getHandler(URL)
       .then(res => {
@@ -92,8 +96,8 @@ const useUserStateFetcher = () => {
           const projectBookmarksData: ProjectBookmark[] = res.data.projectBookmarks || [];
           dispatch(setPostBookmarks(postBookmarksData));
           dispatch(setProjectBookmarks(projectBookmarksData));
-          dispatch(setFetchedPostBookmarks());
-          dispatch(setFetchedProjectBookmarks());
+          dispatch(setFetchedPostBookmarks(new Date().toUTCString()));
+          dispatch(setFetchedProjectBookmarks(new Date().toUTCString()));
         }
       })
       .catch(err => {
@@ -103,7 +107,7 @@ const useUserStateFetcher = () => {
   };
 
   const fetchChats = () => {
-    if (config.fetchedChats) return;
+    if (moment().utc().diff(config.lastFetchedChats, 'minute') < 30) return;
     const URL = `${MESSAGING_URL}/me`;
     getHandler(URL)
       .then(res => {
@@ -113,7 +117,7 @@ const useUserStateFetcher = () => {
             chats.push({ chatID: chat.id, userID: chat.acceptedByID == userID ? chat.createdByID : chat.acceptedByID });
           });
           dispatch(setChats(chats));
-          dispatch(setFetchedChats());
+          dispatch(setFetchedChats(new Date().toUTCString()));
         } else Toaster.error(res.data.message);
       })
       .catch(err => {
@@ -123,7 +127,7 @@ const useUserStateFetcher = () => {
   };
 
   const fetchContributingProjects = () => {
-    if (config.fetchedContributingProjects) return;
+    if (moment().utc().diff(config.lastFetchedContributingProjects, 'minute') < 30) return;
     const URL = `${WORKSPACE_URL}/contributing`;
     getHandler(URL)
       .then(res => {
@@ -133,7 +137,7 @@ const useUserStateFetcher = () => {
             projects.push(project.id);
           });
           dispatch(setContributingProjects(projects));
-          dispatch(setFetchedContributingProjects());
+          dispatch(setFetchedContributingProjects(new Date().toUTCString()));
         } else Toaster.error(res.data.message);
       })
       .catch(err => {

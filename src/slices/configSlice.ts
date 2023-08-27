@@ -2,18 +2,23 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
 
 interface ConfigState {
-  fetchingFollowing: boolean;
-  fetchingLikes: boolean;
-  fetchedFollowing: boolean;
-  fetchedLikes: boolean;
-  fetchedPostBookmarks: boolean;
-  fetchedProjectBookmarks: boolean;
-  fetchedChats: boolean;
-  fetchedContributingProjects: boolean;
+  lastFetchingFollowing: string;
+  lastFetchingLikes: string;
+  lastFetchedFollowing: string;
+  lastFetchedLikes: string;
+  lastFetchedPostBookmarks: string;
+  lastFetchedProjectBookmarks: string;
+  lastFetchedChats: string;
+  lastFetchedContributingProjects: string;
   lastFetchedUnreadNotifications: string;
   lastFetchedUnreadInvitations: string;
 }
 
+const getInitialDate = (): string => {
+  const date = new Date();
+  date.setMinutes(date.getMinutes() - 30);
+  return date.toUTCString();
+};
 const getInitialNotificationDate = (): string => {
   const date = new Date();
   date.setSeconds(date.getSeconds() - 30);
@@ -27,14 +32,14 @@ const getInitialInvitationDate = (): string => {
 };
 
 const initialState: ConfigState = {
-  fetchingFollowing: false,
-  fetchingLikes: false,
-  fetchedFollowing: false,
-  fetchedLikes: false,
-  fetchedPostBookmarks: false,
-  fetchedProjectBookmarks: false,
-  fetchedChats: false,
-  fetchedContributingProjects: false,
+  lastFetchingFollowing: getInitialDate(),
+  lastFetchingLikes: getInitialDate(),
+  lastFetchedFollowing: getInitialDate(),
+  lastFetchedLikes: getInitialDate(),
+  lastFetchedPostBookmarks: getInitialDate(),
+  lastFetchedProjectBookmarks: getInitialDate(),
+  lastFetchedChats: getInitialDate(),
+  lastFetchedContributingProjects: getInitialDate(),
   lastFetchedUnreadNotifications: getInitialNotificationDate(),
   lastFetchedUnreadInvitations: getInitialInvitationDate(),
 };
@@ -46,39 +51,39 @@ export const configSlice = createSlice({
     resetConfig: state => {
       state = initialState;
     },
-    setFetchingFollowing: (state, action: PayloadAction<boolean>) => {
-      state.fetchingFollowing = action.payload;
+    setFetchingFollowing: (state, action: PayloadAction<string>) => {
+      state.lastFetchingFollowing = action.payload;
     },
-    setFetchingLikes: (state, action: PayloadAction<boolean>) => {
-      state.fetchingLikes = action.payload;
+    setFetchingLikes: (state, action: PayloadAction<string>) => {
+      state.lastFetchingLikes = action.payload;
     },
     setConfig: state => {
-      state.fetchedFollowing = true;
-      state.fetchedLikes = true;
-      state.fetchedPostBookmarks = true;
-      state.fetchedProjectBookmarks = true;
-      state.fetchedChats = true;
-      state.fetchedContributingProjects = true;
+      state.lastFetchedFollowing = new Date().toUTCString();
+      state.lastFetchedLikes = new Date().toUTCString();
+      state.lastFetchedPostBookmarks = new Date().toUTCString();
+      state.lastFetchedProjectBookmarks = new Date().toUTCString();
+      state.lastFetchedChats = new Date().toUTCString();
+      state.lastFetchedContributingProjects = new Date().toUTCString();
       state.lastFetchedUnreadNotifications = new Date().toUTCString();
       state.lastFetchedUnreadInvitations = new Date().toUTCString();
     },
-    setFetchedFollowing: state => {
-      state.fetchedFollowing = true;
+    setFetchedFollowing: (state, action: PayloadAction<string>) => {
+      state.lastFetchedFollowing = action.payload;
     },
-    setFetchedLikes: state => {
-      state.fetchedLikes = true;
+    setFetchedLikes: (state, action: PayloadAction<string>) => {
+      state.lastFetchedLikes = action.payload;
     },
-    setFetchedPostBookmarks: state => {
-      state.fetchedPostBookmarks = true;
+    setFetchedPostBookmarks: (state, action: PayloadAction<string>) => {
+      state.lastFetchedPostBookmarks = action.payload;
     },
-    setFetchedProjectBookmarks: state => {
-      state.fetchedProjectBookmarks = true;
+    setFetchedProjectBookmarks: (state, action: PayloadAction<string>) => {
+      state.lastFetchedProjectBookmarks = action.payload;
     },
-    setFetchedChats: state => {
-      state.fetchedChats = true;
+    setFetchedChats: (state, action: PayloadAction<string>) => {
+      state.lastFetchedChats = action.payload;
     },
-    setFetchedContributingProjects: state => {
-      state.fetchedContributingProjects = true;
+    setFetchedContributingProjects: (state, action: PayloadAction<string>) => {
+      state.lastFetchedContributingProjects = action.payload;
     },
     setLastFetchedUnreadNotifications: (state, action: PayloadAction<string>) => {
       state.lastFetchedUnreadNotifications = action.payload;
