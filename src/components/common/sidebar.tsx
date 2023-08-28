@@ -10,6 +10,7 @@ interface Props {
 
 const Sidebar = ({ index }: Props) => {
   const [active, setActive] = useState(index);
+  const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
 
   const dispatch = useDispatch();
   const open = useSelector(navbarOpenSelector);
@@ -19,6 +20,18 @@ const Sidebar = ({ index }: Props) => {
   useEffect(() => {
     userFetcher();
   }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setTheme('light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setTheme('dark');
+    }
+  };
 
   return (
     <div
@@ -91,6 +104,23 @@ const Sidebar = ({ index }: Props) => {
         setActive={setActive}
         open={open}
       />
+
+      <label className="flex cursor-pointer select-none items-center">
+        <div>Toggle Theme</div>
+        <div className="relative">
+          <input type="checkbox" onChange={toggleTheme} className="sr-only" />
+          <div
+            className={`box block h-8 w-14 rounded-full ${
+              theme == 'dark' ? 'bg-blue-300' : 'bg-black'
+            } transition-ease-300`}
+          ></div>
+          <div
+            className={`absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition ${
+              theme == 'dark' ? 'translate-x-full' : ''
+            }`}
+          ></div>
+        </div>
+      </label>
       <div onClick={() => dispatch(setNavbarOpen(!open))}>Toggle</div>
     </div>
   );

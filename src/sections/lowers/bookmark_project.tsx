@@ -59,7 +59,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     setMutex(true);
 
     const URL = `${BOOKMARK_URL}/project/item/${bookmark.id}`;
-    const res = await postHandler(URL, { projectID: project.id });
+    const res = await postHandler(URL, { itemID: project.id });
 
     if (res.statusCode === 201) {
       const bookmarkItem: ProjectBookmarkItem = res.data.bookmarkItem;

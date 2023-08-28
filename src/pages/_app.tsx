@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import NProgressConfig from '@/config/nprogress';
 import socketService from '@/config/ws';
 import { Inter } from 'next/font/google';
+import ThemeCheck from '@/config/theme';
 
 NProgressConfig();
 
@@ -22,6 +23,7 @@ const inter = Inter({
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     socketService.connect();
+    ThemeCheck();
     return () => {
       socketService.disconnect();
     };

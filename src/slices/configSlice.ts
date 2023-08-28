@@ -17,18 +17,18 @@ interface ConfigState {
 
 const getInitialDate = (): string => {
   const date = new Date();
-  date.setMinutes(date.getMinutes() - 30);
+  date.setMinutes(date.getMinutes() - 31); //+1 minutes
   return date.toUTCString();
 };
 const getInitialNotificationDate = (): string => {
   const date = new Date();
-  date.setSeconds(date.getSeconds() - 30);
+  date.setSeconds(date.getSeconds() - 31);
   return date.toUTCString();
 };
 
 const getInitialInvitationDate = (): string => {
   const date = new Date();
-  date.setMinutes(date.getMinutes() - 2);
+  date.setMinutes(date.getMinutes() - 3);
   return date.toUTCString();
 };
 
@@ -51,7 +51,17 @@ export const configSlice = createSlice({
   initialState,
   reducers: {
     resetConfig: state => {
-      state = initialState;
+      state.lastFetchingFollowing = getInitialDate();
+      state.lastFetchingLikes = getInitialDate();
+      state.lastFetchedFollowing = getInitialDate();
+      state.lastFetchedLikes = getInitialDate();
+      state.lastFetchedPostBookmarks = getInitialDate();
+      state.lastFetchedProjectBookmarks = getInitialDate();
+      state.lastFetchedOpeningBookmarks = getInitialDate();
+      state.lastFetchedChats = getInitialDate();
+      state.lastFetchedContributingProjects = getInitialDate();
+      state.lastFetchedUnreadNotifications = getInitialNotificationDate();
+      state.lastFetchedUnreadInvitations = getInitialInvitationDate();
     },
     setFetchingFollowing: (state, action: PayloadAction<string>) => {
       state.lastFetchingFollowing = action.payload;
