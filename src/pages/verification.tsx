@@ -12,6 +12,7 @@ import nookies from 'nookies';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
+import Protect from '@/utils/protect';
 
 const Verification = () => {
   const [sentOTP, setSentOTP] = useState(false);
@@ -169,4 +170,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-export default Verification;
+export default Protect(Verification);

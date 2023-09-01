@@ -84,7 +84,13 @@ const Feed = () => {
             // <NoFeed />
             <></>
           ) : (
-            <InfiniteScroll dataLength={feed.length} next={getFeed} hasMore={hasMore} loader={<Loader />}>
+            <InfiniteScroll
+              className="snap-mandatory snap-y"
+              dataLength={feed.length}
+              next={getFeed}
+              hasMore={hasMore}
+              loader={<Loader />}
+            >
               {feed.map(post => {
                 return <PostComponent key={post.id} post={post} />;
               })}

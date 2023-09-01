@@ -16,7 +16,7 @@ interface Props {
 
 const Post = ({ post, showLowerPost = true }: Props) => {
   return (
-    <div className="w-full flex flex-col gap-4 px-12 py-12 border-b-2 transition-ease-300 hover:bg-[#e3e3e3] max-md:px-4 max-md:py-4">
+    <div className="w-full flex flex-col gap-4 snap-center px-12 py-12 border-b-2 transition-ease-300 hover:bg-[#e3e3e3] max-md:px-4 max-md:py-4">
       <div className="flex justify-between w-full">
         <div className="w-full flex gap-2">
           <Link href={`/explore/user/${post.userID}`} className="rounded-full">

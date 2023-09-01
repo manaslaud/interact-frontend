@@ -8,6 +8,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Posts from '@/screens/bookmarks/posts';
 import Projects from '@/screens/bookmarks/projects';
+import Protect from '@/utils/protect';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -16,7 +17,7 @@ const Bookmarks = () => {
       <Sidebar index={6} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
-          <TabMenu items={['Posts', 'Projects']} active={active} setReduxState={setBookmarksTab} />
+          <TabMenu items={['Posts', 'Projects', 'Openings']} active={active} setReduxState={setBookmarksTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>
             <Posts />
           </div>
@@ -24,7 +25,7 @@ const Bookmarks = () => {
             <Projects />
           </div>
           {/* <div className={`${active === 2 ? 'block' : 'hidden'}`}>
-            <Applications />
+            <Openings />
           </div> */}
         </div>
       </MainWrapper>
@@ -32,4 +33,4 @@ const Bookmarks = () => {
   );
 };
 
-export default Bookmarks;
+export default Protect(Bookmarks);

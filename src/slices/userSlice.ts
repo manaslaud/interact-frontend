@@ -13,7 +13,6 @@ interface UserState {
   username: string;
   email: string;
   phoneNo: string;
-  theme: string;
   following: string[];
   likes: string[];
   postBookmarks: PostBookmark[];
@@ -32,7 +31,6 @@ const initialState: UserState = {
   username: '',
   email: '',
   phoneNo: '',
-  theme: 'light',
   isLoggedIn: false,
   profilePic: '',
   following: [],
@@ -55,7 +53,6 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.profilePic = action.payload.profilePic;
-      state.theme = 'light';
       state.isLoggedIn = true;
       state.phoneNo = action.payload.phoneNo;
       state.isVerified = action.payload.isVerified;
@@ -69,9 +66,6 @@ export const userSlice = createSlice({
     },
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;
-    },
-    setTheme: (state, action: PayloadAction<string>) => {
-      state.theme = action.payload;
     },
     setFollowing: (state, action: PayloadAction<string[]>) => {
       state.following = action.payload;
@@ -109,7 +103,6 @@ export const userSlice = createSlice({
 export const {
   setUser,
   setProfilePic,
-  setTheme,
   setFollowing,
   setLikes,
   setPostBookmarks,
@@ -129,5 +122,3 @@ export const userSelector = (state: RootState) => state.user;
 export const userIDSelector = (state: RootState) => state.user.id;
 
 export const profilePicSelector = (state: RootState) => state.user.profilePic;
-
-export const themeSelector = (state: RootState) => state.user.theme;

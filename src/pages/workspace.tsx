@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import YourProjects from '@/screens/workspace/your_projects';
 import ContributingProjects from '@/screens/workspace/contributing_projects';
 import Applications from '@/screens/workspace/applications';
+import Protect from '@/utils/protect';
 
 const Workspace = () => {
   const active = useSelector(workspaceTabSelector);
@@ -36,4 +37,4 @@ const Workspace = () => {
   );
 };
 
-export default Workspace;
+export default Protect(Workspace);

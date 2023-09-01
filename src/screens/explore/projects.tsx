@@ -47,7 +47,7 @@ const Projects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className={`w-full grid ${navbarOpen ? 'grid-cols-4' : 'grid-cols-5'} gap-2`}>
+            <div className={`w-full grid ${navbarOpen ? 'grid-cols-3' : 'grid-cols-4'} gap-12`}>
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}

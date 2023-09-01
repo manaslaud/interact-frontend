@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import '@/styles/loader.css';
 import '@/styles/extras.tailwind.css';
+import '@/styles/project_card.css';
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
