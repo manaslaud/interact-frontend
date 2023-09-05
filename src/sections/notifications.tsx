@@ -21,6 +21,7 @@ interface Props {
 }
 
 const Notifications = ({ setShow }: Props) => {
+  //! Only new notifications here, have a separate notifications page for all notifications
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -94,7 +95,7 @@ const Notifications = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-96 h-108 max-md:w-full overflow-y-auto absolute top-[50px] max-md:top-[40px] max-md:h-[95vh] right-5 max-md:right-0 flex flex-col items-center bg-white z-20">
+      <div className="w-96 h-108 max-md:w-full overflow-y-auto absolute top-[50px] max-md:top-[64px] max-md:h-[95vh] right-5 max-md:right-0 flex flex-col items-center bg-white z-20">
         {loading ? (
           <Loader />
         ) : (

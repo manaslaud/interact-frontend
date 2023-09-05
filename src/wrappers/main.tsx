@@ -5,7 +5,12 @@ interface WrapperProps {
 }
 
 const MainWrapper: React.FC<WrapperProps> = ({ children }) => {
-  return <div className="grow mt-[40px] max-md:w-full dark:bg-black transition-ease-500">{children}</div>;
+  return (
+    <div className="flex flex-col grow mt-[64px] backdrop-blur-sm max-md:w-full bg-[#070615ab] transition-ease-500">
+      <div className="bg-white h-[1px] w-full sticky top-16 z-10"></div>
+      {children}
+    </div>
+  );
 };
 
 export default MainWrapper;

@@ -18,9 +18,7 @@ const Home = () => {
       <Sidebar index={1} />
       <MainWrapper>
         <div
-          className={`${
-            navbarOpen ? 'w-base_open' : 'w-base_close'
-          } max-lg:w-full flex flex-col relative gap-4 transition-ease-out-500`}
+          className={`w-full max-lg:w-full flex flex-col items-center relative gap-4 transition-ease-out-500 px-9 py-6`}
         >
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>
@@ -31,9 +29,6 @@ const Home = () => {
           </div>
         </div>
       </MainWrapper>
-      <SideWrapper>
-        <div></div>
-      </SideWrapper>
     </BaseWrapper>
   );
 };

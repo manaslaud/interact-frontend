@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
+import { Link } from '@phosphor-icons/react';
 
 interface Props {
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -52,51 +53,59 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
           }
         }}
       />
-      <label htmlFor="image">
-        <div
-          className={
-            'rounded-full w-12 h-12 bg-[#292929] flex flex-col items-center justify-center transition-ease-500cursor-pointer hover:scale-110 hover:bg-[#3b3b3b]'
-          }
-        >
-          add Image
-        </div>
+      <label htmlFor="image" className="w-fit cursor-pointer">
+        <Link size={24} />
       </label>
-      <CarouselProvider
-        naturalSlideHeight={500}
-        naturalSlideWidth={1000}
-        totalSlides={selectedImageUrls.length}
-        visibleSlides={1}
-        infinite={true}
-        dragEnabled={true}
-        isPlaying={false}
-        className="w-1/2 h-full text-white flex items-center justify-center"
-      >
-        <Slider className="w-full">
-          {selectedImageUrls.map((el, index) => {
-            return (
-              <Slide index={index} key={index} className="w-full h-full text-center flex items-center justify-center ">
-                <div className="relative">
-                  <div
-                    onClick={() => {
-                      setSelectedFiles(prev => prev.filter((file, i) => i != index));
-                      setSelectedImageUrls(prev => prev.filter((img, i) => i != index));
-                    }}
-                    className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                  >
-                    X
+      {selectedImageUrls.length > 0 ? (
+        <CarouselProvider
+          naturalSlideHeight={500}
+          naturalSlideWidth={1000}
+          totalSlides={selectedImageUrls.length}
+          visibleSlides={2}
+          infinite={true}
+          dragEnabled={true}
+          isPlaying={false}
+          className="w-full h-full text-white flex items-center justify-center rounded-xl"
+        >
+          <Slider className="w-full rounded-xl ">
+            {selectedImageUrls.map((el, index) => {
+              return (
+                <Slide
+                  index={index}
+                  key={index}
+                  className="w-full h-full rounded-xl text-center flex items-center justify-center"
+                >
+                  <div className="w-fit pl-2 relative rounded-xl">
+                    <div
+                      onClick={() => {
+                        setSelectedFiles(prev => prev.filter((file, i) => i != index));
+                        setSelectedImageUrls(prev => prev.filter((img, i) => i != index));
+                      }}
+                      className="w-6 h-6 absolute top-5 left-80 rounded-full flex-center p-2 translate-x-1/2 -translate-y-1/2 cursor-pointer bg-[#000000b2]"
+                    >
+                      X
+                    </div>
+                    <Image
+                      width={10000}
+                      height={10000}
+                      alt="post"
+                      src={el}
+                      className="w-[90%] rounded-xl object-contain"
+                    />
                   </div>
-                  <Image width={10000} height={10000} alt="quotes" src={el} className="w-full object-contain" />
-                </div>
-              </Slide>
-            );
-          })}
-        </Slider>
-        <div className="absolute bottom-2">
-          {selectedImageUrls.map((_, i) => {
-            return <Dot key={i} slide={i} />;
-          })}
-        </div>
-      </CarouselProvider>
+                </Slide>
+              );
+            })}
+          </Slider>
+          <div className="absolute bottom-2">
+            {selectedImageUrls.map((_, i) => {
+              return <Dot key={i} slide={i} />;
+            })}
+          </div>
+        </CarouselProvider>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

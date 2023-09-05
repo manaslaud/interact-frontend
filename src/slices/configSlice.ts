@@ -2,8 +2,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
 
 interface ConfigState {
-  lastFetchingFollowing: string;
-  lastFetchingLikes: string;
+  updatingFollowing: boolean;
+  updatingLikes: boolean;
   lastFetchedFollowing: string;
   lastFetchedLikes: string;
   lastFetchedPostBookmarks: string;
@@ -33,8 +33,8 @@ const getInitialInvitationDate = (): string => {
 };
 
 const initialState: ConfigState = {
-  lastFetchingFollowing: getInitialDate(),
-  lastFetchingLikes: getInitialDate(),
+  updatingFollowing: false,
+  updatingLikes: false,
   lastFetchedFollowing: getInitialDate(),
   lastFetchedLikes: getInitialDate(),
   lastFetchedPostBookmarks: getInitialDate(),
@@ -51,8 +51,8 @@ export const configSlice = createSlice({
   initialState,
   reducers: {
     resetConfig: state => {
-      state.lastFetchingFollowing = getInitialDate();
-      state.lastFetchingLikes = getInitialDate();
+      state.updatingFollowing = false;
+      state.updatingLikes = false;
       state.lastFetchedFollowing = getInitialDate();
       state.lastFetchedLikes = getInitialDate();
       state.lastFetchedPostBookmarks = getInitialDate();
@@ -63,11 +63,11 @@ export const configSlice = createSlice({
       state.lastFetchedUnreadNotifications = getInitialNotificationDate();
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();
     },
-    setFetchingFollowing: (state, action: PayloadAction<string>) => {
-      state.lastFetchingFollowing = action.payload;
+    setUpdatingFollowing: (state, action: PayloadAction<boolean>) => {
+      state.updatingFollowing = action.payload;
     },
-    setFetchingLikes: (state, action: PayloadAction<string>) => {
-      state.lastFetchingLikes = action.payload;
+    setUpdatingLikes: (state, action: PayloadAction<boolean>) => {
+      state.updatingLikes = action.payload;
     },
     setConfig: state => {
       state.lastFetchedFollowing = new Date().toUTCString();
@@ -112,8 +112,8 @@ export const configSlice = createSlice({
 
 export const {
   resetConfig,
-  setFetchingFollowing,
-  setFetchingLikes,
+  setUpdatingFollowing,
+  setUpdatingLikes,
   setConfig,
   setFetchedChats,
   setFetchedFollowing,

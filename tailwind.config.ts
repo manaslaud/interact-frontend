@@ -14,17 +14,19 @@ const config: Config = {
       },
       height: {
         108: '32rem',
-        base: 'calc(100vh - 40px)',
+        base: 'calc(100vh - 64px)',
       },
       boxShadow: {
-        custom: '0 25px 100px -30px rgb(0 0 0 / 0.25);',
-        inner: 'inset 0px 0px 200px 100px rgb(0,0,0,0.8);',
+        outer: '0 0 15px 2px #262626a1;',
+        inner: '0px 0px 10px 1px #262626a1 inset;',
       },
       backgroundImage: {
         onboarding: "url('/assets/onboarding.png')",
+        new_post: "url('/assets/new_post.png')",
       },
       backgroundColor: {
         backdrop: '#0000007f',
+        navbar: 'rgba(14, 12, 42, 0.50)',
       },
       fontFamily: {
         primary: ['var(--inter-font)'],

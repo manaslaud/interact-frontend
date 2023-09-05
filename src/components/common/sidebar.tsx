@@ -37,9 +37,9 @@ const Sidebar = ({ index }: Props) => {
     <div
       className={`${
         open ? 'w-navbar_open' : 'w-navbar_close'
-      } h-screen pt-[64px] sticky top-0 py-6 flex flex-col pl-[30px] gap-2 border-r-2 transition-ease-out-500 max-md:hidden`}
+      } h-screen bg-[#43434385] backdrop-blur-sm pt-[84px] sticky top-0 py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
     >
-      {/* 40+24=64 */}
+      {/* 64+20=64 */}
       <SidebarItem
         index={1}
         title="Home"
@@ -105,7 +105,7 @@ const Sidebar = ({ index }: Props) => {
         open={open}
       />
 
-      <label className="flex cursor-pointer select-none items-center">
+      {/* <label className="flex cursor-pointer select-none items-center">
         <div>Toggle Theme</div>
         <div className="relative">
           <input type="checkbox" onChange={toggleTheme} className="sr-only" />
@@ -120,7 +120,7 @@ const Sidebar = ({ index }: Props) => {
             }`}
           ></div>
         </div>
-      </label>
+      </label> */}
       <div onClick={() => dispatch(setNavbarOpen(!open))}>Toggle</div>
     </div>
   );

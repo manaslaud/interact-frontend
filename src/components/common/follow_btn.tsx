@@ -4,7 +4,7 @@ import { userSelector, setFollowing } from '@/slices/userSlice';
 import Cookies from 'js-cookie';
 import Toaster from '@/utils/toaster';
 import getHandler from '@/handlers/get_handler';
-import { configSelector, setFetchingFollowing } from '@/slices/configSlice';
+import { configSelector, setUpdatingFollowing } from '@/slices/configSlice';
 import Semaphore from '@/utils/semaphore';
 import { CONNECTION_URL } from '@/config/routes';
 import socketService from '@/config/ws';
@@ -18,7 +18,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   const following = useSelector(userSelector).following;
-  const updatingFollowing = useSelector(configSelector).fetchingFollowing;
+  const updatingFollowing = useSelector(configSelector).updatingFollowing;
   const dispatch = useDispatch();
 
   const userID = Cookies.get('id');
@@ -27,7 +27,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
     if (following.includes(toFollowID)) setIsFollowing(true);
   }, [toFollowID]);
 
-  const semaphore = new Semaphore(updatingFollowing, setFetchingFollowing);
+  const semaphore = new Semaphore(updatingFollowing, setUpdatingFollowing);
 
   const submitHandler = async () => {
     await semaphore.acquire();

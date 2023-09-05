@@ -16,7 +16,8 @@ import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkPost from '../../sections/lowers/bookmark_post';
 import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
-import { configSelector, setFetchingLikes } from '@/slices/configSlice';
+import { configSelector, setUpdatingLikes } from '@/slices/configSlice';
+import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
 
 interface Props {
   post: Post;
@@ -46,11 +47,10 @@ const LowerPost = ({ post }: Props) => {
   const userID = Cookies.get('id');
 
   const dispatch = useDispatch();
-  const router = useRouter();
 
-  const updatingLikes = useSelector(configSelector).fetchingLikes;
+  const updatingLikes = useSelector(configSelector).updatingLikes;
 
-  const semaphore = new Semaphore(updatingLikes, setFetchingLikes);
+  const semaphore = new Semaphore(updatingLikes, setUpdatingLikes);
 
   const setBookmark = (isBookmarked: boolean, postItemID: string, bookmarkID: string) => {
     setBookmarkStatus({
@@ -143,47 +143,55 @@ const LowerPost = ({ post }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-full flex justify-between pl-14">
-        <div className="flex gap-6 max-md:gap-3">
-          <div onClick={likeHandler} className="flex items-center gap-2">
-            <Heart className="cursor-pointer max-md:w-6 max-md:h-6" size={40} weight={liked ? 'duotone' : 'regular'} />
-            <div className="">{numLikes}</div>
-          </div>
-          <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
-            <ChatTeardrop className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={40} weight="duotone" />
-            <div className="">{post.noComments}</div>
-          </Link>
-          <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
-            <Export className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={40} weight="duotone" />
-            <div className="">{post.noShares}</div>
-          </div>
+      <div className="w-full flex justify-between">
+        <div className="flex gap-3 max-md:gap-3">
+          <HeartStraight
+            onClick={likeHandler}
+            className="cursor-pointer max-md:w-6 max-md:h-6"
+            size={24}
+            weight={liked ? 'fill' : 'regular'}
+          />
+          {/* <div onClick={likeHandler} className="flex items-center gap-2">
+          </div> */}
+          <ChatCircleText className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
+          </Link> */}
+          <Repeat className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          {/* <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
+          </div> */}
+          <Export className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          <BookmarkSimple
+            className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+            onClick={() => {
+              if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+              else setClickedOnBookmark(prev => !prev);
+            }}
+            size={24}
+            weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
+          />
         </div>
-        <div className="relative">
-          <div className="flex gap-2">
-            {userID == post?.userID ? (
-              <Gear
-                className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
-                onClick={() => {
-                  router.push(`/workspace/post/edit/${post.id}`);
-                }}
-                size={40}
-                weight="light"
-              />
-            ) : (
-              <></>
-            )}
 
-            <BookmarkSimple
+        <div className="relative flex gap-2">
+          {/* {userID == post?.userID ? (
+            <Gear
               className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
               onClick={() => {
-                if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-                else setClickedOnBookmark(prev => !prev);
+                router.push(`/workspace/post/edit/${post.id}`);
               }}
-              size={40}
-              weight={bookmarkStatus.isBookmarked ? 'duotone' : 'light'}
+              size={24}
+              weight="light"
             />
-          </div>
+          ) : (
+            <></>
+          )} */}
         </div>
+      </div>
+      <div className="w-full flex items-center font-primary text-sm gap-2 text-[#ffffffb6]">
+        <div>
+          {numLikes} like{numLikes == 1 ? '' : 's'}
+        </div>
+        <div className="text-xs">•</div>
+        <div>{post.noComments} comments</div>
       </div>
     </>
   );

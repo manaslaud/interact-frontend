@@ -24,7 +24,7 @@ const UserAppliedToOpening = ({ notification }: Props) => {
             width={10000}
             height={10000}
             alt={'User Pic'}
-            src={`${USER_PROFILE_PIC_URL}/${notification.user.profilePic}`}
+            src={`${USER_PROFILE_PIC_URL}/${notification.sender.profilePic}`}
             className={'rounded-full w-12 h-12 border-[1px] border-black'}
           />
           <div className="gap-2 text-lg">

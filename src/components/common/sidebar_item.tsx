@@ -15,12 +15,12 @@ const SidebarItem = ({ title, icon, active, setActive, index, open }: Props) => 
     <Link
       href={`/${title.toLowerCase()}`}
       onClick={() => setActive(index)}
-      className={`${open ? 'w-[280px] rounded-full' : 'w-10 rounded-full'} h-10 p-[8.5px] ${
-        active == index ? 'text-[#4278c8] bg-[#3d6cb33a]' : 'text-gray-500 hover:bg-[#00000012]'
+      className={`${open ? 'w-[280px]' : 'w-10 '} h-10 p-[8.5px] rounded-xl text-[#ffffffbc] ${
+        active == index ? 'bg-[#0e0c2a59]' : 'hover:bg-[#00000012]'
       } relative font-primary font-medium items-center ${open ? '' : ''} transition-ease-out-500`}
     >
       {icon}
-      {open ? <div className="absolute top-1/2 left-[40px] -translate-y-1/2 animate-fade_half">{title}</div> : <></>}
+      {open ? <div className="absolute top-1/2 left-[64px] -translate-y-1/2 animate-fade_half">{title}</div> : <></>}
     </Link>
   );
 };
