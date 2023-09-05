@@ -11,9 +11,9 @@ const Base = () => {
       <MainWrapper>
         <div></div>
       </MainWrapper>
-      <SideWrapper>
+      {/* <SideWrapper>
         <div></div>
-      </SideWrapper>
+      </SideWrapper> */}
     </BaseWrapper>
   );
 };

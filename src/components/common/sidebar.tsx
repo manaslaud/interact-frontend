@@ -37,7 +37,7 @@ const Sidebar = ({ index }: Props) => {
     <div
       className={`${
         open ? 'w-navbar_open' : 'w-navbar_close'
-      } h-screen bg-[#43434385] backdrop-blur-sm pt-[84px] sticky top-0 py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
+      } h-base bg-[#43434385] backdrop-blur-sm pt-[84px] sticky top-16 mt-16 py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
     >
       {/* 64+20=64 */}
       <SidebarItem

@@ -7,10 +7,10 @@ const config: Config = {
     extend: {
       width: {
         108: '32rem',
-        navbar_open: '347px',
+        navbar_open: '320px',
         navbar_close: '100px',
-        base_open: 'calc(100vw - 694px)',
-        base_close: 'calc(100vw - 447px)',
+        base_open: 'calc(100vw - 640px)',
+        base_close: 'calc(100vw - 420px)',
       },
       height: {
         108: '32rem',

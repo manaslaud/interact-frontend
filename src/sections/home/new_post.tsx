@@ -77,7 +77,7 @@ const NewPost = ({ setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-12 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 bg-new_post bg-contain right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 bg-new_post bg-contain right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="flex gap-4">
           <Image
             crossOrigin="anonymous"
