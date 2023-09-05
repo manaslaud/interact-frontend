@@ -10,6 +10,12 @@
     justify-content: center;
   }
 
+  .glassMorphism {
+    background: rgba(242, 242, 242, 0.174);
+    backdrop-filter: blur(9.6px);
+    -webkit-backdrop-filter: blur(9.6px);
+  }
+
     /* Scroll Bar */
 
   /* html {

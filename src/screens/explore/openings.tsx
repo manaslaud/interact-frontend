@@ -8,12 +8,14 @@ import React, { useEffect, useState } from 'react';
 const Openings = () => {
   const [openings, setOpenings] = useState<Opening[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const search = new URLSearchParams(window.location.search).get('search');
+  const [search, setSearch] = useState(new URLSearchParams(window.location.search).get('search'));
 
   const fetchOpenings = async () => {
     setLoading(true);
-    const URL = `${EXPLORE_URL}/openings/recommended${search && search != '' ? '?search=' + search : ''}`;
+    const URL =
+      search && search != ''
+        ? `${EXPLORE_URL}/openings/trending${'?search=' + search}`
+        : `${EXPLORE_URL}/openings/recommended`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setOpenings(res.data.openings || []);

@@ -20,11 +20,14 @@ const Projects = () => {
 
   const navbarOpen = useSelector(navbarOpenSelector);
 
-  const search = new URLSearchParams(window.location.search).get('search');
+  const initialSearch = new URLSearchParams(window.location.search).get('search');
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (search: string | null) => {
     setLoading(true);
-    const URL = `${EXPLORE_URL}/projects/recommended${search && search != '' ? '?search=' + search : ''}`;
+    const URL =
+      search && search != ''
+        ? `${EXPLORE_URL}/projects/trending${'?search=' + search}`
+        : `${EXPLORE_URL}/projects/recommended`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setProjects(res.data.projects || []);
@@ -36,18 +39,18 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    fetchProjects();
-  }, [search]);
+    fetchProjects(new URLSearchParams(window.location.search).get('search'));
+  }, [window.location.search]);
 
   return (
-    <div className="w-full px-2">
-      <SearchBar initialValue={search && search != '' ? search : ''} />
+    <div className="w-full flex flex-col gap-12 px-2 py-2">
+      <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
       {loading ? (
         <Loader />
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className={`w-full grid ${navbarOpen ? 'grid-cols-3' : 'grid-cols-4'} gap-12`}>
+            <div className={`w-full grid ${navbarOpen ? 'grid-cols-3 px-16 gap-16' : 'grid-cols-4 px-12 gap-12'} `}>
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}

@@ -1,3 +1,4 @@
+import { MagnifyingGlass } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
@@ -15,8 +16,18 @@ const SearchBar = ({ initialValue = '' }: Props) => {
     else router.push(`/explore?search=${search}`);
   };
   return (
-    <form onSubmit={handleSubmit} className="w-full bg-slate-100 h-12">
-      <input type="text" placeholder="Search" value={search} onChange={el => setSearch(el.target.value)} />
+    <form
+      onSubmit={handleSubmit}
+      className="w-[720px] h-12 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b from-[#633267] to-[#5B406B]"
+    >
+      <input
+        className="h-full grow bg-transparent focus:outline-none font-primary text-white font-medium"
+        type="text"
+        placeholder="Search"
+        value={search}
+        onChange={el => setSearch(el.target.value)}
+      />
+      <MagnifyingGlass color="white" size={32} className="opacity-75" />
     </form>
   );
 };

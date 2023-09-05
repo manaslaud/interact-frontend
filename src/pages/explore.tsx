@@ -18,11 +18,7 @@ const Explore = () => {
     <BaseWrapper>
       <Sidebar index={2} />
       <MainWrapper>
-        <div
-          className={`${
-            navbarOpen ? 'w-base_open' : 'w-base_close'
-          } max-lg:w-full flex flex-col gap-4 transition-ease-out-500`}
-        >
+        <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-6`}>
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
@@ -35,9 +31,6 @@ const Explore = () => {
           </div>
         </div>
       </MainWrapper>
-      <SideWrapper>
-        <div></div>
-      </SideWrapper>
     </BaseWrapper>
   );
 };

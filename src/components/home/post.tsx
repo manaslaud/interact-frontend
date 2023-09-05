@@ -17,7 +17,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
   return (
     <div className="w-full font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
       <div className="w-[5%] h-full">
-        <Link href={`/explore/user/${post.userID}`} className="rounded-full">
+        <Link href={`/explore/user/${post.user.username}`} className="rounded-full">
           <Image
             crossOrigin="anonymous"
             width={10000}
@@ -30,7 +30,9 @@ const Post = ({ post, showLowerPost = true }: Props) => {
       </div>
       <div className="w-[95%] flex flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
-          <div className="font-medium">{post.user.username}</div>
+          <Link href={`/explore/user/${post.user.username}`} className="font-medium">
+            {post.user.username}
+          </Link>
           <div className="flex gap-2 font-light text-xs">
             <div>{moment(post.postedAt).fromNow()}</div>
             <div className="text-xxs">•••</div>

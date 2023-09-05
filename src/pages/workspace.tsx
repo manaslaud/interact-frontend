@@ -16,7 +16,7 @@ const Workspace = () => {
     <BaseWrapper>
       <Sidebar index={3} />
       <MainWrapper>
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4 py-6">
           <TabMenu
             items={['Your Projects', 'Contributing', 'Applied At']}
             active={active}

@@ -80,7 +80,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
   };
   return (
     <>
-      <div className="fixed top-12 w-1/3 max-md:w-5/6 h-max bg-slate-100 right-1/2 translate-x-1/2 animate-fade_third z-20">
+      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max bg-slate-100 right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div>BookMark this Project</div>
         {bookmarks.map((bookmark, index: number) => {
           return (
@@ -106,7 +106,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-10"
+        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );

@@ -56,18 +56,18 @@ const Feed = () => {
       {/* Create a New Post */}
       <div
         onClick={() => setClickedOnNewPost(true)}
-        className="w-full h-12 bg-gradient-to-l from-[#633267] to-[#5B406B] px-4 py-3 rounded-lg transition-ease-300 cursor-pointer hover:shadow-outer flex justify-between items-center"
+        className="w-full h-16 bg-gradient-to-l from-[#633267] to-[#5B406B] px-4 py-3 rounded-lg transition-ease-300 cursor-pointer hover:shadow-outer flex justify-between items-center"
       >
-        <div className="flex gap-2 items-center">
-          <Image
+        <div className="flex gap-2 items-center pl-2">
+          {/* <Image
             crossOrigin="anonymous"
             className="w-8 h-8 rounded-full"
             width={10000}
             height={10000}
             alt="user"
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-          />
-          <div className="font-primary text-gray-200 font-medium text-xl">Create a post</div>
+          /> */}
+          <div className="font-primary text-gray-200 text-xl">Create a post</div>
         </div>
         <Plus
           size={48}

@@ -12,11 +12,14 @@ const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const search = new URLSearchParams(window.location.search).get('search');
+  const initialSearch = new URLSearchParams(window.location.search).get('search');
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (search: string | null) => {
     setLoading(true);
-    const URL = `${EXPLORE_URL}/users/recommended${search && search != '' ? '?search=' + search : ''}`;
+    const URL =
+      search && search != ''
+        ? `${EXPLORE_URL}/users/trending${'?search=' + search}`
+        : `${EXPLORE_URL}/users/recommended`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setUsers(res.data.users || []);
@@ -28,11 +31,11 @@ const Users = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, [search]);
+    fetchUsers(new URLSearchParams(window.location.search).get('search'));
+  }, [window.location.search]);
   return (
-    <>
-      <SearchBar initialValue={search && search != '' ? search : ''} />
+    <div className="w-full flex flex-col gap-12 px-2 py-2">
+      <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
       {loading ? (
         <Loader />
       ) : (
@@ -48,7 +51,7 @@ const Users = () => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };
 
