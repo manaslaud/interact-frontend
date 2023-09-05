@@ -20,8 +20,6 @@ const Projects = () => {
 
   const navbarOpen = useSelector(navbarOpenSelector);
 
-  const initialSearch = new URLSearchParams(window.location.search).get('search');
-
   const fetchProjects = async (search: string | null) => {
     setLoading(true);
     const URL =
@@ -44,7 +42,6 @@ const Projects = () => {
 
   return (
     <div className="w-full flex flex-col gap-12 px-2 py-2">
-      <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
       {loading ? (
         <Loader />
       ) : (

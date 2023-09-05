@@ -12,8 +12,6 @@ const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const initialSearch = new URLSearchParams(window.location.search).get('search');
-
   const fetchUsers = async (search: string | null) => {
     setLoading(true);
     const URL =
@@ -34,14 +32,13 @@ const Users = () => {
     fetchUsers(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
   return (
-    <div className="w-full flex flex-col gap-12 px-2 py-2">
-      <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
+    <div className="w-full flex flex-col gap-6 px-2 py-2">
       {loading ? (
         <Loader />
       ) : (
         <>
           {users.length > 0 ? (
-            <div className="w-full px-16 flex flex-col gap-2">
+            <div className="w-[720px] mx-auto flex flex-col gap-4">
               {users.map(user => {
                 return <UserCard key={user.id} user={user} />;
               })}

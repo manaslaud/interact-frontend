@@ -11,7 +11,8 @@ interface Props {
 const TabMenu = ({ items, active, setReduxState }: Props) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-[500px] h-[45px] p-1 rounded-lg bg-gradient-to-b from-[#633267] to-[#5B406B] shadow-outer mx-auto bg-slate-100 flex justify-around gap-1 sticky top-[72px] z-10">
+    <div className="w-[500px] h-[45px] p-1 rounded-lg bg-gradient-to-b from-[#633267] to-[#5B406B] shadow-outer mx-auto bg-slate-100 flex justify-around gap-1 sticky top-[88px] z-10">
+      {/* 64+24=88 */}
       {items.map((item, index) => (
         <div
           key={index}

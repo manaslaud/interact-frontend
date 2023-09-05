@@ -16,7 +16,7 @@ const SidebarItem = ({ title, icon, active, setActive, index, open }: Props) => 
       href={`/${title.toLowerCase()}`}
       onClick={() => setActive(index)}
       className={`${open ? 'w-[260px]' : 'w-10 '} h-10 p-[8.5px] rounded-xl text-[#ffffffbc] ${
-        active == index ? 'bg-[#0e0c2a59]' : 'hover:bg-[#00000012]'
+        active == index ? 'bg-[#0e0c2a59]' : 'hover:bg-[#0000002b]'
       } relative font-primary font-medium items-center ${open ? '' : ''} transition-ease-out-500`}
     >
       {icon}
