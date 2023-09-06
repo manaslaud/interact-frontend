@@ -20,7 +20,15 @@ const SidebarItem = ({ title, icon, active, setActive, index, open }: Props) => 
       } relative font-primary font-medium items-center ${open ? '' : ''} transition-ease-out-500`}
     >
       {icon}
-      {open ? <div className="absolute top-1/2 left-[64px] -translate-y-1/2 animate-fade_half">{title}</div> : <></>}
+      {
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 ${
+            open ? 'opacity-100 left-[64px]' : 'opacity-0 left-[0px] animate-shrink'
+          } transition-ease-500`}
+        >
+          {title}
+        </div>
+      }
     </Link>
   );
 };
