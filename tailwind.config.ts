@@ -13,6 +13,7 @@ const config: Config = {
         base_close: 'calc(100vw - 420px)',
         taskbar: '720px',
         taskbar_md: '90%',
+        bottomBar: '100px',
       },
       height: {
         108: '32rem',
@@ -23,6 +24,7 @@ const config: Config = {
       spacing: {
         navbar: '64px',
         base_padding: '24px',
+        bottomBar: '100px',
       },
 
       boxShadow: {

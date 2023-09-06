@@ -69,7 +69,11 @@ const Openings = () => {
                   );
                 })}
               </div>
-              {clickedOnOpening ? <OpeningView opening={clickedOpening} setShow={setClickedOnOpening} /> : <></>}
+              {clickedOnOpening ? (
+                <OpeningView opening={clickedOpening} setShow={setClickedOnOpening} setOpening={setClickedOpening} />
+              ) : (
+                <></>
+              )}
             </div>
           ) : (
             <div>No Openings found</div>

@@ -21,7 +21,7 @@ const Navbar = () => {
       {clickedOnNotifications ? <Notifications setShow={setClickedOnNotifications} /> : <></>}
       <ReactSVG src="/onboarding_logo.svg" />
       <div className="flex items-center gap-4">
-        <ChatCircleDots color="white" className="cursor-pointer" size={36} weight="regular" />
+        <ChatCircleDots color="white" className="cursor-pointer max-md:w-8 max-md:h-8" size={36} weight="regular" />
         <div onClick={() => setClickedOnNotifications(prev => !prev)} className="flex-center relative cursor-pointer">
           {notifications > 0 ? (
             <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black text-white">
@@ -30,11 +30,11 @@ const Navbar = () => {
           ) : (
             <></>
           )}
-          <Bell color="white" size={36} weight="regular" />
+          <Bell className="cursor-pointer max-md:w-8 max-md:h-8" color="white" size={36} weight="regular" />
         </div>
         <Image
           crossOrigin="anonymous"
-          className="w-9 h-9 rounded-full"
+          className="w-9 h-9 max-md:w-8 max-md:h-8 rounded-full"
           width={10000}
           height={10000}
           alt="user"

@@ -1,3 +1,4 @@
+import BottomBar from '@/components/common/bottombar';
 import Navbar from '@/components/common/navbar';
 import React, { ReactNode } from 'react';
 import { ReactSVG } from 'react-svg';
