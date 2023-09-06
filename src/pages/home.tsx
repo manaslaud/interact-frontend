@@ -18,7 +18,7 @@ const Home = () => {
       <Sidebar index={1} />
       <MainWrapper>
         <div
-          className={`w-full max-lg:w-full flex flex-col items-center relative gap-4 transition-ease-out-500 px-9 py-6`}
+          className={`w-full max-lg:w-full flex flex-col items-center relative gap-4 transition-ease-out-500 px-9 py-base_padding`}
         >
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>

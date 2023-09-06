@@ -18,7 +18,7 @@ const SearchBar = ({ initialValue = '' }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[720px] h-12 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b from-[#633267] to-[#5B406B]"
+      className="w-taskbar h-taskbar px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b from-primary_gradient_start to-primary_gradient_end"
     >
       <input
         className="h-full grow bg-transparent focus:outline-none font-primary text-white font-medium"

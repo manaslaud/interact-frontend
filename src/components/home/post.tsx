@@ -79,7 +79,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
         ) : (
           <></>
         )}
-        <div className="w-full text-sm whitespace-pre-line mb-2">{post.content}</div>
+        <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>
         {showLowerPost ? <LowerPost post={post} /> : <></>}
       </div>
     </div>

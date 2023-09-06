@@ -75,7 +75,7 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
           <div>{project.title}</div>
           <div>{project.user.name}</div>
         </div>
-        <div className="w-full h-[calc(100vh-64px)] flex bg-white max-md:flex-col">
+        <div className="w-full h-base flex bg-white max-md:flex-col">
           <div className="w-3/4 max-md:w-full h-full">{loading ? <Loader /> : <></>}</div>
           <div className="w-1/4 max-md:w-full h-full bg-slate-200"></div>
         </div>

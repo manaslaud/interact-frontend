@@ -1,13 +1,7 @@
-import Loader from '@/components/common/loader';
-import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL } from '@/config/routes';
-import getHandler from '@/handlers/get_handler';
 import { Opening } from '@/types';
-import { initialOpening } from '@/types/initials';
-import Toaster from '@/utils/toaster';
 import { BookmarkSimple, Share } from '@phosphor-icons/react';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface Props {
   opening: Opening;
@@ -15,10 +9,10 @@ interface Props {
 
 const OpeningView = ({ opening }: Props) => {
   return (
-    <div className="sticky top-[158px] w-[55%] max-h-[70vh] overflow-y-auto flex flex-col gap-6 px-12 py-10 font-primary text-white border-[1px] border-[#9275b9ba] rounded-lg">
+    <div className="sticky top-[158px] w-[55%] max-h-[70vh] overflow-y-auto flex flex-col gap-6 px-12 py-10 font-primary text-white border-[1px] border-primary_btn rounded-lg">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#BE76BF] to-[#607EE7]">
+          <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
             {opening.title}
           </div>
           <div className="flex gap-4">
@@ -40,7 +34,7 @@ const OpeningView = ({ opening }: Props) => {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <div className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-[#BE76BF] to-[#607EE7]">
+          <div className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
             About this role
           </div>
         </div>
@@ -51,7 +45,7 @@ const OpeningView = ({ opening }: Props) => {
               return (
                 <div
                   key={tag}
-                  className="flex-center p-2 font-primary text-xs text-white border-[1px] border-[#9275b9ba] rounded-xl"
+                  className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl"
                 >
                   {tag}
                 </div>
@@ -59,7 +53,7 @@ const OpeningView = ({ opening }: Props) => {
             })}
         </div>
       </div>
-      <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-[#9275b9ba] bg-gradient-to-r hover:from-[#BE76BF] hover:to-[#607de7ab] transition-ease-300 rounded-lg cursor-pointer">
+      <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer">
         Apply
       </div>
     </div>

@@ -56,7 +56,7 @@ const Feed = () => {
       {/* Create a New Post */}
       <div
         onClick={() => setClickedOnNewPost(true)}
-        className="w-full h-16 bg-gradient-to-l from-[#633267] to-[#5B406B] px-4 py-3 rounded-lg transition-ease-300 cursor-pointer hover:shadow-outer flex justify-between items-center"
+        className="w-taskbar h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
       >
         <div className="flex gap-2 items-center pl-2">
           {/* <Image
@@ -67,10 +67,10 @@ const Feed = () => {
             alt="user"
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
           /> */}
-          <div className="font-primary text-gray-200 text-xl">Create a post</div>
+          <div className="font-primary text-gray-200 text-lg">Create a post</div>
         </div>
         <Plus
-          size={48}
+          size={36}
           className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
           weight="regular"
         />

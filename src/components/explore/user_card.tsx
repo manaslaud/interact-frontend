@@ -12,7 +12,7 @@ interface Props {
 const UserCard = ({ user }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   return (
-    <div className="w-full font-primary text-white border-[1px] border-[#9275b9ba] rounded-lg flex flex-col px-5 py-4 transition-ease-300 cursor-pointe">
+    <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg flex flex-col px-5 py-4 transition-ease-300 cursor-pointe">
       <div className="flex items-center justify-between w-full">
         <Link className="flex items-center gap-2 w-fit" href={`/explore/user/${user.id}`}>
           <Image

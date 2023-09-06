@@ -35,7 +35,7 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
       <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
         <div className="text-xl">{project.title}</div>
         <div className="w-full flex items-center justify-between">
-          <div className="text-sm">Pratham Mishra</div>
+          <div className="text-sm">{project.user.name}</div>
           {
             //TODO add actual name
           }

@@ -7,15 +7,23 @@ const config: Config = {
     extend: {
       width: {
         108: '32rem',
-        navbar_open: '320px',
-        navbar_close: '100px',
+        sidebar_open: '320px',
+        sidebar_close: '100px',
         base_open: 'calc(100vw - 640px)',
         base_close: 'calc(100vw - 420px)',
+        taskbar: '720px',
       },
       height: {
         108: '32rem',
+        navbar: '64px',
         base: 'calc(100vh - 64px)',
+        taskbar: '48px',
       },
+      spacing: {
+        navbar: '64px',
+        base_padding: '24px',
+      },
+
       boxShadow: {
         outer: '0 0 15px 2px #262626a1;',
         inner: '0px 0px 10px 1px #262626a1 inset;',
@@ -24,9 +32,18 @@ const config: Config = {
         onboarding: "url('/assets/onboarding.png')",
         new_post: "url('/assets/new_post.png')",
       },
+      colors: {
+        primary_gradient_start: '#633267',
+        primary_gradient_end: '#5b406b',
+        secondary_gradient_start: '#be76bf',
+        secondary_gradient_end: '#607ee7',
+        primary_btn: '#9275b9ba',
+      },
       backgroundColor: {
         backdrop: '#0000007f',
-        navbar: 'rgba(14, 12, 42, 0.50)',
+        navbar: '#070615be',
+        main: '#070615be',
+        sidebar: '#43434385',
       },
       fontFamily: {
         primary: ['var(--inter-font)'],

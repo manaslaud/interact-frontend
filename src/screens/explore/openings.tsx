@@ -20,10 +20,13 @@ const Openings = () => {
 
   const fetchOpenings = async (search: string | null) => {
     setLoading(true);
-    const URL =
+    let URL =
       search && search != ''
         ? `${EXPLORE_URL}/openings/trending${'?search=' + search}`
         : `${EXPLORE_URL}/openings/recommended`;
+
+    const projectSlug = new URLSearchParams(window.location.search).get('project');
+    if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setOpenings(res.data.openings || []);
@@ -52,7 +55,7 @@ const Openings = () => {
       ) : (
         <>
           {openings.length > 0 ? (
-            <div className="flex justify-evenly px-12">
+            <div className="flex justify-evenly px-4">
               <div className={`${clickedOnOpening ? 'w-[40%]' : 'w-[720px]'} flex flex-col gap-4`}>
                 {openings.map(opening => {
                   return (

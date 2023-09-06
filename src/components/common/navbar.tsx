@@ -17,7 +17,7 @@ const Navbar = () => {
     profilePic = profilePic == '' ? 'default.jpg' : profilePic;
   }, []);
   return (
-    <div className="w-full h-[64px] bg-[#070615be] glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
+    <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
       {clickedOnNotifications ? <Notifications setShow={setClickedOnNotifications} /> : <></>}
       <ReactSVG src="/onboarding_logo.svg" />
       <div className="flex items-center gap-4">

@@ -8,11 +8,11 @@ interface WrapperProps {
 
 const BaseWrapper: React.FC<WrapperProps> = ({ children }) => {
   return (
-    <div className="w-full">
+    <>
       <Navbar />
       <div className="w-full flex">{children}</div>
       <ReactSVG className="fixed -z-50 top-0 right-0" src="/assets/base.svg" />
-    </div>
+    </>
   );
 };
 

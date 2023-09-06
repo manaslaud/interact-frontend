@@ -20,7 +20,7 @@ const Explore = () => {
     <BaseWrapper>
       <Sidebar index={2} />
       <MainWrapper>
-        <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-6`}>
+        <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>

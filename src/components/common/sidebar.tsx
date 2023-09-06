@@ -36,10 +36,9 @@ const Sidebar = ({ index }: Props) => {
   return (
     <div
       className={`${
-        open ? 'w-navbar_open' : 'w-navbar_close'
-      } h-base bg-[#43434385] backdrop-blur-sm pt-[84px] sticky top-16 mt-16 py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
+        open ? 'w-sidebar_open' : 'w-sidebar_close'
+      } h-base bg-sidebar backdrop-blur-sm pt-[84px] sticky top-navbar mt-navbar py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
     >
-      {/* 64+20=64 */}
       <SidebarItem
         index={1}
         title="Home"

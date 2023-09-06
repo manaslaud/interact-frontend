@@ -21,7 +21,7 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
       }}
       className={`w-full ${
         opening.id == clickedOpening.id ? 'bg-[#ffffff2b]' : ''
-      } font-primary text-white border-[1px] border-[#9275b9ba] rounded-lg p-8 flex items-center gap-12 transition-ease-300 cursor-pointer`}
+      } font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 flex items-center gap-12 transition-ease-300 cursor-pointer`}
     >
       <Image
         crossOrigin="anonymous"
@@ -34,7 +34,7 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
 
       <div className="grow flex flex-col">
         <div className="flex items-center justify-between">
-          <div className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-[#BE76BF] to-[#607EE7]">
+          <div className="w-5/6 font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
             {opening.title}
           </div>
           <BookmarkSimple size={24} />
