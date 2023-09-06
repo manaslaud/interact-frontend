@@ -10,7 +10,7 @@ interface Props {
 const Images = ({ setSelectedFiles }: Props) => {
   const [selectedImageUrls, setSelectedImageUrls] = useState<string[]>([]);
   return (
-    <div className="w-full h-screen overflow-auto flex flex-col items-center gap-4">
+    <div className="w-full h-screen max-md:h-full max-md:py-2 overflow-auto flex flex-col items-center gap-4">
       <div>Images {selectedImageUrls.length + '/' + '3'}</div>
       {selectedImageUrls.map((img, index) => {
         return (

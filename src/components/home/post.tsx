@@ -16,7 +16,7 @@ interface Props {
 const Post = ({ post, showLowerPost = true }: Props) => {
   return (
     <div className="w-full font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
-      <div className="w-[5%] h-full">
+      <div className="w-[5%] max-md:w-[10%] h-full">
         <Link href={`/explore/user/${post.user.username}`} className="rounded-full">
           <Image
             crossOrigin="anonymous"
@@ -28,7 +28,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
           />
         </Link>
       </div>
-      <div className="w-[95%] flex flex-col gap-3">
+      <div className="w-[95%] max-md:w-[90%] flex flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
           <Link href={`/explore/user/${post.user.username}`} className="font-medium">
             {post.user.username}

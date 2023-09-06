@@ -12,11 +12,17 @@ const persistConfig = {
   whitelist: ['user', 'config'],
 };
 
+const configPersistConfig = {
+  key: 'config',
+  storage,
+  blacklist: ['updatingFollowing', 'updatingLikes'],
+};
+
 const rootReducer = combineReducers({
   feed: feedReducer,
   user: userReducer,
   messaging: messagingReducer,
-  config: configReducer,
+  config: persistReducer(configPersistConfig, configReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

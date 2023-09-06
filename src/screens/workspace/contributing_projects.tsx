@@ -45,7 +45,7 @@ const ContributingProjects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full flex flex-wrap justify-evenly">
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}

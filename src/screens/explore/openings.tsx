@@ -56,7 +56,7 @@ const Openings = () => {
         <>
           {openings.length > 0 ? (
             <div className="flex justify-evenly px-4">
-              <div className={`${clickedOnOpening ? 'w-[40%]' : 'w-[720px]'} flex flex-col gap-4`}>
+              <div className={`${clickedOnOpening ? 'w-[40%]' : 'w-[720px]'} max-md:w-[720px] flex flex-col gap-4`}>
                 {openings.map(opening => {
                   return (
                     <OpeningCard
@@ -69,7 +69,7 @@ const Openings = () => {
                   );
                 })}
               </div>
-              {clickedOnOpening ? <OpeningView opening={clickedOpening} /> : <></>}
+              {clickedOnOpening ? <OpeningView opening={clickedOpening} setShow={setClickedOnOpening} /> : <></>}
             </div>
           ) : (
             <div>No Openings found</div>

@@ -51,7 +51,7 @@ const YourProjects = () => {
         <>
           <div
             onClick={() => setClickedOnNewProject(true)}
-            className="w-taskbar h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+            className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
           >
             <div className="font-primary text-gray-200 text-lg pl-2">Create a new project</div>
             <Plus
@@ -65,7 +65,7 @@ const YourProjects = () => {
           ) : (
             <>
               {projects.length > 0 ? (
-                <div className="w-full grid grid-cols-4 gap-1 justify-items-center py-8">
+                <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
                   {clickedOnProject ? (
                     <ProjectView
                       projectSlugs={projects.map(project => project.slug)}

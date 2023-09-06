@@ -153,15 +153,15 @@ const LowerPost = ({ post }: Props) => {
           />
           {/* <div onClick={likeHandler} className="flex items-center gap-2">
           </div> */}
-          <ChatCircleText className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          <ChatCircleText className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
-          <Repeat className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          <Repeat className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
           {/* <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
           </div> */}
-          <Export className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={24} weight="regular" />
+          <Export className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
           <BookmarkSimple
-            className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+            className="cursor-pointer max-md:w-6 max-md:h-6"
             onClick={() => {
               if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
               else setClickedOnBookmark(prev => !prev);
@@ -174,7 +174,7 @@ const LowerPost = ({ post }: Props) => {
         <div className="relative flex gap-2">
           {/* {userID == post?.userID ? (
             <Gear
-              className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+              className="cursor-pointer max-md:w-6 max-md:h-6"
               onClick={() => {
                 router.push(`/workspace/post/edit/${post.id}`);
               }}

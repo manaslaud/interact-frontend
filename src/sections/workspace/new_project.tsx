@@ -77,15 +77,15 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   };
 
   return (
-    <div className="w-screen h-screen flex fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
-      <div className="w-1/3 bg-slate-100">
+    <div className="w-screen h-screen max-md:overflow-auto flex max-md:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
+      <div className="w-1/3 max-md:w-full bg-slate-100">
         <Images setSelectedFiles={setImages} />
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 max-md:w-full">
         <div className="w-full flex justify-end">
           <div onClick={() => setShow(false)}>Cancel</div>
         </div>
-        <div className="w-3/5 flex flex-col gap-4">
+        <div className="w-3/5 max-md:w-full flex flex-col gap-4">
           <input
             value={title}
             onChange={el => setTitle(el.target.value)}

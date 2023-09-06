@@ -12,6 +12,7 @@ const config: Config = {
         base_open: 'calc(100vw - 640px)',
         base_close: 'calc(100vw - 420px)',
         taskbar: '720px',
+        taskbar_md: '90%',
       },
       height: {
         108: '32rem',
