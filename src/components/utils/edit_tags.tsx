@@ -28,7 +28,7 @@ const Tags = ({ tags, setTags }: Props) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center font-Helvetica gap-2 py-2 rounded-md">
+    <div className="flex flex-wrap items-center font-Helvetica gap-2 rounded-md">
       {tags.map(tag => (
         <div
           key={tag}
@@ -43,7 +43,7 @@ const Tags = ({ tags, setTags }: Props) => {
       ))}
       <input
         type="text"
-        className="flex-1 p-2 outline-none"
+        className="flex-1 bg-transparent outline-none"
         placeholder="Add tags"
         value={tagInput}
         onChange={handleTagInputChange}

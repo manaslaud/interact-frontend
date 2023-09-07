@@ -18,7 +18,9 @@ const Navbar = () => {
   }, []);
   return (
     <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
-      {clickedOnNotifications ? <Notifications setShow={setClickedOnNotifications} /> : <></>}
+      <div className={`${clickedOnNotifications ? 'block' : 'hidden'}`}>
+        <Notifications setShow={setClickedOnNotifications} />
+      </div>
       <ReactSVG src="/onboarding_logo.svg" />
       <div className="flex items-center gap-4">
         <ChatCircleDots color="white" className="cursor-pointer max-md:w-8 max-md:h-8" size={36} weight="regular" />

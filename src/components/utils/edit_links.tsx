@@ -40,7 +40,7 @@ const Links = ({ links, setLinks }: Props) => {
 
   return (
     <>
-      <div className="w-full bg-white flex flex-col ">
+      <div className="w-full flex flex-col ">
         <div className="w-full text-sm font-bold">Links {links.length + '/' + '5'}</div>
         <div className="w-full flex flex-col gap-2">
           {links && links.length > 0 ? (
@@ -86,7 +86,7 @@ const Links = ({ links, setLinks }: Props) => {
           {links.length < 5 ? (
             <form onSubmit={addLink}>
               <input
-                className="w-full h-12 bg-slate-200 rounded-lg font-Inconsolata px-4 py-2"
+                className="w-full h-12 bg-[#10013b30] focus:outline-none border-[1px] border-primary_btn rounded-lg font-Inconsolata px-4 py-2"
                 value={newLink}
                 onChange={el => setNewLink(el.target.value)}
                 placeholder="Add a New Link"

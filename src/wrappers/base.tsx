@@ -1,4 +1,3 @@
-import BottomBar from '@/components/common/bottombar';
 import Navbar from '@/components/common/navbar';
 import React, { ReactNode } from 'react';
 import { ReactSVG } from 'react-svg';
@@ -13,6 +12,7 @@ const BaseWrapper: React.FC<WrapperProps> = ({ children }) => {
       <Navbar />
       <div className="w-full flex">{children}</div>
       <ReactSVG className="fixed -z-50 top-0 right-0" src="/assets/base.svg" />
+      {/* <div className="w-screen h-screen main_bg fixed -z-50 top-0 right-0"></div> */}
     </>
   );
 };

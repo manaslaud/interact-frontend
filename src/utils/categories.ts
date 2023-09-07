@@ -1,4 +1,5 @@
 const categories = [
+  'Select Category',
   'Technology and Software',
   'Engineering and Electronics',
   'Health and Wellness',

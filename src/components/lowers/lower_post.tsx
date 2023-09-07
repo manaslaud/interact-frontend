@@ -18,6 +18,7 @@ import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdatingLikes } from '@/slices/configSlice';
 import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
+import RePost from './repost';
 
 interface Props {
   post: Post;
@@ -39,6 +40,7 @@ const LowerPost = ({ post }: Props) => {
   });
   const [clickedOnShare, setClickedOnShare] = useState(false);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
+  const [clickedOnRePost, setClickedOnRePost] = useState(false);
   const [mutex, setMutex] = useState(false);
 
   const likes = useSelector(userSelector).likes;
@@ -143,6 +145,7 @@ const LowerPost = ({ post }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnRePost ? <RePost setShow={setClickedOnRePost} post={post} /> : <></>}
       <div className="w-full flex justify-between">
         <div className="flex gap-3 max-md:gap-3">
           <HeartStraight
@@ -156,7 +159,19 @@ const LowerPost = ({ post }: Props) => {
           <ChatCircleText className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
-          <Repeat className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
+          {post.userID != userID ? (
+            <Repeat
+              onClick={() => {
+                setClickedOnRePost(true);
+              }}
+              className="cursor-pointer max-md:w-6 max-md:h-6"
+              size={24}
+              weight="regular"
+            />
+          ) : (
+            <></>
+          )}
+
           {/* <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
           </div> */}
           <Export className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />

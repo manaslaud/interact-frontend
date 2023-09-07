@@ -89,17 +89,17 @@ const Notifications = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-96 max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-base_md overflow-y-auto absolute top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg flex flex-col items-center z-20 animate-fade_third">
+      <div className="w-96 max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-base_md overflow-y-auto absolute top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop flex flex-col items-center p-2 z-20 animate-fade_third">
         {loading ? (
           <Loader />
         ) : (
           <>
             {notifications.length === 0 ? (
-              <div className="w-full font-primary flex-center text-white py-6 px-4 cursor-default text-center">
+              <div className="w-full font-primary flex-center text-white py-4 cursor-default text-center">
                 No new notifications :)
               </div>
             ) : (
-              <div className="w-full p-2">
+              <div className="w-full">
                 {notifications.map(notification => {
                   switch (notification.notificationType) {
                     case -1:
@@ -130,6 +130,7 @@ const Notifications = ({ setShow }: Props) => {
             )}
           </>
         )}
+        <div className="text-white font-primary text-xs hover:underline cursor-pointer">view all</div>
       </div>
       <div
         onClick={() => setShow(false)}

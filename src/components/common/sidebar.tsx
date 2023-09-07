@@ -66,14 +66,6 @@ const Sidebar = ({ index }: Props) => {
           open={open}
         />
         <SidebarItem
-          index={4}
-          title="Message"
-          icon={<Chats size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
           index={5}
           title="Invitations"
           icon={<Envelope size={24} />}
@@ -84,14 +76,6 @@ const Sidebar = ({ index }: Props) => {
         <SidebarItem
           index={6}
           title="Bookmarks"
-          icon={<BookmarkSimple size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={7}
-          title="Notifications"
           icon={<BookmarkSimple size={24} />}
           active={active}
           setActive={setActive}

@@ -45,53 +45,52 @@ const YourProjects = () => {
   }, []);
   return (
     <div className="w-full px-2">
-      {clickedOnNewProject ? (
+      <div className={`${clickedOnNewProject ? 'block' : 'hidden'}`}>
+        {' '}
         <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} />
+      </div>
+
+      <div
+        onClick={() => setClickedOnNewProject(true)}
+        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+      >
+        <div className="font-primary text-gray-200 text-lg pl-2">Create a new project</div>
+        <Plus
+          size={36}
+          className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
+          weight="regular"
+        />
+      </div>
+      {loading ? (
+        <Loader />
       ) : (
         <>
-          <div
-            onClick={() => setClickedOnNewProject(true)}
-            className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
-          >
-            <div className="font-primary text-gray-200 text-lg pl-2">Create a new project</div>
-            <Plus
-              size={36}
-              className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
-              weight="regular"
-            />
-          </div>
-          {loading ? (
-            <Loader />
-          ) : (
-            <>
-              {projects.length > 0 ? (
-                <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
-                  {clickedOnProject ? (
-                    <ProjectView
-                      projectSlugs={projects.map(project => project.slug)}
-                      clickedProjectIndex={clickedProjectIndex}
-                      setClickedProjectIndex={setClickedProjectIndex}
-                      setClickedOnProject={setClickedOnProject}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                  {projects.map((project, index) => {
-                    return (
-                      <ProjectCard
-                        key={project.id}
-                        index={index}
-                        project={project}
-                        setClickedOnProject={setClickedOnProject}
-                        setClickedProjectIndex={setClickedProjectIndex}
-                      />
-                    );
-                  })}
-                </div>
+          {projects.length > 0 ? (
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
+              {clickedOnProject ? (
+                <ProjectView
+                  projectSlugs={projects.map(project => project.slug)}
+                  clickedProjectIndex={clickedProjectIndex}
+                  setClickedProjectIndex={setClickedProjectIndex}
+                  setClickedOnProject={setClickedOnProject}
+                />
               ) : (
-                <div>No projects found</div>
+                <></>
               )}
-            </>
+              {projects.map((project, index) => {
+                return (
+                  <ProjectCard
+                    key={project.id}
+                    index={index}
+                    project={project}
+                    setClickedOnProject={setClickedOnProject}
+                    setClickedProjectIndex={setClickedProjectIndex}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div>No projects found</div>
           )}
         </>
       )}

@@ -23,7 +23,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [links, setLinks] = useState<string[]>([]);
-  const [images, setImages] = useState<File[]>([]);
+  const [image, setImage] = useState<File>();
 
   const [mutex, setMutex] = useState(false);
 
@@ -33,6 +33,10 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       return;
     }
     if (category.trim() == '') {
+      Toaster.error('Select Category');
+      return;
+    }
+    if (category == 'Select Category') {
       Toaster.error('Select Category');
       return;
     }
@@ -77,80 +81,91 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   };
 
   return (
-    <div className="w-screen h-screen max-md:overflow-auto flex max-md:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
-      <div className="w-1/3 max-md:w-full bg-slate-100">
-        <Images setSelectedFiles={setImages} />
-      </div>
-      <div className="w-2/3 max-md:w-full">
-        <div className="w-full flex justify-end">
-          <div onClick={() => setShow(false)}>Cancel</div>
+    <>
+      {/* <div className="w-screen h-screen max-md:overflow-auto flex max-md:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
+        
+        </div> */}
+
+      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 flex max-md:flex-col justify-between rounded-lg p-8 gap-8 text-white font-primary overflow-y-auto bg-new_post bg-contain right-1/2 translate-x-1/2 animate-fade_third z-30">
+        <div className="max-md:w-full md:sticky md:top-0">
+          <Images setSelectedFile={setImage} />
         </div>
-        <div className="w-3/5 max-md:w-full flex flex-col gap-4">
-          <input
-            value={title}
-            onChange={el => setTitle(el.target.value)}
-            type="text"
-            placeholder="Untitled Project"
-            className="w-full text-5xl focus:outline-none"
-          />
-          <input
-            value={tagline}
-            onChange={el => setTagline(el.target.value)}
-            type="text"
-            placeholder="Add a Tagline"
-            className="w-full text-lg focus:outline-none"
-          />
-          <Tags tags={tags} setTags={setTags} />
-          <textarea
-            value={description}
-            onChange={el => setDescription(el.target.value)}
-            className="w-full max-h-80 focus:outline-none"
-            placeholder="Click here and start typing"
-          />
-          <Links links={links} setLinks={setLinks} />
-          <div>
-            <div className="block mb-2 text-sm font-medium text-gray-900">Select a Category</div>
+        <div className="grow max-md:w-full">
+          <div className="w-full max-md:w-full flex flex-col gap-4 pb-8 max-md:pb-4">
+            <input
+              value={title}
+              onChange={el => setTitle(el.target.value)}
+              type="text"
+              placeholder="Untitled Project"
+              className="w-full text-5xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
+            />
+
             <select
               onChange={el => setCategory(el.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-fit h-12 border-[1px] border-primary_btn text-white bg-[#10013b30] focus:outline-none border-gray-300 text-sm rounded-lg block p-2"
             >
               {categories.map((c, i) => {
                 return (
-                  <option key={i} value={c}>
+                  <option className="bg-[#10013b30]" key={i} value={c}>
                     {c}
                   </option>
                 );
               })}
             </select>
-          </div>
 
-          <label className="flex cursor-pointer select-none items-center">
-            <div>Keep this Project Private</div>
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={isPrivate}
-                onChange={() => setIsPrivate(prev => !prev)}
-                className="sr-only"
-              />
-              <div
-                className={`box block h-8 w-14 rounded-full ${
-                  isPrivate ? 'bg-blue-300' : 'bg-black'
-                } transition-ease-300`}
-              ></div>
-              <div
-                className={`absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition ${
-                  isPrivate ? 'translate-x-full' : ''
-                }`}
-              ></div>
+            <Tags tags={tags} setTags={setTags} />
+
+            <input
+              value={tagline}
+              onChange={el => setTagline(el.target.value)}
+              type="text"
+              placeholder="Write your Tagline here..."
+              className="w-full text-lg bg-transparent focus:outline-none"
+            />
+
+            <textarea
+              value={description}
+              onChange={el => setDescription(el.target.value)}
+              className="w-full max-h-80 bg-transparent focus:outline-none"
+              placeholder="Explain your project"
+            />
+            <Links links={links} setLinks={setLinks} />
+
+            <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
+              <div>Keep this Project Private</div>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={isPrivate}
+                  onChange={() => setIsPrivate(prev => !prev)}
+                  className="sr-only"
+                />
+                <div
+                  className={`box block h-6 w-10 rounded-full ${
+                    isPrivate ? 'bg-blue-300' : 'bg-black'
+                  } transition-ease-300`}
+                ></div>
+                <div
+                  className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
+                    isPrivate ? 'translate-x-full' : ''
+                  }`}
+                ></div>
+              </div>
+            </label>
+            <div
+              onClick={handleSubmit}
+              className="w-36 h-12 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-[#10013b48] flex-center rounded-lg cursor-pointer"
+            >
+              Build Project
             </div>
-          </label>
-          <div onClick={handleSubmit} className="cursor-pointer">
-            Build Project
           </div>
         </div>
       </div>
-    </div>
+      <div
+        onClick={() => setShow(false)}
+        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+      ></div>
+    </>
   );
 };
 
