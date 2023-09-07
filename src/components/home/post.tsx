@@ -64,7 +64,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
                       height={10000}
                       alt={'Post Pic'}
                       src={`${POST_PIC_URL}/${image}`}
-                      className={`w-full rounded-lg`}
+                      className={`w-full`}
                     />
                   </Slide>
                 );

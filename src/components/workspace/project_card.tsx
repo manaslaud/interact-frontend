@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import { Bookmark, BookmarkSimple, Circle, CircleDashed, HeartStraight } from '@phosphor-icons/react';
+import { CircleDashed, HeartStraight } from '@phosphor-icons/react';
 
 interface Props {
   index: number;

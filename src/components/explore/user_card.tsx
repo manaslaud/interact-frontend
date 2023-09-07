@@ -12,7 +12,7 @@ interface Props {
 const UserCard = ({ user }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   return (
-    <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg flex flex-col px-5 py-4 transition-ease-300">
+    <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
       <div className="flex items-center justify-between w-full">
         <Link className="flex items-center gap-2 w-fit" href={`/explore/user/${user.id}`}>
           <Image
@@ -36,9 +36,13 @@ const UserCard = ({ user }: Props) => {
         </Link>
         <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} />
       </div>
-      <Link href={`/explore/user/${user.username}`} className="w-full pl-16">
-        {user.tagline}
-      </Link>
+      {user.tagline && user.tagline != '' ? (
+        <Link href={`/explore/user/${user.username}`} className="w-full text-sm pl-16">
+          {user.tagline}
+        </Link>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

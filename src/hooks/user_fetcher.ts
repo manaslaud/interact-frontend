@@ -154,7 +154,7 @@ const useUserStateFetcher = () => {
 
   const fetchUnreadNotifications = () => {
     if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
-    const URL = `${NOTIFICATION_URL}/unread`;
+    const URL = `${NOTIFICATION_URL}/unread/count`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -171,7 +171,7 @@ const useUserStateFetcher = () => {
 
   const fetchUnreadInvitations = () => {
     if (moment().utc().diff(config.lastFetchedUnreadInvitations, 'minute') < 2) return;
-    const URL = `${INVITATION_URL}/unread`;
+    const URL = `${INVITATION_URL}/unread/count`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {

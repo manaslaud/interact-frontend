@@ -85,7 +85,7 @@ const Feed = () => {
             <></>
           ) : (
             <InfiniteScroll
-              className="snap-mandatory snap-y px-12 max-md:px-2"
+              className="px-12 max-md:px-2"
               dataLength={feed.length}
               next={getFeed}
               hasMore={hasMore}

@@ -21,12 +21,8 @@ interface Props {
 }
 
 const Notifications = ({ setShow }: Props) => {
-  //! Only new notifications here, have a separate notifications page for all notifications
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -60,25 +56,23 @@ const Notifications = ({ setShow }: Props) => {
   };
 
   const getNotifications = () => {
-    const URL = `/notifications?page=${page}&limit=${10}`;
+    if (totalUnreadNotification == 0) return;
+    setLoading(true);
+    const URL = `/notifications/unread`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          const newNotifications: Notification[] = res.data.notifications;
+          const notificationsData: Notification[] = res.data.notifications;
           const updatedUnreadNotificationIDs: string[] = [];
-          newNotifications.forEach(notification => {
-            if (!notification.isRead)
-              if (!updatedUnreadNotificationIDs.includes(notification.id)) {
-                updatedUnreadNotificationIDs.push(notification.id);
-              }
+          notificationsData.forEach(notification => {
+            if (!updatedUnreadNotificationIDs.includes(notification.id)) {
+              updatedUnreadNotificationIDs.push(notification.id);
+            }
           });
           markRead(updatedUnreadNotificationIDs);
 
-          const addedNotifications = [...notifications, ...newNotifications];
-          if (addedNotifications.length === notifications.length) setHasMore(false);
-          setNotifications(addedNotifications);
+          setNotifications(notificationsData);
           setLoading(false);
-          setPage(prev => prev + 1);
         } else {
           if (res.data.message) Toaster.error(res.data.message);
           else {
@@ -95,30 +89,18 @@ const Notifications = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-96 h-108 max-md:w-full overflow-y-auto absolute top-[50px] max-md:top-[64px] max-md:h-[95vh] right-5 max-md:right-0 flex flex-col items-center bg-white z-20">
+      <div className="w-96 max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-base_md overflow-y-auto absolute top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg flex flex-col items-center z-20 animate-fade_third">
         {loading ? (
           <Loader />
         ) : (
           <>
             {notifications.length === 0 ? (
-              <div className="w-full flex flex-col items-center gap-2 py-24 cursor-default text-center">
-                <div className="font-Helvetica text-2xl">
-                  Looks like you&apos;re as popular as a rainy day on a picnic.
-                </div>
-                <div className="font-sans text-lg text-center">
-                  Explore the wonders of our platform and who knows, maybe someone will notice you and shower you with
-                  notifications soon!
-                </div>
+              <div className="w-full font-primary flex-center text-white py-6 px-4 cursor-default text-center">
+                No new notifications :)
               </div>
             ) : (
-              <InfiniteScroll //! Not working
-                dataLength={notifications.length}
-                next={getNotifications}
-                hasMore={hasMore}
-                loader={<Loader />}
-                className="w-full h-full flex flex-col gap-2"
-              >
-                {notifications.map((notification, index) => {
+              <div className="w-full p-2">
+                {notifications.map(notification => {
                   switch (notification.notificationType) {
                     case -1:
                       return <Welcome notification={notification} />;
@@ -144,14 +126,14 @@ const Notifications = ({ setShow }: Props) => {
                       return <></>;
                   }
                 })}
-              </InfiniteScroll>
+              </div>
             )}
           </>
         )}
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third"
+        className="bg-backdrop blur-lg backdrop-blur-xl w-screen h-screen fixed top-0 left-0 animate-fade_third"
       ></div>
     </>
   );

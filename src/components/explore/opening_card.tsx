@@ -2,8 +2,7 @@ import { Opening } from '@/types';
 import React from 'react';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import { BookmarkSimple, BookmarksSimple } from '@phosphor-icons/react';
-import moment from 'moment';
+import getDisplayTime from '@/utils/get_display_time';
 
 interface Props {
   opening: Opening;
@@ -32,17 +31,40 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
         className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
       />
 
-      <div className="grow flex flex-col max-md:gap-2">
-        <div className="flex items-center justify-between">
-          <div className="w-5/6 font-bold text-2xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-            {opening.title}
+      <div className="grow flex flex-col gap-4 max-md:gap-2">
+        <div className="flex items-start justify-between">
+          <div className="w-5/6 flex flex-col gap-1">
+            <div className="font-bold text-2xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
+              {opening.title}
+            </div>
+            <div className="text-lg max-md:text-sm">{opening.project.title}</div>
           </div>
-          <BookmarkSimple size={24} />
+          <div className="text-sm opacity-60 max-md:text-xs">{getDisplayTime(opening.createdAt)}</div>
         </div>
-        <div>
-          <div className="text-lg max-md:text-sm">{opening.project.title}</div>
-          <div className="text-lg max-md:text-sm">Delhi, India</div>
-          <div className="text-sm opacity-60 max-md:text-xs">{moment(opening.createdAt).fromNow()}</div>
+
+        <div className="w-full flex flex-wrap gap-2">
+          {opening.tags &&
+            opening.tags // Splicing causes array mutation
+              .filter((tag, index) => {
+                return index >= 0 && index < 3;
+              })
+              .map(tag => {
+                return (
+                  <div
+                    key={tag}
+                    className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl"
+                  >
+                    {tag}
+                  </div>
+                );
+              })}
+          {opening.tags && opening.tags.length - 3 > 0 ? (
+            <div className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl">
+              + {opening.tags.length - 3}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

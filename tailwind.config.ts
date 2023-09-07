@@ -20,11 +20,13 @@ const config: Config = {
         navbar: '64px',
         base: 'calc(100vh - 64px)',
         taskbar: '48px',
+        base_md: 'calc(100vh - 64px - 48px)',
       },
       spacing: {
         navbar: '64px',
         base_padding: '24px',
         bottomBar: '100px',
+        base_md: 'calc(100vh - 64px - 48px)',
       },
 
       boxShadow: {
