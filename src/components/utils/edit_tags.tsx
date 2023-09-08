@@ -3,9 +3,10 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 interface Props {
   tags: string[];
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  maxLinks?: number;
 }
 
-const Tags = ({ tags, setTags }: Props) => {
+const Tags = ({ tags, setTags, maxLinks = 5 }: Props) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,6 +16,7 @@ const Tags = ({ tags, setTags }: Props) => {
   const handleTagInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
+      if (tags.length == maxLinks) return;
       const newTag = tagInput.trim();
       if (!tags.includes(newTag) && newTag !== '') {
         setTags([...tags, newTag]);

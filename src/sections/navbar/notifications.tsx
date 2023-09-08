@@ -56,9 +56,10 @@ const Notifications = ({ setShow }: Props) => {
   };
 
   const getNotifications = () => {
-    if (totalUnreadNotification == 0) return;
+    // if (totalUnreadNotification == 0) return;
     setLoading(true);
-    const URL = `/notifications/unread`;
+    // const URL = `/notifications/unread`;
+    const URL = `/notifications`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -69,7 +70,7 @@ const Notifications = ({ setShow }: Props) => {
               updatedUnreadNotificationIDs.push(notification.id);
             }
           });
-          markRead(updatedUnreadNotificationIDs);
+          // markRead(updatedUnreadNotificationIDs);
 
           setNotifications(notificationsData);
           setLoading(false);
@@ -89,7 +90,13 @@ const Notifications = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-96 max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-base_md overflow-y-auto absolute top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop flex flex-col items-center p-2 z-20 animate-fade_third">
+      <div className="w-96 bg-[#200c1944] font-primary max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-base_md overflow-y-auto fixed top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop flex flex-col items-center p-2 z-50 animate-fade_third">
+        <div className="w-full flex flex-col gap-2 p-4 pb-2">
+          <div className="w-full text-start text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
+            Notification Center
+          </div>
+          <div className="w-full h-[1px] bg-primary_btn"></div>
+        </div>
         {loading ? (
           <Loader />
         ) : (
@@ -130,11 +137,11 @@ const Notifications = ({ setShow }: Props) => {
             )}
           </>
         )}
-        <div className="text-white font-primary text-xs hover:underline cursor-pointer">view all</div>
+        <div className="text-white font-primary text-xs hover:underline cursor-pointer my-2">view all</div>
       </div>
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop blur-lg backdrop-blur-xl w-screen h-screen fixed top-0 left-0 animate-fade_third"
+        className="backdrop-brightness-75 w-screen h-screen fixed top-0 left-0 z-30 animate-fade_third"
       ></div>
     </>
   );

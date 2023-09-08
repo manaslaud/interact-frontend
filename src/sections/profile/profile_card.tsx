@@ -13,6 +13,7 @@ import Links from '@/components/utils/edit_links';
 import getDomainName from '@/utils/get_domain_name';
 import getIcon from '@/utils/get_icon';
 import Link from 'next/link';
+import { setExploreTab } from '@/slices/feedSlice';
 
 interface Props {
   user: User;
@@ -164,46 +165,49 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
           </div>
         </div>
       )}
-
-      {clickedOnEdit ? (
-        <div className="w-full flex flex-col gap-2 ml-1">
-          <div className="text-sm font-medium">Tags ({tags.length || 0}/5)</div>
-          <Tags tags={tags} setTags={setTags} />
-        </div>
-      ) : (
-        <div className="w-full flex flex-wrap items-center justify-center gap-2">
-          {user.tags &&
-            user.tags.map(tag => {
-              return (
-                <div
-                  className="flex-center px-4 py-1 border-[1px] border-primary_btn rounded-md cursor-pointer"
-                  key={tag}
-                >
-                  {tag}
-                </div>
-              );
-            })}
-        </div>
-      )}
-      {clickedOnEdit ? (
-        <Links links={links} setLinks={setLinks} maxLinks={3} />
-      ) : (
-        <div className="w-full h-fit flex flex-wrap items-center justify-center gap-4">
-          {user.links &&
-            user.links.map((link, index) => {
-              return (
-                <Link
-                  href={link}
-                  key={index}
-                  className="w-fit h-8 border-[1px] border-primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
-                >
-                  {getIcon(getDomainName(link), 24)}
-                  <div className="capitalize">{getDomainName(link)}</div>
-                </Link>
-              );
-            })}
-        </div>
-      )}
+      <div className="w-full flex flex-col gap-8 mt-12">
+        {clickedOnEdit ? (
+          <div className="w-full flex flex-col gap-2 ml-1">
+            <div className="text-sm font-medium cursor-default">Tags ({tags.length || 0}/5)</div>
+            <Tags tags={tags} setTags={setTags} />
+          </div>
+        ) : (
+          <div className="w-full flex flex-wrap items-center justify-center gap-2">
+            {user.tags &&
+              user.tags.map(tag => {
+                return (
+                  <Link
+                    href={`/explore?search=` + tag}
+                    onClick={() => dispatch(setExploreTab(2))}
+                    className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn rounded-md cursor-pointer"
+                    key={tag}
+                  >
+                    {tag}
+                  </Link>
+                );
+              })}
+          </div>
+        )}
+        {clickedOnEdit ? (
+          <Links links={links} setLinks={setLinks} maxLinks={3} />
+        ) : (
+          <div className="w-full h-fit flex flex-wrap items-center justify-center gap-4">
+            {user.links &&
+              user.links.map((link, index) => {
+                return (
+                  <Link
+                    href={link}
+                    key={index}
+                    className="w-fit h-8 border-[1px] border-primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                  >
+                    {getIcon(getDomainName(link), 24)}
+                    <div className="capitalize">{getDomainName(link)}</div>
+                  </Link>
+                );
+              })}
+          </div>
+        )}
+      </div>
 
       {clickedOnEdit ? (
         <div
