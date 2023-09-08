@@ -4,6 +4,7 @@ import { RootState } from '@/store';
 interface ConfigState {
   updatingFollowing: boolean;
   updatingLikes: boolean;
+  updateBookmark: boolean;
   lastFetchedFollowing: string;
   lastFetchedLikes: string;
   lastFetchedPostBookmarks: string;
@@ -35,6 +36,7 @@ const getInitialInvitationDate = (): string => {
 const initialState: ConfigState = {
   updatingFollowing: false,
   updatingLikes: false,
+  updateBookmark: false,
   lastFetchedFollowing: getInitialDate(),
   lastFetchedLikes: getInitialDate(),
   lastFetchedPostBookmarks: getInitialDate(),
@@ -68,6 +70,9 @@ export const configSlice = createSlice({
     },
     setUpdatingLikes: (state, action: PayloadAction<boolean>) => {
       state.updatingLikes = action.payload;
+    },
+    setUpdateBookmark: (state, action: PayloadAction<boolean>) => {
+      state.updateBookmark = action.payload;
     },
     setConfig: state => {
       state.lastFetchedFollowing = new Date().toUTCString();
@@ -114,6 +119,7 @@ export const {
   resetConfig,
   setUpdatingFollowing,
   setUpdatingLikes,
+  setUpdateBookmark,
   setConfig,
   setFetchedChats,
   setFetchedFollowing,

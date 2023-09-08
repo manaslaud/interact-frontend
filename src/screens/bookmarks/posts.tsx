@@ -11,12 +11,17 @@ import BookmarkPosts from '@/sections/bookmarks/posts';
 import deleteHandler from '@/handlers/delete_handler';
 import { userSelector, setPostBookmarks } from '@/slices/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { navbarOpenSelector } from '@/slices/feedSlice';
+import { configSelector, setUpdateBookmark } from '@/slices/configSlice';
+import patchHandler from '@/handlers/patch_handler';
 
 const Posts = () => {
   const [bookmarks, setBookmarks] = useState<PostBookmark[]>([]);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
   const [clickedBookmark, setClickedBookmark] = useState<PostBookmark>(initialPostBookmark);
   const [loading, setLoading] = useState(true);
+
+  const open = useSelector(navbarOpenSelector);
 
   const [mutex, setMutex] = useState(false);
 
@@ -34,6 +39,7 @@ const Posts = () => {
   };
 
   const bookmarksRedux = useSelector(userSelector).postBookmarks;
+  const updateBookmark = useSelector(configSelector).updateBookmark;
   const dispatch = useDispatch();
 
   const handleDeleteBookmark = async (bookmarkID: string) => {
@@ -48,6 +54,7 @@ const Posts = () => {
       let updatedBookmarks = [...bookmarksRedux];
       updatedBookmarks = updatedBookmarks.filter(el => el.id != bookmarkID);
       dispatch(setPostBookmarks(updatedBookmarks));
+      dispatch(setUpdateBookmark(false));
       setBookmarks(prev => prev.filter(el => el.id != bookmarkID));
       Toaster.stopLoad(toaster, 'Bookmark Deleted', 1);
     } else {
@@ -60,22 +67,58 @@ const Posts = () => {
     setMutex(false);
   };
 
+  const handleEditBookmark = async (bookmarkID: string, title: string): Promise<number> => {
+    if (mutex) return 0;
+    setMutex(true);
+
+    const toaster = Toaster.startLoad('Updating the Bookmark...');
+    const formData = new FormData();
+    formData.append('title', title);
+
+    const URL = `${BOOKMARK_URL}/`;
+
+    const res = await patchHandler(URL, formData, 'multipart/form-data');
+
+    if (res.statusCode === 200) {
+      setBookmarks(prev =>
+        prev.map(bookmark => {
+          if (bookmark.id == bookmarkID) return { ...bookmark, title };
+          else return bookmark;
+        })
+      );
+      setMutex(false);
+      return 1;
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
+        console.log(res);
+      }
+      setMutex(false);
+      return 0;
+    }
+  };
+
   useEffect(() => {
     fetchBookmarks();
-  }, []);
+  }, [updateBookmark]);
 
   return (
     <div>
-      {loading ? (
-        <Loader />
+      {clickedOnBookmark ? (
+        <BookmarkPosts bookmark={clickedBookmark} setClick={setClickedOnBookmark} />
       ) : (
         <>
-          {clickedOnBookmark ? (
-            <BookmarkPosts bookmark={clickedBookmark} setClick={setClickedOnBookmark} />
+          {loading ? (
+            <Loader />
           ) : (
             <>
               {bookmarks.length > 0 ? (
-                <div className="w-full px-4 flex flex-wrap gap-2">
+                <div
+                  className={`w-fit mx-auto justify-center px-4 pt-12 grid grid-cols-3 ${
+                    open ? 'gap-x-4' : 'gap-x-12'
+                  } transition-ease-out-500`}
+                >
                   {bookmarks.map(bookmark => {
                     return (
                       <Bookmark
@@ -83,6 +126,7 @@ const Posts = () => {
                         bookmark={bookmark}
                         setClick={setClickedOnBookmark}
                         setBookmark={setClickedBookmark}
+                        handleEdit={handleEditBookmark}
                         handleDelete={handleDeleteBookmark}
                       />
                     );

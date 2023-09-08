@@ -15,7 +15,7 @@ const persistConfig = {
 const configPersistConfig = {
   key: 'config',
   storage,
-  blacklist: ['updatingFollowing', 'updatingLikes'],
+  blacklist: ['updatingFollowing', 'updatingLikes', 'updateBookmark'],
 };
 
 const rootReducer = combineReducers({

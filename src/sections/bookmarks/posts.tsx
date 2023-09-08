@@ -1,5 +1,6 @@
 import PostComponent from '@/components/home/post';
 import { PostBookmark } from '@/types';
+import { ArrowArcLeft } from '@phosphor-icons/react';
 import React from 'react';
 
 interface Props {
@@ -9,8 +10,11 @@ interface Props {
 
 const Posts = ({ bookmark, setClick }: Props) => {
   return (
-    <div className="w-base_open m-auto flex flex-col gap-2">
-      <div onClick={() => setClick(false)}>Back</div>
+    <div className="w-[50vw] m-auto flex flex-col gap-2 font-primary text-white pt-8">
+      <div className="flex items-center gap-2">
+        <ArrowArcLeft onClick={() => setClick(false)} color="white" className="cursor-pointer" size={32} />
+        <div className="font-medium text-xl cursor-default">{bookmark.title}</div>
+      </div>
       {bookmark.postItems.length === 0 ? (
         <>No Items</>
       ) : (

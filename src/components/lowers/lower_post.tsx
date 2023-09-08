@@ -16,7 +16,7 @@ import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkPost from '../../sections/lowers/bookmark_post';
 import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
-import { configSelector, setUpdatingLikes } from '@/slices/configSlice';
+import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
 import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
 import RePost from './repost';
 
@@ -131,6 +131,7 @@ const LowerPost = ({ post }: Props) => {
       );
       dispatch(setPostBookmarks(updatedBookmarks));
       setBookmark(false, '', '');
+      dispatch(setUpdateBookmark(true));
     } else {
       setBookmark(true, bookmarkStatus.postItemID, bookmarkStatus.bookmarkID);
     }

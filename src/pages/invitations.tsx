@@ -16,7 +16,7 @@ const Invitations = () => {
   const initialSearch = new URLSearchParams(window.location.search).get('search');
   return (
     <BaseWrapper>
-      <Sidebar index={4} />
+      <Sidebar index={5} />
       <MainWrapper>
         <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>
           <TabMenu

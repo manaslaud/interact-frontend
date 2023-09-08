@@ -1,47 +1,93 @@
-import { POST_PIC_URL } from '@/config/routes';
+import { BOOKMARK_URL, POST_PIC_URL } from '@/config/routes';
+import patchHandler from '@/handlers/patch_handler';
 import { PostBookmark } from '@/types';
+import Toaster from '@/utils/toaster';
+import { Check } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
   bookmark: PostBookmark;
-  setClick: React.Dispatch<React.SetStateAction<boolean>>;
   setBookmark: React.Dispatch<React.SetStateAction<PostBookmark>>;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  handleEdit: (bookmarkID: string, title: string) => Promise<number>;
   handleDelete: (bookmarkID: string) => Promise<void>;
 }
 
-const PostBookmark = ({ bookmark, setClick, setBookmark, handleDelete }: Props) => {
+const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelete }: Props) => {
   let count = 0;
+  const [clickedOnSettings, setClickedOnSettings] = useState(false);
+  const [clickedOnEdit, setClickedOnEdit] = useState(false);
+
+  const [title, setTitle] = useState(bookmark.title);
+
+  const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
+    el.preventDefault();
+    const status = await handleEdit(bookmark.id, title);
+    if (status == 1) setClickedOnEdit(false);
+  };
   return (
-    <div className="w-96 h-108 bg-white border-2">
+    <div className="w-96 h-108 font-primary text-white">
       <div
         onClick={() => {
           setBookmark(bookmark);
           setClick(true);
         }}
-        className="cursor-pointer"
+        className="group relative cursor-pointer"
       >
+        <div className="w-full h-full absolute p-2 top-2 left-2 hidden group-hover:flex gap-4 animate-fade_third z-20 rounded-lg cursor-pointer">
+          <div
+            onClick={el => {
+              el.stopPropagation();
+              setClickedOnSettings(prev => !prev);
+            }}
+            className="h-8 w-8 flex-center glassMorphism rounded-full text-white p-1"
+          >
+            •••
+          </div>
+          {clickedOnSettings ? (
+            <div className="w-1/2 h-fit rounded-2xl glassMorphism text-white p-2">
+              <div
+                onClick={el => {
+                  el.stopPropagation();
+                  setClickedOnEdit(prev => !prev);
+                  setClickedOnSettings(false);
+                }}
+                className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+              >
+                {clickedOnEdit ? 'Cancel' : 'Edit'}
+              </div>
+              <div className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg">Delete</div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
         {bookmark.postItems ? (
           <>
             {bookmark.postItems.length == 0 ? (
-              <div className="w-full h-96 bg-slate-400 grid grid-cols-2"></div>
+              <div className="p-2">
+                <div className="w-full h-[368px] bg-slate-400 rounded-md"></div>
+              </div>
             ) : bookmark.postItems.length == 1 ? (
               <>
                 {bookmark.postItems[0].post.images && bookmark.postItems[0].post.images.length > 0 ? (
-                  <Image
-                    crossOrigin="anonymous"
-                    className="w-full h-96 object-cover"
-                    width={10000}
-                    height={10000}
-                    alt=""
-                    src={`${POST_PIC_URL}/${bookmark.postItems[0].post.images[0]}`}
-                  />
+                  <div className="p-2">
+                    <Image
+                      crossOrigin="anonymous"
+                      className="w-full h-[368px] rounded-md object-cover"
+                      width={10000}
+                      height={10000}
+                      alt=""
+                      src={`${POST_PIC_URL}/${bookmark.postItems[0].post.images[0]}`}
+                    />
+                  </div>
                 ) : (
-                  <div className="w-full h-96 bg-slate-400 grid grid-cols-2"></div>
+                  <div className="w-full h-96 bg-slate-400 rounded-md"></div>
                 )}
               </>
             ) : (
-              <div className="w-full h-96 bg-slate-200 grid grid-cols-2">
+              <div className="w-full h-96 flex flex-wrap gap-2 p-2 items-center justify-center">
                 {bookmark.postItems.map(postItem => {
                   if (count >= 4 || !postItem.post.images || postItem.post.images.length === 0) {
                     return <></>;
@@ -51,7 +97,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleDelete }: Props) 
                     <Image
                       key={postItem.postID}
                       crossOrigin="anonymous"
-                      className="w-[180px] h-[180px] object-cover"
+                      className="w-[48%] h-[48%] object-cover rounded-md"
                       width={10000}
                       height={10000}
                       alt=""
@@ -60,7 +106,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleDelete }: Props) 
                   );
                 })}
                 {[...Array(4 - count)].map((_, index) => (
-                  <div key={index} className="w-[180px] h-[180px] bg-slate-400"></div>
+                  <div key={index} className="w-[48%] h-[48%] bg-slate-400 rounded-md"></div>
                 ))}
               </div>
             )}
@@ -69,9 +115,25 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleDelete }: Props) 
           <></>
         )}
       </div>
-
-      <div className="w-full text-center">{bookmark.title}</div>
-      <div onClick={() => handleDelete(bookmark.id)}>delete Bookmark</div>
+      <div className="w-full flex flex-col p-4">
+        {clickedOnEdit ? (
+          <form onSubmit={handleSubmit} className="w-full flex gap-2 items-center mb-2">
+            <input
+              value={title}
+              onChange={el => setTitle(el.target.value)}
+              className="w-full bg-transparent text-xl font-semibold border-[1px] p-2 rounded-md border-primary_btn focus:outline-none"
+            />
+            <button type="submit">
+              <Check className="cursor-pointer" color="white" size={32} />
+            </button>
+          </form>
+        ) : (
+          <div className="w-full text-3xl font-semibold">{bookmark.title}</div>
+        )}
+        <div>
+          {bookmark.postItems.length || 0} Post{bookmark.postItems.length != 1 ? 's' : ''}
+        </div>
+      </div>
     </div>
   );
 };

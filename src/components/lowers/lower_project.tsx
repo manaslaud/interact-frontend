@@ -16,7 +16,7 @@ import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkProject from '../../sections/lowers/bookmark_project';
 import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
-import { configSelector, setFetchingLikes } from '@/slices/configSlice';
+import { configSelector, setUpdatingLikes } from '@/slices/configSlice';
 
 interface Props {
   project: Project;
@@ -48,9 +48,9 @@ const LowerProject = ({ project }: Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const updatingLikes = useSelector(configSelector).fetchingLikes;
+  const updatingLikes = useSelector(configSelector).updatingLikes;
 
-  const semaphore = new Semaphore(updatingLikes, setFetchingLikes);
+  const semaphore = new Semaphore(updatingLikes, setUpdatingLikes);
 
   const setBookmark = (isBookmarked: boolean, projectItemID: string, bookmarkID: string) => {
     setBookmarkStatus({
