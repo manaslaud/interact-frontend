@@ -14,7 +14,7 @@ const UserCard = ({ user }: Props) => {
   return (
     <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
       <div className="flex items-center justify-between w-full">
-        <Link className="flex items-center gap-2 w-fit" href={`/explore/user/${user.id}`}>
+        <Link className="flex items-center gap-2 w-fit" href={`/explore/user/${user.username}`}>
           <Image
             crossOrigin="anonymous"
             width={10000}
