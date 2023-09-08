@@ -57,7 +57,7 @@ const ProjectView = ({ projectSlugs, clickedProjectIndex, setClickedProjectIndex
   }, []);
 
   return (
-    <div className="w-screen h-screen absolute top-0 left-0 z-50 flex bg-[#000000a5] backdrop-blur-sm animate-fade_third">
+    <div className="w-screen h-screen fixed top-0 left-0 z-50 flex bg-[#000000a5] backdrop-blur-sm animate-fade_third">
       <div className="w-16 h-screen flex flex-col items-center justify-between">
         <div className="w-12 h-12 rounded-full bg-white"></div>
         {clickedProjectIndex != 0 ? (

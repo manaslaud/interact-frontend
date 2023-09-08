@@ -11,6 +11,8 @@ const config: Config = {
         sidebar_close: '100px',
         base_open: 'calc(100vw - 640px)',
         base_close: 'calc(100vw - 420px)',
+        no_side_base_open: 'calc(100vw - 320px)',
+        no_side_base_close: 'calc(100vw - 100px)',
         taskbar: '720px',
         taskbar_md: '90%',
         bottomBar: '100px',
@@ -20,6 +22,9 @@ const config: Config = {
         navbar: '64px',
         base: 'calc(100vh - 64px)',
         taskbar: '48px',
+        base_md: 'calc(100vh - 64px - 48px)',
+      },
+      minHeight: {
         base_md: 'calc(100vh - 64px - 48px)',
       },
       spacing: {

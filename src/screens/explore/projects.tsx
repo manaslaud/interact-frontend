@@ -6,7 +6,6 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState, useEffect } from 'react';
-import SearchBar from '@/components/explore/searchbar';
 import ProjectView from '../../sections/explore/project_view';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';

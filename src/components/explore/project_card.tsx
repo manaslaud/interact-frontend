@@ -7,18 +7,20 @@ import { Bookmark, BookmarkSimple, Circle, CircleDashed, HeartStraight } from '@
 interface Props {
   index: number;
   project: Project;
+  size?: number;
   setClickedOnProject: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedProjectIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectIndex }: Props) => {
+const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClickedProjectIndex }: Props) => {
+  const variants = ['w-72', 'w-64', 'w-56', 'h-72', 'h-64', 'h-56'];
   return (
     <div
       onClick={() => {
         setClickedOnProject(true);
         setClickedProjectIndex(index);
       }}
-      className="w-72 h-72 rounded-lg relative group cursor-pointer"
+      className={`w-${size} h-${size} rounded-lg relative group cursor-pointer`}
     >
       <div className="w-full h-full absolute top-0 hidden group-hover:flex animate-fade_third justify-end z-20 rounded-lg p-1">
         <BookmarkSimple size={24} color="white" className="opacity-75" />

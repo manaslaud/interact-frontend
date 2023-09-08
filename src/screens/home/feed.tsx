@@ -1,6 +1,5 @@
 import Loader from '@/components/common/loader';
 import PostComponent from '@/components/home/post';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { userSelector } from '@/slices/userSlice';
 import { Post } from '@/types';
@@ -9,7 +8,6 @@ import { Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
 import NewPost from '@/sections/home/new_post';
 
 const Feed = () => {
