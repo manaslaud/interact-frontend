@@ -16,7 +16,7 @@ const Tags = ({ tags, setTags }: Props) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       const newTag = tagInput.trim();
-      if (newTag !== '') {
+      if (!tags.includes(newTag) && newTag !== '') {
         setTags([...tags, newTag]);
         setTagInput('');
       }
@@ -28,22 +28,24 @@ const Tags = ({ tags, setTags }: Props) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center font-Helvetica gap-2 rounded-md">
+    <div className="w-fit flex flex-wrap items-center font-Helvetica gap-2 rounded-md">
       {tags.map(tag => (
-        <div
-          key={tag}
-          className="flex items-center justify-center px-2 py-1 border-[1px] rounded-md cursor-pointer"
-          onClick={() => handleTagRemove(tag)}
-        >
+        <div key={tag} className="flex-center px-2 py-1 border-[1px] border-primary_btn rounded-md cursor-default">
           {tag}
-          <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg
+            onClick={() => handleTagRemove(tag)}
+            className="w-4 h-4 ml-1 cursor-pointer"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
       ))}
       <input
         type="text"
-        className="flex-1 bg-transparent outline-none"
+        className="w-fit bg-transparent outline-none"
         placeholder="Add tags"
         value={tagInput}
         onChange={handleTagInputChange}

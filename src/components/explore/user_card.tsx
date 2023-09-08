@@ -4,6 +4,8 @@ import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { User } from '@/types';
 import Link from 'next/link';
 import FollowBtn from '../common/follow_btn';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   user: User;
@@ -11,10 +13,14 @@ interface Props {
 
 const UserCard = ({ user }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
+  const loggedInUser = useSelector(userSelector);
   return (
     <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
       <div className="flex items-center justify-between w-full">
-        <Link className="flex items-center gap-2 w-fit" href={`/explore/user/${user.username}`}>
+        <Link
+          className="flex items-center gap-2 w-fit"
+          href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
+        >
           <Image
             crossOrigin="anonymous"
             width={10000}
@@ -37,7 +43,10 @@ const UserCard = ({ user }: Props) => {
         <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} />
       </div>
       {user.tagline && user.tagline != '' ? (
-        <Link href={`/explore/user/${user.username}`} className="w-full text-sm pl-16">
+        <Link
+          href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
+          className="w-full text-sm pl-16"
+        >
           {user.tagline}
         </Link>
       ) : (

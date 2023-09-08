@@ -23,7 +23,7 @@ const UserAppliedToOpening = ({ notification }: Props) => {
         className={'rounded-full w-12 h-12 border-[1px] border-black'}
       />
       <div className="gap-2">
-        <Link className="font-bold z-50" href={`/explore/user/${notification.sender.id}`}>
+        <Link className="font-bold z-50" href={`/explore/user/${notification.sender.username}`}>
           {notification.sender.name}
         </Link>{' '}
         applied for the opening of {notification.opening.title} at {notification.project.title}

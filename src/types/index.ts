@@ -90,6 +90,7 @@ export interface Opening {
 export interface User {
   id: string;
   tags: string[];
+  links: string[];
   email: string;
   name: string;
   active: boolean;

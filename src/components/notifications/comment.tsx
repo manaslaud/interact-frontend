@@ -24,7 +24,7 @@ const Comment = ({ notification, type }: Props) => {
         className={'rounded-full w-12 h-12 border-[1px] border-black'}
       />
       <div className="gap-2">
-        <Link className="font-bold" href={`/explore/user/${notification.sender.id}`}>
+        <Link className="font-bold" href={`/explore/user/${notification.sender.username}`}>
           {notification.sender.name}
         </Link>{' '}
         commented on your {type}

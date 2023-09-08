@@ -24,7 +24,7 @@ const Liked = ({ notification, type }: Props) => {
         className={'rounded-full w-10 h-10 cursor-default border-[1px] border-black'}
       />
       <div className="gap-2 cursor-default">
-        <Link className="font-bold" href={`/explore/user/${notification.sender.id}`}>
+        <Link className="font-bold" href={`/explore/user/${notification.sender.username}`}>
           {notification.sender.name}
         </Link>{' '}
         liked your {type}

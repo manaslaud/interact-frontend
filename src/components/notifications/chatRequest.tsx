@@ -6,12 +6,15 @@ import Link from 'next/link';
 import { Notification } from '@/types';
 import CircleDashed from '@phosphor-icons/react/dist/icons/CircleDashed';
 import NotificationWrapper from '@/wrappers/notification';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
 
 interface Props {
   notification: Notification;
 }
 
 const ChatRequest = ({ notification }: Props) => {
+  const loggedInUser = useSelector(userSelector);
   return (
     <NotificationWrapper notification={notification}>
       <Image
@@ -23,7 +26,7 @@ const ChatRequest = ({ notification }: Props) => {
         className={'rounded-full w-10 h-10 cursor-default border-[1px] border-black'}
       />
       <div className="gap-2 cursor-default">
-        <Link className="font-bold" href={`/explore/user/${notification.sender.id}`}>
+        <Link className="font-bold" href={`/explore/user/${notification.sender.username}`}>
           {notification.sender.name}
         </Link>{' '}
         has initiated a chat.

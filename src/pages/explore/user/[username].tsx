@@ -4,7 +4,7 @@ import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
 import { initialUser } from '@/types/initials';
-import { EXPLORE_URL, USER_COVER_PIC_URL, USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
+import { EXPLORE_URL, USER_COVER_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Image from 'next/image';
@@ -14,8 +14,6 @@ import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
 import { Membership, Project } from '@/types';
 import { GetServerSidePropsContext } from 'next/types';
-import { useRouter } from 'next/router';
-import { userSelector } from '@/slices/userSlice';
 import ProfileCard from '@/sections/explore/profile_card';
 
 interface Props {

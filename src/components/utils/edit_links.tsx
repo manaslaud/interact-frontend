@@ -3,20 +3,21 @@ import React, { FormEvent, useState } from 'react';
 import isURL from 'validator/lib/isURL';
 import Link from 'next/link';
 import getIcon from '@/utils/get_icon';
+import getDomainName from '@/utils/get_domain_name';
 
 interface Props {
   links: string[];
   setLinks: React.Dispatch<React.SetStateAction<string[]>>;
+  maxLinks?: number;
 }
 
-const Links = ({ links, setLinks }: Props) => {
+const Links = ({ links, setLinks, maxLinks = 5 }: Props) => {
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
   const addLink = (el: FormEvent<HTMLFormElement>) => {
     el.preventDefault();
-    if (links && links.length == 5) {
-      Toaster.error('Can add only 5 links');
+    if (links && links.length == maxLinks) {
       return;
     }
     if (isURL(newLink)) {
@@ -28,20 +29,10 @@ const Links = ({ links, setLinks }: Props) => {
     } else Toaster.error('Enter a valid URL');
   };
 
-  const getDomainName = (link: string) => {
-    return new URL(link).hostname
-      .replace('.com', '')
-      .replace('.co', '')
-      .replace('.in', '')
-      .replace('.org', '')
-      .replace('.net', '')
-      .replace('www.', '');
-  };
-
   return (
     <>
-      <div className="w-full flex flex-col ">
-        <div className="w-full text-sm font-bold">Links {links.length + '/' + '5'}</div>
+      <div className="w-full flex flex-col gap-2">
+        <div className="w-full text-sm font-medium">Links ({links.length + '/' + maxLinks})</div>
         <div className="w-full flex flex-col gap-2">
           {links && links.length > 0 ? (
             <div className="flex flex-col gap-4">
@@ -83,7 +74,7 @@ const Links = ({ links, setLinks }: Props) => {
             <></>
           )}
 
-          {links.length < 5 ? (
+          {links.length < maxLinks ? (
             <form onSubmit={addLink}>
               <input
                 className="w-full h-12 bg-[#10013b30] focus:outline-none border-[1px] border-primary_btn rounded-lg font-Inconsolata px-4 py-2"

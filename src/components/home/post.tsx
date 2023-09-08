@@ -7,6 +7,8 @@ import { CarouselProvider, Slider, Slide, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import Link from 'next/link';
 import LowerPost from '../lowers/lower_post';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
 
 interface Props {
   post: Post;
@@ -14,10 +16,14 @@ interface Props {
 }
 
 const Post = ({ post, showLowerPost = true }: Props) => {
+  const loggedInUser = useSelector(userSelector);
   return (
     <div className="w-full font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
       <div className="w-[5%] max-md:w-[10%] h-full">
-        <Link href={`/explore/user/${post.user.username}`} className="rounded-full">
+        <Link
+          href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+          className="rounded-full"
+        >
           <Image
             crossOrigin="anonymous"
             width={10000}
@@ -30,7 +36,10 @@ const Post = ({ post, showLowerPost = true }: Props) => {
       </div>
       <div className="w-[95%] max-md:w-[90%] flex flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
-          <Link href={`/explore/user/${post.user.username}`} className="font-medium">
+          <Link
+            href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+            className="font-medium"
+          >
             {post.user.username}
           </Link>
           <div className="flex gap-2 font-light text-xs">

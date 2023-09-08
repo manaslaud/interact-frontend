@@ -36,6 +36,7 @@ export const initialAchievement: Achievement = {
 export const initialUser: User = {
   id: '',
   tags: [],
+  links: [],
   email: '',
   name: '',
   profilePic: '',

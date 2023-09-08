@@ -64,6 +64,9 @@ export const userSlice = createSlice({
       state.projectBookmarks = [];
       state.openingBookmarks = [];
     },
+    setReduxName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;
     },
@@ -102,6 +105,7 @@ export const userSlice = createSlice({
 
 export const {
   setUser,
+  setReduxName,
   setProfilePic,
   setFollowing,
   setLikes,
