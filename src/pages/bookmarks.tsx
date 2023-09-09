@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Posts from '@/screens/bookmarks/posts';
 import Projects from '@/screens/bookmarks/projects';
 import Protect from '@/utils/protect';
+import Openings from '@/screens/bookmarks/openings';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -24,9 +25,9 @@ const Bookmarks = () => {
           <div className={`${active === 1 ? 'block' : 'hidden'}`}>
             <Projects />
           </div>
-          {/* <div className={`${active === 2 ? 'block' : 'hidden'}`}>
+          <div className={`${active === 2 ? 'block' : 'hidden'}`}>
             <Openings />
-          </div> */}
+          </div>
         </div>
       </MainWrapper>
     </BaseWrapper>

@@ -21,9 +21,13 @@ const Posts = () => {
   const [clickedBookmark, setClickedBookmark] = useState<PostBookmark>(initialPostBookmark);
   const [loading, setLoading] = useState(true);
 
-  const open = useSelector(navbarOpenSelector);
-
   const [mutex, setMutex] = useState(false);
+
+  const open = useSelector(navbarOpenSelector);
+  const bookmarksRedux = useSelector(userSelector).postBookmarks;
+  const updateBookmark = useSelector(configSelector).updateBookmark;
+
+  const dispatch = useDispatch();
 
   const fetchBookmarks = async () => {
     setLoading(true);
@@ -31,6 +35,7 @@ const Posts = () => {
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setBookmarks(res.data.bookmarks || []);
+      dispatch(setUpdateBookmark(false));
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message);
@@ -38,9 +43,10 @@ const Posts = () => {
     }
   };
 
-  const bookmarksRedux = useSelector(userSelector).postBookmarks;
-  const updateBookmark = useSelector(configSelector).updateBookmark;
-  const dispatch = useDispatch();
+  const checkAndFetchBookmarks = () => {
+    if (!updateBookmark) return;
+    fetchBookmarks();
+  };
 
   const handleDeleteBookmark = async (bookmarkID: string) => {
     if (mutex) return;
@@ -54,7 +60,6 @@ const Posts = () => {
       let updatedBookmarks = [...bookmarksRedux];
       updatedBookmarks = updatedBookmarks.filter(el => el.id != bookmarkID);
       dispatch(setPostBookmarks(updatedBookmarks));
-      dispatch(setUpdateBookmark(false));
       setBookmarks(prev => prev.filter(el => el.id != bookmarkID));
       Toaster.stopLoad(toaster, 'Bookmark Deleted', 1);
     } else {
@@ -75,17 +80,17 @@ const Posts = () => {
     const formData = new FormData();
     formData.append('title', title);
 
-    const URL = `${BOOKMARK_URL}/`;
+    const URL = `${BOOKMARK_URL}/post/${bookmarkID}`;
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 200) {
-      setBookmarks(prev =>
-        prev.map(bookmark => {
-          if (bookmark.id == bookmarkID) return { ...bookmark, title };
-          else return bookmark;
-        })
-      );
+      const updatedBookmarks = bookmarks.map(bookmark => {
+        if (bookmark.id == bookmarkID) return { ...bookmark, title };
+        else return bookmark;
+      });
+      setBookmarks(updatedBookmarks);
+      dispatch(setPostBookmarks(updatedBookmarks));
       setMutex(false);
       return 1;
     } else {
@@ -101,12 +106,16 @@ const Posts = () => {
 
   useEffect(() => {
     fetchBookmarks();
-  }, [updateBookmark]);
+  }, []);
 
   return (
     <div>
       {clickedOnBookmark ? (
-        <BookmarkPosts bookmark={clickedBookmark} setClick={setClickedOnBookmark} />
+        <BookmarkPosts
+          bookmark={clickedBookmark}
+          setClick={setClickedOnBookmark}
+          fetchBookmarks={checkAndFetchBookmarks}
+        />
       ) : (
         <>
           {loading ? (

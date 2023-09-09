@@ -1,18 +1,18 @@
-import { POST_PIC_URL } from '@/config/routes';
-import { PostBookmark } from '@/types';
+import { PROJECT_PIC_URL } from '@/config/routes';
+import { OpeningBookmark } from '@/types';
 import { Check } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface Props {
-  bookmark: PostBookmark;
-  setBookmark: React.Dispatch<React.SetStateAction<PostBookmark>>;
+  bookmark: OpeningBookmark;
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  setBookmark: React.Dispatch<React.SetStateAction<OpeningBookmark>>;
   handleEdit: (bookmarkID: string, title: string) => Promise<number>;
   handleDelete: (bookmarkID: string) => Promise<void>;
 }
 
-const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelete }: Props) => {
+const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelete }: Props) => {
   let count = 0;
   const [clickedOnSettings, setClickedOnSettings] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
@@ -25,7 +25,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
     if (status == 1) setClickedOnEdit(false);
   };
   return (
-    <div className="w-96 h-108 font-primary text-white">
+    <div className="w-96 h-108 bg-white border-2">
       <div
         onClick={() => {
           setBookmark(bookmark);
@@ -61,15 +61,15 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
             <></>
           )}
         </div>
-        {bookmark.postItems ? (
+        {bookmark.openingItems ? (
           <>
-            {bookmark.postItems.length == 0 ? (
+            {bookmark.openingItems.length == 0 ? (
               <div className="p-2">
                 <div className="w-full h-[368px] bg-[#c578bf63] rounded-md"></div>
               </div>
-            ) : bookmark.postItems.length == 1 ? (
+            ) : bookmark.openingItems.length == 1 ? (
               <>
-                {bookmark.postItems[0].post.images && bookmark.postItems[0].post.images.length > 0 ? (
+                {bookmark.openingItems[0].opening.project.coverPic ? (
                   <div className="p-2">
                     <Image
                       crossOrigin="anonymous"
@@ -77,7 +77,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
                       width={10000}
                       height={10000}
                       alt=""
-                      src={`${POST_PIC_URL}/${bookmark.postItems[0].post.images[0]}`}
+                      src={`${PROJECT_PIC_URL}/${bookmark.openingItems[0].opening.project.coverPic}`}
                     />
                   </div>
                 ) : (
@@ -86,20 +86,20 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
               </>
             ) : (
               <div className="w-full h-96 flex flex-wrap gap-2 p-2 items-center justify-center">
-                {bookmark.postItems.map(postItem => {
-                  if (count >= 4 || !postItem.post.images || postItem.post.images.length === 0) {
+                {bookmark.openingItems.map(openingItem => {
+                  if (count >= 4 || !openingItem.opening.project.coverPic) {
                     return <></>;
                   }
                   count++;
                   return (
                     <Image
-                      key={postItem.postID}
+                      key={openingItem.openingID}
                       crossOrigin="anonymous"
                       className="w-[48%] h-[49%] object-cover rounded-md"
                       width={10000}
                       height={10000}
                       alt=""
-                      src={`${POST_PIC_URL}/${postItem.post.images[0]}`}
+                      src={`${PROJECT_PIC_URL}/${openingItem.opening.project.coverPic}`}
                     />
                   );
                 })}
@@ -129,11 +129,11 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
           <div className="w-full text-3xl font-semibold">{bookmark.title}</div>
         )}
         <div>
-          {bookmark.postItems.length || 0} Post{bookmark.postItems.length != 1 ? 's' : ''}
+          {bookmark.openingItems.length || 0} Post{bookmark.openingItems.length != 1 ? 's' : ''}
         </div>
       </div>
     </div>
   );
 };
 
-export default PostBookmark;
+export default OpeningBookmark;

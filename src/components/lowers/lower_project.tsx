@@ -16,7 +16,7 @@ import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkProject from '../../sections/lowers/bookmark_project';
 import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
-import { configSelector, setUpdatingLikes } from '@/slices/configSlice';
+import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
 
 interface Props {
   project: Project;
@@ -129,6 +129,7 @@ const LowerProject = ({ project }: Props) => {
       );
       dispatch(setProjectBookmarks(updatedBookmarks));
       setBookmark(false, '', '');
+      dispatch(setUpdateBookmark(true));
     } else {
       setBookmark(true, bookmarkStatus.projectItemID, bookmarkStatus.bookmarkID);
     }

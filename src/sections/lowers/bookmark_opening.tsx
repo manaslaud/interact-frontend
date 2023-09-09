@@ -1,6 +1,6 @@
 import postHandler from '@/handlers/post_handler';
-import { setProjectBookmarks, userSelector } from '@/slices/userSlice';
-import { Project, ProjectBookmark, ProjectBookmarkItem } from '@/types';
+import { setOpeningBookmarks, userSelector } from '@/slices/userSlice';
+import { Opening, OpeningBookmark, OpeningBookmarkItem } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,16 +8,16 @@ import { BOOKMARK_URL } from '@/config/routes';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  project: Project;
-  setBookmark: (isBookmarked: boolean, projectItemID: string, bookmarkID: string) => void;
+  opening: Opening;
+  setBookmark: (isBookmarked: boolean, openingItemID: string, bookmarkID: string) => void;
 }
 
-const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
+const BookmarkOpening = ({ setShow, opening, setBookmark }: Props) => {
   const [bookmarkTitle, setBookmarkTitle] = useState('');
   const [mutex, setMutex] = useState(false);
   const dispatch = useDispatch();
 
-  const bookmarks = useSelector(userSelector).projectBookmarks;
+  const bookmarks = useSelector(userSelector).openingBookmarks;
 
   useEffect(() => {
     document.documentElement.style.overflowY = 'hidden';
@@ -35,13 +35,13 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     setMutex(true);
     const toaster = Toaster.startLoad('Adding your Bookmark...');
 
-    const URL = `${BOOKMARK_URL}/project`;
+    const URL = `${BOOKMARK_URL}/opening`;
     const res = await postHandler(URL, { title: bookmarkTitle });
 
     if (res.statusCode === 201) {
-      const bookmark: ProjectBookmark = res.data.bookmark;
+      const bookmark: OpeningBookmark = res.data.bookmark;
       const updatedBookmarks = [...bookmarks, bookmark];
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setOpeningBookmarks(updatedBookmarks));
       Toaster.stopLoad(toaster, 'Bookmark Added', 1);
       setBookmarkTitle('');
     } else {
@@ -54,34 +54,34 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     setMutex(false);
   };
 
-  const addBookmarkItemHandler = async (bookmark: ProjectBookmark) => {
+  const addBookmarkItemHandler = async (bookmark: OpeningBookmark) => {
     if (mutex) return;
     setMutex(true);
 
-    const URL = `${BOOKMARK_URL}/project/item/${bookmark.id}`;
-    const res = await postHandler(URL, { itemID: project.id });
+    const URL = `${BOOKMARK_URL}/opening/item/${bookmark.id}`;
+    const res = await postHandler(URL, { itemID: opening.id });
 
     if (res.statusCode === 201) {
-      const bookmarkItem: ProjectBookmarkItem = res.data.bookmarkItem;
-      const updatedBookmarks = bookmarks.map(projectBookmark => {
-        if (projectBookmark.id === bookmark.id) {
-          const updatedProjectItems = projectBookmark.projectItems
-            ? [...projectBookmark.projectItems, bookmarkItem]
+      const bookmarkItem: OpeningBookmarkItem = res.data.bookmarkItem;
+      const updatedBookmarks = bookmarks.map(openingBookmark => {
+        if (openingBookmark.id === bookmark.id) {
+          const updatedOpeningItems = openingBookmark.openingItems
+            ? [...openingBookmark.openingItems, bookmarkItem]
             : [bookmarkItem];
-          return { ...projectBookmark, projectItems: updatedProjectItems };
+          return { ...openingBookmark, openingItems: updatedOpeningItems };
         }
-        return projectBookmark;
+        return openingBookmark;
       });
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setOpeningBookmarks(updatedBookmarks));
       setShow(false);
-      setBookmark(true, bookmarkItem.id, bookmarkItem.projectBookmarkID);
+      setBookmark(true, bookmarkItem.id, bookmarkItem.openingBookmarkID);
     }
     setMutex(false);
   };
   return (
     <>
       <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max bg-slate-100 right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div>BookMark this Project</div>
+        <div>BookMark this Opening</div>
         {bookmarks.map((bookmark, index: number) => {
           return (
             <div
@@ -112,4 +112,4 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
   );
 };
 
-export default BookmarkProject;
+export default BookmarkOpening;

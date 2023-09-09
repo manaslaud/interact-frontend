@@ -1,37 +1,37 @@
-import Bookmark from '@/components/bookmarks/project_bookmark';
+import Bookmark from '@/components/bookmarks/opening_bookmark';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import { BOOKMARK_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { ProjectBookmark } from '@/types';
-import { initialProjectBookmark } from '@/types/initials';
+import { OpeningBookmark, ProjectBookmark } from '@/types';
+import { initialOpeningBookmark, initialProjectBookmark } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import BookmarkProjects from '@/sections/bookmarks/projects';
+import BookmarkOpenings from '@/sections/bookmarks/openings';
 import deleteHandler from '@/handlers/delete_handler';
-import { userSelector, setProjectBookmarks } from '@/slices/userSlice';
+import { userSelector, setProjectBookmarks, setOpeningBookmarks } from '@/slices/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { configSelector } from '@/slices/configSlice';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import patchHandler from '@/handlers/patch_handler';
 
-const Projects = () => {
-  const [bookmarks, setBookmarks] = useState<ProjectBookmark[]>([]);
+const Openings = () => {
+  const [bookmarks, setBookmarks] = useState<OpeningBookmark[]>([]);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
-  const [clickedBookmark, setClickedBookmark] = useState<ProjectBookmark>(initialProjectBookmark);
+  const [clickedBookmark, setClickedBookmark] = useState<OpeningBookmark>(initialOpeningBookmark);
   const [loading, setLoading] = useState(true);
 
   const [mutex, setMutex] = useState(false);
 
   const open = useSelector(navbarOpenSelector);
-  const bookmarksRedux = useSelector(userSelector).projectBookmarks;
+  const bookmarksRedux = useSelector(userSelector).openingBookmarks;
   const updateBookmark = useSelector(configSelector).updateBookmark;
 
   const dispatch = useDispatch();
 
   const fetchBookmarks = async () => {
     setLoading(true);
-    const URL = `${BOOKMARK_URL}/project`;
+    const URL = `${BOOKMARK_URL}/opening`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setBookmarks(res.data.bookmarks || []);
@@ -53,12 +53,12 @@ const Projects = () => {
 
     const toaster = Toaster.startLoad('Deleting Bookmark', bookmarkID);
 
-    const URL = `${BOOKMARK_URL}/project/${bookmarkID}`;
+    const URL = `${BOOKMARK_URL}/opening/${bookmarkID}`;
     const res = await deleteHandler(URL);
     if (res.statusCode === 204) {
       let updatedBookmarks = [...bookmarksRedux];
       updatedBookmarks = updatedBookmarks.filter(el => el.id != bookmarkID);
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setOpeningBookmarks(updatedBookmarks));
       setBookmarks(prev => prev.filter(el => el.id != bookmarkID));
       Toaster.stopLoad(toaster, 'Bookmark Deleted', 1);
     } else {
@@ -79,7 +79,7 @@ const Projects = () => {
     const formData = new FormData();
     formData.append('title', title);
 
-    const URL = `${BOOKMARK_URL}/project/${bookmarkID}`;
+    const URL = `${BOOKMARK_URL}/opening/${bookmarkID}`;
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
 
@@ -89,7 +89,7 @@ const Projects = () => {
         else return bookmark;
       });
       setBookmarks(updatedBookmarks);
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setOpeningBookmarks(updatedBookmarks));
       setMutex(false);
       return 1;
     } else {
@@ -110,7 +110,7 @@ const Projects = () => {
   return (
     <div>
       {clickedOnBookmark ? (
-        <BookmarkProjects
+        <BookmarkOpenings
           bookmark={clickedBookmark}
           setClick={setClickedOnBookmark}
           fetchBookmarks={checkAndFetchBookmarks}
@@ -151,4 +151,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Openings;
