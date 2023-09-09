@@ -7,15 +7,15 @@ interface Props {
   active: number;
   setReduxState?: ActionCreatorWithPayload<number>;
   setState?: React.Dispatch<React.SetStateAction<number>>;
-  width?: number;
+  width?: string;
 }
 
-const TabMenu = ({ items, active, setReduxState, setState, width = 500 }: Props) => {
+const TabMenu = ({ items, active, setReduxState, setState, width = '500px' }: Props) => {
   const dispatch = useDispatch();
-  const variants = ['w-[500px]', 'w-[640px]', 'w-[720px]'];
+  const variants = ['w-[500px]', 'w-[640px]', 'w-[720px]', 'w-[100%]'];
   return (
     <div
-      className={`w-[${width}px] max-md:w-[95%] h-[45px] p-1 rounded-lg bg-gradient-to-b from-primary_gradient_start to-primary_gradient_end shadow-outer mx-auto bg-slate-100 flex justify-around gap-1 sticky top-[90px] z-10`}
+      className={`w-[${width}] max-md:w-[95%] h-[45px] p-1 rounded-lg bg-gradient-to-b from-primary_gradient_start to-primary_gradient_end shadow-outer mx-auto bg-slate-100 flex justify-around gap-1 sticky top-[90px] z-10`}
     >
       {/* 64+24=88 */}
       {items.map((item, index) => (

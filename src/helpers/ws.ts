@@ -3,6 +3,8 @@ import { Chat, Message, User } from '@/types';
 import { initialMessage, initialUser } from '@/types/initials';
 import { toast } from 'react-toastify';
 import { messageToastSettings } from '../utils/toaster';
+import { store } from '@/store';
+import sortChats from '@/utils/sort_chats';
 
 export class WSEvent {
   type = '';
@@ -93,7 +95,6 @@ export class MeStopTyping {
 
 export function routeMessagingWindowEvents(
   event: WSEvent,
-  currentChatID: string,
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>,
   typingStatus: TypingStatus,
   setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
@@ -101,7 +102,7 @@ export function routeMessagingWindowEvents(
   if (event.type === undefined) {
     alert('No Type in the Event');
   }
-
+  const currentChatID = store.getState().messaging.currentChatID;
   switch (event.type) {
     case 'new_message':
       const messageEventPayload: Message = event.payload;
@@ -155,12 +156,14 @@ export function routeChatListEvents(
     case 'new_message':
       const messageEventPayload: Message = event.payload;
       setChats(prev =>
-        prev.map(chat => {
-          if (chat.id == messageEventPayload.chatID) {
-            chat.latestMessage = messageEventPayload;
-          }
-          return chat;
-        })
+        sortChats(
+          prev.map(chat => {
+            if (chat.id == messageEventPayload.chatID) {
+              chat.latestMessage = messageEventPayload;
+            }
+            return chat;
+          })
+        )
       );
       break;
     default:
@@ -171,5 +174,9 @@ export function routeChatListEvents(
 export function sendEvent(eventName: string, payloadEvent: any, conn: WebSocket) {
   const event = new WSEvent(eventName, payloadEvent);
 
-  conn.send(JSON.stringify(event));
+  try {
+    conn.send(JSON.stringify(event));
+  } catch {
+    alert('Socket connection error');
+  }
 }

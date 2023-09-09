@@ -6,14 +6,17 @@ import {
   MeTyping,
   SendMessageEvent,
   SendNotificationEvent,
+  WSEvent,
   getWSEvent,
+  routeChatListEvents,
+  routeMessagingWindowEvents,
   sendEvent,
 } from '@/helpers/ws';
-import { Message, User } from '@/types';
+import { Chat, Message, TypingStatus, User } from '@/types';
 import { messageToastSettings } from '@/utils/toaster';
 import { toast } from 'react-toastify';
 import { store } from '@/store';
-import { incrementUnreadNotifications, setUnreadNotifications } from '@/slices/feedSlice';
+import { incrementUnreadNotifications } from '@/slices/feedSlice';
 
 class SocketService {
   private static instance: SocketService | null = null;
@@ -86,6 +89,30 @@ class SocketService {
     if (this.socket) {
       const outgoingNotificationEvent = new SendNotificationEvent(userID, content);
       sendEvent('send_notification', outgoingNotificationEvent, this.socket);
+    }
+  }
+
+  public setupChatWindowRoutes(
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>,
+    typingStatus: TypingStatus,
+    setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
+  ) {
+    if (this.socket) {
+      this.socket.addEventListener('message', function (evt) {
+        const eventData = JSON.parse(evt.data);
+        const event = new WSEvent(eventData.type, eventData.payload);
+        routeMessagingWindowEvents(event, setMessages, typingStatus, setTypingStatus);
+      });
+    }
+  }
+
+  public setupChatListRoutes(setChats: React.Dispatch<React.SetStateAction<Chat[]>>) {
+    if (this.socket) {
+      this.socket.addEventListener('message', function (evt) {
+        const eventData = JSON.parse(evt.data);
+        const event = new WSEvent(eventData.type, eventData.payload);
+        routeChatListEvents(event, setChats);
+      });
     }
   }
 

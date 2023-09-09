@@ -144,7 +144,7 @@ const Profile = () => {
               items={['Posts', 'Projects', 'Collaborating', 'Openings']}
               active={active}
               setState={setActive}
-              width={640}
+              width={'640px'}
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>

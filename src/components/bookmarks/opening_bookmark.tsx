@@ -25,7 +25,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
     if (status == 1) setClickedOnEdit(false);
   };
   return (
-    <div className="w-96 h-108 bg-white border-2">
+    <div className="w-96 h-108 font-primary text-white">
       <div
         onClick={() => {
           setBookmark(bookmark);
@@ -129,7 +129,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
           <div className="w-full text-3xl font-semibold">{bookmark.title}</div>
         )}
         <div>
-          {bookmark.openingItems.length || 0} Post{bookmark.openingItems.length != 1 ? 's' : ''}
+          {bookmark.openingItems.length || 0} Opening{bookmark.openingItems.length != 1 ? 's' : ''}
         </div>
       </div>
     </div>

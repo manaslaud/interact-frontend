@@ -1,13 +1,12 @@
-import Navbar from '@/components/common/sidebar';
+import Sidebar from '@/components/common/sidebar';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import SideWrapper from '@/wrappers/side';
 import React from 'react';
 
 const Base = () => {
   return (
     <BaseWrapper>
-      <Navbar index={-1} />
+      <Sidebar index={-1} />
       <MainWrapper>
         <div></div>
       </MainWrapper>

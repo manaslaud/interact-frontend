@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { userSelector } from '@/slices/userSlice';
 import ProfileDropdown from '@/sections/navbar/profile_dropdown';
+import Link from 'next/link';
 
 const Navbar = () => {
   const notifications = useSelector(unreadNotificationsSelector);
@@ -29,7 +30,9 @@ const Navbar = () => {
       <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
         <ReactSVG src="/onboarding_logo.svg" />
         <div className="flex items-center gap-4 z-0">
-          <ChatCircleDots color="white" className="cursor-pointer max-md:w-8 max-md:h-8" size={36} weight="regular" />
+          <Link href={'/messaging'}>
+            <ChatCircleDots color="white" className="max-md:w-8 max-md:h-8" size={36} weight="regular" />
+          </Link>
           <div
             onClick={() => {
               setClickedOnProfile(false);
