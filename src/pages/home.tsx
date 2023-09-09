@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
-  const navbarOpen = useSelector(navbarOpenSelector);
   return (
     <BaseWrapper>
       <Sidebar index={1} />

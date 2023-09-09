@@ -10,16 +10,36 @@ import { currentChatIDSelector, setCurrentChatID } from '@/slices/messagingSlice
 
 interface Props {
   chat: Chat;
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
 
-const PersonalChatCard = ({ chat }: Props) => {
+const PersonalChatCard = ({ chat, setChats }: Props) => {
   const userID = Cookies.get('id');
   const dispatch = useDispatch();
 
   const currentChatID = useSelector(currentChatIDSelector);
+
+  const handleClick = () => {
+    dispatch(setCurrentChatID(chat.id));
+    // setChats(prev =>
+    //   prev.map(c => {
+    //     if (c.id == chat.id && c.latestMessage.userID != userID && getLastReadMessageID() != c.latestMessage.id) {
+    //       //! latestMessageId is not there in messages from socket
+    //       if (c.createdByID == userID) c.lastReadMessageByCreatingUserID = c.latestMessageID;
+    //       else c.lastReadMessageByAcceptingUserID = c.latestMessageID;
+    //     }
+    //     return c;
+    //   })
+    // );
+  };
+
+  const getLastReadMessageID = () => {
+    if (chat.createdByID == userID) return chat.lastReadMessageByCreatingUserID;
+    return chat.lastReadMessageByAcceptingUserID;
+  };
   return (
     <div
-      onClick={() => dispatch(setCurrentChatID(chat.id))}
+      onClick={handleClick}
       className={`w-full font-primary text-white ${
         chat.id == currentChatID ? 'bg-[#c578bf36]' : ''
       } border-[1px] border-primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
@@ -37,6 +57,11 @@ const PersonalChatCard = ({ chat }: Props) => {
           <div className="text-xl font-semibold">{getMessagingUser(chat).name}</div>
           <div className="flex flex-col font text-xs">
             {chat.latestMessage ? getDisplayTime(chat.latestMessage.createdAt, false) : ''}
+            {/* {chat.latestMessage.userID != userID && getLastReadMessageID() != chat.latestMessage.id ? (
+              <>Unread</>
+            ) : (
+              <></>
+            )} */}
           </div>
         </div>
         {chat.latestMessage ? (

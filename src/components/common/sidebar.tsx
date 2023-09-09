@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import SidebarItem from './sidebar_item';
-import { BookmarkSimple, Chats, Envelope, HouseLine, RocketLaunch, Wrench } from '@phosphor-icons/react';
+import {
+  ArrowLineLeft,
+  BookmarkSimple,
+  Buildings,
+  Chats,
+  Envelope,
+  HouseLine,
+  RocketLaunch,
+  Wrench,
+} from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
@@ -84,7 +93,7 @@ const Sidebar = ({ index }: Props) => {
         <SidebarItem
           index={8}
           title="Organizations"
-          icon={<BookmarkSimple size={24} />}
+          icon={<Buildings size={24} />}
           active={active}
           setActive={setActive}
           open={open}
@@ -106,7 +115,13 @@ const Sidebar = ({ index }: Props) => {
           ></div>
         </div>
       </label> */}
-        <div onClick={() => dispatch(setNavbarOpen(!open))}>Toggle</div>
+
+        <ArrowLineLeft
+          onClick={() => dispatch(setNavbarOpen(!open))}
+          className="cursor-pointer ml-2 mt-2"
+          color="white"
+          size={24}
+        />
       </div>
       <BottomBar index={index} />
     </>

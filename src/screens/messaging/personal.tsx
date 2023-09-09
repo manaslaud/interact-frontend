@@ -4,16 +4,20 @@ import { SERVER_ERROR } from '@/config/errors';
 import { MESSAGING_URL } from '@/config/routes';
 import socketService from '@/config/ws';
 import getHandler from '@/handlers/get_handler';
+import { userSelector } from '@/slices/userSlice';
 import { Chat } from '@/types';
 import getMessagingUser from '@/utils/get_messaging_user';
 import sortChats from '@/utils/sort_chats';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Personal = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [filteredChats, setFilteredChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const currentChats = useSelector(userSelector).chats;
 
   const fetchChats = async () => {
     setLoading(true);
@@ -44,7 +48,7 @@ const Personal = () => {
   useEffect(() => {
     fetchChats();
     socketService.setupChatListRoutes(setChats);
-  }, []);
+  }, [currentChats]);
 
   useEffect(() => {
     filterChats(new URLSearchParams(window.location.search).get('search'));
@@ -61,7 +65,7 @@ const Personal = () => {
               {chats.length > 0 ? (
                 <>
                   {chats.map(chat => {
-                    return <PersonalChatCard key={chat.id} chat={chat} />;
+                    return <PersonalChatCard key={chat.id} chat={chat} setChats={setChats} />;
                   })}
                 </>
               ) : (
@@ -73,7 +77,7 @@ const Personal = () => {
               {filteredChats.length > 0 ? (
                 <>
                   {filteredChats.map(chat => {
-                    return <PersonalChatCard key={chat.id} chat={chat} />;
+                    return <PersonalChatCard key={chat.id} chat={chat} setChats={setChats} />;
                   })}
                 </>
               ) : (

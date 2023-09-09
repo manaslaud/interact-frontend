@@ -33,7 +33,7 @@ const Messaging = () => {
       <Sidebar index={-1} />
       <MainWrapper>
         <div
-          className={`w-fit h-[calc(100vh-65px)] mx-auto flex max-md:flex-col ${
+          className={`w-fit h-[calc(100vh-65px)] max-md:h-fit mx-auto flex max-md:flex-col ${
             open ? 'gap-2' : 'gap-16'
           } transition-ease-out-500 font-primary`}
         >
@@ -67,7 +67,7 @@ const Messaging = () => {
           <div
             className={`w-[37.5vw] max-md:w-screen h-full max-md:h-base max-md:fixed max-md:top-navbar p-2 max-md:p-0 ${
               currentChatID == '' ? 'hidden' : ''
-            } max-md:z-50`}
+            } max-md:z-30`}
           >
             {currentChatID != '' ? <PersonalChat /> : <></>}
           </div>

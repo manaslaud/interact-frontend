@@ -9,6 +9,9 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import NewPost from '@/sections/home/new_post';
+import ProfileCard from '@/sections/home/profile_card';
+import { initialUser } from '@/types/initials';
+import { navbarOpenSelector } from '@/slices/feedSlice';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -18,6 +21,8 @@ const Feed = () => {
   const [loading, setLoading] = useState(true);
 
   let profilePic = useSelector(userSelector).profilePic;
+
+  const open = useSelector(navbarOpenSelector);
 
   const getFeed = () => {
     const URL = `/feed?page=${page}&limit=${5}`;
@@ -49,15 +54,16 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="w-[55vw] max-md:w-screen flex flex-col gap-2">
+    <div className={`w-full flex ${open ? 'gap-2' : 'gap-20'} transition-ease-out-500`}>
       {clickedOnNewPost ? <NewPost setFeed={setFeed} setShow={setClickedOnNewPost} /> : <></>}
       {/* Create a New Post */}
-      <div
-        onClick={() => setClickedOnNewPost(true)}
-        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
-      >
-        <div className="flex gap-2 items-center pl-2">
-          {/* <Image
+      <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
+        <div
+          onClick={() => setClickedOnNewPost(true)}
+          className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+        >
+          <div className="flex gap-2 items-center pl-2">
+            {/* <Image
             crossOrigin="anonymous"
             className="w-8 h-8 rounded-full"
             width={10000}
@@ -65,37 +71,39 @@ const Feed = () => {
             alt="user"
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
           /> */}
-          <div className="font-primary text-gray-200 text-lg">Create a post</div>
+            <div className="font-primary text-gray-200 text-lg">Create a post</div>
+          </div>
+          <Plus
+            size={36}
+            className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
+            weight="regular"
+          />
         </div>
-        <Plus
-          size={36}
-          className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
-          weight="regular"
-        />
-      </div>
 
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          {feed.length === 0 ? (
-            // <NoFeed />
-            <></>
-          ) : (
-            <InfiniteScroll
-              className="px-12 max-md:px-2"
-              dataLength={feed.length}
-              next={getFeed}
-              hasMore={hasMore}
-              loader={<Loader />}
-            >
-              {feed.map(post => {
-                return <PostComponent key={post.id} post={post} />;
-              })}
-            </InfiniteScroll>
-          )}
-        </>
-      )}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {feed.length === 0 ? (
+              // <NoFeed />
+              <></>
+            ) : (
+              <InfiniteScroll
+                className="px-12 max-md:px-2"
+                dataLength={feed.length}
+                next={getFeed}
+                hasMore={hasMore}
+                loader={<Loader />}
+              >
+                {feed.map(post => {
+                  return <PostComponent key={post.id} post={post} />;
+                })}
+              </InfiniteScroll>
+            )}
+          </>
+        )}
+      </div>
+      <ProfileCard />
     </div>
   );
 };

@@ -11,13 +11,14 @@ const getDisplayTime = (date: Date, space: boolean = true): string => {
   var second = fromNow.substring(index);
   if (first) {
     if (first == 'a') str += '1';
+    if (first == 'an') str += '1';
     else str += first;
   }
   if (space) str += ' ';
   if (second) {
     if (second.includes('second')) str += 'S';
     else if (second.includes('minute')) str += 'Min';
-    else if (second.includes('hours')) str += 'H';
+    else if (second.includes('hour')) str += 'H';
     else if (second.includes('day')) str += 'D';
     else if (second.includes('week')) str += 'W';
     else if (second.includes('month')) str += 'M';

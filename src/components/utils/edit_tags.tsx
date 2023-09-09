@@ -3,10 +3,10 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 interface Props {
   tags: string[];
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
-  maxLinks?: number;
+  maxTags?: number;
 }
 
-const Tags = ({ tags, setTags, maxLinks = 5 }: Props) => {
+const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ const Tags = ({ tags, setTags, maxLinks = 5 }: Props) => {
   const handleTagInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      if (tags.length == maxLinks) return;
+      if (tags.length == maxTags) return;
       const newTag = tagInput.trim();
       if (!tags.includes(newTag) && newTag !== '') {
         setTags([...tags, newTag]);
@@ -45,14 +45,18 @@ const Tags = ({ tags, setTags, maxLinks = 5 }: Props) => {
           </svg>
         </div>
       ))}
-      <input
-        type="text"
-        className="w-fit bg-transparent outline-none"
-        placeholder="Add tags"
-        value={tagInput}
-        onChange={handleTagInputChange}
-        onKeyDown={handleTagInputKeyDown}
-      />
+      {tags.length < maxTags ? (
+        <input
+          type="text"
+          className="w-fit bg-transparent outline-none"
+          placeholder="Add tags"
+          value={tagInput}
+          onChange={handleTagInputChange}
+          onKeyDown={handleTagInputKeyDown}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
