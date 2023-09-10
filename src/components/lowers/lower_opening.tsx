@@ -9,7 +9,6 @@ import { setOpeningBookmarks, userSelector } from '@/slices/userSlice';
 import BookmarkSimple from '@phosphor-icons/react/dist/icons/BookmarkSimple';
 import Gear from '@phosphor-icons/react/dist/icons/Gear';
 import Export from '@phosphor-icons/react/dist/icons/Export';
-import BookmarkProject from '../../sections/lowers/bookmark_project';
 import { BOOKMARK_URL } from '@/config/routes';
 import { setUpdateBookmark } from '@/slices/configSlice';
 import BookmarkOpening from '@/sections/lowers/bookmark_opening';

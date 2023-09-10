@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { Post } from '@/types';
 import moment from 'moment';
 import { CarouselProvider, Slide, Slider, Dot } from 'pure-react-carousel';
+import getDisplayTime from '@/utils/get_display_time';
 
 interface Props {
   post: Post;
@@ -75,8 +76,8 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 bg-new_post bg-contain right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div className="flex gap-4">
+      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+        <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"
             className="w-16 h-16 rounded-full"
@@ -90,7 +91,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               <div className="text-2xl font-semibold">{name}</div>
               <div
                 onClick={handleSubmit}
-                className="w-[132px] h-[54px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+                className="max-md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
               >
                 RePost
               </div>
@@ -112,52 +113,9 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               <div className="w-[90%] max-md:w-[90%] flex flex-col gap-3">
                 <div className="w-full h-fit flex justify-between items-center">
                   <div className="font-medium">@{post.user.username}</div>
-                  <div className="flex gap-2 font-light text-xxs">
-                    <div>{moment(post.postedAt).fromNow()}</div>
-                  </div>
+                  <div className="flex gap-2 font-light text-xxs">{getDisplayTime(post.postedAt, false)}</div>
                 </div>
-                {post.images && post.images.length > 0 ? (
-                  <CarouselProvider
-                    naturalSlideHeight={580}
-                    naturalSlideWidth={1000}
-                    totalSlides={post.images.length}
-                    visibleSlides={1}
-                    infinite={true}
-                    dragEnabled={post.images.length != 1}
-                    touchEnabled={post.images.length != 1}
-                    isPlaying={false}
-                    className={`w-full rounded-lg flex flex-col items-center justify-center relative`}
-                  >
-                    <Slider className={`w-full rounded-lg`}>
-                      {post.images.map((image, index) => {
-                        return (
-                          <Slide
-                            index={index}
-                            key={index}
-                            className={`w-full rounded-lg flex items-center justify-center gap-2`}
-                          >
-                            <Image
-                              crossOrigin="anonymous"
-                              width={10000}
-                              height={10000}
-                              alt={'Post Pic'}
-                              src={`${POST_PIC_URL}/${image}`}
-                              className={`w-full`}
-                            />
-                          </Slide>
-                        );
-                      })}
-                    </Slider>
-                    <div className={`${post.images.length === 1 ? 'hidden' : ''} absolute bottom-5`}>
-                      {post.images.map((_, i) => {
-                        return <Dot key={i} slide={i} />;
-                      })}
-                    </div>
-                  </CarouselProvider>
-                ) : (
-                  <></>
-                )}
-                <div className="w-full text-sm whitespace-pre-wrap mb-2 line-clamp-3">{post.content}</div>
+                <div className="w-full text-sm whitespace-pre-wrap mb-2 line-clamp-4">{post.content}</div>
               </div>
             </div>
 
@@ -168,6 +126,12 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               placeholder="Add to conversation..."
             ></textarea>
           </div>
+        </div>
+        <div
+          onClick={handleSubmit}
+          className="md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+        >
+          Post
         </div>
       </div>
       <div

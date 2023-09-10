@@ -11,7 +11,7 @@ const getDisplayTime = (date: Date, space: boolean = true): string => {
   var second = fromNow.substring(index);
   if (first) {
     if (first == 'a') str += '1';
-    if (first == 'an') str += '1';
+    else if (first == 'an') str += '1';
     else str += first;
   }
   if (space) str += ' ';

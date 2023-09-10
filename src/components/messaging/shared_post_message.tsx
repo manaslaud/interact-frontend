@@ -27,7 +27,7 @@ const SharedPostMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-[#c578bf36] gap-4">
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-[#c578bf36] gap-2">
           <div
             onClick={() => {
               router.push(`/explore/post/${message.postID}`);
@@ -46,12 +46,12 @@ const SharedPostMessage = ({ message }: Props) => {
             ) : (
               <></>
             )}
-            <div className={`text-xs ${message.post.images?.length > 0 ? 'line-clamp-2' : 'line-clamp-6'}`}>
+            <div className={`text-xs ${message.post.images?.length > 0 ? 'line-clamp-2' : 'line-clamp-4'}`}>
               {message.post.content}
             </div>
           </div>
           {message.content != '' ? (
-            <div className="border-t-[1px] border-black pt-2 border-dashed">{message.content}</div>
+            <div className="border-t-[1px] border-white pt-2 border-dashed">{message.content}</div>
           ) : (
             <></>
           )}

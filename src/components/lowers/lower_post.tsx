@@ -14,6 +14,7 @@ import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
 import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
 import RePost from '../../sections/home/repost';
+import SharePost from '@/sections/lowers/share_post';
 
 interface Props {
   post: Post;
@@ -141,6 +142,7 @@ const LowerPost = ({ post }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnShare ? <SharePost setShow={setClickedOnShare} post={post} /> : <></>}
       {clickedOnRePost ? <RePost setShow={setClickedOnRePost} post={post} /> : <></>}
       <div className="w-full flex justify-between">
         <div className="flex gap-3 max-md:gap-3">
@@ -170,7 +172,12 @@ const LowerPost = ({ post }: Props) => {
 
           {/* <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
           </div> */}
-          <Export className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
+          <Export
+            onClick={() => setClickedOnShare(true)}
+            className="cursor-pointer max-md:w-6 max-md:h-6"
+            size={24}
+            weight="regular"
+          />
           <BookmarkSimple
             className="cursor-pointer max-md:w-6 max-md:h-6"
             onClick={() => {
