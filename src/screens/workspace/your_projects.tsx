@@ -46,7 +46,6 @@ const YourProjects = () => {
   return (
     <div className="w-full px-2">
       <div className={`${clickedOnNewProject ? 'block' : 'hidden'}`}>
-        {' '}
         <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} />
       </div>
 

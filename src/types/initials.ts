@@ -119,6 +119,8 @@ export const initialMembership: Membership = {
 
 export const initialPost: Post = {
   id: '',
+  rePostID: '',
+  rePost: null,
   userID: '',
   images: [],
   content: '',

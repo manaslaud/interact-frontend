@@ -50,9 +50,9 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
     const formData = new FormData();
 
     formData.append('content', content);
-    formData.append('postID', post.id);
+    formData.append('rePostID', post.id);
 
-    const res = await postHandler(POST_URL, formData);
+    const res = await postHandler(POST_URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 201) {
       setContent('');

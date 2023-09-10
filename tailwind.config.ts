@@ -7,11 +7,11 @@ const config: Config = {
     extend: {
       width: {
         108: '32rem',
-        sidebar_open: '320px',
+        sidebar_open: '280px',
         sidebar_close: '100px',
-        base_open: 'calc(100vw - 640px)',
-        base_close: 'calc(100vw - 420px)',
-        no_side_base_open: 'calc(100vw - 320px)',
+        base_open: 'calc(100vw - 560px)',
+        base_close: 'calc(100vw - 380px)',
+        no_side_base_open: 'calc(100vw - 280px)',
         no_side_base_close: 'calc(100vw - 100px)',
         taskbar: '720px',
         taskbar_md: '90%',

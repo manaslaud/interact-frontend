@@ -8,7 +8,6 @@ import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import Welcome from '@/components/notifications/welcome';
 import postHandler from '@/handlers/post_handler';
 import { useDispatch, useSelector } from 'react-redux';

@@ -172,6 +172,8 @@ export interface PostTag {
 export interface Post {
   id: string;
   userID: string;
+  rePostID: string;
+  rePost: Post | null;
   images: string[];
   content: string;
   user: User;

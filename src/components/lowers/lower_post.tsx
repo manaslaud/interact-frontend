@@ -13,7 +13,7 @@ import { BOOKMARK_URL, POST_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
 import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
-import RePost from './repost';
+import RePost from '../../sections/home/repost';
 
 interface Props {
   post: Post;

@@ -20,6 +20,7 @@ import { resizeImage } from '@/utils/resize_image';
 const Profile = () => {
   const [active, setActive] = useState(0);
   const [user, setUser] = useState(initialUser);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [collaboratingProjects, setCollaboratingProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,6 +41,7 @@ const Profile = () => {
             projects.push(membership.project);
           });
           setCollaboratingProjects(projects);
+          setProjects(res.data.user.projects || []);
           setTagline(res.data.user.tagline);
           setCoverPicView(`${USER_COVER_PIC_URL}/${res.data.user.coverPic}`);
           setLoading(false);
@@ -151,7 +153,7 @@ const Profile = () => {
               <Posts posts={user.posts} />
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              <Projects projects={user.projects} />
+              <Projects projects={projects} setProjects={setProjects} displayOnProfile={true} />
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
               <Projects projects={collaboratingProjects} />

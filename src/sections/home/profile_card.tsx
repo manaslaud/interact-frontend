@@ -44,7 +44,7 @@ const ProfileCard = () => {
     <div
       className={`${
         open
-          ? 'w-[360px] h-base_md pb-4 max-md:mb-12 gap-4 pt-12 max-md:pb-8 max-md:pt-4 px-4'
+          ? 'w-[24vw] h-base_md pb-4 max-md:mb-12 gap-4 pt-12 max-md:pb-8 max-md:pt-4 px-4'
           : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0'
       } transition-ease-500 max-md:h-fit sticky top-[90px] overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col text-white items-center bg-[#84478023] backdrop-blur-md border-[1px] border-primary_btn max-md:hidden max-md:bg-transparent rounded-md z-10`}
     >

@@ -118,7 +118,7 @@ const Sidebar = ({ index }: Props) => {
 
         <ArrowLineLeft
           onClick={() => dispatch(setNavbarOpen(!open))}
-          className="cursor-pointer ml-2 mt-2"
+          className={`cursor-pointer ml-2 mt-2 ${open ? 'rotate-0' : '-rotate-180'} transition-ease-500`}
           color="white"
           size={24}
         />

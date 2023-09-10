@@ -21,6 +21,7 @@ const NewPost = ({ setShow, setFeed }: Props) => {
 
   let profilePic = useSelector(userSelector).profilePic;
   let name = useSelector(userSelector).name;
+  let username = useSelector(userSelector).username;
 
   useEffect(() => {
     document.documentElement.style.overflowY = 'hidden';
@@ -28,6 +29,7 @@ const NewPost = ({ setShow, setFeed }: Props) => {
 
     profilePic = profilePic == '' ? 'default.jpg' : profilePic;
     name = name == '' ? 'Interact User' : name;
+    username = username == '' ? 'interactUser' : username;
 
     return () => {
       document.documentElement.style.overflowY = 'auto';
@@ -77,8 +79,8 @@ const NewPost = ({ setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 bg-new_post bg-contain right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div className="flex gap-4">
+      <div className="fixed top-24 max-md:top-[calc(50%-75px)] w-[953px] max-md:w-5/6 h-[470px] max-md:h-2/3 backdrop-blur-xl bg-[#ffe1fc22] flex flex-col justify-between max-md:items-end p-8 max-md:p-6 text-white font-primary overflow-y-auto border-[1px] border-primary_btn rounded-lg right-1/2 translate-x-1/2 max-md:-translate-y-1/2 animate-fade_third z-30">
+        <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"
             className="w-16 h-16 rounded-full"
@@ -87,12 +89,15 @@ const NewPost = ({ setShow, setFeed }: Props) => {
             alt="user"
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
           />
-          <div className="grow flex flex-col gap-2">
+          <div className="grow flex flex-col gap-4">
             <div className="flex justify-between items-center">
-              <div className="text-2xl font-semibold">{name}</div>
+              <div className="flex flex-col">
+                <div className="text-2xl font-semibold">{name}</div>
+                <div className="text-sm">@{username}</div>
+              </div>
               <div
                 onClick={handleSubmit}
-                className="w-[132px] h-[54px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+                className="max-md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
               >
                 Post
               </div>
@@ -105,6 +110,12 @@ const NewPost = ({ setShow, setFeed }: Props) => {
               placeholder="Start a conversation..."
             ></textarea>
           </div>
+        </div>
+        <div
+          onClick={handleSubmit}
+          className="md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+        >
+          Post
         </div>
       </div>
       <div

@@ -34,7 +34,6 @@ const LowerOpening = ({ opening }: Props) => {
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
   const [mutex, setMutex] = useState(false);
 
-  const likes = useSelector(userSelector).likes;
   const bookmarks = useSelector(userSelector).openingBookmarks;
 
   const userID = Cookies.get('id');
@@ -105,39 +104,34 @@ const LowerOpening = ({ opening }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-full flex justify-between pl-14">
-        <div className="flex gap-6 max-md:gap-3">
-          <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
-            <Export className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={40} weight="duotone" />
-            {/* <div className="">{opening.noShares}</div> */}
-          </div>
-        </div>
-        <div className="relative">
-          <div className="flex gap-2">
-            {userID == opening?.userID ? (
-              <Gear
-                className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
-                onClick={() => {
-                  router.push(`/workspace/opening/edit/${opening.id}`);
-                }}
-                size={40}
-                weight="light"
-              />
-            ) : (
-              <></>
-            )}
-
-            <BookmarkSimple
-              className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
-              onClick={() => {
-                if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-                else setClickedOnBookmark(prev => !prev);
-              }}
-              size={40}
-              weight={bookmarkStatus.isBookmarked ? 'duotone' : 'light'}
-            />
-          </div>
-        </div>
+      <div className="flex gap-4">
+        {userID == opening?.userID ? (
+          <Gear
+            className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+            onClick={() => {
+              router.push(`/workspace/opening/edit/${opening.id}`);
+            }}
+            size={32}
+            weight="light"
+          />
+        ) : (
+          <></>
+        )}
+        <Export
+          onClick={() => setClickedOnShare(true)}
+          className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+          size={32}
+          weight="duotone"
+        />
+        <BookmarkSimple
+          className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
+          onClick={() => {
+            if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+            else setClickedOnBookmark(prev => !prev);
+          }}
+          size={32}
+          weight={bookmarkStatus.isBookmarked ? 'duotone' : 'light'}
+        />
       </div>
     </>
   );

@@ -10,8 +10,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import NewPost from '@/sections/home/new_post';
 import ProfileCard from '@/sections/home/profile_card';
-import { initialUser } from '@/types/initials';
 import { navbarOpenSelector } from '@/slices/feedSlice';
+import RePostComponent from '@/components/home/repost';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -54,7 +54,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className={`w-full flex ${open ? 'gap-2' : 'gap-20'} transition-ease-out-500`}>
+    <div className={`w-full flex ${open ? 'gap-2' : 'gap-12'} transition-ease-out-500`}>
       {clickedOnNewPost ? <NewPost setFeed={setFeed} setShow={setClickedOnNewPost} /> : <></>}
       {/* Create a New Post */}
       <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
@@ -96,7 +96,8 @@ const Feed = () => {
                 loader={<Loader />}
               >
                 {feed.map(post => {
-                  return <PostComponent key={post.id} post={post} />;
+                  if (post.rePost) return <RePostComponent key={post.id} post={post} />;
+                  else return <PostComponent key={post.id} post={post} />;
                 })}
               </InfiniteScroll>
             )}

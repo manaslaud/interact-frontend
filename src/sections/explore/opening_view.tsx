@@ -1,3 +1,4 @@
+import LowerOpening from '@/components/lowers/lower_opening';
 import { Opening } from '@/types';
 import { initialOpening } from '@/types/initials';
 import { ArrowArcLeft, BookmarkSimple, Share } from '@phosphor-icons/react';
@@ -26,10 +27,11 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
           <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
             {opening.title}
           </div>
-          <div className="flex gap-4">
+          <LowerOpening opening={opening} />
+          {/* <div className="flex gap-4">
             <Share className="max-md:w-6 max-md:h-6" size={32} />
             <BookmarkSimple className="max-md:w-6 max-md:h-6" size={32} />
-          </div>
+          </div> */}
         </div>
         <div className="flex gap-2 text-sm max-md:flex-wrap">
           <div>{opening.project.title}</div>
