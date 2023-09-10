@@ -198,6 +198,10 @@ export const initialMessage: Message = {
   post: initialPost,
   projectID: '',
   project: initialProject,
+  openingID: '',
+  opening: initialOpening,
+  profileID: '',
+  profile: initialUser,
   messageID: '',
   message: null,
 };

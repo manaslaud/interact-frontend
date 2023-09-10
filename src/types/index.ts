@@ -249,6 +249,10 @@ export interface Message {
   post: Post;
   projectID: string;
   project: Project;
+  openingID: string;
+  opening: Opening;
+  profileID: string;
+  profile: User;
   messageID: string;
   message: Message | null;
   createdAt: Date;

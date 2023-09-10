@@ -27,7 +27,7 @@ const ChatHeader = ({ chat }: Props) => {
         />
         <div className="flex flex-col">
           <div className="text-lg font-medium">{getMessagingUser(chat).name}</div>
-          <div className="text-xs">{getMessagingUser(chat).username}</div>
+          <div className="text-xs">@{getMessagingUser(chat).username}</div>
         </div>
       </div>
       <div className="text-xs cursor-pointer pr-2">•••</div>

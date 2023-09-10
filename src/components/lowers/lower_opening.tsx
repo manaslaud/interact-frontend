@@ -12,6 +12,7 @@ import Export from '@phosphor-icons/react/dist/icons/Export';
 import { BOOKMARK_URL } from '@/config/routes';
 import { setUpdateBookmark } from '@/slices/configSlice';
 import BookmarkOpening from '@/sections/lowers/bookmark_opening';
+import ShareOpening from '@/sections/lowers/share_opening';
 
 interface Props {
   opening: Opening;
@@ -103,6 +104,7 @@ const LowerOpening = ({ opening }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnShare ? <ShareOpening setShow={setClickedOnShare} opening={opening} /> : <></>}
       <div className="flex gap-4">
         {userID == opening?.userID ? (
           <Gear

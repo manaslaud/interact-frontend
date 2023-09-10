@@ -44,7 +44,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
           </Link>
           <div className="flex gap-2 font-light text-xs">
             <div>{moment(post.postedAt).fromNow()}</div>
-            <div className="text-xxs">•••</div>
+            {showLowerPost ? <div className="text-xxs">•••</div> : <></>}
           </div>
         </div>
         {post.images && post.images.length > 0 ? (

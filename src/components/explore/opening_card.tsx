@@ -6,20 +6,20 @@ import getDisplayTime from '@/utils/get_display_time';
 
 interface Props {
   opening: Opening;
-  clickedOpening: Opening;
-  setClickedOnOpening: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedOpening: React.Dispatch<React.SetStateAction<Opening>>;
+  clickedOpening?: Opening;
+  setClickedOnOpening?: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedOpening?: React.Dispatch<React.SetStateAction<Opening>>;
 }
 
 const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedOpening }: Props) => {
   return (
     <div
       onClick={() => {
-        setClickedOpening(opening);
-        setClickedOnOpening(true);
+        if (setClickedOpening) setClickedOpening(opening);
+        if (setClickedOnOpening) setClickedOnOpening(true);
       }}
       className={`w-full ${
-        opening.id == clickedOpening.id ? 'bg-[#ffffff2b]' : ''
+        opening.id == clickedOpening?.id ? 'bg-[#ffffff2b]' : ''
       } font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300 cursor-pointer`}
     >
       <Image
@@ -39,7 +39,7 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
             </div>
             <div className="text-lg max-md:text-sm">{opening.project.title}</div>
           </div>
-          <div className="text-sm opacity-60 max-md:text-xs">{getDisplayTime(opening.createdAt)}</div>
+          <div className="text-sm opacity-60 max-md:text-xs">{getDisplayTime(opening.createdAt, false)}</div>
         </div>
 
         <div className="w-full flex flex-wrap gap-2">

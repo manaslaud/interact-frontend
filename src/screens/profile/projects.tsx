@@ -31,9 +31,10 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
             {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
             <div
               onClick={() => setClickedOnNewProject(true)}
-              className={`w-64 h-64 backdrop-blur-lg text-white font-medium text-2xl bg-[#ffe1fc22] border-[1px] border-primary_btn rounded-lg relative group cursor-pointer flex-center`}
+              className={`w-64 h-64 backdrop-blur-lg text-white bg-[#ffe1fc22] border-[1px] border-primary_btn rounded-lg relative group cursor-pointer flex-center flex-col gap-2 hover:bg-[#ffe1fc10] transition-ease-300`}
             >
-              Add Project
+              <div className="font-medium text-2xl"> Add Project</div>
+              <div className="text-xs">New Project, Who Dis?</div>
             </div>
           </>
         ) : (
