@@ -48,6 +48,9 @@ const config: Config = {
         secondary_gradient_start: '#be76bf',
         secondary_gradient_end: '#607ee7',
         primary_btn: '#9275b9ba',
+        primary_comp: '#c578bf1b',
+        primary_comp_hover: '#c578bf36',
+        primary_comp_active: '#c578bf5d',
       },
       backgroundColor: {
         backdrop: '#0000007f',

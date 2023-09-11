@@ -1,9 +1,10 @@
 import LowerOpening from '@/components/lowers/lower_opening';
 import { Opening } from '@/types';
 import { initialOpening } from '@/types/initials';
-import { ArrowArcLeft, BookmarkSimple, Share } from '@phosphor-icons/react';
+import { ArrowArcLeft } from '@phosphor-icons/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
+import ApplyOpening from './apply_opening';
 
 interface Props {
   opening: Opening;
@@ -12,8 +13,10 @@ interface Props {
 }
 
 const OpeningView = ({ opening, setShow, setOpening }: Props) => {
+  const [clickedOnApply, setClickedOnApply] = useState(false);
   return (
     <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary text-white border-[1px] max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+      {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
       <div className="flex flex-col gap-2 max-md:gap-6">
         <ArrowArcLeft
           className="cursor-pointer"
@@ -28,10 +31,6 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
             {opening.title}
           </div>
           <LowerOpening opening={opening} />
-          {/* <div className="flex gap-4">
-            <Share className="max-md:w-6 max-md:h-6" size={32} />
-            <BookmarkSimple className="max-md:w-6 max-md:h-6" size={32} />
-          </div> */}
         </div>
         <div className="flex gap-2 text-sm max-md:flex-wrap">
           <div>{opening.project.title}</div>
@@ -66,7 +65,10 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
             })}
         </div>
       </div>
-      <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer">
+      <div
+        onClick={() => setClickedOnApply(true)}
+        className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer"
+      >
         Apply
       </div>
     </div>

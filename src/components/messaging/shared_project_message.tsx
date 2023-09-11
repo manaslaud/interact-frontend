@@ -27,7 +27,7 @@ const SharedProjectMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-[#c578bf36] gap-4">
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp_hover gap-4">
           <div
             onClick={() => {
               router.push(`/explore/project/${message.projectID}`);

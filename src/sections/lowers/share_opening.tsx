@@ -1,13 +1,12 @@
 import Loader from '@/components/common/loader';
-import OpeningCard from '@/components/explore/opening_card';
 import { MESSAGING_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
-import { Chat, Opening, Post } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
+import { Chat, Opening } from '@/types';
 import getMessagingUser from '@/utils/get_messaging_user';
 import Toaster from '@/utils/toaster';
 import Cookies from 'js-cookie';
+import moment from 'moment';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -91,28 +90,26 @@ const ShareOpening = ({ opening, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-6 border-2 border-primary_btn rounded-xl">
+      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-6 border-2 border-primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Share this Opening</div>
         <div className="w-full flex max-md:flex-col gap-4 items-center">
-          <div className="w-1/2 max-md:w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-4 flex flex-col items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer">
+          <div className="w-1/2 max-md:w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
-              className={'w-[180px] h-[180px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
+              className={'w-[180px] h-[180px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
             />
 
             <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
-              <div className="flex justify-between items-center">
-                <div className="w-5/6 flex flex-col gap-1">
-                  <div className="font-bold text-3xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                    {opening.title}
-                  </div>
-                  <div className="text-sm max-md:text-sm">{opening.project.title}</div>
+              <div className="w-full flex flex-col items-center gap-1">
+                <div className="font-bold line-clamp-2 text-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
+                  {opening.title}
                 </div>
-                <div className="text-sm opacity-60 max-md:text-xs">{getDisplayTime(opening.createdAt, false)}</div>
+                <div className="text-sm">@{opening.project.title}</div>
+                <div className="text-xs font-thin">{moment(opening.createdAt).fromNow()}</div>
               </div>
 
               <div className="w-full flex justify-center flex-wrap gap-2">
@@ -200,7 +197,7 @@ const ShareOpening = ({ opening, setShow }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen max-md:h-base fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );
