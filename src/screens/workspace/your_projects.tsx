@@ -35,6 +35,15 @@ const YourProjects = () => {
             return { ...project, user };
           });
           setProjects(projectsData);
+          const projectSlug = new URLSearchParams(window.location.search).get('project');
+          if (projectSlug && projectSlug != '') {
+            projectsData.forEach((project: Project, index: number) => {
+              if (project.slug == projectSlug) {
+                setClickedOnProject(true);
+                setClickedProjectIndex(index);
+              }
+            });
+          }
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message);
@@ -55,9 +64,7 @@ const YourProjects = () => {
   }, []);
   return (
     <div className="w-full px-2">
-      <div className={`${clickedOnNewProject ? 'block' : 'hidden'}`}>
-        <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} />
-      </div>
+      {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
 
       <div
         onClick={() => setClickedOnNewProject(true)}
@@ -84,6 +91,7 @@ const YourProjects = () => {
                   setClickedOnProject={setClickedOnProject}
                   fadeIn={fadeIn}
                   setFadeIn={setFadeIn}
+                  setProjects={setProjects}
                 />
               ) : (
                 <></>

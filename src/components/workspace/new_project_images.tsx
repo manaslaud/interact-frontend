@@ -1,6 +1,6 @@
 import { resizeImage } from '@/utils/resize_image';
 import Toaster from '@/utils/toaster';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
 
@@ -13,6 +13,13 @@ const Images = ({ setSelectedFile, initialImage }: Props) => {
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>(
     initialImage ? `${PROJECT_PIC_URL}/${initialImage}` : ''
   );
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(selectedImageUrl);
+      setSelectedImageUrl('');
+    };
+  }, []);
+
   return (
     <div className="w-full max-md:h-full max-md:py-2 overflow-auto flex flex-col items-center gap-4">
       <input
@@ -24,7 +31,7 @@ const Images = ({ setSelectedFile, initialImage }: Props) => {
           if (target.files && target.files.length > 0) {
             if (target.files[0].type.split('/')[0] === 'image') {
               try {
-                const resizedPic = await resizeImage(target.files[0], 1080, 1080);
+                const resizedPic = await resizeImage(target.files[0], 2560, 2560);
                 setSelectedImageUrl(URL.createObjectURL(resizedPic));
                 setSelectedFile(resizedPic);
               } catch (error) {

@@ -1,6 +1,6 @@
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { EXPLORE_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -11,6 +11,8 @@ import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
+import Collaborators from '@/components/explore/show_collaborato';
+import Openings from '@/components/explore/show_openings';
 
 interface Props {
   projectSlugs: string[];
@@ -81,14 +83,24 @@ const ProjectView = ({
       ) : (
         <div className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl">
           <div className="w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
-            <Image
-              crossOrigin="anonymous"
-              width={10000}
-              height={10000}
-              alt={'User Pic'}
-              src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
-              className={'w-10 h-10 rounded-full cursor-default'}
-            />
+            <div className="w-10 h-10 relative">
+              <Image
+                crossOrigin="anonymous"
+                width={10000}
+                height={10000}
+                alt={'User Pic'}
+                src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
+                className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-0 z-10'}
+              />
+              {/* <Image
+                crossOrigin="anonymous"
+                width={10000}
+                height={10000}
+                alt={'User Pic'}
+                src={`${USER_PROFILE_PIC_URL}/${project.memberships[0].user.profilePic}`}
+                className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-2'}
+              /> */}
+            </div>
             {clickedProjectIndex != 0 ? (
               <div
                 onClick={() => {
@@ -106,15 +118,18 @@ const ProjectView = ({
 
           <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen pt-3">
             <div className="w-full h-14 max-md:pl-[68px]">
-              <div className="w-fit font-semibold cursor-default">
-                {project.title} {project.memberships.length > 0 ? `+${project.memberships.length}` : ''}
-              </div>
-              <div
-                onClick={() => router.push(`/explore/user/${project.user.username}`)}
-                // convert to link
-                className="w-fit text-xs font-medium cursor-pointer hover:underline hover:underline-offset-2"
+              <div className="w-fit font-semibold cursor-default">{project.title}</div>
+              <div // convert to link
+                className="w-fit text-xs font-medium"
               >
-                {project.user.name}
+                <span
+                  onClick={() => router.push(`/explore/user/${project.user.username}`)}
+                  className="cursor-pointer hover:underline hover:underline-offset-2"
+                >
+                  {project.user.name}{' '}
+                </span>
+
+                <span>{project.memberships.length > 0 ? `+${project.memberships.length}` : ''}</span>
               </div>
             </div>
             <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
@@ -172,6 +187,8 @@ const ProjectView = ({
                       );
                     })}
                 </div>
+                <Collaborators memberships={project.memberships} />
+                <Openings openings={project.openings} slug={project.slug} />
               </div>
             </div>
           </div>

@@ -96,10 +96,10 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         </div> */}
 
       <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 text-white font-primary overflow-y-auto border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div className="max-md:w-full md:sticky md:top-0">
+        <div className="w-2/5 max-md:w-full md:sticky md:top-0">
           <Images setSelectedFile={setImage} />
         </div>
-        <div className="grow max-md:w-full">
+        <div className="w-3/5 max-md:w-full">
           <div className="w-full max-md:w-full flex flex-col gap-4 pb-8 max-md:pb-4">
             <input
               value={title}
