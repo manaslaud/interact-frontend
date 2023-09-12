@@ -27,28 +27,55 @@ const SharedProjectMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp_hover gap-4">
-          <div
-            onClick={() => {
-              router.push(`/explore/project/${message.projectID}`);
-            }}
-            className="w-56 h-40 flex flex-col cursor-pointer"
-          >
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp_hover gap-2">
+          <div className="w-full min-w-[240px] font-primary text-white border-[1px] border-primary_btn rounded-lg p-4 flex flex-col items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
-              alt={'Project Pic'}
+              alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${message.project.coverPic}`}
-              className={'rounded-lg w-full h-3/4 border-[1px] border-black object-cover'}
+              className={'w-[200px] h-[200px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
             />
-            <div className="flex flex-col">
-              <div className="text-xl font-bold">{message.project.title}</div>
-              <div className="text-xs">{message.project.tagline}</div>
+
+            <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
+              <div className="w-full flex flex-col items-center gap-1">
+                <div className="font-bold text-center text-2xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
+                  {message.project.title}
+                </div>
+                <div className="text-sm">{message.project.tagline}</div>
+                <div className="text-xs font-thin">{moment(message.project.createdAt).fromNow()}</div>
+              </div>
+
+              <div className="w-full flex justify-center flex-wrap gap-2">
+                {message.project.tags &&
+                  message.project.tags // Splicing causes array mutation
+                    .filter((tag, index) => {
+                      return index >= 0 && index < 3;
+                    })
+                    .map(tag => {
+                      return (
+                        <div
+                          key={tag}
+                          className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl"
+                        >
+                          {tag}
+                        </div>
+                      );
+                    })}
+                {message.project.tags && message.project.tags.length - 3 > 0 ? (
+                  <div className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl">
+                    + {message.project.tags.length - 3}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           </div>
+
           {message.content != '' ? (
-            <div className="border-t-[1px] border-black pt-2 border-dashed">{message.content}</div>
+            <div className="border-t-[1px] border-white pt-2 border-dashed">{message.content}</div>
           ) : (
             <></>
           )}

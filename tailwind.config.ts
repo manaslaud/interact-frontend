@@ -53,7 +53,7 @@ const config: Config = {
         primary_comp_active: '#c578bf5d',
       },
       backgroundColor: {
-        backdrop: '#0000007f',
+        backdrop: '#0000003f',
         navbar: '#070615be',
         main: '#070615be',
         sidebar: '#43434385',

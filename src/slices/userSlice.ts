@@ -18,7 +18,8 @@ interface UserState {
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   openingBookmarks: OpeningBookmark[];
-  contributingProjects: string[]; //TODO remove if not required
+  contributingProjects: string[];
+  applications: string[];
   chats: ChatSlice[];
   profilePic: string;
   isLoggedIn: boolean;
@@ -40,6 +41,7 @@ const initialState: UserState = {
   openingBookmarks: [],
   chats: [],
   contributingProjects: [],
+  applications: [],
   isVerified: false,
 };
 
@@ -58,6 +60,7 @@ export const userSlice = createSlice({
       state.isVerified = action.payload.isVerified;
       state.chats = [];
       state.contributingProjects = [];
+      state.applications = [];
       state.following = [];
       state.likes = [];
       state.postBookmarks = [];
@@ -91,6 +94,9 @@ export const userSlice = createSlice({
     setContributingProjects: (state, action: PayloadAction<string[]>) => {
       state.contributingProjects = action.payload;
     },
+    setApplications: (state, action: PayloadAction<string[]>) => {
+      state.applications = action.payload;
+    },
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
@@ -114,6 +120,7 @@ export const {
   setOpeningBookmarks,
   setChats,
   setContributingProjects,
+  setApplications,
   setEmail,
   setPhoneNumber,
   setVerificationStatus,

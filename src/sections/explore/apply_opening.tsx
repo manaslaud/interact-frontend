@@ -53,7 +53,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
     const formData = new FormData();
     formData.append('content', message);
     if (resume) formData.append('resume', resume);
-    links.forEach(link => formData.append('links', link));
+    // links.forEach(link => formData.append('links', link));
 
     const URL = `${APPLICATION_URL}/${opening.id}`;
     const res = await postHandler(URL, formData, 'multipart/form-data');

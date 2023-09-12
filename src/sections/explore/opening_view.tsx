@@ -5,6 +5,8 @@ import { ArrowArcLeft } from '@phosphor-icons/react';
 import moment from 'moment';
 import React, { useState } from 'react';
 import ApplyOpening from './apply_opening';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   opening: Opening;
@@ -14,6 +16,7 @@ interface Props {
 
 const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   const [clickedOnApply, setClickedOnApply] = useState(false);
+  const applications = useSelector(userSelector).applications;
   return (
     <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary text-white border-[1px] max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
       {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
@@ -69,7 +72,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
         onClick={() => setClickedOnApply(true)}
         className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer"
       >
-        Apply
+        {applications?.includes(opening.id) ? 'Applied' : 'Apply'}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import {
 import getHandler from '@/handlers/get_handler';
 import {
   configSelector,
+  setFetchedApplications,
   setFetchedChats,
   setFetchedContributingProjects,
   setFetchedFollowing,
@@ -22,6 +23,7 @@ import {
 } from '@/slices/configSlice';
 import {
   ChatSlice,
+  setApplications,
   setChats,
   setContributingProjects,
   setFollowing,
@@ -31,7 +33,7 @@ import {
   setProjectBookmarks,
 } from '@/slices/userSlice';
 import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
-import { Chat, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
+import { Application, Chat, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
@@ -152,6 +154,26 @@ const useUserStateFetcher = () => {
       });
   };
 
+  const fetchApplications = () => {
+    if (moment().utc().diff(config.lastFetchedApplications, 'minute') < 30) return;
+    const URL = `${WORKSPACE_URL}/applications`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const applications: string[] = [];
+          res.data.applications?.forEach((application: Application) => {
+            applications.push(application.id);
+          });
+          dispatch(setApplications(applications));
+          dispatch(setFetchedApplications(new Date().toUTCString()));
+        } else Toaster.error(res.data.message);
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR);
+        console.log(err);
+      });
+  };
+
   const fetchUnreadNotifications = () => {
     if (moment().utc().diff(config.lastFetchedUnreadNotifications, 'seconds') < 30) return;
     const URL = `${NOTIFICATION_URL}/unread/count`;
@@ -192,6 +214,7 @@ const useUserStateFetcher = () => {
     fetchBookmarks();
     fetchChats();
     fetchContributingProjects();
+    fetchApplications();
     fetchUnreadNotifications();
     fetchUnreadInvitations();
   };

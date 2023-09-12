@@ -136,7 +136,6 @@ const LowerPost = ({ post }: Props) => {
 
   return (
     <>
-      {/* {clickedOnShare ? <clickedOnSharePost id={post.id} setShow={setClickedOnShare} /> : <></>} */}
       {clickedOnBookmark ? (
         <BookmarkPost setShow={setClickedOnBookmark} post={post} setBookmark={setBookmark} />
       ) : (
@@ -152,8 +151,6 @@ const LowerPost = ({ post }: Props) => {
             size={24}
             weight={liked ? 'fill' : 'regular'}
           />
-          {/* <div onClick={likeHandler} className="flex items-center gap-2">
-          </div> */}
           <ChatCircleText className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
@@ -169,9 +166,6 @@ const LowerPost = ({ post }: Props) => {
           ) : (
             <></>
           )}
-
-          {/* <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
-          </div> */}
           <Export
             onClick={() => setClickedOnShare(true)}
             className="cursor-pointer max-md:w-6 max-md:h-6"

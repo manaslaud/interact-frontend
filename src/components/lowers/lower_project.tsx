@@ -14,9 +14,11 @@ import Export from '@phosphor-icons/react/dist/icons/Export';
 import Heart from '@phosphor-icons/react/dist/icons/Heart';
 import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkProject from '../../sections/lowers/bookmark_project';
-import { BOOKMARK_URL, POST_URL } from '@/config/routes';
+import { BOOKMARK_URL, POST_URL, PROJECT_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
+import { HeartStraight } from '@phosphor-icons/react';
+import ShareProject from '@/sections/lowers/share_project';
 
 interface Props {
   project: Project;
@@ -94,7 +96,7 @@ const LowerProject = ({ project }: Props) => {
 
     setLiked(prev => !prev);
 
-    const URL = `${POST_URL}/like/${project.id}`;
+    const URL = `${PROJECT_URL}/like/${project.id}`;
     const res = await getHandler(URL);
 
     if (res.statusCode === 200) {
@@ -138,53 +140,36 @@ const LowerProject = ({ project }: Props) => {
 
   return (
     <>
-      {/* {clickedOnShare ? <clickedOnShareProject id={project.id} setShow={setClickedOnShare} /> : <></>} */}
       {clickedOnBookmark ? (
         <BookmarkProject setShow={setClickedOnBookmark} project={project} setBookmark={setBookmark} />
       ) : (
         <></>
       )}
-      <div className="w-full flex justify-between pl-14">
-        <div className="flex gap-6 max-md:gap-3">
-          <div onClick={likeHandler} className="flex items-center gap-2">
-            <Heart className="cursor-pointer max-md:w-6 max-md:h-6" size={40} weight={liked ? 'duotone' : 'regular'} />
-            <div className="">{numLikes}</div>
-          </div>
-          <Link className="flex items-center gap-2" href={`/explore/project/comments/${project.id}`}>
-            <ChatTeardrop className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={40} weight="duotone" />
-            <div className="">{project.noComments}</div>
-          </Link>
-          <div className="flex items-center gap-2" onClick={() => setClickedOnShare(true)}>
-            <Export className="cursor-pointer max-md:w-[32px] max-md:h-[32px]" size={40} weight="duotone" />
-            <div className="">{project.noShares}</div>
-          </div>
-        </div>
-        <div className="relative">
-          <div className="flex gap-2">
-            {userID == project?.userID ? (
-              <Gear
-                className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
-                onClick={() => {
-                  router.push(`/workspace/project/edit/${project.id}`);
-                }}
-                size={40}
-                weight="light"
-              />
-            ) : (
-              <></>
-            )}
+      {clickedOnShare ? <ShareProject setShow={setClickedOnShare} project={project} /> : <></>}
 
-            <BookmarkSimple
-              className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
-              onClick={() => {
-                if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-                else setClickedOnBookmark(prev => !prev);
-              }}
-              size={40}
-              weight={bookmarkStatus.isBookmarked ? 'duotone' : 'light'}
-            />
-          </div>
-        </div>
+      <div className="flex flex-col gap-12 max-md:gap-2 max-md:flex-row">
+        <BookmarkSimple
+          className="cursor-pointer max-md:w-6 max-md:h-6"
+          onClick={() => {
+            if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+            else setClickedOnBookmark(prev => !prev);
+          }}
+          size={32}
+          weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
+        />
+        <HeartStraight
+          onClick={likeHandler}
+          className="cursor-pointer max-md:w-6 max-md:h-6"
+          size={32}
+          weight={liked ? 'fill' : 'regular'}
+        />
+        <Export
+          onClick={() => setClickedOnShare(true)}
+          className="cursor-pointer max-md:w-6 max-md:h-6"
+          size={32}
+          weight="regular"
+        />
+        <ChatTeardrop className="cursor-pointer max-md:w-6 max-md:h-6" size={32} />
       </div>
     </>
   );

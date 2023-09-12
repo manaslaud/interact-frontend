@@ -1,7 +1,7 @@
 import ProjectCard from '@/components/explore/project_card';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL } from '@/config/routes';
+import { EXPLORE_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import ProjectView from '../../sections/explore/project_view';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
+import { initialProject } from '@/types/initials';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -35,8 +36,30 @@ const Projects = () => {
     }
   };
 
+  const fetchProject = async (id: string | null) => {
+    setLoading(true);
+    const URL = `${PROJECT_URL}/${id}`;
+
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      setProjects([res.data.project] || []);
+
+      if (res.data.project) {
+        setClickedProjectIndex(0);
+        setClickedOnProject(true);
+      }
+
+      setLoading(false);
+    } else {
+      if (res.data.message) Toaster.error(res.data.message);
+      else Toaster.error(SERVER_ERROR);
+    }
+  };
+
   useEffect(() => {
-    fetchProjects(new URLSearchParams(window.location.search).get('search'));
+    const pid = new URLSearchParams(window.location.search).get('pid');
+    if (pid && pid != '') fetchProject(pid);
+    else fetchProjects(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
 
   return (

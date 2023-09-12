@@ -12,6 +12,7 @@ interface ConfigState {
   lastFetchedOpeningBookmarks: string;
   lastFetchedChats: string;
   lastFetchedContributingProjects: string;
+  lastFetchedApplications: string;
   lastFetchedUnreadNotifications: string;
   lastFetchedUnreadInvitations: string;
 }
@@ -44,6 +45,7 @@ const initialState: ConfigState = {
   lastFetchedOpeningBookmarks: getInitialDate(),
   lastFetchedChats: getInitialDate(),
   lastFetchedContributingProjects: getInitialDate(),
+  lastFetchedApplications: getInitialDate(),
   lastFetchedUnreadNotifications: getInitialNotificationDate(),
   lastFetchedUnreadInvitations: getInitialInvitationDate(),
 };
@@ -62,6 +64,7 @@ export const configSlice = createSlice({
       state.lastFetchedOpeningBookmarks = getInitialDate();
       state.lastFetchedChats = getInitialDate();
       state.lastFetchedContributingProjects = getInitialDate();
+      state.lastFetchedApplications = getInitialDate();
       state.lastFetchedUnreadNotifications = getInitialNotificationDate();
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();
     },
@@ -106,6 +109,9 @@ export const configSlice = createSlice({
     setFetchedContributingProjects: (state, action: PayloadAction<string>) => {
       state.lastFetchedContributingProjects = action.payload;
     },
+    setFetchedApplications: (state, action: PayloadAction<string>) => {
+      state.lastFetchedApplications = action.payload;
+    },
     setLastFetchedUnreadNotifications: (state, action: PayloadAction<string>) => {
       state.lastFetchedUnreadNotifications = action.payload;
     },
@@ -128,6 +134,7 @@ export const {
   setFetchedProjectBookmarks,
   setFetchedOpeningBookmarks,
   setFetchedContributingProjects,
+  setFetchedApplications,
   setLastFetchedUnreadNotifications,
   setLastFetchedUnreadInvitations,
 } = configSlice.actions;

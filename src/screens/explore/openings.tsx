@@ -1,9 +1,7 @@
 import Loader from '@/components/common/loader';
 import OpeningCard from '@/components/explore/opening_card';
-import SearchBar from '@/components/explore/searchbar';
-import UserCard from '@/components/explore/user_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL } from '@/config/routes';
+import { EXPLORE_URL, OPENING_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import OpeningView from '@/sections/explore/opening_view';
 import { Opening } from '@/types';
@@ -44,8 +42,30 @@ const Openings = () => {
     }
   };
 
+  const fetchOpening = async (id: string | null) => {
+    setLoading(true);
+    const URL = `${OPENING_URL}/${id}`;
+
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      setOpenings([res.data.opening] || []);
+
+      if (res.data.opening) {
+        setClickedOpening(res.data.opening || initialOpening);
+        setClickedOnOpening(true);
+      }
+
+      setLoading(false);
+    } else {
+      if (res.data.message) Toaster.error(res.data.message);
+      else Toaster.error(SERVER_ERROR);
+    }
+  };
+
   useEffect(() => {
-    fetchOpenings(new URLSearchParams(window.location.search).get('search'));
+    const oid = new URLSearchParams(window.location.search).get('oid');
+    if (oid && oid != '') fetchOpening(oid);
+    else fetchOpenings(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
 
   return (
