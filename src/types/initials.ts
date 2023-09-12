@@ -86,6 +86,7 @@ export const initialProject: Project = {
   hashes: [],
   isPrivate: false,
   views: 0,
+  totalNoViews: 0,
   privateLinks: [],
   links: [],
 };

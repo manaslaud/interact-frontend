@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
+import { useRouter } from 'next/router';
 
 interface Props {
   projectSlugs: string[];
@@ -32,6 +33,8 @@ const ProjectView = ({
   const [loading, setLoading] = useState(true);
 
   const [clickedOnReadMore, setClickedOnReadMore] = useState(false);
+
+  const router = useRouter();
 
   const fetchProject = async (abortController: AbortController) => {
     setLoading(true);
@@ -84,7 +87,7 @@ const ProjectView = ({
               height={10000}
               alt={'User Pic'}
               src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
-              className={'w-10 h-10 rounded-full cursor-pointer'}
+              className={'w-10 h-10 rounded-full cursor-default'}
             />
             {clickedProjectIndex != 0 ? (
               <div
@@ -103,10 +106,16 @@ const ProjectView = ({
 
           <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen pt-3">
             <div className="w-full h-14 max-md:pl-[68px]">
-              <div className="font-semibold">
+              <div className="w-fit font-semibold cursor-default">
                 {project.title} {project.memberships.length > 0 ? `+${project.memberships.length}` : ''}
               </div>
-              <div className="text-xs">{project.user.name}</div>
+              <div
+                onClick={() => router.push(`/explore/user/${project.user.username}`)}
+                // convert to link
+                className="w-fit text-xs font-medium cursor-pointer hover:underline hover:underline-offset-2"
+              >
+                {project.user.name}
+              </div>
             </div>
             <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
               <Image

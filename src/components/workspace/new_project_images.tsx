@@ -2,13 +2,17 @@ import { resizeImage } from '@/utils/resize_image';
 import Toaster from '@/utils/toaster';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { PROJECT_PIC_URL } from '@/config/routes';
 
 interface Props {
   setSelectedFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+  initialImage?: string;
 }
 
-const Images = ({ setSelectedFile }: Props) => {
-  const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
+const Images = ({ setSelectedFile, initialImage }: Props) => {
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>(
+    initialImage ? `${PROJECT_PIC_URL}/${initialImage}` : ''
+  );
   return (
     <div className="w-full max-md:h-full max-md:py-2 overflow-auto flex flex-col items-center gap-4">
       <input
@@ -37,11 +41,12 @@ const Images = ({ setSelectedFile }: Props) => {
 
       <label htmlFor="image">
         {selectedImageUrl == '' ? (
-          <div className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 bg-[#fffcea] flex flex-col items-center justify-center transition-ease-500 cursor-pointer hover:bg-[#fff7cb]">
+          <div className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 bg-[#fffcea] flex-center transition-ease-500 cursor-pointer hover:bg-[#fff7cb]">
             add Image
           </div>
         ) : (
           <Image
+            crossOrigin="anonymous"
             width={10000}
             height={10000}
             alt="project cover"

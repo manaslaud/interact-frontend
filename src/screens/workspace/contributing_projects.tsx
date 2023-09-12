@@ -14,6 +14,8 @@ const ContributingProjects = () => {
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
+  const [fadeIn, setFadeIn] = useState(true);
+
   const getProjects = () => {
     const URL = `${WORKSPACE_URL}/contributing`;
     getHandler(URL)
@@ -52,6 +54,8 @@ const ContributingProjects = () => {
                   clickedProjectIndex={clickedProjectIndex}
                   setClickedProjectIndex={setClickedProjectIndex}
                   setClickedOnProject={setClickedOnProject}
+                  fadeIn={fadeIn}
+                  setFadeIn={setFadeIn}
                 />
               ) : (
                 <></>
@@ -62,6 +66,7 @@ const ContributingProjects = () => {
                     key={project.id}
                     index={index}
                     project={project}
+                    setProjects={setProjects}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}
                   />

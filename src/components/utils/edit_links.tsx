@@ -9,9 +9,10 @@ interface Props {
   links: string[];
   setLinks: React.Dispatch<React.SetStateAction<string[]>>;
   maxLinks?: number;
+  title?: string;
 }
 
-const Links = ({ links, setLinks, maxLinks = 5 }: Props) => {
+const Links = ({ links, setLinks, maxLinks = 5, title = 'Links' }: Props) => {
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
@@ -32,7 +33,9 @@ const Links = ({ links, setLinks, maxLinks = 5 }: Props) => {
   return (
     <>
       <div className="w-full flex flex-col gap-2">
-        <div className="w-full text-sm font-medium">Links ({links.length + '/' + maxLinks})</div>
+        <div className="w-full text-sm font-medium">
+          {title} ({links.length + '/' + maxLinks})
+        </div>
         <div className="w-full flex flex-col gap-2">
           {links && links.length > 0 ? (
             <div className="flex flex-col gap-4">

@@ -20,6 +20,8 @@ const YourProjects = () => {
 
   const [clickedOnNewProject, setClickedOnNewProject] = useState(false);
 
+  const [fadeIn, setFadeIn] = useState(true);
+
   const user = useSelector(userSelector);
 
   const getProjects = () => {
@@ -80,6 +82,8 @@ const YourProjects = () => {
                   clickedProjectIndex={clickedProjectIndex}
                   setClickedProjectIndex={setClickedProjectIndex}
                   setClickedOnProject={setClickedOnProject}
+                  fadeIn={fadeIn}
+                  setFadeIn={setFadeIn}
                 />
               ) : (
                 <></>
@@ -90,6 +94,7 @@ const YourProjects = () => {
                     key={project.id}
                     index={index}
                     project={project}
+                    setProjects={setProjects}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}
                   />

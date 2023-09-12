@@ -18,7 +18,9 @@ interface UserState {
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   openingBookmarks: OpeningBookmark[];
-  contributingProjects: string[];
+  memberProjects: string[];
+  editorProjects: string[];
+  managerProjects: string[];
   applications: string[];
   chats: ChatSlice[];
   profilePic: string;
@@ -40,7 +42,9 @@ const initialState: UserState = {
   projectBookmarks: [],
   openingBookmarks: [],
   chats: [],
-  contributingProjects: [],
+  memberProjects: [],
+  editorProjects: [],
+  managerProjects: [],
   applications: [],
   isVerified: false,
 };
@@ -59,7 +63,9 @@ export const userSlice = createSlice({
       state.phoneNo = action.payload.phoneNo;
       state.isVerified = action.payload.isVerified;
       state.chats = [];
-      state.contributingProjects = [];
+      state.memberProjects = [];
+      state.editorProjects = [];
+      state.managerProjects = [];
       state.applications = [];
       state.following = [];
       state.likes = [];
@@ -91,8 +97,14 @@ export const userSlice = createSlice({
     setChats: (state, action: PayloadAction<ChatSlice[]>) => {
       state.chats = action.payload;
     },
-    setContributingProjects: (state, action: PayloadAction<string[]>) => {
-      state.contributingProjects = action.payload;
+    setMemberProjects: (state, action: PayloadAction<string[]>) => {
+      state.memberProjects = action.payload;
+    },
+    setEditorProjects: (state, action: PayloadAction<string[]>) => {
+      state.editorProjects = action.payload;
+    },
+    setManagerProjects: (state, action: PayloadAction<string[]>) => {
+      state.managerProjects = action.payload;
     },
     setApplications: (state, action: PayloadAction<string[]>) => {
       state.applications = action.payload;
@@ -119,7 +131,9 @@ export const {
   setProjectBookmarks,
   setOpeningBookmarks,
   setChats,
-  setContributingProjects,
+  setMemberProjects,
+  setEditorProjects,
+  setManagerProjects,
   setApplications,
   setEmail,
   setPhoneNumber,

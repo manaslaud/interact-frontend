@@ -158,6 +158,7 @@ export interface Project {
   hashes: string[];
   isPrivate: boolean;
   views: number;
+  totalNoViews: number;
   privateLinks: string[];
   links: string[];
   createdAt: Date;

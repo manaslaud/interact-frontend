@@ -25,20 +25,23 @@ import {
   ChatSlice,
   setApplications,
   setChats,
-  setContributingProjects,
+  setEditorProjects,
   setFollowing,
   setLikes,
+  setManagerProjects,
+  setMemberProjects,
   setOpeningBookmarks,
   setPostBookmarks,
   setProjectBookmarks,
 } from '@/slices/userSlice';
 import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
-import { Application, Chat, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
+import { Application, Chat, Membership, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { SERVER_ERROR } from '@/config/errors';
 import moment from 'moment';
+import { PROJECT_EDITOR, PROJECT_MANAGER, PROJECT_MEMBER } from '@/config/constants';
 
 const useUserStateFetcher = () => {
   const dispatch = useDispatch();
@@ -136,15 +139,33 @@ const useUserStateFetcher = () => {
 
   const fetchContributingProjects = () => {
     if (moment().utc().diff(config.lastFetchedContributingProjects, 'minute') < 30) return;
-    const URL = `${WORKSPACE_URL}/contributing`;
+    const URL = `${WORKSPACE_URL}/memberships`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          const projects: string[] = [];
-          res.data.projects?.forEach((project: Project) => {
-            projects.push(project.id);
+          const memberProjects: string[] = [];
+          const editorProjects: string[] = [];
+          const managerProjects: string[] = [];
+
+          res.data.memberships?.forEach((membership: Membership) => {
+            switch (membership.role) {
+              case PROJECT_MANAGER:
+                managerProjects.push(membership.projectID);
+                editorProjects.push(membership.projectID);
+                memberProjects.push(membership.projectID);
+                break;
+              case PROJECT_EDITOR:
+                editorProjects.push(membership.projectID);
+                memberProjects.push(membership.projectID);
+                break;
+              case PROJECT_MEMBER:
+                memberProjects.push(membership.projectID);
+                break;
+            }
           });
-          dispatch(setContributingProjects(projects));
+          dispatch(setManagerProjects(managerProjects));
+          dispatch(setEditorProjects(editorProjects));
+          dispatch(setMemberProjects(memberProjects));
           dispatch(setFetchedContributingProjects(new Date().toUTCString()));
         } else Toaster.error(res.data.message);
       })

@@ -38,9 +38,6 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
         <div className="text-xl">{project.title}</div>
         <div className="w-full flex items-center justify-between">
           <div className="text-sm">{project.user.name}</div>
-          {
-            //TODO add actual name
-          }
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">
               <HeartStraight size={16} />
@@ -48,10 +45,7 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
             </div>
             <div className="flex items-center gap-1 text-xs">
               <CircleDashed size={16} />
-              <div>{project.noShares}</div>{' '}
-              {
-                //TODO change to number of views
-              }
+              <div>{project.totalNoViews}</div>
             </div>
           </div>
         </div>
