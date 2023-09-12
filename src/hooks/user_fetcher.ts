@@ -162,7 +162,7 @@ const useUserStateFetcher = () => {
         if (res.statusCode === 200) {
           const applications: string[] = [];
           res.data.applications?.forEach((application: Application) => {
-            applications.push(application.id);
+            applications.push(application.openingID);
           });
           dispatch(setApplications(applications));
           dispatch(setFetchedApplications(new Date().toUTCString()));

@@ -68,12 +68,18 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
             })}
         </div>
       </div>
-      <div
-        onClick={() => setClickedOnApply(true)}
-        className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer"
-      >
-        {applications?.includes(opening.id) ? 'Applied' : 'Apply'}
-      </div>
+      {applications?.includes(opening.id) ? (
+        <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end rounded-lg cursor-default">
+          Applied
+        </div>
+      ) : (
+        <div
+          onClick={() => setClickedOnApply(true)}
+          className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-lg cursor-pointer"
+        >
+          Apply
+        </div>
+      )}
     </div>
   );
 };

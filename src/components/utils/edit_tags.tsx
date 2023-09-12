@@ -19,7 +19,7 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
       if (tags.length == maxTags) return;
       const newTag = tagInput.trim();
       if (!tags.includes(newTag) && newTag !== '') {
-        setTags([...tags, newTag]);
+        setTags([...tags, newTag.toLowerCase()]);
         setTagInput('');
       }
     }

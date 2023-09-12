@@ -50,16 +50,6 @@ const ShareProject = ({ project, setShow }: Props) => {
       });
   }, [project]);
 
-  useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
-
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
-  }, []);
-
   const handleSubmit = async () => {
     if (selectedChats.length == 0) {
       setShow(false);

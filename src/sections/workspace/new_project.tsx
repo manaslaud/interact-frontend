@@ -4,11 +4,13 @@ import Images from '@/components/workspace/new_project_images';
 import { VERIFICATION_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
+import { userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
 import router from 'next/router';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +28,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   const [image, setImage] = useState<File>();
 
   const [mutex, setMutex] = useState(false);
+
+  const user = useSelector(userSelector);
 
   const handleSubmit = async () => {
     if (title.trim() == '') {
@@ -55,16 +59,21 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     links.forEach(link => formData.append('links', link));
     formData.append('category', category);
     formData.append('isPrivate', String(isPrivate));
-    // images.forEach(file => {
-    //   formData.append('images', file);
-    // });
+    if (image) formData.append('coverPic', image);
 
     const res = await postHandler(PROJECT_URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 201) {
       const project = res.data.project;
+      project.user = user;
       if (setProjects) setProjects(prev => [...prev, project]);
       Toaster.stopLoad(toaster, 'Project Added', 1);
+      setTitle('');
+      setTagline('');
+      setDescription('');
+      setTags([]);
+      setLinks([]);
+      setImage(undefined);
       setShow(false);
     } else {
       if (res.data.message) {
@@ -95,6 +104,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             <input
               value={title}
               onChange={el => setTitle(el.target.value)}
+              maxLength={25}
               type="text"
               placeholder="Untitled Project"
               className="w-full text-5xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
@@ -154,7 +164,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             </label>
             <div
               onClick={handleSubmit}
-              className="w-36 h-12 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-[#10013b48] flex-center rounded-lg cursor-pointer"
+              className="w-36 h-12 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Build Project
             </div>

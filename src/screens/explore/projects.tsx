@@ -6,10 +6,7 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState, useEffect } from 'react';
-import ProjectView from '../../sections/explore/project_view';
-import { useSelector } from 'react-redux';
-import { navbarOpenSelector } from '@/slices/feedSlice';
-import { initialProject } from '@/types/initials';
+import ProjectView from '@/sections/explore/project_view';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -18,7 +15,7 @@ const Projects = () => {
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
-  const navbarOpen = useSelector(navbarOpenSelector);
+  const [fadeInProjectView, setFadeInProjectView] = useState(true);
 
   const fetchProjects = async (search: string | null) => {
     setLoading(true);
@@ -69,17 +66,15 @@ const Projects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div
-              className={`w-full grid ${
-                navbarOpen ? 'grid-cols-3 px-16 gap-16' : 'grid-cols-4 px-12 gap-12'
-              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center`}
-            >
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8 gap-y-5">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
                   clickedProjectIndex={clickedProjectIndex}
                   setClickedProjectIndex={setClickedProjectIndex}
                   setClickedOnProject={setClickedOnProject}
+                  fadeIn={fadeInProjectView}
+                  setFadeIn={setFadeInProjectView}
                 />
               ) : (
                 <></>

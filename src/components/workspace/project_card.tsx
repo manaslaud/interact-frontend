@@ -19,9 +19,10 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
         setClickedOnProject(true);
         setClickedProjectIndex(index);
       }}
+      onMouseLeave={() => setClickedOnSettings(false)}
       className="w-72 h-72 rounded-lg relative group cursor-pointer"
     >
-      <div className="w-full h-full absolute top-0 hidden group-hover:flex gap-4 animate-fade_third z-20 rounded-lg p-2">
+      <div className="w-full h-full absolute top-0 hidden group-hover:flex gap-4 animate-fade_third z-[6] rounded-lg p-2">
         <div
           onClick={el => {
             el.stopPropagation();
@@ -42,7 +43,7 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
           <></>
         )}
       </div>
-      <div className="w-full h-full rounded-lg absolute top-0 left-0 bg-gradient-to-b from-[#00000084] z-10 to-transparent opacity-0 group-hover:opacity-100 transition-ease-300"></div>
+      <div className="w-full h-full rounded-lg absolute top-0 left-0 bg-gradient-to-b from-[#00000084] z-[5] to-transparent opacity-0 group-hover:opacity-100 transition-ease-300"></div>
       <Image
         crossOrigin="anonymous"
         className="w-full h-full rounded-lg object-cover absolute top-0 left-0 "
@@ -54,10 +55,7 @@ const ProjectCard = ({ index, project, setClickedOnProject, setClickedProjectInd
       <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
         <div className="text-xl">{project.title}</div>
         <div className="w-full flex items-center justify-between">
-          <div className="text-sm">Pratham Mishra</div>
-          {
-            //TODO add actual name
-          }
+          <div className="text-sm">{project.user.name}</div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">
               <HeartStraight size={16} />

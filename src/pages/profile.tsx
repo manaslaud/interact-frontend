@@ -16,6 +16,7 @@ import { Membership, Project } from '@/types';
 import ProfileCard from '@/sections/profile/profile_card';
 import { Pen } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
+import ProfileCardLoader from '@/components/loaders/profile_card';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -116,7 +117,7 @@ const Profile = () => {
           )}
 
           {loading ? (
-            <></>
+            <ProfileCardLoader />
           ) : (
             <ProfileCard
               clickedOnEdit={clickedOnEdit}

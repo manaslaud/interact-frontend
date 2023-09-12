@@ -5,9 +5,11 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import ProjectView from '../../sections/workspace/project_view';
+import ProjectView from '@/sections/workspace/project_view';
 import NewProject from '@/sections/workspace/new_project';
 import { Plus } from '@phosphor-icons/react';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
 
 const YourProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -18,13 +20,19 @@ const YourProjects = () => {
 
   const [clickedOnNewProject, setClickedOnNewProject] = useState(false);
 
+  const user = useSelector(userSelector);
+
   const getProjects = () => {
     setLoading(true);
     const URL = `${WORKSPACE_URL}/my`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          setProjects(res.data.projects || []);
+          let projectsData = res.data.projects || [];
+          projectsData = projectsData.map((project: Project) => {
+            return { ...project, user };
+          });
+          setProjects(projectsData);
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message);
@@ -65,7 +73,7 @@ const YourProjects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8 gap-y-5">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}

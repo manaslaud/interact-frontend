@@ -19,16 +19,6 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
 
   const bookmarks = useSelector(userSelector).projectBookmarks;
 
-  useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
-
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
-  }, []);
-
   const addBookmarkHandler = async (el: FormEvent<HTMLFormElement>) => {
     el.preventDefault();
     if (mutex) return;

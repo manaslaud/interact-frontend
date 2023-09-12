@@ -15,6 +15,7 @@ import Projects from '@/screens/profile/projects';
 import { Membership, Project } from '@/types';
 import { GetServerSidePropsContext } from 'next/types';
 import ProfileCard from '@/sections/explore/profile_card';
+import ProfileCardLoader from '@/components/loaders/profile_card';
 
 interface Props {
   username: string;
@@ -73,7 +74,7 @@ const User = ({ username }: Props) => {
               open ? 'w-no_side_base_open' : 'w-no_side_base_close'
             } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
           />
-          <ProfileCard user={user} />
+          {loading ? <ProfileCardLoader /> : <ProfileCard user={user} />}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
             {user.tagline && user.tagline != '' ? (
               <div className="w-full h-24 font-bold text-5xl max-md:text-3xl text-center text-white">
