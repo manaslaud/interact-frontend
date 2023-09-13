@@ -30,9 +30,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
           }}
         />
         <div className="flex max-md:flex-col justify-between items-center max-md:items-start max-md:gap-2">
-          <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-            {opening.title}
-          </div>
+          <div className="font-bold text-3xl text-gradient">{opening.title}</div>
           <LowerOpening opening={opening} />
         </div>
         <div className="flex gap-2 text-sm max-md:flex-wrap">
@@ -49,9 +47,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <div className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-            About this role
-          </div>
+          <div className="font-bold text-xl text-gradient">About this role</div>
         </div>
         <div className="">{opening.description}</div>
         <div className="w-full flex flex-wrap gap-2">

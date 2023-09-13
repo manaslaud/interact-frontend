@@ -85,7 +85,7 @@ const Applications = () => {
                     <div className="grow flex flex-col gap-4 max-md:gap-2">
                       <div className="flex items-center justify-between">
                         <div className="w-5/6 flex flex-col gap-1">
-                          <div className="font-bold text-2xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
+                          <div className="font-bold text-2xl max-md:text-lg text-gradient">
                             {application.opening.title}
                           </div>
                           <div className="text-lg font-medium max-md:text-sm">{application.project.title}</div>

@@ -37,9 +37,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
         <div className="grow flex flex-col gap-4 max-md:gap-2">
           <div className="flex items-start justify-between">
             <div className="w-5/6 flex flex-col gap-1">
-              <div className="font-bold text-2xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                {opening.title}
-              </div>
+              <div className="font-bold text-2xl max-md:text-lg text-gradient">{opening.title}</div>
               <div className="text-lg max-md:text-sm">{project.title}</div>
               <div className="max-md:text-sm">
                 {opening.noOfApplications} Application{opening.noOfApplications == 1 ? '' : 's'}

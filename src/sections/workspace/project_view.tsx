@@ -11,7 +11,7 @@ import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
-import Collaborators from '@/components/explore/show_collaborato';
+import Collaborators from '@/components/explore/show_collaborator';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import EditProject from './edit_project';
@@ -156,7 +156,7 @@ const ProjectView = ({
             )}
           </div>
 
-          <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen overflow-auto pt-3">
+          <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen overflow-hidden pt-3">
             <div className="w-full h-14 max-md:pl-[68px]">
               <div className="w-fit font-semibold cursor-default">{project.title}</div>
               <div // convert to link
@@ -185,9 +185,7 @@ const ProjectView = ({
               <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-primary_comp_hover flex flex-col justify-between">
                 <div className="w-full h-fit flex flex-col gap-4">
                   <div className="flex justify-between items-center">
-                    <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                      {project.title}
-                    </div>
+                    <div className="font-bold text-3xl text-gradient">{project.title}</div>
                     <div className="md:hidden w-fit">
                       <LowerProject project={project} />
                     </div>
@@ -252,7 +250,7 @@ const ProjectView = ({
                   ) : (
                     <></>
                   )}
-                  {project.userID == user.id ? (
+                  {project.userID != user.id ? (
                     <div className="w-full text-lg font-medium py-2 flex-center border-[1px] border-[#ea333e] hover:bg-[#ea333e] rounded-lg cursor-pointer transition-ease-300">
                       Leave Project
                     </div>

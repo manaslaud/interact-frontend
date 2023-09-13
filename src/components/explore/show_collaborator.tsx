@@ -35,9 +35,7 @@ const Collaborators = ({ memberships }: Props) => {
                       />
                       <div className="grow flex flex-col gap-4">
                         <div className="flex flex-col">
-                          <div className="font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                            {membership.user.name}
-                          </div>
+                          <div className="font-bold text-lg text-gradient">{membership.user.name}</div>
                           <div className="text-sm">{membership.title}</div>
                         </div>
 

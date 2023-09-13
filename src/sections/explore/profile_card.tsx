@@ -23,9 +23,7 @@ const ProfileCard = ({ user }: Props) => {
         src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
         className={'rounded-full max-md:mx-auto w-44 h-44 cursor-default'}
       />
-      <div className="text-3xl max-md:text-2xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-        {user.name}
-      </div>
+      <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
       <div className="text-sm text-center">{user.bio || 'Professional Bio'}</div>
       <div className="w-full flex justify-center gap-6">
         <div className="flex gap-1">

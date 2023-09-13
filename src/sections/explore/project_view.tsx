@@ -11,7 +11,7 @@ import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
-import Collaborators from '@/components/explore/show_collaborato';
+import Collaborators from '@/components/explore/show_collaborator';
 import Openings from '@/components/explore/show_openings';
 
 interface Props {
@@ -144,9 +144,7 @@ const ProjectView = ({
 
               <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-primary_comp_hover flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                  <div className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                    {project.title}
-                  </div>
+                  <div className="font-bold text-3xl text-gradient">{project.title}</div>
                   <div className="md:hidden w-fit">
                     <LowerProject project={project} />
                   </div>

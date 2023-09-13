@@ -71,7 +71,7 @@ const EditOpening = ({ setShow, opening, project, setProject }: Props) => {
               className={'w-[160px] h-[160px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
             />
             <div className="grow flex flex-col gap-2">
-              <div className="w-full text-4xl max-md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end cursor-default">
+              <div className="w-full text-4xl max-md:text-3xl font-bold text-gradient cursor-default">
                 {' '}
                 {opening.title}{' '}
               </div>

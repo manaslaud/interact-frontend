@@ -126,9 +126,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
           />
         </div>
       ) : (
-        <div className="text-3xl max-md:text-2xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-          {user.name}
-        </div>
+        <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
       )}
       {clickedOnEdit ? (
         <div className="w-full">

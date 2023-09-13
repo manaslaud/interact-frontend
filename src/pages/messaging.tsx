@@ -39,9 +39,7 @@ const Messaging = () => {
         >
           {/* 100-(navbar+1) */}
           <div className="w-[37.5vw] max-md:w-screen h-full flex flex-col pt-4 pl-4 max-md:pl-0 gap-4">
-            <div className="text-3xl max-md:hidden font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-              Messaging
-            </div>
+            <div className="text-3xl max-md:hidden font-extrabold text-gradient">Messaging</div>
             <SearchBar />
             <TabMenu
               items={['Personal', 'Organisation', 'Project', 'Request']}

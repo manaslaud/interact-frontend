@@ -77,7 +77,7 @@ const ProfileCard = () => {
               <div
                 className={`${
                   open ? 'text-3xl max-md:text-2xl' : 'text-xxs'
-                } transition-ease-500 text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end`}
+                } transition-ease-500 text-center font-bold text-gradient`}
               >
                 {user.name}
               </div>

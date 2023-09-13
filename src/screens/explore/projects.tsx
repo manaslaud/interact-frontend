@@ -1,7 +1,7 @@
 import ProjectCard from '@/components/explore/project_card';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL, PROJECT_URL } from '@/config/routes';
+import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';

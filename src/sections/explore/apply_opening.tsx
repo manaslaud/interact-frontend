@@ -93,9 +93,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
             <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
               <div className="w-full flex flex-col items-center gap-1">
-                <div className="font-bold text-center line-clamp-2 text-2xl text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                  {opening.title}
-                </div>
+                <div className="font-bold text-center line-clamp-2 text-2xl text-gradient">{opening.title}</div>
                 <div className="text-sm">@{opening.project.title}</div>
                 <div className="text-xs font-thin">{moment(opening.createdAt).fromNow()}</div>
               </div>

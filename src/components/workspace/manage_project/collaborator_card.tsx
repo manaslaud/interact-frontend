@@ -28,7 +28,11 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
       <div className="grow flex flex-col gap-2 pt-1">
         <div className="w-full flex items-center justify-between">
           <div className="text-2xl font-semibold">{membership.user.name}</div>
-          {project.userID == user.id || user.managerProjects.includes(project.id) ? <Pen size={24} /> : <></>}
+          {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+            <Pen className="cursor-pointer" size={24} />
+          ) : (
+            <></>
+          )}
         </div>
         <div className="font-medium">{membership.title}</div>
         <div className="font-medium">{membership.role}</div>
