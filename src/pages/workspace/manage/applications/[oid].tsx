@@ -9,9 +9,12 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import React, { useEffect, useState } from 'react';
+import { initialApplication } from '@/types/initials';
+import ApplicationCard from '@/components/workspace/manage_project/application_card';
+import ApplicationView from '@/sections/workspace/manage_project/application_view';
 
 interface Props {
   oid: string;
@@ -21,11 +24,26 @@ const Applications = ({ oid }: Props) => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [clickedOnApplication, setClickedOnApplication] = useState(false);
+  const [clickedApplication, setClickedApplication] = useState(initialApplication);
+
+  const router = useRouter();
+
   const fetchApplications = async () => {
     const URL = `${OPENING_URL}/applications/${oid}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setApplications(res.data.applications);
+      const applicationData = res.data.applications || [];
+      setApplications(applicationData);
+      const aid = new URLSearchParams(window.location.search).get('aid');
+      if (aid && aid != '') {
+        applicationData.forEach((application: Application) => {
+          if (aid == application.id) {
+            setClickedApplication(application);
+            setClickedOnApplication(true);
+          }
+        });
+      }
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message);
@@ -36,6 +54,14 @@ const Applications = ({ oid }: Props) => {
   useEffect(() => {
     fetchApplications();
   }, [oid]);
+
+  useEffect(() => {
+    if (clickedApplication.id != '')
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, aid: clickedApplication.id },
+      });
+  }, [clickedApplication]);
 
   return (
     <BaseWrapper>
@@ -51,7 +77,42 @@ const Applications = ({ oid }: Props) => {
             />
             <div className="text-4xl font-semibold text-white font-primary">Applications</div>
           </div>
-          {loading ? <Loader /> : <></>}
+          <div className="w-full flex flex-col gap-6 px-2 py-2">
+            {loading ? (
+              <Loader />
+            ) : (
+              <>
+                {applications.length > 0 ? (
+                  <div className="flex justify-evenly px-4">
+                    <div
+                      className={`${
+                        clickedOnApplication ? 'w-[40%]' : 'w-[720px]'
+                      } max-md:w-[720px] flex flex-col gap-4`}
+                    >
+                      {applications.map(application => {
+                        return (
+                          <ApplicationCard
+                            key={application.id}
+                            application={application}
+                            clickedApplication={clickedApplication}
+                            setClickedOnApplication={setClickedOnApplication}
+                            setClickedApplication={setClickedApplication}
+                          />
+                        );
+                      })}
+                    </div>
+                    {clickedOnApplication ? (
+                      <ApplicationView application={clickedApplication} setShow={setClickedOnApplication} />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                ) : (
+                  <div>No Openings found</div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </MainWrapper>
     </BaseWrapper>

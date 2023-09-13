@@ -6,6 +6,7 @@ import { Pen, TrashSimple } from '@phosphor-icons/react';
 import EditOpening from '@/sections/workspace/manage_project/edit_opening';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 interface Props {
   opening: Opening;
@@ -46,9 +47,12 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                 <>
                   {opening.noOfApplications > 0 ? (
-                    <div className="w-fit text-[#15bffd] text-sm max-md:text-sm underline underline-offset-4 cursor-pointer">
+                    <Link
+                      href={`/workspace/manage/applications/${opening.id}`}
+                      className="w-fit text-[#15bffd] text-sm max-md:text-sm underline underline-offset-4"
+                    >
                       View applications
-                    </div>
+                    </Link>
                   ) : (
                     <div className="w-fit text-white text-sm max-md:text-sm underline underline-offset-4 cursor-default">
                       No applications
