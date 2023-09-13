@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import Openings from '@/screens/workspace/manage_project/openings';
 import Loader from '@/components/common/loader';
+import Protect from '@/utils/protect';
 
 interface Props {
   slug: string;
@@ -33,14 +34,12 @@ const ManageProject = ({ slug }: Props) => {
     const URL = `${PROJECT_URL}/${slug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (res.data.project.userID != user.id && !user.managerProjects.includes(res.data.project.id)) router.back();
+      if (res.data.project.userID != user.id && !user.editorProjects.includes(res.data.project.id)) router.back();
       setProject(res.data.project);
       setLoading(false);
     } else {
-      if (res.status != -1) {
-        if (res.data.message) Toaster.error(res.data.message);
-        else Toaster.error(SERVER_ERROR);
-      }
+      if (res.data.message) Toaster.error(res.data.message);
+      else Toaster.error(SERVER_ERROR);
     }
   };
 
@@ -52,8 +51,8 @@ const ManageProject = ({ slug }: Props) => {
     <BaseWrapper>
       <Sidebar index={3} />
       <MainWrapper>
-        <div className="w-full flex flex-col gap-4 p-base_padding">
-          <div className="flex gap-3">
+        <div className="w-full flex flex-col gap-4">
+          <div className="flex gap-3 p-base_padding">
             <ArrowArcLeft
               onClick={() => router.back()}
               color="white"
@@ -68,7 +67,7 @@ const ManageProject = ({ slug }: Props) => {
           ) : (
             <>
               <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-                <Openings project={project} />
+                <Openings project={project} setProject={setProject} />
               </div>
               <div className={`${active === 1 ? 'block' : 'hidden'}`}></div>
               <div className={`${active === 2 ? 'block' : 'hidden'}`}></div>
@@ -80,7 +79,7 @@ const ManageProject = ({ slug }: Props) => {
   );
 };
 
-export default ManageProject;
+export default Protect(ManageProject);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.query;

@@ -1,17 +1,32 @@
-import { Opening, Project } from '@/types';
-import { Pen, Plus, TrashSimple } from '@phosphor-icons/react';
+import { Project } from '@/types';
+import { Plus } from '@phosphor-icons/react';
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { PROJECT_PIC_URL } from '@/config/routes';
+import NewOpening from '@/sections/workspace/manage_project/new_opening';
+import OpeningCard from '@/components/workspace/manage_project/opening_card';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   project: Project;
+  setProject?: React.Dispatch<React.SetStateAction<Project>>;
 }
 
-const Openings = ({ project }: Props) => {
+const Openings = ({ project, setProject }: Props) => {
   const [clickedOnNewOpening, setClickedOnNewOpening] = useState(false);
+  const user = useSelector(userSelector);
   return (
     <div className="w-[50vw] max-md:w-screen mx-auto flex flex-col gap-8">
+      {clickedOnNewOpening ? (
+        <>
+          {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+            <NewOpening setShow={setClickedOnNewOpening} project={project} setProject={setProject} />
+          ) : (
+            <></>
+          )}
+        </>
+      ) : (
+        <></>
+      )}
       <div
         onClick={() => setClickedOnNewOpening(true)}
         className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
@@ -29,43 +44,8 @@ const Openings = ({ project }: Props) => {
       {project.openings ? (
         <div className="w-full flex flex-col gap-2">
           {project.openings.map(opening => {
-            return (
-              <div
-                key={opening.id}
-                className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300"
-              >
-                <Image
-                  crossOrigin="anonymous"
-                  width={10000}
-                  height={10000}
-                  alt={'User Pic'}
-                  src={`${PROJECT_PIC_URL}/${project.coverPic}`}
-                  className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
-                />
-
-                <div className="grow flex flex-col gap-4 max-md:gap-2">
-                  <div className="flex items-start justify-between">
-                    <div className="w-5/6 flex flex-col gap-1">
-                      <div className="font-bold text-2xl max-md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end">
-                        {opening.title}
-                      </div>
-                      <div className="text-lg max-md:text-sm">{project.title}</div>
-                      <div className="max-md:text-sm">
-                        {opening.noOfApplications} Application{opening.noOfApplications == 1 ? '' : 's'}
-                      </div>
-                      <div className="w-fit text-sm max-md:text-sm underline underline-offset-4 cursor-pointer">
-                        View applications
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <Pen size={24} />
-                      <TrashSimple size={24} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}{' '}
+            return <OpeningCard key={opening.id} opening={opening} project={project} setProject={setProject} />;
+          })}
         </div>
       ) : (
         <></>

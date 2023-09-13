@@ -156,7 +156,7 @@ const ProjectView = ({
             )}
           </div>
 
-          <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen pt-3">
+          <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen overflow-auto pt-3">
             <div className="w-full h-14 max-md:pl-[68px]">
               <div className="w-fit font-semibold cursor-default">{project.title}</div>
               <div // convert to link

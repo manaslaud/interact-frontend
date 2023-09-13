@@ -57,6 +57,16 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
               ) : (
                 <></>
               )}
+              {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+                <div
+                  // onClick={() => setClickedOnEdit(true)}
+                  className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+                >
+                  Manage
+                </div>
+              ) : (
+                <></>
+              )}
               {project.userID == user.id ? (
                 <div className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg">Delete</div>
               ) : (
