@@ -154,6 +154,7 @@ export interface Project {
   tags: string[];
   category: string;
   memberships: Membership[];
+  invitations: Invitation[];
   openings: Opening[];
   hashes: string[];
   isPrivate: boolean;

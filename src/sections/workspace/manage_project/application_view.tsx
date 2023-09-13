@@ -12,9 +12,11 @@ import router from 'next/router';
 interface Props {
   application: Application;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setApplications?: React.Dispatch<React.SetStateAction<Application[]>>;
+  setFilteredApplications?: React.Dispatch<React.SetStateAction<Application[]>>;
 }
 
-const ApplicationView = ({ application, setShow }: Props) => {
+const ApplicationView = ({ application, setShow, setApplications, setFilteredApplications }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const handleAccept = async () => {
@@ -25,6 +27,24 @@ const ApplicationView = ({ application, setShow }: Props) => {
     const URL = `/${APPLICATION_URL}/accept/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
+      if (setApplications) {
+        setApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: 2 };
+            } else return a;
+          })
+        );
+      }
+      if (setFilteredApplications) {
+        setFilteredApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: 2 };
+            } else return a;
+          })
+        );
+      }
       Toaster.stopLoad(toaster, 'Application accepted!', 1);
       router.back();
     } else {
@@ -46,6 +66,24 @@ const ApplicationView = ({ application, setShow }: Props) => {
     const URL = `/${APPLICATION_URL}/reject/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
+      if (setApplications) {
+        setApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: -1 };
+            } else return a;
+          })
+        );
+      }
+      if (setFilteredApplications) {
+        setFilteredApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: -1 };
+            } else return a;
+          })
+        );
+      }
       Toaster.stopLoad(toaster, 'Application rejected', 1);
       router.back();
     } else {
@@ -63,11 +101,29 @@ const ApplicationView = ({ application, setShow }: Props) => {
     if (mutex) return;
     setMutex(true);
 
-    const toaster = Toaster.startLoad('Adding to Review...');
+    const toaster = Toaster.startLoad('Adding/Removing from Shortlist...');
     const URL = `/${APPLICATION_URL}/review/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
-      Toaster.stopLoad(toaster, 'Application set to review', 1);
+      if (setApplications) {
+        setApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: application.status == 1 ? 0 : 1 };
+            } else return a;
+          })
+        );
+      }
+      if (setFilteredApplications) {
+        setFilteredApplications(prev =>
+          prev.map(a => {
+            if (a.id == application.id) {
+              return { ...a, status: application.status == 1 ? 0 : 1 };
+            } else return a;
+          })
+        );
+      }
+      Toaster.stopLoad(toaster, 'Application added/removed from Shortlist', 1);
       router.back();
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -101,7 +157,13 @@ const ApplicationView = ({ application, setShow }: Props) => {
           />
           <div className="grow flex flex-col gap-1">
             <div className="w-full flex flex-wrap items-center justify-between">
-              <div className="text-2xl font-semibold">{application.user.name}</div>
+              <Link
+                target="_blank"
+                href={`/explore/user/${application.user.username}`}
+                className="text-2xl font-semibold"
+              >
+                {application.user.name}
+              </Link>
               <div className="flex gap-4">
                 {getIcon('google', 24)}
                 {getIcon('facebook', 24)}
@@ -147,14 +209,25 @@ const ApplicationView = ({ application, setShow }: Props) => {
 
       {application.status == 0 || application.status == 1 ? (
         <div className="w-full flex justify-center gap-12 max-md:gap-4">
-          <div className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg">
+          <div
+            onClick={handleAccept}
+            className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+          >
             Accept
           </div>
-          <div className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg">
+          <div
+            onClick={handleReject}
+            className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+          >
             Reject
           </div>
-          <div className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg">
-            Shortlist
+          <div
+            onClick={handleShortlist}
+            className={`w-32 p-2 flex-center ${
+              application.status == 0 ? 'bg-primary_comp' : 'bg-[#482e4636] border-[1px] border-primary_btn'
+            } hover:bg-primary_comp active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg`}
+          >
+            {application.status == 0 ? 'Shortlist' : 'Shortlisted'}
           </div>
         </div>
       ) : (

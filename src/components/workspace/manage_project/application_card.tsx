@@ -41,7 +41,7 @@ const ApplicationCard = ({
           <div className="font-medium">{application.user.tagline}</div>
         </div>
       </div>
-      <div className="w-fit h-fit">{getApplicationStatus(application.status)}</div>
+      <div className="w-fit h-fit font-medium">{getApplicationStatus(application.status)}</div>
     </div>
   );
 };

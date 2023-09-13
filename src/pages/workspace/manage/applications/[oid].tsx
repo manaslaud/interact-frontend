@@ -9,7 +9,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import React, { useEffect, useState } from 'react';
 import { initialApplication } from '@/types/initials';
@@ -22,6 +22,8 @@ interface Props {
 
 const Applications = ({ oid }: Props) => {
   const [applications, setApplications] = useState<Application[]>([]);
+  const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
+  const [filterStatus, setFilterStatus] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [clickedOnApplication, setClickedOnApplication] = useState(false);
@@ -35,6 +37,7 @@ const Applications = ({ oid }: Props) => {
     if (res.statusCode == 200) {
       const applicationData = res.data.applications || [];
       setApplications(applicationData);
+      setFilteredApplications(applicationData);
       const aid = new URLSearchParams(window.location.search).get('aid');
       if (aid && aid != '') {
         applicationData.forEach((application: Application) => {
@@ -49,6 +52,12 @@ const Applications = ({ oid }: Props) => {
       if (res.data.message) Toaster.error(res.data.message);
       else Toaster.error(SERVER_ERROR);
     }
+  };
+
+  const filterShortlisted = (status: boolean) => {
+    setFilterStatus(status);
+    if (status) setFilteredApplications(applications.filter(application => application.status == 1));
+    else setFilteredApplications(applications);
   };
 
   useEffect(() => {
@@ -68,28 +77,33 @@ const Applications = ({ oid }: Props) => {
       <Sidebar index={3} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
-          <div className="flex gap-3 p-base_padding">
-            <ArrowArcLeft
-              onClick={() => router.back()}
-              color="white"
-              className="w-10 h-10 p-2 bg-primary_comp_hover rounded-full cursor-pointer"
-              size={40}
-            />
-            <div className="text-4xl font-semibold text-white font-primary">Applications</div>
+          <div className="w-full flex justify-between p-base_padding">
+            <div className="flex gap-3">
+              <ArrowArcLeft
+                onClick={() => router.back()}
+                color="white"
+                className="w-10 h-10 p-2 bg-primary_comp_hover rounded-full cursor-pointer"
+                size={40}
+              />
+              <div className="text-4xl font-semibold text-white font-primary">Applications</div>
+            </div>
+            <div onClick={() => filterShortlisted(!filterStatus)} className="">
+              Only Shortlisted
+            </div>
           </div>
           <div className="w-full flex flex-col gap-6 px-2 py-2">
             {loading ? (
               <Loader />
             ) : (
               <>
-                {applications.length > 0 ? (
+                {filteredApplications.length > 0 ? (
                   <div className="flex justify-evenly px-4">
                     <div
                       className={`${
                         clickedOnApplication ? 'w-[40%]' : 'w-[720px]'
                       } max-md:w-[720px] flex flex-col gap-4`}
                     >
-                      {applications.map(application => {
+                      {filteredApplications.map(application => {
                         return (
                           <ApplicationCard
                             key={application.id}
@@ -102,7 +116,12 @@ const Applications = ({ oid }: Props) => {
                       })}
                     </div>
                     {clickedOnApplication ? (
-                      <ApplicationView application={clickedApplication} setShow={setClickedOnApplication} />
+                      <ApplicationView
+                        application={clickedApplication}
+                        setShow={setClickedOnApplication}
+                        setApplications={setApplications}
+                        setFilteredApplications={setFilteredApplications}
+                      />
                     ) : (
                       <></>
                     )}

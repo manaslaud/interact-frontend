@@ -16,6 +16,7 @@ import { ArrowArcLeft } from '@phosphor-icons/react';
 import Openings from '@/screens/workspace/manage_project/openings';
 import Loader from '@/components/common/loader';
 import Protect from '@/utils/protect';
+import Collaborators from '@/screens/workspace/manage_project/collaborators';
 
 interface Props {
   slug: string;
@@ -69,7 +70,9 @@ const ManageProject = ({ slug }: Props) => {
               <div className={`${active === 0 ? 'block' : 'hidden'}`}>
                 <Openings project={project} setProject={setProject} />
               </div>
-              <div className={`${active === 1 ? 'block' : 'hidden'}`}></div>
+              <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+                <Collaborators project={project} setProject={setProject} />
+              </div>
               <div className={`${active === 2 ? 'block' : 'hidden'}`}></div>
             </>
           )}
