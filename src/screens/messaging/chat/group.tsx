@@ -1,8 +1,8 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MESSAGING_URL } from '@/config/routes';
+import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { currentGroupChatIDSelector } from '@/slices/messagingSlice';
-import { initialGroupChat, initialUser } from '@/types/initials';
+import { initialGroupChat, initialGroupChatMembership, initialUser } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import { GroupChat, GroupChatMessage, TypingStatus } from '@/types';
 import React, { useEffect, useState } from 'react';
@@ -15,10 +15,12 @@ import MessageGroup from '@/sections/messaging/chats/message_group';
 import ChatTextarea from '@/components/messaging/group_chat_textarea';
 import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
+import GroupInfo from '@/sections/messaging/group_info';
 
 const GroupChat = () => {
   const [chat, setChat] = useState<GroupChat>(initialGroupChat);
   const [messages, setMessages] = useState<GroupChatMessage[]>([]);
+  const [membership, setMembership] = useState(initialGroupChatMembership);
   const [loading, setLoading] = useState(true);
   const [typingStatus, setTypingStatus] = useState<TypingStatus>({ user: initialUser, chatID: '' });
   const [clickedOnInfo, setClickedOnInfo] = useState(false);
@@ -31,7 +33,10 @@ const GroupChat = () => {
     const URL = `${MESSAGING_URL}/group/${chatID}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setChat(res.data.chat);
+      const chatData: GroupChat = res.data.chat;
+      chatData.invitations = chatData.invitations.filter(invitation => invitation.status == 0);
+      setChat(chatData);
+      setMembership(res.data.membership);
       await fetchMessages();
     } else {
       if (res.data.message) Toaster.error(res.data.message);
@@ -71,7 +76,7 @@ const GroupChat = () => {
   }, []);
 
   return (
-    <div className="w-full h-full border-2 max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
+    <div className="w-full h-full text-white font-primary border-2 max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
       {chatID == '' ? (
         <></>
       ) : (
@@ -81,10 +86,9 @@ const GroupChat = () => {
           ) : (
             <>
               {clickedOnInfo ? (
-                <></>
+                <GroupInfo chat={chat} membership={membership} setShow={setClickedOnInfo} setChat={setChat} />
               ) : (
                 <>
-                  {' '}
                   <ChatHeader chat={chat} setClickedOnInfo={setClickedOnInfo} />
                   <div className="w-full h-[calc(100%-72px)] max-h-full flex flex-col gap-6 overflow-hidden">
                     <ScrollableFeed>

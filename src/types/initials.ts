@@ -259,6 +259,7 @@ export const initialGroupChat: GroupChat = {
   memberships: [],
   createdAt: new Date(),
   messages: [],
+  invitations: [],
   latestMessageID: '',
   latestMessage: initialGroupChatMessage,
 };

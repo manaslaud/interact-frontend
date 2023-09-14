@@ -310,6 +310,7 @@ export interface GroupChat {
   project: Project;
   memberships: GroupChatMembership[];
   messages: GroupChatMessage[];
+  invitations: Invitation[];
   latestMessageID: string;
   latestMessage: GroupChatMessage;
   createdAt: Date;
