@@ -161,7 +161,11 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               <div className="grow flex flex-col">
                 <div className="w-full flex items-center justify-between pr-2">
                   <div className="text-2xl font-medium">{chat.title}</div>
-                  <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" color="white" size={24} />
+                  {membership.role == GROUP_ADMIN ? (
+                    <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" color="white" size={24} />
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 <div className="text-sm">{chat.description}</div>

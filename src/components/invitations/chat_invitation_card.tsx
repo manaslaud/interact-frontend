@@ -9,14 +9,14 @@ import { VERIFICATION_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMemberProjects, userSelector } from '@/slices/userSlice';
+import { setChats, setMemberProjects, userSelector } from '@/slices/userSlice';
 
 interface Props {
   invitation: Invitation;
   setInvitations?: React.Dispatch<React.SetStateAction<Invitation[]>>;
 }
 
-const InvitationCard = ({ invitation, setInvitations }: Props) => {
+const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
@@ -39,7 +39,8 @@ const InvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
-      dispatch(setMemberProjects([...user.memberProjects, invitation.projectID]));
+      dispatch(setChats([...user.chats, invitation.chatID]));
+      //TODO add chat to socket chats
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
       if (res.data.message) {
@@ -86,27 +87,12 @@ const InvitationCard = ({ invitation, setInvitations }: Props) => {
 
   return (
     <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300">
-      <Link target="_blank" href={`/explore?pid=${invitation.project.slug}`}>
-        <Image
-          crossOrigin="anonymous"
-          width={10000}
-          height={10000}
-          alt={'User Pic'}
-          src={`${PROJECT_PIC_URL}/${invitation.project.coverPic}`}
-          className={'rounded-md w-32 h-32'}
-        />
-      </Link>
+      <div className="rounded-full w-32 h-32 bg-primary_comp_hover"> </div>
+
       <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
         <div className="grow flex flex-col gap-2">
-          <Link
-            target="_blank"
-            href={`/explore?pid=${invitation.project.slug}`}
-            className="text-3xl font-semibold text-gradient"
-          >
-            {invitation.project.title}
-          </Link>
-          <div className="font-medium">{invitation.title}</div>
-          <div className="font-medium">{'Member'}</div>
+          <div className="text-3xl font-semibold text-gradient">{invitation.chat.title}</div>
+          <div className="font-medium line-clamp-2">{invitation.chat.description}</div>
           <div className="text-xs">Invited {moment(invitation.createdAt).format('DD MMM YYYY')}</div>
         </div>
         {invitation.status == 0 ? (
@@ -134,4 +120,4 @@ const InvitationCard = ({ invitation, setInvitations }: Props) => {
   );
 };
 
-export default InvitationCard;
+export default ChatInvitationCard;

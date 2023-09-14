@@ -1,6 +1,7 @@
 import { toast, Id, ToastOptions, UpdateOptions } from 'react-toastify';
 
 class Toaster {
+  //TODO add different ids to toasters
   static toastSettings: ToastOptions = {
     containerId: 'main',
     position: 'top-center',
