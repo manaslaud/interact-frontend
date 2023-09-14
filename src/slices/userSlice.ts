@@ -22,7 +22,8 @@ interface UserState {
   editorProjects: string[];
   managerProjects: string[];
   applications: string[];
-  chats: ChatSlice[];
+  chats: string[];
+  personalChatSlices: ChatSlice[];
   profilePic: string;
   isLoggedIn: boolean;
   isVerified: boolean;
@@ -42,6 +43,7 @@ const initialState: UserState = {
   projectBookmarks: [],
   openingBookmarks: [],
   chats: [],
+  personalChatSlices: [],
   memberProjects: [],
   editorProjects: [],
   managerProjects: [],
@@ -63,6 +65,7 @@ export const userSlice = createSlice({
       state.phoneNo = action.payload.phoneNo;
       state.isVerified = action.payload.isVerified;
       state.chats = [];
+      state.personalChatSlices = [];
       state.memberProjects = [];
       state.editorProjects = [];
       state.managerProjects = [];
@@ -94,8 +97,14 @@ export const userSlice = createSlice({
     setOpeningBookmarks: (state, action: PayloadAction<OpeningBookmark[]>) => {
       state.openingBookmarks = action.payload;
     },
-    setChats: (state, action: PayloadAction<ChatSlice[]>) => {
+    setChats: (state, action: PayloadAction<string[]>) => {
       state.chats = action.payload;
+    },
+    addToChats: (state, action: PayloadAction<string>) => {
+      state.chats = [...state.chats, action.payload];
+    },
+    setPersonalChatSlices: (state, action: PayloadAction<ChatSlice[]>) => {
+      state.personalChatSlices = action.payload;
     },
     setMemberProjects: (state, action: PayloadAction<string[]>) => {
       state.memberProjects = action.payload;
@@ -131,6 +140,8 @@ export const {
   setProjectBookmarks,
   setOpeningBookmarks,
   setChats,
+  addToChats,
+  setPersonalChatSlices,
   setMemberProjects,
   setEditorProjects,
   setManagerProjects,

@@ -1,4 +1,4 @@
-import { Message } from '@/types';
+import { GroupChatMessage, Message } from '@/types';
 import React from 'react';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import moment from 'moment';
 
 interface Props {
-  message: Message;
+  message: Message | GroupChatMessage;
 }
 
 const RegularMessage = ({ message }: Props) => {

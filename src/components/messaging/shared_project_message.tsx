@@ -1,4 +1,4 @@
-import { Message } from '@/types';
+import { GroupChatMessage, Message } from '@/types';
 import React from 'react';
 import Image from 'next/image';
 import { PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 
 interface Props {
-  message: Message;
+  message: Message | GroupChatMessage;
 }
 
 const SharedProjectMessage = ({ message }: Props) => {

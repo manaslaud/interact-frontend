@@ -1,4 +1,4 @@
-import { Message } from '@/types';
+import { GroupChatMessage, Message } from '@/types';
 import RegularMessage from '@/components/messaging/regular_message';
 import SharedPostMessage from '@/components/messaging/shared_post_message';
 import SharedProjectMessage from '@/components/messaging/shared_project_message';
@@ -6,7 +6,7 @@ import SharedOpeningMessage from '@/components/messaging/shared_opening_message'
 
 interface Props {
   date: string;
-  messages: Message[];
+  messages: Message[] | GroupChatMessage[];
 }
 
 const MessageGroup = ({ date, messages }: Props) => {

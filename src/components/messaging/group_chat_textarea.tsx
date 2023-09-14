@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 // import { MeStopTyping, MeTyping, sendEvent } from '@/utils/ws';
-import { Chat, GroupChat } from '@/types';
+import { Chat, GroupChat, User } from '@/types';
 import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
+import { initialUser } from '@/types/initials';
 
 interface Props {
-  chat: Chat;
+  chat: GroupChat;
 }
 
 const ChatTextarea = ({ chat }: Props) => {
@@ -19,13 +22,15 @@ const ChatTextarea = ({ chat }: Props) => {
 
   const userID = Cookies.get('id');
 
+  const user = useSelector(userSelector);
+
   const handleChange = (event: any) => {
     const newValue = event.target.value;
 
     if (newValue.trim() == '') return;
 
-    if (value === '' && newValue.length === 1) socketService.sendTypingStatus(getSelf(chat), chat.id, 1);
-    else if (newValue === '') socketService.sendTypingStatus(getSelf(chat), chat.id, 0);
+    if (value === '' && newValue.length === 1) socketService.sendTypingStatus(getSelf(), chat.id, 1);
+    else if (newValue === '') socketService.sendTypingStatus(getSelf(), chat.id, 0);
 
     setValue(newValue);
     setHeight('auto');
@@ -49,15 +54,14 @@ const ChatTextarea = ({ chat }: Props) => {
     }
   };
 
-  const getSelf = (chat: Chat) => {
-    if (userID === chat.createdByID) return chat.createdBy;
-    return chat.acceptedBy;
+  const getSelf = (): User => {
+    return { ...initialUser, id: user.id, username: user.name, name: user.name, profilePic: user.profilePic };
   };
 
   const handleSubmit = async () => {
     if (value.trim() == '') return;
-    socketService.sendMessage(value, chat.id, userID || '', getSelf(chat));
-    socketService.sendTypingStatus(getSelf(chat), chat.id, 0);
+    socketService.sendMessage(value, chat.id, userID || '', getSelf());
+    socketService.sendTypingStatus(getSelf(), chat.id, 0);
 
     setValue('');
 

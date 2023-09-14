@@ -17,6 +17,8 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
   const [clickedOnNewProject, setClickedOnNewProject] = useState(false);
 
+  const [fadeInProject, setFadeInProject] = useState(true);
+
   const navbarOpen = useSelector(navbarOpenSelector);
 
   return (
@@ -48,6 +50,8 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
                 clickedProjectIndex={clickedProjectIndex}
                 setClickedProjectIndex={setClickedProjectIndex}
                 setClickedOnProject={setClickedOnProject}
+                fadeIn={fadeInProject}
+                setFadeIn={setFadeInProject}
               />
             ) : (
               <></>

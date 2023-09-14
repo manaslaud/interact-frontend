@@ -14,14 +14,14 @@ const Collaborators = ({ memberships }: Props) => {
       {memberships && memberships.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
           <div className="text-lg font-medium">Collaborators</div>
-          <div className="flex flex-wrap gap-4 z-50 relative">
+          <div className="flex flex-wrap gap-4 relative">
             {memberships.map((membership, index) => {
               return (
                 <div
                   onMouseEnter={() => setShowIndex(index)}
                   onMouseLeave={() => setShowIndex(-1)}
                   key={membership.id}
-                  className="w-12 h-12 z-50 rounded-full"
+                  className="w-12 h-12 rounded-full"
                 >
                   {showIndex == index ? (
                     <div className="w-4/5 z-20 flex items-start justify-center gap-4 py-2 px-4 absolute top-12 right-1/2 translate-x-1/2 bg-primary_comp rounded-md animate-fade_third">
@@ -61,7 +61,7 @@ const Collaborators = ({ memberships }: Props) => {
                     height={10000}
                     alt={'User Pic'}
                     src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
-                    className={'w-12 h-12 rounded-full cursor-pointer absolute top-0 left-0'}
+                    className={'w-12 h-12 rounded-full cursor-pointer '}
                   />
                 </div>
               );

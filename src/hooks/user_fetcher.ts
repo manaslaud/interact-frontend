@@ -31,11 +31,22 @@ import {
   setManagerProjects,
   setMemberProjects,
   setOpeningBookmarks,
+  setPersonalChatSlices,
   setPostBookmarks,
   setProjectBookmarks,
 } from '@/slices/userSlice';
 import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
-import { Application, Chat, Membership, OpeningBookmark, PostBookmark, Project, ProjectBookmark, User } from '@/types';
+import {
+  Application,
+  Chat,
+  GroupChat,
+  Membership,
+  OpeningBookmark,
+  PostBookmark,
+  Project,
+  ProjectBookmark,
+  User,
+} from '@/types';
 import Toaster from '@/utils/toaster';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
@@ -123,10 +134,19 @@ const useUserStateFetcher = () => {
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          const chats: ChatSlice[] = [];
+          const personalChatSlices: ChatSlice[] = [];
+          const chats: string[] = [];
           res.data.chats?.forEach((chat: Chat) => {
-            chats.push({ chatID: chat.id, userID: chat.acceptedByID == userID ? chat.createdByID : chat.acceptedByID });
+            chats.push(chat.id);
+            personalChatSlices.push({
+              chatID: chat.id,
+              userID: chat.acceptedByID == userID ? chat.createdByID : chat.acceptedByID,
+            });
           });
+          res.data.groupChats?.forEach((chat: GroupChat) => {
+            chats.push(chat.id);
+          });
+          dispatch(setPersonalChatSlices(personalChatSlices));
           dispatch(setChats(chats));
           dispatch(setFetchedChats(new Date().toUTCString()));
         } else Toaster.error(res.data.message);

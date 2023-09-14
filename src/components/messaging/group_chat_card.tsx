@@ -1,49 +1,39 @@
-import { Chat } from '@/types';
+import { GroupChat } from '@/types';
 import Cookies from 'js-cookie';
 import React from 'react';
 import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import getDisplayTime from '@/utils/get_display_time';
-import getMessagingUser from '@/utils/get_messaging_user';
 import { useDispatch, useSelector } from 'react-redux';
-import { currentChatIDSelector, setCurrentChatID, setCurrentGroupChatID } from '@/slices/messagingSlice';
+import {
+  currentChatIDSelector,
+  currentGroupChatIDSelector,
+  setCurrentChatID,
+  setCurrentGroupChatID,
+} from '@/slices/messagingSlice';
 import { useRouter } from 'next/router';
 
 interface Props {
-  chat: Chat;
-  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+  chat: GroupChat;
 }
 
-const PersonalChatCard = ({ chat, setChats }: Props) => {
+const GroupChatCard = ({ chat }: Props) => {
   const userID = Cookies.get('id');
   const dispatch = useDispatch();
+
+  const currentChatID = useSelector(currentGroupChatIDSelector);
   const router = useRouter();
 
-  const currentChatID = useSelector(currentChatIDSelector);
-
   const handleClick = () => {
+    dispatch(setCurrentChatID(''));
+    dispatch(setCurrentGroupChatID(chat.id));
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, chat: 'personal' },
+      query: { ...router.query, chat: 'group' },
     });
-    dispatch(setCurrentGroupChatID(''));
-    dispatch(setCurrentChatID(chat.id));
-    // setChats(prev =>
-    //   prev.map(c => {
-    //     if (c.id == chat.id && c.latestMessage.userID != userID && getLastReadMessageID() != c.latestMessage.id) {
-    //       //! latestMessageId is not there in messages from socket
-    //       if (c.createdByID == userID) c.lastReadMessageByCreatingUserID = c.latestMessageID;
-    //       else c.lastReadMessageByAcceptingUserID = c.latestMessageID;
-    //     }
-    //     return c;
-    //   })
-    // );
   };
 
-  const getLastReadMessageID = () => {
-    if (chat.createdByID == userID) return chat.lastReadMessageByCreatingUserID;
-    return chat.lastReadMessageByAcceptingUserID;
-  };
+  // const imgURL = chat.project?chat.project.coverPic?chat.coverPic;
+
   return (
     <div
       onClick={handleClick}
@@ -51,17 +41,17 @@ const PersonalChatCard = ({ chat, setChats }: Props) => {
         chat.id == currentChatID ? 'bg-primary_comp_hover' : ''
       } border-[1px] border-primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
     >
-      <Image
+      {/* <Image
         crossOrigin="anonymous"
         width={10000}
         height={10000}
         alt={'User Pic'}
-        src={`${USER_PROFILE_PIC_URL}/${getMessagingUser(chat).profilePic}`}
+        src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
         className={'rounded-full w-14 h-14 cursor-pointer border-[1px] border-black'}
-      />
+      /> */}
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex items-center justify-between">
-          <div className="text-xl font-semibold">{getMessagingUser(chat).name}</div>
+          <div className="text-xl font-semibold">{chat.title}</div>
           <div className="flex flex-col font text-xs">
             {chat.latestMessage ? getDisplayTime(chat.latestMessage.createdAt, false) : ''}
             {/* {chat.latestMessage.userID != userID && getLastReadMessageID() != chat.latestMessage.id ? (
@@ -74,7 +64,7 @@ const PersonalChatCard = ({ chat, setChats }: Props) => {
         {chat.latestMessage ? (
           <div className="w-full line-clamp-2 font-light">
             <span className="mr-2 font-medium">
-              • {chat.latestMessage.userID == userID ? 'You' : `${getMessagingUser(chat).username}`}
+              • {chat.latestMessage.userID == userID ? 'You' : `${chat.latestMessage.user.username}`}
             </span>
             {chat.latestMessage.content}
           </div>
@@ -86,4 +76,4 @@ const PersonalChatCard = ({ chat, setChats }: Props) => {
   );
 };
 
-export default PersonalChatCard;
+export default GroupChatCard;

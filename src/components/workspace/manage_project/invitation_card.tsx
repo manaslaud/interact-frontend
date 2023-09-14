@@ -33,13 +33,19 @@ const InvitationCard = ({ invitation, project, setProject }: Props) => {
             <div className="font-medium">{invitation.title}</div>
             <div className="font-medium">{'Member'}</div>
           </div>
-          <div>{getInvitationStatus(invitation.status)}</div>
+          <div className="text-lg font-medium pr-4 cursor-default">{getInvitationStatus(invitation.status)}</div>
         </div>
 
         <div className="w-full flex items-center justify-between text-sm">
           <div className="text-gray-400">Sent {moment(invitation.createdAt).format('DD MMM YYYY')}</div>
-          {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-            <div className="text-[#ea333e] cursor-pointer">Withdraw Invitation</div>
+          {invitation.status == 0 ? (
+            <>
+              {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+                <div className="text-[#ea333e] cursor-pointer">Withdraw Invitation</div>
+              ) : (
+                <></>
+              )}
+            </>
           ) : (
             <></>
           )}

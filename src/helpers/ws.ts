@@ -1,14 +1,14 @@
-import { TypingStatus } from '@/types';
+import { GroupChat, GroupChatMessage, TypingStatus } from '@/types';
 import { Chat, Message, User } from '@/types';
 import { initialMessage, initialUser } from '@/types/initials';
 import { toast } from 'react-toastify';
 import { messageToastSettings } from '../utils/toaster';
 import { store } from '@/store';
-import sortChats from '@/utils/sort_chats';
+import sortChats, { sortGroupChats } from '@/utils/sort_chats';
 
 export class WSEvent {
   type = '';
-  payload = initialMessage;
+  payload = {};
   constructor(type: string, payload: any) {
     this.type = type;
     this.payload = payload;
@@ -105,7 +105,7 @@ export function routeMessagingWindowEvents(
   const currentChatID = store.getState().messaging.currentChatID;
   switch (event.type) {
     case 'new_message':
-      const messageEventPayload: Message = event.payload;
+      const messageEventPayload = event.payload as Message;
       if (messageEventPayload.chatID == currentChatID) setMessages(prev => [messageEventPayload, ...prev]);
       else {
         toast.info(messageEventPayload.user.name + ': ' + messageEventPayload.content, {
@@ -123,11 +123,60 @@ export function routeMessagingWindowEvents(
       }
       break;
     case 'user_typing':
-      const userTypingEventPayload: TypingStatus = event.payload;
+      const userTypingEventPayload = event.payload as TypingStatus;
       setTypingStatus(userTypingEventPayload);
       break;
     case 'user_stop_typing':
-      const userStopTypingEventPayload: TypingStatus = event.payload;
+      const userStopTypingEventPayload = event.payload as TypingStatus;
+      if (userStopTypingEventPayload.user.id !== typingStatus.user.id) {
+        const initialTypingStatus: TypingStatus = {
+          user: initialUser,
+          chatID: typingStatus.chatID,
+        };
+        setTypingStatus(initialTypingStatus);
+      }
+      break;
+    default:
+      alert('Message type not supported');
+      break;
+  }
+}
+
+export function routeGroupMessagingWindowEvents(
+  event: WSEvent,
+  setMessages: React.Dispatch<React.SetStateAction<GroupChatMessage[]>>,
+  typingStatus: TypingStatus,
+  setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
+) {
+  if (event.type === undefined) {
+    alert('No Type in the Event');
+  }
+  const currentGroupChatID = store.getState().messaging.currentGroupChatID;
+  switch (event.type) {
+    case 'new_message':
+      const messageEventPayload = event.payload as GroupChatMessage;
+      if (messageEventPayload.chatID == currentGroupChatID) setMessages(prev => [messageEventPayload, ...prev]);
+      else {
+        toast.info(messageEventPayload.user.name + ': ' + messageEventPayload.content, {
+          ...messageToastSettings,
+          icon: '🐵',
+          // icon: () => (
+          //   <Image
+          //     width={100}
+          //     height={100}
+          //     src={`${USER_PROFILE_PIC_URL}/${messageEventPayload.user.profilePic}`}
+          //     alt="User"
+          //   />
+          // ),
+        });
+      }
+      break;
+    case 'user_typing':
+      const userTypingEventPayload = event.payload as TypingStatus;
+      setTypingStatus(userTypingEventPayload);
+      break;
+    case 'user_stop_typing':
+      const userStopTypingEventPayload = event.payload as TypingStatus;
       if (userStopTypingEventPayload.user.id !== typingStatus.user.id) {
         const initialTypingStatus: TypingStatus = {
           user: initialUser,
@@ -154,9 +203,38 @@ export function routeChatListEvents(
 
   switch (event.type) {
     case 'new_message':
-      const messageEventPayload: Message = event.payload;
+      const messageEventPayload = event.payload as Message;
       setChats(prev =>
         sortChats(
+          prev.map(chat => {
+            if (chat.id == messageEventPayload.chatID) {
+              chat.latestMessage = messageEventPayload;
+            }
+            return chat;
+          })
+        )
+      );
+      break;
+    default:
+      break;
+  }
+}
+
+export function routeGroupChatListEvents(
+  event: WSEvent,
+  setChats: React.Dispatch<React.SetStateAction<GroupChat[]>>
+  // typingStatus: TypingStatus,
+  // setTypingStatus: React.Dispatch<React.SetStateAction<TypingStatus>>
+) {
+  if (event.type === undefined) {
+    alert('No Type in the Event');
+  }
+
+  switch (event.type) {
+    case 'new_message':
+      const messageEventPayload = event.payload as GroupChatMessage;
+      setChats(prev =>
+        sortGroupChats(
           prev.map(chat => {
             if (chat.id == messageEventPayload.chatID) {
               chat.latestMessage = messageEventPayload;

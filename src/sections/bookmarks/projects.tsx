@@ -16,6 +16,8 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
+  const [fadeInProject, setFadeInProject] = useState(true);
+
   const open = useSelector(navbarOpenSelector);
 
   return (
@@ -44,6 +46,8 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
               clickedProjectIndex={clickedProjectIndex}
               setClickedProjectIndex={setClickedProjectIndex}
               setClickedOnProject={setClickedOnProject}
+              fadeIn={fadeInProject}
+              setFadeIn={setFadeInProject}
             />
           ) : (
             <></>
