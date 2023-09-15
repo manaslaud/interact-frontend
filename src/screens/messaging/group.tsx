@@ -37,7 +37,7 @@ const Group = () => {
     else
       setFilteredChats(
         chats.filter(chat => {
-          if (chat.title.match(search)) return true;
+          if (chat.title.match(new RegExp(search, 'i'))) return true;
           return false;
         })
       );

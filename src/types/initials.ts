@@ -285,8 +285,8 @@ export const initialGroupChatMembership: GroupChatMembership = {
   id: '',
   userID: '',
   user: initialUser,
-  groupChatID: '',
-  groupChat: initialGroupChat,
+  chatID: '',
+  chat: initialGroupChat,
   role: '',
   createdAt: new Date(),
 };

@@ -38,18 +38,18 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
 
     const toaster = Toaster.startLoad('Changing Role on the User');
 
-    const URL = `${MESSAGING_URL}/group/project/role/${membership.groupChatID}`;
+    const URL = `${MESSAGING_URL}/group/project/role/${membership.chatID}`;
 
     const formData = {
       userID: membership.userID,
       role: membership.role == GROUP_ADMIN ? GROUP_MEMBER : GROUP_ADMIN,
     };
 
-    const res = await postHandler(URL, formData);
+    const res = await patchHandler(URL, formData);
     if (res.statusCode === 200) {
       setChats(prev =>
         prev.map(chat => {
-          if (chat.id == membership.groupChatID) {
+          if (chat.id == membership.chatID) {
             return {
               ...chat,
               memberships: chat.memberships.map(m => {
@@ -79,7 +79,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
 
     const toaster = Toaster.startLoad('Remove Member from Group');
 
-    const URL = `${MESSAGING_URL}/group/members/remove${membership.groupChatID}`;
+    const URL = `${MESSAGING_URL}/group/project/members/remove/${membership.chatID}`;
 
     const formData = {
       userID: membership.userID,
@@ -89,7 +89,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
     if (res.statusCode === 204) {
       setChats(prev =>
         prev.map(chat => {
-          if (chat.id == membership.groupChatID) {
+          if (chat.id == membership.chatID) {
             return {
               ...chat,
               memberships: chat.memberships.filter(m => m.id != membership.id),

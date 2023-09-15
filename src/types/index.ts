@@ -321,8 +321,8 @@ export interface GroupChatMembership {
   id: string;
   userID: string;
   user: User;
-  groupChatID: string;
-  groupChat: GroupChat;
+  chatID: string;
+  chat: GroupChat;
   role: string;
   createdAt: Date;
 }

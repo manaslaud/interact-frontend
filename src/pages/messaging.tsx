@@ -56,8 +56,8 @@ const Messaging = () => {
           {clickedOnNewGroup ? <NewGroup setShow={setClickedOnNewGroup} /> : <></>}
           {/* 100-(navbar+1) */}
           <div className="w-[37.5vw] max-md:w-screen h-full flex flex-col pt-4 pl-4 max-md:pl-0 gap-4 ">
-            <div className="w-full flex items-center justify-between relative">
-              <div className="text-3xl max-md:hidden font-extrabold text-gradient">Messaging</div>
+            <div className="w-full flex items-center justify-between max-md:px-4 relative">
+              <div className="text-3xl font-extrabold text-gradient">Messaging</div>
               <PencilSimpleLine
                 onClick={() => setClickedOnNew(prev => !prev)}
                 className="cursor-pointer"

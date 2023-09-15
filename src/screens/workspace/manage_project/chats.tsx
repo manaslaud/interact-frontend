@@ -83,7 +83,12 @@ const Chats = ({ project }: Props) => {
                 })}
               </div>
               {clickedOnEditChat ? (
-                <EditChat chat={clickedEditChat} setStateChats={setChats} setShow={setClickedOnEditChat} />
+                <EditChat
+                  chat={clickedEditChat}
+                  project={project}
+                  setStateChats={setChats}
+                  setShow={setClickedOnEditChat}
+                />
               ) : (
                 <></>
               )}

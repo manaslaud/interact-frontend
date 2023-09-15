@@ -38,7 +38,7 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
     const toaster = Toaster.startLoad('Changing Role on the User');
 
-    const URL = `${MESSAGING_URL}/group/role/${membership.groupChatID}`;
+    const URL = `${MESSAGING_URL}/group/role/${membership.chatID}`;
 
     const formData = {
       userID: membership.userID,
@@ -76,7 +76,7 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
     const toaster = Toaster.startLoad('Remove Member from Group');
 
-    const URL = `${MESSAGING_URL}/group/members/remove${membership.groupChatID}`;
+    const URL = `${MESSAGING_URL}/group/members/remove${membership.chatID}`;
 
     const formData = {
       userID: membership.userID,

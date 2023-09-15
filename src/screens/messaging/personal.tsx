@@ -39,7 +39,11 @@ const Personal = () => {
       setFilteredChats(
         chats.filter(chat => {
           const messagingUser = getMessagingUser(chat);
-          if (messagingUser.name.match(search) || messagingUser.username.match(search)) return true;
+          if (
+            messagingUser.name.match(new RegExp(search, 'i')) ||
+            messagingUser.username.match(new RegExp(search, 'i'))
+          )
+            return true;
           return false;
         })
       );
