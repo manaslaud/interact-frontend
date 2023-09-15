@@ -26,10 +26,10 @@ import Link from 'next/link';
 interface Props {
   membership: GroupChatMembership;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setChat: React.Dispatch<React.SetStateAction<GroupChat>>;
+  setChats: React.Dispatch<React.SetStateAction<GroupChat[]>>;
 }
 
-const EditMembership = ({ setShow, membership, setChat }: Props) => {
+const EditMembership = ({ setShow, membership, setChats }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const handleChangeRole = async () => {
@@ -38,7 +38,7 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
     const toaster = Toaster.startLoad('Changing Role on the User');
 
-    const URL = `${MESSAGING_URL}/group/role/${membership.groupChatID}`;
+    const URL = `${MESSAGING_URL}/group/project/role/${membership.groupChatID}`;
 
     const formData = {
       userID: membership.userID,
@@ -47,16 +47,19 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
     const res = await postHandler(URL, formData);
     if (res.statusCode === 200) {
-      setChat(prev => {
-        return {
-          ...prev,
-          memberships: prev.memberships.map(m => {
-            if (m.id == membership.id) {
-              return { ...m, role: m.role == GROUP_ADMIN ? GROUP_MEMBER : GROUP_ADMIN };
-            } else return m;
-          }),
-        };
-      });
+      setChats(prev =>
+        prev.map(chat => {
+          if (chat.id == membership.groupChatID) {
+            return {
+              ...chat,
+              memberships: chat.memberships.map(m => {
+                if (m.id == membership.id) return { ...m, role: m.role == GROUP_ADMIN ? GROUP_MEMBER : GROUP_ADMIN };
+                else return m;
+              }),
+            };
+          } else return chat;
+        })
+      );
       setShow(false);
       Toaster.stopLoad(toaster, 'Role Changed of the User', 1);
     } else {
@@ -84,12 +87,16 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
     const res = await postHandler(URL, formData);
     if (res.statusCode === 204) {
-      setChat(prev => {
-        return {
-          ...prev,
-          memberships: prev.memberships.filter(m => m.id != membership.id),
-        };
-      });
+      setChats(prev =>
+        prev.map(chat => {
+          if (chat.id == membership.groupChatID) {
+            return {
+              ...chat,
+              memberships: chat.memberships.filter(m => m.id != membership.id),
+            };
+          } else return chat;
+        })
+      );
       setShow(false);
       Toaster.stopLoad(toaster, 'Member Removed from Group', 1);
     } else {

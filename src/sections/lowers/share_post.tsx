@@ -28,7 +28,9 @@ const SharePost = ({ post, setShow }: Props) => {
       Toaster.error('You are not logged In.');
       return;
     }
-    getHandler(MESSAGING_URL)
+
+    const URL = `${MESSAGING_URL}/personal`;
+    getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
           const chatsData: Chat[] = res.data.chats;

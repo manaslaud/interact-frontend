@@ -84,6 +84,7 @@ export const initialProject: Project = {
   memberships: [],
   invitations: [],
   openings: [],
+  chats: [],
   hashes: [],
   isPrivate: false,
   views: 0,

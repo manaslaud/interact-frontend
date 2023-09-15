@@ -17,6 +17,7 @@ import Openings from '@/screens/workspace/manage_project/openings';
 import Loader from '@/components/common/loader';
 import Protect from '@/utils/protect';
 import Collaborators from '@/screens/workspace/manage_project/collaborators';
+import Chats from '@/screens/workspace/manage_project/chats';
 
 interface Props {
   slug: string;
@@ -73,7 +74,9 @@ const ManageProject = ({ slug }: Props) => {
               <div className={`${active === 1 ? 'block' : 'hidden'}`}>
                 <Collaborators project={project} setProject={setProject} />
               </div>
-              <div className={`${active === 2 ? 'block' : 'hidden'}`}></div>
+              <div className={`${active === 2 ? 'block' : 'hidden'}`}>
+                <Chats project={project} />
+              </div>
             </>
           )}
         </div>

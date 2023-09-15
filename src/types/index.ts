@@ -156,6 +156,7 @@ export interface Project {
   memberships: Membership[];
   invitations: Invitation[];
   openings: Opening[];
+  chats: GroupChat[];
   hashes: string[];
   isPrivate: boolean;
   views: number;
