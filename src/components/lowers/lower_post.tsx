@@ -5,7 +5,6 @@ import deleteHandler from '@/handlers/delete_handler';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLikes, setPostBookmarks, userSelector } from '@/slices/userSlice';
-// import clickedOnSharePost from './clickedOnShare_post';
 import BookmarkSimple from '@phosphor-icons/react/dist/icons/BookmarkSimple';
 import Export from '@phosphor-icons/react/dist/icons/Export';
 import BookmarkPost from '../../sections/lowers/bookmark_post';
@@ -15,9 +14,11 @@ import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/co
 import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
 import RePost from '../../sections/home/repost';
 import SharePost from '@/sections/lowers/share_post';
+import CommentPost from '@/sections/lowers/comment_post';
 
 interface Props {
   post: Post;
+  setPost?: React.Dispatch<React.SetStateAction<Post>>;
 }
 
 interface bookMarkStatus {
@@ -26,14 +27,16 @@ interface bookMarkStatus {
   bookmarkID: string;
 }
 
-const LowerPost = ({ post }: Props) => {
+const LowerPost = ({ post, setPost }: Props) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post.noLikes);
+  const [numComments, setNumComments] = useState(post.noComments);
   const [bookmarkStatus, setBookmarkStatus] = useState<bookMarkStatus>({
     isBookmarked: false,
     postItemID: '',
     bookmarkID: '',
   });
+  const [clickedOnComment, setClickedOnComment] = useState(false);
   const [clickedOnShare, setClickedOnShare] = useState(false);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
   const [clickedOnRePost, setClickedOnRePost] = useState(false);
@@ -141,6 +144,11 @@ const LowerPost = ({ post }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnComment ? (
+        <CommentPost setShow={setClickedOnComment} post={post} setNoComments={setNumComments} />
+      ) : (
+        <></>
+      )}
       {clickedOnShare ? <SharePost setShow={setClickedOnShare} post={post} /> : <></>}
       {clickedOnRePost ? <RePost setShow={setClickedOnRePost} post={post} /> : <></>}
       <div className="w-full flex justify-between">
@@ -151,7 +159,12 @@ const LowerPost = ({ post }: Props) => {
             size={24}
             weight={liked ? 'fill' : 'regular'}
           />
-          <ChatCircleText className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
+          <ChatCircleText
+            onClick={() => setClickedOnComment(true)}
+            className="cursor-pointer max-md:w-6 max-md:h-6"
+            size={24}
+            weight="regular"
+          />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
           {post.userID != userID ? (
@@ -203,7 +216,7 @@ const LowerPost = ({ post }: Props) => {
           {numLikes} like{numLikes == 1 ? '' : 's'}
         </div>
         <div className="text-xs">•</div>
-        <div>{post.noComments} comments</div>
+        <div> {numComments} comment{numComments == 1 ? '' : 's'}</div>
       </div>
     </>
   );
