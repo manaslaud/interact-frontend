@@ -39,4 +39,4 @@ const Explore = () => {
   );
 };
 
-export default Protect(Explore);
+export default Explore;

@@ -260,7 +260,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                     </div>
                   </Link>
                   {membership.role == GROUP_ADMIN ? (
-                    <div className="text-xs text-[#ea333e] cursor-pointer">Withdraw Invitation</div>
+                    <div className="text-xs text-primary_danger cursor-pointer">Withdraw Invitation</div>
                   ) : (
                     <></>
                   )}
@@ -281,11 +281,11 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         <div className="w-full  rounded-md flex flex-col gap-1 p-4">
           <div
             onClick={handleExit}
-            className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-[#ea333e] rounded-lg cursor-pointer transition-ease-300"
+            className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Exit Group
           </div>
-          <div className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-[#ea333e] rounded-lg cursor-pointer transition-ease-300">
+          <div className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
             Report Group
           </div>
         </div>

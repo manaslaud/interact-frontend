@@ -14,6 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
+import { profilePicSelector } from '@/slices/userSlice';
+import { USER_PROFILE_PIC_URL } from '@/config/routes';
+import Image from 'next/image';
+import Link from 'next/link';
 interface Props {
   index: number;
 }
@@ -42,6 +46,8 @@ const Sidebar = ({ index }: Props) => {
       setTheme('dark');
     }
   };
+
+  const profilePic = useSelector(profilePicSelector);
 
   return (
     <>

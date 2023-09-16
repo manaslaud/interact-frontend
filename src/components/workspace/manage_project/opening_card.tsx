@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Opening, Project } from '@/types';
 import { PROJECT_PIC_URL } from '@/config/routes';
@@ -17,6 +17,17 @@ interface Props {
 const OpeningCard = ({ opening, project, setProject }: Props) => {
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const user = useSelector(userSelector);
+
+  useEffect(() => {
+    const oid = new URLSearchParams(window.location.search).get('oid');
+    const action = new URLSearchParams(window.location.search).get('action');
+
+    if (oid && action == 'edit')
+      if (opening.id == oid) {
+        setClickedOnEdit(true);
+      }
+  }, []);
+
   return (
     <>
       {clickedOnEdit ? (

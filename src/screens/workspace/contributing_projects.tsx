@@ -56,6 +56,7 @@ const ContributingProjects = () => {
                   setClickedOnProject={setClickedOnProject}
                   fadeIn={fadeIn}
                   setFadeIn={setFadeIn}
+                  setProjects={setProjects}
                 />
               ) : (
                 <></>

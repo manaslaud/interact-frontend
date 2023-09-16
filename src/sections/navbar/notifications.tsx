@@ -32,6 +32,7 @@ const Notifications = ({ setShow }: Props) => {
   }, []);
 
   const markRead = (unreadNotifications: string[]) => {
+    //TODO handle this server side
     if (unreadNotifications.length == 0) return;
     const URL = `/notifications/unread`;
     postHandler(URL, { unreadNotifications })

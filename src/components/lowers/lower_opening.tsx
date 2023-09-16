@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Opening, OpeningBookmark } from '@/types';
-import Cookies from 'js-cookie';
 import deleteHandler from '@/handlers/delete_handler';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +35,7 @@ const LowerOpening = ({ opening }: Props) => {
 
   const bookmarks = useSelector(userSelector).openingBookmarks;
 
-  const userID = Cookies.get('id');
+  const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -98,7 +97,6 @@ const LowerOpening = ({ opening }: Props) => {
 
   return (
     <>
-      {/* {clickedOnShare ? <clickedOnShareProject id={project.id} setShow={setClickedOnShare} /> : <></>} */}
       {clickedOnBookmark ? (
         <BookmarkOpening setShow={setClickedOnBookmark} opening={opening} setBookmark={setBookmark} />
       ) : (
@@ -106,11 +104,11 @@ const LowerOpening = ({ opening }: Props) => {
       )}
       {clickedOnShare ? <ShareOpening setShow={setClickedOnShare} opening={opening} /> : <></>}
       <div className="flex gap-4">
-        {userID == opening?.userID ? (
+        {user.id == opening?.userID || user.editorProjects.includes(opening.projectID) ? (
           <Gear
             className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
             onClick={() => {
-              router.push(`/workspace/opening/edit/${opening.id}`);
+              router.push(`/workspace/manage/${opening.project.slug}?action=edit&oid=${opening.id}`);
             }}
             size={32}
             weight="light"

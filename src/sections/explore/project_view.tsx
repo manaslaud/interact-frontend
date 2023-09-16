@@ -13,6 +13,11 @@ import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
 import Openings from '@/components/explore/show_openings';
+import Link from 'next/link';
+import getIcon from '@/utils/get_icon';
+import getDomainName from '@/utils/get_domain_name';
+import Links from '@/components/explore/show_links';
+import { useSwipeable } from 'react-swipeable';
 
 interface Props {
   projectSlugs: string[];
@@ -61,6 +66,7 @@ const ProjectView = ({
   useEffect(() => {
     const abortController = new AbortController();
     fetchProject(abortController);
+
     return () => {
       abortController.abort();
     };
@@ -76,12 +82,30 @@ const ProjectView = ({
     };
   }, []);
 
+  const swipeHandler = useSwipeable({
+    onSwipedRight: () => {
+      if (clickedProjectIndex != 0) {
+        setClickedProjectIndex(prev => prev - 1);
+        setFadeIn(false);
+      }
+    },
+    onSwipedLeft: () => {
+      if (clickedProjectIndex != projectSlugs.length - 1) {
+        setClickedProjectIndex(prev => prev + 1);
+        setFadeIn(false);
+      }
+    },
+  });
+
   return (
     <>
       {loading ? (
         <ProjectViewLoader fadeIn={fadeIn} setClickedOnProject={setClickedOnProject} />
       ) : (
-        <div className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl">
+        <div
+          {...swipeHandler}
+          className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
+        >
           <div className="w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
             <div className="w-10 h-10 relative">
               <Image
@@ -187,6 +211,7 @@ const ProjectView = ({
                 </div>
                 <Collaborators memberships={project.memberships} />
                 <Openings openings={project.openings} slug={project.slug} />
+                <Links links={project.links} />
               </div>
             </div>
           </div>

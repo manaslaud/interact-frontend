@@ -41,7 +41,7 @@ const InvitationCard = ({ invitation, project, setProject }: Props) => {
           {invitation.status == 0 ? (
             <>
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                <div className="text-[#ea333e] cursor-pointer">Withdraw Invitation</div>
+                <div className="text-primary_danger cursor-pointer">Withdraw Invitation</div>
               ) : (
                 <></>
               )}

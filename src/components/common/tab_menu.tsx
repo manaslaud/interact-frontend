@@ -26,7 +26,7 @@ const TabMenu = ({ items, active, setReduxState, setState, width = '500px' }: Pr
             else if (setState) setState(index);
           }}
           className={`${
-            active === index ? 'bg-[#0E0C2A59] shadow-inner' : ''
+            active === index ? 'bg-[#0E0C2A59] shadow-inner' : 'hover:bg-primary_comp_active'
           } w-1/2 h-full font-primary font-medium flex-center text-lg max-md:text-sm text-white rounded-md transition-ease-300 cursor-pointer`}
         >
           {item}

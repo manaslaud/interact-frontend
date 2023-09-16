@@ -120,13 +120,14 @@ const ProfileCard = () => {
                     );
                   })}
               </div>
-              <div
+              <Link
+                href={'/profile?action=edit'}
                 className={`w-[120px] ${
                   open ? 'mt-12' : 'mt-0'
-                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end rounded-lg cursor-pointer`}
+                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end rounded-lg`}
               >
                 Edit
-              </div>
+              </Link>
             </>
           )}
         </div>

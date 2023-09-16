@@ -93,7 +93,7 @@ const Project = () => {
                             onClick={() => {
                               setDisplayChats(chats.filter(chat => chat.projectID == project.id));
                             }}
-                            className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300 cursor-pointer"
+                            className="w-full font-primary hover:bg-primary_comp_hover text-white border-[1px] border-primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
                           >
                             <Image
                               crossOrigin="anonymous"
@@ -101,11 +101,11 @@ const Project = () => {
                               height={10000}
                               alt={'User Pic'}
                               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
-                              className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
+                              className={'w-[90px] h-[90px] max-md:w-[60px] max-md:h-[60px] rounded-lg object-cover'}
                             />
 
                             <div className="grow flex flex-col gap-4 max-md:gap-2">
-                              <div className="font-bold text-3xl max-md:text-lg text-gradient">{project.title}</div>
+                              <div className="font-bold text-2xl max-md:text-lg text-gradient">{project.title}</div>
                               {/* <div className="text-lg max-md:text-sm">{project.chats.length}</div> */}
                             </div>
                           </div>

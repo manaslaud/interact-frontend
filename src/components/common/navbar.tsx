@@ -1,7 +1,7 @@
 import Notifications from '@/sections/navbar/notifications';
 import { unreadNotificationsSelector } from '@/slices/feedSlice';
 import { Bell, ChatCircleDots } from '@phosphor-icons/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import Image from 'next/image';
@@ -14,11 +14,7 @@ const Navbar = () => {
   const notifications = useSelector(unreadNotificationsSelector);
   const [clickedOnNotifications, setClickedOnNotifications] = useState(false);
   const [clickedOnProfile, setClickedOnProfile] = useState(false);
-  let profilePic = useSelector(userSelector).profilePic;
-
-  useEffect(() => {
-    profilePic = profilePic == '' ? 'default.jpg' : profilePic;
-  }, []);
+  const user = useSelector(userSelector);
   return (
     <>
       <div className={`${clickedOnNotifications ? '' : 'hidden'}`}>
@@ -29,39 +25,46 @@ const Navbar = () => {
       </div>
       <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
         <ReactSVG src="/onboarding_logo.svg" />
-        <div className="flex items-center gap-4 z-0">
-          <Link href={'/messaging'}>
-            <ChatCircleDots color="white" className="max-md:w-8 max-md:h-8" size={36} weight="regular" />
-          </Link>
-          <div
-            onClick={() => {
-              setClickedOnProfile(false);
-              setClickedOnNotifications(prev => !prev);
-            }}
-            className="flex-center relative cursor-pointer"
-          >
-            {notifications > 0 ? (
-              <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black text-white">
-                {notifications}
-              </div>
-            ) : (
-              <></>
-            )}
-            <Bell className="cursor-pointer max-md:w-8 max-md:h-8" color="white" size={36} weight="regular" />
+        {user.isLoggedIn ? (
+          <div className="flex items-center gap-2 z-0">
+            <Link
+              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover transition-ease-300"
+              href={'/messaging'}
+            >
+              <ChatCircleDots color="white" className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+            </Link>
+            <div
+              onClick={() => {
+                setClickedOnProfile(false);
+                setClickedOnNotifications(prev => !prev);
+              }}
+              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover transition-ease-300"
+            >
+              {notifications > 0 ? (
+                <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black text-white">
+                  {notifications}
+                </div>
+              ) : (
+                <></>
+              )}
+              <Bell className="cursor-pointer max-md:w-8 max-md:h-8" color="white" size={24} weight="regular" />
+            </div>
+            <Image
+              crossOrigin="anonymous"
+              className="w-9 h-9 max-md:w-8 max-md:h-8 rounded-full cursor-pointer"
+              onClick={() => {
+                setClickedOnNotifications(false);
+                setClickedOnProfile(prev => !prev);
+              }}
+              width={10000}
+              height={10000}
+              alt="user"
+              src={`${USER_PROFILE_PIC_URL}/${user.profilePic != '' ? user.profilePic : 'default.jpg'}`}
+            />
           </div>
-          <Image
-            crossOrigin="anonymous"
-            className="w-9 h-9 max-md:w-8 max-md:h-8 rounded-full cursor-pointer"
-            onClick={() => {
-              setClickedOnNotifications(false);
-              setClickedOnProfile(prev => !prev);
-            }}
-            width={10000}
-            height={10000}
-            alt="user"
-            src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-          />
-        </div>
+        ) : (
+          <>Login, SignUp</>
+        )}
       </div>
     </>
   );

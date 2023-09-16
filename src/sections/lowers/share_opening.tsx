@@ -5,6 +5,7 @@ import postHandler from '@/handlers/post_handler';
 import { Chat, Opening } from '@/types';
 import getMessagingUser from '@/utils/get_messaging_user';
 import Toaster from '@/utils/toaster';
+import { ClipboardText } from '@phosphor-icons/react';
 import Cookies from 'js-cookie';
 import moment from 'moment';
 import Image from 'next/image';
@@ -136,6 +137,18 @@ const ShareOpening = ({ opening, setShow }: Props) => {
                   <></>
                 )}
               </div>
+            </div>
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${process.env.NEXT_PUBLIC_FRONTEND_URL}/explore?oid=${opening.id}&action=external`
+                );
+                Toaster.success('Copied to Clipboard!');
+              }}
+              className="w-full text-center py-2 flex justify-center gap-2 rounded-lg border-[1px] border-[#ffe1fc10] hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+            >
+              <ClipboardText color="white" size={24} />
+              <div> Copy Link</div>
             </div>
           </div>
           <div className="w-1/2 max-md:w-full max-h-base_md overflow-auto flex flex-col gap-2">

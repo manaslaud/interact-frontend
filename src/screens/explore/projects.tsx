@@ -7,6 +7,8 @@ import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState, useEffect } from 'react';
 import ProjectView from '@/sections/explore/project_view';
+import { useDispatch } from 'react-redux';
+import { setExploreTab } from '@/slices/feedSlice';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -16,6 +18,8 @@ const Projects = () => {
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
   const [fadeInProjectView, setFadeInProjectView] = useState(true);
+
+  const dispatch = useDispatch();
 
   const fetchProjects = async (search: string | null) => {
     setLoading(true);
@@ -58,6 +62,12 @@ const Projects = () => {
     if (pid && pid != '') fetchProject(pid);
     else fetchProjects(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
+
+  useEffect(() => {
+    const oid = new URLSearchParams(window.location.search).get('oid');
+    const action = new URLSearchParams(window.location.search).get('action');
+    if (oid && action == 'external') dispatch(setExploreTab(1));
+  }, []);
 
   return (
     <div className="w-full px-2">

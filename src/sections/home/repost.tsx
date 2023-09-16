@@ -91,7 +91,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               <div className="text-2xl font-semibold">{name}</div>
               <div
                 onClick={handleSubmit}
-                className="max-md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+                className="max-md:hidden w-[120px] h-[48px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
               >
                 RePost
               </div>
@@ -129,7 +129,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
         </div>
         <div
           onClick={handleSubmit}
-          className="md:hidden w-[120px] h-[48px] bg-[#0e0c2a77] shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+          className="md:hidden w-[120px] h-[48px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
         >
           Post
         </div>

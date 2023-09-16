@@ -62,6 +62,8 @@ const Profile = () => {
 
   useEffect(() => {
     getUser();
+    const action = new URLSearchParams(window.location.search).get('action');
+    if (action && action == 'edit') setClickedOnEdit(true);
   }, []);
 
   return (

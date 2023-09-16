@@ -34,7 +34,7 @@ const Post = ({ post, showLowerPost = true }: Props) => {
           />
         </Link>
       </div>
-      <div className="grow flex flex-col gap-3">
+      <div className="grow max-w-[90%] flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}

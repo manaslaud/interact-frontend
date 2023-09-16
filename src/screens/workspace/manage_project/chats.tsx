@@ -51,7 +51,7 @@ const Chats = ({ project }: Props) => {
       )}
       <div
         onClick={() => setClickedOnAddChat(true)}
-        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto hover:to-primary_comp_hover bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
       >
         <div className="flex gap-2 items-center pl-2">
           <div className="font-primary text-gray-200 text-lg">Create a new Chat</div>

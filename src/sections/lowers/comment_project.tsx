@@ -34,7 +34,7 @@ const CommentProject = ({ project, setShow, setNoComments }: Props) => {
 
   return (
     <>
-      <div className="w-[80%] h-[90%] max-md:w-5/6 max-md:overflow-y-auto fixed backdrop-blur-lg text-white bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex items-center max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-primary_btn rounded-xl">
+      <div className="w-[80%] h-[90%] max-md:w-5/6 max-md:overflow-y-auto fixed backdrop-blur-xl text-white bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex items-center max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-primary_btn rounded-xl">
         <div className="w-1/3 max-md:w-full h-fit pb-8">
           <div className={`w-full h-96 rounded-lg relative cursor-default`}>
             <Image

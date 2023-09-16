@@ -1,13 +1,13 @@
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { EXPLORE_URL, MEMBERSHIP_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, Link, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
@@ -15,7 +15,11 @@ import Collaborators from '@/components/explore/show_collaborator';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import EditProject from './edit_project';
-
+import getDomainName from '@/utils/get_domain_name';
+import getIcon from '@/utils/get_icon';
+import Links from '@/components/explore/show_links';
+import deleteHandler from '@/handlers/delete_handler';
+import { useSwipeable } from 'react-swipeable';
 interface Props {
   projectSlugs: string[];
   clickedProjectIndex: number;
@@ -65,11 +69,38 @@ const ProjectView = ({
     }
   };
 
+  const handleLeaveProject = async () => {
+    const toaster = Toaster.startLoad('Leaving this project...');
+
+    const URL = `${MEMBERSHIP_URL}/project/${project.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
+      setClickedProjectIndex(-1);
+      const { query } = router;
+      if (router.pathname == '/workspace') {
+        delete query.project;
+
+        router.replace({
+          pathname: router.pathname,
+          query: { ...query },
+        });
+      }
+      setClickedOnProject(false);
+      Toaster.stopLoad(toaster, 'Left the Project', 1);
+    } else {
+      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+      console.log(res);
+    }
+  };
+
   useEffect(() => {
     const abortController = new AbortController();
     fetchProject(abortController);
 
-    router.push({
+    router.replace({
       pathname: router.pathname,
       query: { ...router.query, project: projectSlugs[clickedProjectIndex] },
     });
@@ -109,12 +140,20 @@ const ProjectView = ({
     setFadeIn(false);
   };
 
+  const swipeHandler = useSwipeable({
+    onSwipedRight: handleClickPrev,
+    onSwipedLeft: handleClickNext,
+  });
+
   return (
     <>
       {loading ? (
         <ProjectViewLoader fadeIn={fadeIn} setClickedOnProject={setClickedOnProject} />
       ) : (
-        <div className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl">
+        <div
+          {...swipeHandler}
+          className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
+        >
           {clickedOnEdit ? (
             <EditProject
               projectToEdit={project}
@@ -227,6 +266,8 @@ const ProjectView = ({
                       })}
                   </div>
                   <Collaborators memberships={project.memberships} />
+                  <Links links={project.links} />
+                  <Links links={project.privateLinks} title="Private Links" />
                 </div>
 
                 <div className="w-full mx-auto flex flex-col gap-2 pb-4">
@@ -251,7 +292,10 @@ const ProjectView = ({
                     <></>
                   )}
                   {project.userID != user.id ? (
-                    <div className="w-full text-lg font-medium py-2 flex-center border-[1px] border-[#ea333e] hover:bg-[#ea333e] rounded-lg cursor-pointer transition-ease-300">
+                    <div
+                      onClick={handleLeaveProject}
+                      className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
+                    >
                       Leave Project
                     </div>
                   ) : (

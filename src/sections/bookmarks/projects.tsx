@@ -1,7 +1,7 @@
-import ProjectCard from '@/components/workspace/project_card';
+import ProjectCard from '@/components/explore/project_card';
 import { ProjectBookmark } from '@/types';
 import React, { useState } from 'react';
-import ProjectView from '../../sections/workspace/project_view';
+import ProjectView from '../../sections/explore/project_view';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
