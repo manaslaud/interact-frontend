@@ -96,6 +96,7 @@ const Feed = () => {
                 loader={<Loader />}
               >
                 {feed.map(post => {
+                  console.log(post);
                   if (post.rePost) return <RePostComponent key={post.id} post={post} />;
                   else return <PostComponent key={post.id} post={post} />;
                 })}

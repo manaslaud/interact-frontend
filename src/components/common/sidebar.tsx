@@ -6,8 +6,11 @@ import {
   Buildings,
   Chats,
   Envelope,
+  Gear,
   HouseLine,
   RocketLaunch,
+  User,
+  UserCircle,
   Wrench,
 } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,57 +57,58 @@ const Sidebar = ({ index }: Props) => {
       <div
         className={`${
           open ? 'w-sidebar_open' : 'w-sidebar_close'
-        } h-base bg-sidebar backdrop-blur-sm pt-[84px] sticky top-navbar mt-navbar py-6 flex flex-col pl-[30px] gap-2 transition-ease-out-500 max-md:hidden`}
+        } h-base bg-sidebar backdrop-blur-sm pt-[40px] sticky top-navbar mt-navbar py-6 flex flex-col justify-between pl-[30px] transition-ease-out-500 max-md:hidden`}
       >
-        <SidebarItem
-          index={1}
-          title="Home"
-          icon={<HouseLine size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={2}
-          title="Explore"
-          icon={<RocketLaunch size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={3}
-          title="Workspace"
-          icon={<Wrench size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={5}
-          title="Invitations"
-          icon={<Envelope size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={6}
-          title="Bookmarks"
-          icon={<BookmarkSimple size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-        <SidebarItem
-          index={8}
-          title="Organizations"
-          icon={<Buildings size={24} />}
-          active={active}
-          setActive={setActive}
-          open={open}
-        />
-
+        <div className="w-full flex flex-col gap-2">
+          <SidebarItem
+            index={1}
+            title="Home"
+            icon={<HouseLine size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={2}
+            title="Explore"
+            icon={<RocketLaunch size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={3}
+            title="Workspace"
+            icon={<Wrench size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={5}
+            title="Invitations"
+            icon={<Envelope size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={6}
+            title="Bookmarks"
+            icon={<BookmarkSimple size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={8}
+            title="Organizations"
+            icon={<Buildings size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+        </div>
         {/* <label className="flex cursor-pointer select-none items-center">
         <div>Toggle Theme</div>
         <div className="relative">
@@ -121,6 +125,25 @@ const Sidebar = ({ index }: Props) => {
           ></div>
         </div>
       </label> */}
+
+        <div className="w-fit py-8 border-y-2 border-primary_btn flex flex-col gap-2">
+          <SidebarItem
+            index={8}
+            title="Profile"
+            icon={<UserCircle size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={8}
+            title="Settings"
+            icon={<Gear size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+        </div>
 
         <ArrowLineLeft
           onClick={() => dispatch(setNavbarOpen(!open))}

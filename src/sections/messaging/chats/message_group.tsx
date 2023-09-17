@@ -3,6 +3,7 @@ import RegularMessage from '@/components/messaging/regular_message';
 import SharedPostMessage from '@/components/messaging/shared_post_message';
 import SharedProjectMessage from '@/components/messaging/shared_project_message';
 import SharedOpeningMessage from '@/components/messaging/shared_opening_message';
+import SharedProfileMessage from '@/components/messaging/shared_profile_message';
 
 interface Props {
   date: string;
@@ -18,7 +19,7 @@ const MessageGroup = ({ date, messages }: Props) => {
           if (message.postID != null) return <SharedPostMessage message={message} />;
           else if (message.projectID != null) return <SharedProjectMessage message={message} />;
           else if (message.openingID != null) return <SharedOpeningMessage message={message} />;
-          // else if (message.profileID != null) return <SharedProjectMessage message={message} />;
+          else if (message.profileID != null) return <SharedProfileMessage message={message} />;
           else return <RegularMessage message={message} />;
         })}
       </div>
