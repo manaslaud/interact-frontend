@@ -100,14 +100,14 @@ const Sidebar = ({ index }: Props) => {
             setActive={setActive}
             open={open}
           />
-          <SidebarItem
+          {/* <SidebarItem
             index={8}
             title="Organizations"
             icon={<Buildings size={24} />}
             active={active}
             setActive={setActive}
             open={open}
-          />
+          /> */}
         </div>
         {/* <label className="flex cursor-pointer select-none items-center">
         <div>Toggle Theme</div>
@@ -128,7 +128,7 @@ const Sidebar = ({ index }: Props) => {
 
         <div className="w-fit py-8 border-y-2 border-primary_btn flex flex-col gap-2">
           <SidebarItem
-            index={8}
+            index={7}
             title="Profile"
             icon={<UserCircle size={24} />}
             active={active}

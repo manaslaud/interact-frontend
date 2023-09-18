@@ -66,9 +66,9 @@ const Messaging = () => {
               />
               {clickedOnNew ? (
                 <div className="w-1/3 flex flex-col gap-2 backdrop-blur-sm border-[1px] border-primary_btn bg-primary_comp text-white font-primary p-3 absolute translate-y-full -bottom-2 right-0 rounded-md z-50">
-                  <div className="p-2 rounded-md hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer">
+                  {/* <div className="p-2 rounded-md hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer">
                     New Chat
-                  </div>
+                  </div> */}
                   <div
                     onClick={() => {
                       setClickedOnNewGroup(true);

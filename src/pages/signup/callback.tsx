@@ -50,7 +50,7 @@ const SignUpCallback = ({ token }: Props) => {
           Cookies.set('id', user.id, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
-          dispatch(setUser({ ...user, isVerified: false }));
+          dispatch(setUser(user));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1));
           socketService.connect(user.id);

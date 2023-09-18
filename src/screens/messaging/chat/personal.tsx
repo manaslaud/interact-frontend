@@ -50,6 +50,17 @@ const PersonalChat = () => {
     }
   };
 
+  const handleAccept = async () => {
+    const URL = `${MESSAGING_URL}/accept/${chatID}`;
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      setChat({ ...chat, accepted: true });
+    } else {
+      if (res.data.message) Toaster.error(res.data.message);
+      else Toaster.error(SERVER_ERROR);
+    }
+  };
+
   useEffect(() => {
     if (chatID != '') {
       fetchChat();
@@ -97,7 +108,18 @@ const PersonalChat = () => {
                 </ScrollableFeed>
               </div>
               <div className="flex w-[calc(100%-16px)] items-end gap-2 absolute bottom-2 right-1/2 translate-x-1/2">
-                <ChatTextarea chat={chat} />
+                {chat.accepted || chat.createdByID == userID ? (
+                  <ChatTextarea chat={chat} />
+                ) : (
+                  <>
+                    <div
+                      onClick={handleAccept}
+                      className="w-full h-12 rounded-md text-white font-primary flex-center text-xl font-medium bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active cursor-pointer transition-ease-300"
+                    >
+                      Accept Chat
+                    </div>
+                  </>
+                )}
               </div>
             </>
           )}

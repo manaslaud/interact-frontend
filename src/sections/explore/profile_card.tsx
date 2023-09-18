@@ -5,11 +5,15 @@ import Image from 'next/image';
 import getDomainName from '@/utils/get_domain_name';
 import Link from 'next/link';
 import getIcon from '@/utils/get_icon';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setExploreTab } from '@/slices/feedSlice';
 import FollowBtn from '@/components/common/follow_btn';
-import { Share, Warning } from '@phosphor-icons/react';
+import { Chat, Share, Warning } from '@phosphor-icons/react';
 import ShareProfile from '../lowers/share_profile';
+import { userSelector } from '@/slices/userSlice';
+import SendMessage from '../profile/send_message';
+import { setCurrentChatID } from '@/slices/messagingSlice';
+import { useRouter } from 'next/router';
 interface Props {
   user: User;
 }
@@ -18,9 +22,31 @@ const ProfileCard = ({ user }: Props) => {
   const dispatch = useDispatch();
   const [numFollowers, setNumFollowers] = useState(user.noFollowers);
   const [clickedOnShare, setClickedOnShare] = useState(false);
+  const [clickedOnChat, setClickedOnChat] = useState(false);
+
+  const chatSlices = useSelector(userSelector).personalChatSlices;
+
+  const router = useRouter();
+
+  const handleChat = () => {
+    var check = false;
+    var chatID = '';
+    chatSlices.forEach(chat => {
+      if (chat.userID == user.id) {
+        chatID = chat.chatID;
+        check = true;
+        return;
+      }
+    });
+    if (check) {
+      dispatch(setCurrentChatID(chatID));
+      router.push('/messaging');
+    } else setClickedOnChat(true);
+  };
   return (
     <>
       {clickedOnShare ? <ShareProfile user={user} setShow={setClickedOnShare} /> : <></>}
+      {clickedOnChat ? <SendMessage user={user} setShow={setClickedOnChat} /> : <></>}
 
       <div className="w-[360px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#84478023] backdrop-blur-md border-[1px] border-primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10">
         <Image
@@ -77,15 +103,21 @@ const ProfileCard = ({ user }: Props) => {
           </div>
         </div>
         <div className="w-fit absolute max-md:static top-4 right-4 flex gap-2">
+          <div className="p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+            <Chat onClick={handleChat} size={18} />
+          </div>
           <div
             onClick={() => setClickedOnShare(true)}
             className="p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer"
           >
-            <Share size={20} />
+            <Share size={18} />
           </div>
-          <div className="p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
-            <Warning size={20} />
+          <div className="md:hidden p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+            <Warning size={18} />
           </div>
+        </div>
+        <div className="absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+          <Warning size={18} />
         </div>
       </div>
     </>

@@ -29,8 +29,7 @@ const Verification = () => {
     Cookies.remove('token');
     Cookies.remove('id');
     router.push('/login');
-  }
-  //  else if (user.isVerified) router.back();
+  } else if (user.isVerified) router.back();
 
   const sendOTP = () => {
     const toaster = Toaster.startLoad('Sending OTP');
@@ -154,22 +153,6 @@ const Verification = () => {
       </div>
     </>
   );
-};
-
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const token = nookies.get(context).token;
-  if (token && process.env.NODE_ENV != 'development') {
-    return {
-      redirect: {
-        permanent: true,
-        destination: '/home',
-      },
-      props: { token },
-    };
-  }
-  return {
-    props: {},
-  };
 };
 
 export default Protect(Verification);
