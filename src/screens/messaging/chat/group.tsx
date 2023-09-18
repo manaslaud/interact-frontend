@@ -108,7 +108,7 @@ const GroupChat = () => {
                       )}
                     </ScrollableFeed>
                   </div>
-                  <div className="flex w-[calc(100%-16px)] items-end gap-2 absolute bottom-2 right-1/2 translate-x-1/2">
+                  <div className="flex w-[calc(100%-16px)] max-md:w-[99%] items-end gap-2 absolute max-md:sticky bottom-2 right-1/2 translate-x-1/2 max-md:translate-x-0">
                     <ChatTextarea chat={chat} />
                   </div>
                 </>

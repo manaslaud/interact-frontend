@@ -31,7 +31,7 @@ const Images = ({ setSelectedFile, initialImage }: Props) => {
           if (target.files && target.files.length > 0) {
             if (target.files[0].type.split('/')[0] === 'image') {
               try {
-                const resizedPic = await resizeImage(target.files[0], 2560, 2560);
+                const resizedPic = await resizeImage(target.files[0], 1080, 1080);
                 setSelectedImageUrl(URL.createObjectURL(resizedPic));
                 setSelectedFile(resizedPic);
               } catch (error) {
