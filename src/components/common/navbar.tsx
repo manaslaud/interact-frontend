@@ -38,7 +38,7 @@ const Navbar = () => {
                 setClickedOnProfile(false);
                 setClickedOnNotifications(prev => !prev);
               }}
-              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover transition-ease-300"
+              className="w-10 h-10 rounded-full flex-center relative hover:bg-primary_comp_hover transition-ease-300"
             >
               {notifications > 0 ? (
                 <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black text-white">

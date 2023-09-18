@@ -1,12 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { resetUser } from '@/slices/userSlice';
+import { useRouter } from 'next/router';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfileDropdown = ({ setShow }: Props) => {
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handleLogout = () => {
+    dispatch(resetUser());
+    Cookies.remove('id');
+    Cookies.remove('token');
+
+    router.replace('/login');
+  };
   return (
     <>
       <div className="w-72 max-md:border-b-[1px] max-md:border-primary_btn text-white font-primary max-md:w-full max-h-[480px] max-md:max-h-none overflow-y-auto fixed top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop p-2 z-50 animate-fade_third">

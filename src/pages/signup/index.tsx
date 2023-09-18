@@ -85,7 +85,7 @@ const SignUp = () => {
         withCredentials: true,
       })
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           Toaster.stopLoad(toaster, 'Account created!', 1);
           const user: User = res.data.user;
           Cookies.set('token', res.data.token, {

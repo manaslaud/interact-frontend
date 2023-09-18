@@ -76,6 +76,27 @@ export const userSlice = createSlice({
       state.projectBookmarks = [];
       state.openingBookmarks = [];
     },
+    resetUser: state => {
+      state.id = '';
+      state.name = '';
+      state.username = '';
+      state.email = '';
+      state.profilePic = 'default.jpg';
+      state.isLoggedIn = true;
+      state.phoneNo = '';
+      state.isVerified = false;
+      state.chats = [];
+      state.personalChatSlices = [];
+      state.memberProjects = [];
+      state.editorProjects = [];
+      state.managerProjects = [];
+      state.applications = [];
+      state.following = [];
+      state.likes = [];
+      state.postBookmarks = [];
+      state.projectBookmarks = [];
+      state.openingBookmarks = [];
+    },
     setReduxName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
@@ -132,6 +153,7 @@ export const userSlice = createSlice({
 
 export const {
   setUser,
+  resetUser,
   setReduxName,
   setProfilePic,
   setFollowing,
