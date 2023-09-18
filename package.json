@@ -6,7 +6,7 @@
     "validate-env": "node src/helpers/validate-env.cjs",
     "dev": "npm run validate-env && next dev",
     "build": "next build",
-    "start": "npm run validate-env && next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
