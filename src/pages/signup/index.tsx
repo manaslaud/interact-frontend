@@ -94,7 +94,7 @@ const SignUp = () => {
           Cookies.set('id', user.id, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
-          dispatch(setUser(user));
+          dispatch(setUser({ ...user, isVerified: false }));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
           socketService.connect(user.id);

@@ -27,8 +27,10 @@ const Verification = () => {
   if (!user.email || user.email == '') {
     Toaster.error('Please Log in again');
     Cookies.remove('token');
+    Cookies.remove('id');
     router.push('/login');
-  } else if (user.isVerified) router.back();
+  }
+  //  else if (user.isVerified) router.back();
 
   const sendOTP = () => {
     const toaster = Toaster.startLoad('Sending OTP');
