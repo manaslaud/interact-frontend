@@ -96,8 +96,8 @@ const Feed = () => {
                 loader={<Loader />}
               >
                 {feed.map(post => {
-                  if (post.rePost) return <RePostComponent key={post.id} post={post} />;
-                  else return <PostComponent key={post.id} post={post} />;
+                  if (post.rePost) return <RePostComponent key={post.id} setFeed={setFeed} post={post} />;
+                  else return <PostComponent key={post.id} setFeed={setFeed} post={post} />;
                 })}
               </InfiniteScroll>
             )}

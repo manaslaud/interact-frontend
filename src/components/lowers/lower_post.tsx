@@ -19,6 +19,7 @@ import CommentPost from '@/sections/lowers/comment_post';
 interface Props {
   post: Post;
   setPost?: React.Dispatch<React.SetStateAction<Post>>;
+  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
 interface bookMarkStatus {
@@ -27,7 +28,7 @@ interface bookMarkStatus {
   bookmarkID: string;
 }
 
-const LowerPost = ({ post, setPost }: Props) => {
+const LowerPost = ({ post, setPost, setFeed }: Props) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post.noLikes);
   const [numComments, setNumComments] = useState(post.noComments);
@@ -150,7 +151,7 @@ const LowerPost = ({ post, setPost }: Props) => {
         <></>
       )}
       {clickedOnShare ? <SharePost setShow={setClickedOnShare} post={post} /> : <></>}
-      {clickedOnRePost ? <RePost setShow={setClickedOnRePost} post={post} /> : <></>}
+      {clickedOnRePost ? <RePost setFeed={setFeed} setShow={setClickedOnRePost} post={post} /> : <></>}
       <div className="w-full flex justify-between">
         <div className="flex gap-3 max-md:gap-3">
           <HeartStraight
@@ -212,11 +213,11 @@ const LowerPost = ({ post, setPost }: Props) => {
         </div>
       </div>
       <div className="w-full flex items-center font-primary text-sm gap-2 text-[#ffffffb6]">
-        <div>
+        <div onClick={likeHandler} className="cursor-pointer">
           {numLikes} like{numLikes == 1 ? '' : 's'}
         </div>
         <div className="text-xs">•</div>
-        <div>
+        <div onClick={() => setClickedOnComment(true)} className="cursor-pointer">
           {' '}
           {numComments} comment{numComments == 1 ? '' : 's'}
         </div>

@@ -24,7 +24,9 @@ const Navbar = () => {
         <ProfileDropdown setShow={setClickedOnProfile} />
       </div>
       <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
-        <ReactSVG src="/onboarding_logo.svg" />
+        <Link href={'/home'}>
+          <ReactSVG src="/onboarding_logo.svg" />
+        </Link>
         {user.isLoggedIn ? (
           <div className="flex items-center gap-2 z-0">
             <Link
