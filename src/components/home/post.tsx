@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Post } from '@/types';
 import { USER_PROFILE_PIC_URL, POST_PIC_URL } from '@/config/routes';
@@ -17,8 +17,48 @@ interface Props {
 
 const Post = ({ post, showLowerPost = true }: Props) => {
   const loggedInUser = useSelector(userSelector);
+  const [clickedOnOptions, setClickedOnOptions] = useState(false);
   return (
-    <div className="w-full font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
+    <div
+      onClick={() => setClickedOnOptions(false)}
+      className="w-full relative font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:p-4"
+    >
+      {clickedOnOptions ? (
+        <div className="w-1/4 h-fit flex flex-col absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
+          {/* {post.userID == loggedInUser.id ? (
+            <div
+              // onClick={() => setClickedOnEdit(true)}
+              className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Edit
+            </div>
+          ) : (
+            <></>
+          )} */}
+          {post.userID == loggedInUser.id ? (
+            <div
+              // onClick={handleDelete}
+              onClick={el => {
+                el.stopPropagation();
+              }}
+              className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Delete
+            </div>
+          ) : (
+            <div
+              onClick={el => {
+                el.stopPropagation();
+              }}
+              className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Report
+            </div>
+          )}
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="h-full">
         <Link
           href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
@@ -44,7 +84,19 @@ const Post = ({ post, showLowerPost = true }: Props) => {
           </Link>
           <div className="flex gap-2 font-light text-xs">
             <div>{moment(post.postedAt).fromNow()}</div>
-            {showLowerPost ? <div className="text-xxs">•••</div> : <></>}
+            {showLowerPost ? (
+              <div
+                onClick={el => {
+                  el.stopPropagation();
+                  setClickedOnOptions(prev => !prev);
+                }}
+                className="text-xxs cursor-pointer"
+              >
+                •••
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         {post.images && post.images.length > 0 ? (

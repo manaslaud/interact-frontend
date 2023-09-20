@@ -168,7 +168,7 @@ const ProjectView = ({
           ) : (
             <></>
           )}
-          <div className="w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
+          <div className="max-md:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
             <div className="w-10 h-10 relative">
               <Image
                 crossOrigin="anonymous"
@@ -200,19 +200,37 @@ const ProjectView = ({
           </div>
 
           <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen overflow-hidden pt-3">
-            <div className="w-full h-14 max-md:pl-[68px]">
-              <div className="w-fit font-semibold cursor-default">{project.title}</div>
-              <div // convert to link
-                className="w-fit text-xs font-medium"
-              >
-                <span
-                  onClick={() => router.push(`/explore/user/${project.user.username}`)}
-                  className="cursor-pointer hover:underline hover:underline-offset-2"
-                >
-                  {project.user.name}{' '}
-                </span>
+            <div className="w-full h-14 flex justify-between max-md:pr-3">
+              <div className="grow flex gap-2 max-md:gap-4">
+                <Image
+                  crossOrigin="anonymous"
+                  width={10000}
+                  height={10000}
+                  alt={'User Pic'}
+                  src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
+                  className={'md:hidden w-10 h-10 rounded-full cursor-default'}
+                />
+                <div>
+                  <div className="w-fit font-semibold cursor-default">{project.title}</div>
+                  <div // convert to link
+                    className="w-fit text-xs font-medium"
+                  >
+                    <span
+                      onClick={() => router.push(`/explore/user/${project.user.username}`)}
+                      className="cursor-pointer hover:underline hover:underline-offset-2"
+                    >
+                      {project.user.name}{' '}
+                    </span>
 
-                <span>{project.memberships.length > 0 ? `+${project.memberships.length}` : ''}</span>
+                    <span>{project.memberships.length > 0 ? `+${project.memberships.length}` : ''}</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                onClick={() => setClickedOnProject(false)}
+                className="md:hidden w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer"
+              >
+                <X color="white" size={24} weight="bold" />
               </div>
             </div>
             <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
@@ -310,7 +328,7 @@ const ProjectView = ({
             </div>
           </div>
 
-          <div className="w-16 h-screen flex flex-col items-center justify-between py-3 max-md:fixed max-md:top-0 max-md:right-0">
+          <div className="max-md:hidden w-16 h-screen flex flex-col items-center justify-between py-3 max-md:fixed max-md:top-0 max-md:right-0">
             <div
               onClick={() => setClickedOnProject(false)}
               className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer"
@@ -325,6 +343,34 @@ const ProjectView = ({
             {clickedProjectIndex != projectSlugs.length - 1 ? (
               <div
                 onClick={handleClickNext}
+                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+              >
+                <CaretRight color="white" size={24} weight="bold" />
+              </div>
+            ) : (
+              <div className="w-10 h-10 rounded-full"></div>
+            )}
+          </div>
+          <div className="md:hidden fixed bottom-3 w-full flex justify-between px-3">
+            {clickedProjectIndex != 0 ? (
+              <div
+                onClick={() => {
+                  setClickedProjectIndex(prev => prev - 1);
+                  setFadeIn(false);
+                }}
+                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+              >
+                <CaretLeft color="white" size={24} weight="bold" />
+              </div>
+            ) : (
+              <div className="w-10 h-10 rounded-full"></div>
+            )}
+            {clickedProjectIndex != projectSlugs.length - 1 ? (
+              <div
+                onClick={() => {
+                  setClickedProjectIndex(prev => prev + 1);
+                  setFadeIn(false);
+                }}
                 className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
               >
                 <CaretRight color="white" size={24} weight="bold" />

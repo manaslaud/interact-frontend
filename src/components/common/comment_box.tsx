@@ -12,7 +12,7 @@ import moment from 'moment';
 import getHandler from '@/handlers/get_handler';
 import Loader from '@/components/common/loader';
 import Link from 'next/link';
-import { profilePicSelector } from '@/slices/userSlice';
+import { profilePicSelector, userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import postHandler from '@/handlers/post_handler';
 import Trash from '@phosphor-icons/react/dist/icons/Trash';
@@ -115,7 +115,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
     }
   };
 
-  const profilePic = useSelector(profilePicSelector);
+  const profilePic = useSelector(userSelector).profilePic;
+  const loggedInUser = useSelector(userSelector);
 
   return (
     <div className="w-full h-full overflow-auto flex flex-col px-12 py-8 font-primary gap-8 max-md:px-4">
@@ -160,7 +161,14 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                   <div key={comment.id} className="flex flex-col gap-2">
                     <div className="w-full flex justify-between items-center">
                       <div className="flex gap-2">
-                        <Link href={`/explore/user/${comment.user.id}`} className="rounded-full">
+                        <Link
+                          href={`${
+                            comment.user.username != loggedInUser.username
+                              ? `/explore/user/${comment.user.username}`
+                              : '/profile'
+                          }`}
+                          className="rounded-full"
+                        >
                           <Image
                             crossOrigin="anonymous"
                             width={10000}
@@ -172,13 +180,24 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                         </Link>
                         <div className="flex flex-col">
                           <Link
-                            href={`/explore/user/${comment.user.id}`}
+                            href={`${
+                              comment.user.username != loggedInUser.username
+                                ? `/explore/user/${comment.user.username}`
+                                : '/profile'
+                            }`}
                             className="text-xl max-md:text-lg font-semibold"
                           >
                             {comment.user.name}
                           </Link>
                           <div className="flex gap-1 items-center">
-                            <Link href={`/explore/user/${comment.user.id}`} className="text-sm max-md:text-xs">
+                            <Link
+                              href={`${
+                                comment.user.username != loggedInUser.username
+                                  ? `/explore/user/${comment.user.username}`
+                                  : '/profile'
+                              }`}
+                              className="text-sm max-md:text-xs"
+                            >
                               @{comment.user.username}
                             </Link>
                             <div className="text-xs max-md:text-xxs">•</div>

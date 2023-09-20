@@ -14,6 +14,7 @@ import { userSelector } from '@/slices/userSlice';
 import SendMessage from './send_message';
 import { setCurrentChatID } from '@/slices/messagingSlice';
 import { useRouter } from 'next/router';
+import Connections from './connections_view';
 interface Props {
   user: User;
 }
@@ -23,6 +24,9 @@ const ProfileCard = ({ user }: Props) => {
   const [numFollowers, setNumFollowers] = useState(user.noFollowers);
   const [clickedOnShare, setClickedOnShare] = useState(false);
   const [clickedOnChat, setClickedOnChat] = useState(false);
+
+  const [clickedOnFollowers, setClickedOnFollowers] = useState(false);
+  const [clickedOnFollowing, setClickedOnFollowing] = useState(false);
 
   const chatSlices = useSelector(userSelector).personalChatSlices;
 
@@ -48,6 +52,9 @@ const ProfileCard = ({ user }: Props) => {
       {clickedOnShare ? <ShareProfile user={user} setShow={setClickedOnShare} /> : <></>}
       {clickedOnChat ? <SendMessage user={user} setShow={setClickedOnChat} /> : <></>}
 
+      {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
+      {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
+
       <div className="w-[360px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#84478023] backdrop-blur-md border-[1px] border-primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10">
         <Image
           crossOrigin="anonymous"
@@ -60,11 +67,11 @@ const ProfileCard = ({ user }: Props) => {
         <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
         <div className="text-sm text-center">{user.bio || 'Professional Bio'}</div>
         <div className="w-full flex justify-center gap-6">
-          <div className="flex gap-1">
+          <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
             <div className="font-bold">{numFollowers}</div>
             <div>Follower{numFollowers != 1 ? 's' : ''}</div>
           </div>
-          <div className="flex gap-1">
+          <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
             <div className="font-bold">{user.noFollowing}</div>
             <div>Following</div>
           </div>

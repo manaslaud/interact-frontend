@@ -31,6 +31,10 @@ const SignUpCallback = ({ token }: Props) => {
 
   const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
     el.preventDefault();
+    if (!/^[a-z][a-z0-9_]{3,}/.test(username.trim().toLowerCase())) {
+      Toaster.error('Enter a Valid Username');
+      return;
+    }
     if (mutex) return;
     setMutex(true);
     const formData = {

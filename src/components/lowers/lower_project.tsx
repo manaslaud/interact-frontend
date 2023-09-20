@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Project, ProjectBookmark } from '@/types';
-import Cookies from 'js-cookie';
 import deleteHandler from '@/handlers/delete_handler';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLikes, setProjectBookmarks, userSelector } from '@/slices/userSlice';
 // import clickedOnSharePost from './clickedOnShare_project';
 import BookmarkSimple from '@phosphor-icons/react/dist/icons/BookmarkSimple';
-import Gear from '@phosphor-icons/react/dist/icons/Gear';
 import Export from '@phosphor-icons/react/dist/icons/Export';
-import Heart from '@phosphor-icons/react/dist/icons/Heart';
 import ChatTeardrop from '@phosphor-icons/react/dist/icons/ChatTeardrop';
 import BookmarkProject from '../../sections/lowers/bookmark_project';
-import { BOOKMARK_URL, POST_URL, PROJECT_URL } from '@/config/routes';
+import { BOOKMARK_URL, PROJECT_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
 import { HeartStraight } from '@phosphor-icons/react';
@@ -48,10 +43,7 @@ const LowerProject = ({ project }: Props) => {
   const likes = useSelector(userSelector).likes;
   const bookmarks = useSelector(userSelector).projectBookmarks;
 
-  const userID = Cookies.get('id');
-
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const updatingLikes = useSelector(configSelector).updatingLikes;
 

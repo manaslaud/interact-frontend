@@ -10,12 +10,18 @@ import Toaster from '@/utils/toaster';
 import { ArrowDownLeft } from '@phosphor-icons/react';
 import Loader from '@/components/common/loader';
 import ProfileCardLoader from '@/components/loaders/feed_profile_card';
+import Connections from '../explore/connections_view';
 
 const ProfileCard = () => {
   const [user, setUser] = useState(initialUser);
   const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(true);
+
   const dispatch = useDispatch();
+
+  const [clickedOnFollowers, setClickedOnFollowers] = useState(false);
+  const [clickedOnFollowing, setClickedOnFollowing] = useState(false);
+
   const fetchUser = () => {
     const URL = `/users/me`;
     getHandler(URL)
@@ -43,6 +49,8 @@ const ProfileCard = () => {
 
   return (
     <>
+      {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
+      {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
       {loading ? (
         <ProfileCardLoader />
       ) : (
@@ -89,11 +97,11 @@ const ProfileCard = () => {
                   open ? 'text-base gap-6' : 'text-xxs gap-0'
                 } transition-ease-500 flex justify-center`}
               >
-                <div className="flex gap-1">
+                <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
                   <div className="font-bold">{user.noFollowers}</div>
                   <div>Follower{user.noFollowers != 1 ? 's' : ''}</div>
                 </div>
-                <div className="flex gap-1">
+                <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
                   <div className="font-bold">{user.noFollowing}</div>
                   <div>Following</div>
                 </div>
