@@ -6,6 +6,7 @@ import patchHandler from '@/handlers/patch_handler';
 import { userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
+import isArrEdited from '@/utils/check_array_edited';
 import Toaster from '@/utils/toaster';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -48,12 +49,13 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
 
     const formData = new FormData();
 
-    formData.append('tagline', tagline);
-    formData.append('description', description);
-    tags.forEach(tag => formData.append('tags', tag));
-    links.forEach(link => formData.append('links', link));
-    privateLinks.forEach(link => formData.append('privateLinks', link));
-    formData.append('category', category);
+    if (tagline != projectToEdit.tagline) formData.append('tagline', tagline);
+    if (description != projectToEdit.description) formData.append('description', description);
+    if (isArrEdited(tags, projectToEdit.tags)) tags.forEach(tag => formData.append('tags', tag));
+    if (isArrEdited(links, projectToEdit.links)) links.forEach(link => formData.append('links', link));
+    if (isArrEdited(privateLinks, projectToEdit.privateLinks))
+      privateLinks.forEach(link => formData.append('privateLinks', link));
+    if (category != projectToEdit.category) formData.append('category', category);
     formData.append('isPrivate', String(isPrivate));
     if (image) formData.append('coverPic', image);
 
@@ -94,6 +96,8 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
       setLinks([]);
       setImage(undefined);
       setShow(false);
+    } else if (res.statusCode == 413) {
+      Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
       console.log(res);

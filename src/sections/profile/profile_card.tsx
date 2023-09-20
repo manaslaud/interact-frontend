@@ -14,6 +14,7 @@ import getDomainName from '@/utils/get_domain_name';
 import getIcon from '@/utils/get_icon';
 import Link from 'next/link';
 import { setExploreTab } from '@/slices/feedSlice';
+import isArrEdited from '@/utils/check_array_edited';
 
 interface Props {
   user: User;
@@ -44,11 +45,11 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
     const formData = new FormData();
     if (coverPic) formData.append('coverPic', coverPic);
     if (userPic) formData.append('profilePic', userPic);
-    formData.append('name', name);
-    formData.append('bio', bio);
-    tags.forEach(tag => formData.append('tags', tag));
-    links.forEach(link => formData.append('links', link));
-    formData.append('tagline', tagline);
+    if (name != user.name) formData.append('name', name);
+    if (bio != user.bio) formData.append('bio', bio);
+    if (tagline != user.tagline) formData.append('tagline', tagline);
+    if (isArrEdited(tags, user.tags)) tags.forEach(tag => formData.append('tags', tag));
+    if (isArrEdited(links, user.links)) links.forEach(link => formData.append('links', link));
 
     const URL = `${USER_URL}/me`;
 
@@ -62,6 +63,8 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
       dispatch(setReduxName(name));
       Toaster.stopLoad(toaster, 'Profile Updated', 1);
       setClickedOnEdit(false);
+    } else if (res.statusCode == 413) {
+      Toaster.stopLoad(toaster, 'Image/s too large', 0);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
@@ -176,6 +179,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
                 return (
                   <Link
                     href={`/explore?search=` + tag}
+                    target="_blank"
                     onClick={() => dispatch(setExploreTab(2))}
                     className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn rounded-md cursor-pointer"
                     key={tag}
@@ -195,6 +199,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
                 return (
                   <Link
                     href={link}
+                    target="_blank"
                     key={index}
                     className="w-fit h-8 border-[1px] border-primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                   >

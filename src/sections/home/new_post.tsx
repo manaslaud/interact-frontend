@@ -64,6 +64,8 @@ const NewPost = ({ setShow, setFeed }: Props) => {
       if (setFeed) setFeed(prev => [res.data.post, ...prev]);
       Toaster.stopLoad(toaster, 'Posted!', 1);
       setShow(false);
+    } else if (res.statusCode == 413) {
+      Toaster.stopLoad(toaster, 'Image/s too large', 0);
     } else {
       if (res.data.message) {
         if (res.data.message == VERIFICATION_ERROR) {

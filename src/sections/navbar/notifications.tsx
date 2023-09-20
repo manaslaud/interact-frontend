@@ -9,10 +9,6 @@ import Toaster from '@/utils/toaster';
 import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import Welcome from '@/components/notifications/welcome';
-import postHandler from '@/handlers/post_handler';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUnreadNotifications, unreadNotificationsSelector } from '@/slices/feedSlice';
-import { setLastFetchedUnreadNotifications } from '@/slices/configSlice';
 import ChatRequest from '@/components/notifications/chatRequest';
 
 interface Props {
@@ -23,37 +19,9 @@ const Notifications = ({ setShow }: Props) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const totalUnreadNotification = useSelector(unreadNotificationsSelector);
-
   useEffect(() => {
     getNotifications();
   }, []);
-
-  const markRead = (unreadNotifications: string[]) => {
-    //TODO handle this server side
-    if (unreadNotifications.length == 0) return;
-    const URL = `/notifications/unread`;
-    postHandler(URL, { unreadNotifications })
-      .then(res => {
-        if (res.statusCode === 200) {
-          const remainingUnreadNotifications = totalUnreadNotification - unreadNotifications.length;
-          dispatch(setUnreadNotifications(remainingUnreadNotifications >= 0 ? remainingUnreadNotifications : 0));
-          dispatch(setLastFetchedUnreadNotifications(new Date().toUTCString()));
-        } else {
-          if (res.data.message) Toaster.error(res.data.message);
-          else {
-            Toaster.error('Internal Server Error');
-            console.log(res);
-          }
-        }
-      })
-      .catch(err => {
-        Toaster.error('Internal Server Error');
-        console.log(err);
-      });
-  };
 
   const getNotifications = () => {
     // if (totalUnreadNotification == 0) return;
@@ -64,14 +32,6 @@ const Notifications = ({ setShow }: Props) => {
       .then(res => {
         if (res.statusCode === 200) {
           const notificationsData: Notification[] = res.data.notifications;
-          const updatedUnreadNotificationIDs: string[] = [];
-          notificationsData.forEach(notification => {
-            if (!updatedUnreadNotificationIDs.includes(notification.id)) {
-              updatedUnreadNotificationIDs.push(notification.id);
-            }
-          });
-          // markRead(updatedUnreadNotificationIDs);
-
           setNotifications(notificationsData);
           setLoading(false);
         } else {
@@ -141,7 +101,7 @@ const Notifications = ({ setShow }: Props) => {
             )}
           </>
         )}
-        <div className="text-white font-primary text-xs hover:underline cursor-pointer my-2">view all</div>
+        {/* <div className="text-white font-primary text-xs hover:underline cursor-pointer my-2">view all</div> */}
       </div>
       <div
         onClick={() => setShow(false)}

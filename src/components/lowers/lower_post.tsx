@@ -167,7 +167,7 @@ const LowerPost = ({ post, setPost }: Props) => {
           />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
-          {post.userID != userID ? (
+          {post.userID != userID && !post.rePost ? (
             <Repeat
               onClick={() => {
                 setClickedOnRePost(true);
@@ -216,7 +216,10 @@ const LowerPost = ({ post, setPost }: Props) => {
           {numLikes} like{numLikes == 1 ? '' : 's'}
         </div>
         <div className="text-xs">•</div>
-        <div> {numComments} comment{numComments == 1 ? '' : 's'}</div>
+        <div>
+          {' '}
+          {numComments} comment{numComments == 1 ? '' : 's'}
+        </div>
       </div>
     </>
   );

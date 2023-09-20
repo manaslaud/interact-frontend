@@ -27,8 +27,6 @@ const ChatTextarea = ({ chat }: Props) => {
   const handleChange = (event: any) => {
     const newValue = event.target.value;
 
-    if (newValue.trim() == '') return;
-
     if (value === '' && newValue.length === 1) socketService.sendTypingStatus(getSelf(), chat.id, 1);
     else if (newValue === '') socketService.sendTypingStatus(getSelf(), chat.id, 0);
 

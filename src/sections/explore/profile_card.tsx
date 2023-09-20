@@ -11,7 +11,7 @@ import FollowBtn from '@/components/common/follow_btn';
 import { Chat, Share, Warning } from '@phosphor-icons/react';
 import ShareProfile from '../lowers/share_profile';
 import { userSelector } from '@/slices/userSlice';
-import SendMessage from '../profile/send_message';
+import SendMessage from './send_message';
 import { setCurrentChatID } from '@/slices/messagingSlice';
 import { useRouter } from 'next/router';
 interface Props {
@@ -77,6 +77,7 @@ const ProfileCard = ({ user }: Props) => {
                 return (
                   <Link
                     href={`/explore?search=` + tag}
+                    target="_blank"
                     onClick={() => dispatch(setExploreTab(2))}
                     className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn rounded-md"
                     key={tag}
@@ -92,6 +93,7 @@ const ProfileCard = ({ user }: Props) => {
                 return (
                   <Link
                     href={link}
+                    target="_blank"
                     key={index}
                     className="w-fit h-8 border-[1px] border-primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                   >

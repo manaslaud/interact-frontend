@@ -75,6 +75,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       setLinks([]);
       setImage(undefined);
       setShow(false);
+    } else if (res.statusCode == 413) {
+      Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       if (res.data.message) {
         if (res.data.message == VERIFICATION_ERROR) {
