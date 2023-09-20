@@ -131,13 +131,17 @@ const ProjectView = ({
   }, []);
 
   const handleClickPrev = () => {
-    setClickedProjectIndex(prev => prev - 1);
-    setFadeIn(false);
+    if (clickedProjectIndex != 0) {
+      setClickedProjectIndex(prev => prev - 1);
+      setFadeIn(false);
+    }
   };
 
   const handleClickNext = () => {
-    setClickedProjectIndex(prev => prev + 1);
-    setFadeIn(false);
+    if (clickedProjectIndex != projectSlugs.length - 1) {
+      setClickedProjectIndex(prev => prev + 1);
+      setFadeIn(false);
+    }
   };
 
   const swipeHandler = useSwipeable({

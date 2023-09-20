@@ -60,16 +60,16 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col justify-between rounded-lg p-10 text-white font-primary overflow-y-auto border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col justify-between rounded-lg p-10 max-md:p-6 text-white font-primary overflow-y-auto border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-full flex flex-col gap-12">
-          <div className="w-full flex gap-12 items-center">
+          <div className="w-full flex max-md:flex-col gap-12 max-md:gap-6 items-center">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
-              className={'w-[160px] h-[160px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
+              className={'w-[160px] h-[160px] max-md:w-[200px] max-md:h-[200px] rounded-lg object-cover'}
             />
             <div className="grow flex flex-col gap-2">
               <input
@@ -77,7 +77,7 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
                 onChange={el => setTitle(el.target.value)}
                 maxLength={25}
                 type="text"
-                placeholder="Untitled Project"
+                placeholder="Opening Title"
                 className="w-full text-4xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
               />
               <div className="text-xl font-medium cursor-default">{project.title}</div>

@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import SidebarItem from './sidebar_item';
 import {
   ArrowLineLeft,
+  Bell,
   BookmarkSimple,
-  Buildings,
-  Chats,
   Envelope,
   Gear,
   HouseLine,
   RocketLaunch,
-  User,
   UserCircle,
   Wrench,
 } from '@phosphor-icons/react';
@@ -18,9 +16,6 @@ import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
 import { profilePicSelector } from '@/slices/userSlice';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
-import Image from 'next/image';
-import Link from 'next/link';
 interface Props {
   index: number;
 }
@@ -137,6 +132,14 @@ const Sidebar = ({ index }: Props) => {
           />
           <SidebarItem
             index={8}
+            title="Notifications"
+            icon={<Bell size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={9}
             title="Settings"
             icon={<Gear size={24} />}
             active={active}

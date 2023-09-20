@@ -101,7 +101,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           {clickedOnSettings ? (
             <div
               onClick={el => el.stopPropagation()}
-              className="w-1/2 h-fit absolute top-2 left-12 rounded-2xl glassMorphism text-white p-2"
+              className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism text-white p-2"
             >
               {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                 <div
@@ -114,13 +114,13 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
                 <></>
               )}
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                <div
-                  // href={`/workspace/manage/${project.slug}`}
-                  // onClick={() => setClickedOnEdit(true)}
+                <Link
+                  href={`/workspace/manage/${project.slug}`}
+                  target="_blank"
                   className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
                 >
                   Manage
-                </div>
+                </Link>
               ) : (
                 <></>
               )}

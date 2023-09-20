@@ -2,11 +2,10 @@ import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import Discover from '@/screens/home/discover';
 import Feed from '@/screens/home/feed';
-import { homeTabSelector, navbarOpenSelector, setHomeTab } from '@/slices/feedSlice';
+import { homeTabSelector, setHomeTab } from '@/slices/feedSlice';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import SideWrapper from '@/wrappers/side';
 import React from 'react';
 import { useSelector } from 'react-redux';
 

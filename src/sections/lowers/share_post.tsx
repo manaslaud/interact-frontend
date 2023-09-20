@@ -1,5 +1,4 @@
 import Loader from '@/components/common/loader';
-import PostComponent from '@/components/home/post';
 import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';

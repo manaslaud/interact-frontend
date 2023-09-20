@@ -1,44 +1,45 @@
-import React, { useState, useEffect } from 'react';
 import Loader from '@/components/common/loader';
+import Sidebar from '@/components/common/sidebar';
 import ApplicationUpdate from '@/components/notifications/applicationUpdate';
+import ChatRequest from '@/components/notifications/chatRequest';
 import Follow from '@/components/notifications/follow';
 import Liked from '@/components/notifications/liked';
 import UserAppliedToOpening from '@/components/notifications/userAppliedToOpening';
+import Welcome from '@/components/notifications/welcome';
+import { NOTIFICATION_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
+import Protect from '@/utils/protect';
 import Toaster from '@/utils/toaster';
+import BaseWrapper from '@/wrappers/base';
+import MainWrapper from '@/wrappers/main';
+import React, { useEffect, useState } from 'react';
 import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
-import Welcome from '@/components/notifications/welcome';
-import ChatRequest from '@/components/notifications/chatRequest';
-import { useSelector } from 'react-redux';
-import { unreadNotificationsSelector } from '@/slices/feedSlice';
-import { NOTIFICATION_URL } from '@/config/routes';
-import Link from 'next/link';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-interface Props {
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Notifications = ({ setShow }: Props) => {
+const Home = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const totalUnreadNotification = useSelector(unreadNotificationsSelector);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getNotifications();
   }, []);
 
   const getNotifications = () => {
-    // if (totalUnreadNotification == 0) return;
     setLoading(true);
-    const URL = `${NOTIFICATION_URL}/unread`;
+    const URL = `${NOTIFICATION_URL}?page=${page}&limit=${10}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
           const notificationsData: Notification[] = res.data.notifications;
-          setNotifications(notificationsData);
+          const addedNotifications = [...notifications, ...notificationsData];
+          if (addedNotifications.length === notifications.length) setHasMore(false);
+          setNotifications(addedNotifications);
           setLoading(false);
+          setPage(prev => prev + 1);
         } else {
           if (res.data.message) Toaster.error(res.data.message);
           else {
@@ -52,31 +53,26 @@ const Notifications = ({ setShow }: Props) => {
         console.log(err);
       });
   };
-
   return (
-    <>
-      <div className="w-96 bg-[#200c1944] font-primary max-md:w-full max-h-[480px] max-md:max-h-none max-md:h-screen overflow-y-auto fixed top-[72px] max-md:top-0 right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop flex flex-col items-center p-2 z-50 animate-fade_third">
-        <div className="w-full flex flex-col gap-2 max-md:gap-4 p-4 pb-2">
-          <div className="w-full flex items-center justify-between">
-            <div className="w-fit text-start text-2xl max-md:text-3xl font-bold text-gradient">Notification Center</div>
-            <div onClick={() => setShow(false)} className="text-xl text-white cursor-pointer md:hidden">
-              X
-            </div>
-          </div>
-
-          <div className="w-full h-[1px] bg-primary_btn"></div>
-        </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
+    <BaseWrapper>
+      <Sidebar index={8} />
+      <MainWrapper>
+        <div className="w-full max-lg:w-full mx-auto flex flex-col gap-4 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
+          <div className="text-3xl font-extrabold text-gradient pl-2">Notifications</div>
+          <div className="w-full flex flex-col gap-2">
             {notifications.length === 0 ? (
               <div className="w-full font-primary flex-center text-white py-4 cursor-default text-center">
-                No new notifications :)
+                No notifications :)
               </div>
             ) : (
-              <div className="w-full">
-                {notifications.map(notification => {
+              <InfiniteScroll
+                dataLength={notifications.length}
+                next={getNotifications}
+                hasMore={hasMore}
+                loader={<Loader />}
+                className="flex flex-col gap-2"
+              >
+                {notifications.map((notification, index) => {
                   switch (notification.notificationType) {
                     case -1:
                       return <Welcome notification={notification} />;
@@ -102,20 +98,13 @@ const Notifications = ({ setShow }: Props) => {
                       return <></>;
                   }
                 })}
-              </div>
+              </InfiniteScroll>
             )}
-          </>
-        )}
-        <Link href={'/notifications'} className="text-white font-primary text-xs hover:underline my-2">
-          view all
-        </Link>
-      </div>
-      <div
-        onClick={() => setShow(false)}
-        className="backdrop-brightness-75 w-screen h-screen fixed top-0 left-0 z-30 animate-fade_third"
-      ></div>
-    </>
+          </div>
+        </div>
+      </MainWrapper>
+    </BaseWrapper>
   );
 };
 
-export default Notifications;
+export default Protect(Home);

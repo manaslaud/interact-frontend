@@ -1,19 +1,9 @@
 import CommentBox from '@/components/common/comment_box';
-import Loader from '@/components/common/loader';
-import ProjectCard from '@/components/explore/project_card';
-import post from '@/components/home/post';
-import PostComponent from '@/components/home/post';
-import { MESSAGING_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import getHandler from '@/handlers/get_handler';
-import postHandler from '@/handlers/post_handler';
-import { Chat, Post, Project } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
-import getMessagingUser from '@/utils/get_messaging_user';
-import Toaster from '@/utils/toaster';
-import { BookmarkSimple, HeartStraight, CircleDashed } from '@phosphor-icons/react';
-import Cookies from 'js-cookie';
+import { PROJECT_PIC_URL } from '@/config/routes';
+import { Project } from '@/types';
+import { HeartStraight, CircleDashed } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 interface Props {
   project: Project;

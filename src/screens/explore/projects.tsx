@@ -66,7 +66,11 @@ const Projects = () => {
   useEffect(() => {
     const oid = new URLSearchParams(window.location.search).get('oid');
     const action = new URLSearchParams(window.location.search).get('action');
-    if (oid && action == 'external') dispatch(setExploreTab(1));
+    if (oid && action == 'external') dispatch(setExploreTab(1)); //TODO add tab query to this url
+
+    const tab = new URLSearchParams(window.location.search).get('tab');
+    if (tab && tab == 'openings') dispatch(setExploreTab(1));
+    if (tab && tab == 'users') dispatch(setExploreTab(2));
   }, []);
 
   return (
