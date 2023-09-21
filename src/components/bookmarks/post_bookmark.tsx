@@ -65,7 +65,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
           <>
             {bookmark.postItems.length == 0 ? (
               <div className="p-2">
-                <div className="w-full h-[368px] bg-[#c578bf63] rounded-md"></div>
+                <div className="w-full h-[368px] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
               </div>
             ) : bookmark.postItems.length == 1 ? (
               <>
@@ -81,7 +81,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-96 bg-[#c578bf63] rounded-md"></div>
+                  <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
                 )}
               </>
             ) : (
@@ -104,7 +104,7 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
                   );
                 })}
                 {[...Array(4 - count)].map((_, index) => (
-                  <div key={index} className="w-[48%] h-[49%] bg-[#c578bf63] rounded-md"></div>
+                  <div key={index} className="w-[48%] h-[49%] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
                 ))}
               </div>
             )}

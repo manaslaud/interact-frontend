@@ -65,7 +65,7 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
           <>
             {bookmark.projectItems.length == 0 ? (
               <div className="p-2">
-                <div className="w-full h-[368px] bg-[#c578bf63] rounded-md"></div>
+                <div className="w-full h-[368px] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
               </div>
             ) : bookmark.projectItems.length == 1 ? (
               <>
@@ -81,7 +81,7 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-96 bg-[#c578bf63] rounded-md"></div>
+                  <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
                 )}
               </>
             ) : (
@@ -104,7 +104,7 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                   );
                 })}
                 {[...Array(4 - count)].map((_, index) => (
-                  <div key={index} className="w-[48%] h-[49%] bg-[#c578bf63] rounded-md"></div>
+                  <div key={index} className="w-[48%] h-[49%] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
                 ))}
               </div>
             )}

@@ -156,7 +156,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
         >
           {clickedOnEdit ? (
             <EditProject
@@ -211,7 +211,7 @@ const ProjectView = ({
                   className={'md:hidden w-10 h-10 rounded-full cursor-default'}
                 />
                 <div>
-                  <div className="w-fit font-semibold cursor-default">{project.title}</div>
+                  <div className="w-fit font-bold cursor-default">{project.title}</div>
                   <div // convert to link
                     className="w-fit text-xs font-medium"
                   >
@@ -233,7 +233,7 @@ const ProjectView = ({
                 <X size={24} weight="bold" />
               </div>
             </div>
-            <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
+            <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto shadow-xl flex max-md:flex-col">
               <Image
                 crossOrigin="anonymous"
                 className="w-3/4 max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none object-cover"
@@ -243,7 +243,7 @@ const ProjectView = ({
                 height={10000}
               />
 
-              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 dark:bg-dark_primary_comp_hover flex flex-col justify-between">
+              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
                 <div className="w-full h-fit flex flex-col gap-4">
                   <div className="flex justify-between items-center">
                     <div className="font-bold text-3xl text-gradient">{project.title}</div>
@@ -280,7 +280,7 @@ const ProjectView = ({
                         return (
                           <div
                             key={tag}
-                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-[#20032c41] rounded-lg"
+                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] rounded-lg"
                           >
                             {tag}
                           </div>
@@ -296,7 +296,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                     <div
                       onClick={() => setClickedOnEdit(true)}
-                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Edit Project
                     </div>
@@ -306,7 +306,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                     <div
                       onClick={() => router.push(`/workspace/manage/${projectSlugs[clickedProjectIndex]}`)}
-                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Manage Project
                     </div>

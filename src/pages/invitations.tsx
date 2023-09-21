@@ -51,11 +51,7 @@ const Invitations = () => {
       <Sidebar index={5} />
       <MainWrapper>
         <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>
-          <TabMenu
-            items={['Projects', 'Organisations', 'Messenger']}
-            active={active}
-            setReduxState={setInvitationsTab}
-          />
+          <TabMenu items={['Projects', 'Group Chats']} active={active} setReduxState={setInvitationsTab} />
           {loading ? (
             <Loader />
           ) : (
@@ -79,8 +75,8 @@ const Invitations = () => {
                   )}
                 </div>
               </div>
-              <div className={`${active === 1 ? 'block' : 'hidden'}`}></div>
-              <div className={`${active === 2 ? 'block' : 'hidden'} `}>
+              {/* <div className={`${active === 1 ? 'block' : 'hidden'}`}></div> */}
+              <div className={`${active === 1 ? 'block' : 'hidden'} `}>
                 <div className="w-full flex flex-col gap-6 p-2">
                   {groupChatInvitations.length > 0 ? (
                     <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-4">

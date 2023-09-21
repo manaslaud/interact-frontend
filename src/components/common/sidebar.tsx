@@ -91,22 +91,6 @@ const Sidebar = ({ index }: Props) => {
             open={open}
           /> */}
         </div>
-        {/* <label className="flex cursor-pointer select-none items-center">
-        <div>Toggle Theme</div>
-        <div className="relative">
-          <input type="checkbox" onChange={toggleTheme} className="sr-only" />
-          <div
-            className={`box block h-8 w-14 rounded-full ${
-              theme == 'dark' ? 'bg-blue-300' : 'bg-black'
-            } transition-ease-300`}
-          ></div>
-          <div
-            className={`absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition ${
-              theme == 'dark' ? 'translate-x-full' : ''
-            }`}
-          ></div>
-        </div>
-      </label> */}
 
         <div className="w-fit py-8 border-y-2 dark:border-dark_primary_btn flex flex-col gap-2">
           <SidebarItem
@@ -137,7 +121,9 @@ const Sidebar = ({ index }: Props) => {
 
         <ArrowLineLeft
           onClick={() => dispatch(setNavbarOpen(!open))}
-          className={`cursor-pointer ml-2 mt-2 ${open ? 'rotate-0' : '-rotate-180'} transition-ease-500`}
+          className={`cursor-pointer ml-2 mt-2 ${
+            open ? 'rotate-0' : '-rotate-180'
+          } text-gray-500 dark:text-white transition-ease-500`}
           size={24}
         />
       </div>

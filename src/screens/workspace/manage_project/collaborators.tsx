@@ -33,18 +33,18 @@ const Collaborators = ({ project, setProject }: Props) => {
       <div className="w-taskbar max-md:w-[95%] h-taskbar mx-auto flex gap-2 font-primary text-gray-200 text-lg">
         <div
           onClick={() => setClickedOnAddCollaborator(true)}
-          className="w-4/5 max-md:w-2/3 h-full hover:to-dark:dark_primary_comp_hover bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+          className="w-4/5 max-md:w-2/3 h-full text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-sm dark:shadow-outer flex justify-between items-center"
         >
           <div className="pl-2 max-md:text-sm">Add Collaborators</div>
           <Plus
             size={36}
-            className="text-gray-200 max-md:w-8 max-md:h-8 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
+            className="dark:text-gray-200 max-md:w-8 max-md:h-8 flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
             weight="regular"
           />
         </div>
         <div
           onClick={() => setClickedOnInvitations(prev => !prev)}
-          className="w-1/5 max-md:w-1/3 h-full max-md:text-sm hover:to-dark:dark_primary_comp_hover bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end p-1 max-md:px-2 rounded-lg cursor-pointer shadow-outer flex-center"
+          className="w-1/5 max-md:w-1/3 h-full max-md:text-sm text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-sm dark:shadow-outer flex justify-between items-center"
         >
           <div
             className={`w-full h-full rounded-lg ${

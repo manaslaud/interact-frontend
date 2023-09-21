@@ -1,4 +1,5 @@
 import PostComponent from '@/components/home/post';
+import RePostComponent from '@/components/home/repost';
 import { Post } from '@/types';
 import React from 'react';
 
@@ -14,7 +15,8 @@ const Posts = ({ posts }: Props) => {
       ) : (
         <>
           {posts.map(post => {
-            return <PostComponent key={post.id} post={post} />;
+            if (post.rePost) return <RePostComponent key={post.id} post={post} />;
+            else return <PostComponent key={post.id} post={post} />;
           })}
         </>
       )}

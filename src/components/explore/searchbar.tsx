@@ -20,7 +20,7 @@ const SearchBar = ({ initialValue = '' }: Props) => {
       onSubmit={handleSubmit}
       className={`w-taskbar max-md:w-taskbar_md h-taskbar px-4 text-gray-500 ${
         search.trim().length > 0 ? 'bg-white' : ''
-      } dark:text-white flex items-center justify-between gap-8 mx-auto rounded-md border-gray-100 border-2 dark:border-0 shadow-lg dark:shadow-outer dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end transition-ease-300`}
+      } dark:text-white flex items-center justify-between gap-8 mx-auto rounded-md border-gray-100 border-2 dark:border-0 shadow-lg dark:shadow-outer dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end transition-ease-100`}
     >
       <input
         className="h-full grow bg-transparent focus:outline-none font-primary font-medium"

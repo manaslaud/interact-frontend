@@ -138,7 +138,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             onKeyDown={el => {
               if (el.key === 'Enter') submitHandler();
             }}
-            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
+            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl text-black dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
             placeholder={`Comment on this ${type}`}
           />
           <div

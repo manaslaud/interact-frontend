@@ -77,7 +77,7 @@ const User = ({ username }: Props) => {
           {loading ? <ProfileCardLoader /> : <ProfileCard user={user} />}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
             {user.tagline && user.tagline != '' ? (
-              <div className="w-full h-24 font-bold text-5xl max-md:text-3xl text-center dark:text-white">
+              <div className="w-full h-24 font-bold text-5xl max-md:text-3xl flex-center text-center dark:text-white">
                 {user.tagline}
               </div>
             ) : (

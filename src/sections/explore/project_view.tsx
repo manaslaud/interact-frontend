@@ -104,7 +104,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
         >
           <div className="max-md:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
             <div className="w-10 h-10 relative">
@@ -152,7 +152,7 @@ const ProjectView = ({
                   className={'md:hidden w-10 h-10 rounded-full cursor-default'}
                 />
                 <div>
-                  <div className="w-fit font-semibold cursor-default">{project.title}</div>
+                  <div className="w-fit font-bold cursor-default">{project.title}</div>
                   <div // convert to link
                     className="w-fit text-xs font-medium"
                   >
@@ -175,7 +175,7 @@ const ProjectView = ({
               </div>
             </div>
 
-            <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
+            <div className="w-full h-[calc(100vh-56px)] shadow-xl max-md:overflow-y-auto flex max-md:flex-col">
               <Image
                 crossOrigin="anonymous"
                 className="w-3/4 max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none object-cover"
@@ -185,7 +185,7 @@ const ProjectView = ({
                 height={10000}
               />
 
-              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 dark:bg-dark_primary_comp_hover flex flex-col gap-4">
+              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
                 <div className="flex justify-between items-center">
                   <div className="font-bold text-3xl text-gradient">{project.title}</div>
                   <div className="md:hidden w-fit">
@@ -223,7 +223,7 @@ const ProjectView = ({
                           href={`/explore?search=${tag}&tab=projects`}
                           target="_blank"
                           key={tag}
-                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-[#20032c41] rounded-lg"
+                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] rounded-lg"
                         >
                           {tag}
                         </Link>

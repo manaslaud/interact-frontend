@@ -97,7 +97,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         
         </div> */}
 
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#4e4e4e8b] dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 text-white font-primary overflow-y-auto border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-2/5 max-md:w-full md:sticky md:top-0">
           <Images setSelectedFile={setImage} />
         </div>

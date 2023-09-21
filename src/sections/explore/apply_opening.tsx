@@ -78,10 +78,10 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
   return (
     <>
-      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 text-white fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Apply to Opening</div>
         <div className="w-full h-full flex max-md:flex-col gap-4 items-center">
-          <div className="w-1/3 h-full max-md:w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
+          <div className="w-1/3 h-full max-md:w-full font-primary text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
               width={10000}
@@ -132,7 +132,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                   setMessage(el.target.value);
                 }}
                 maxLength={250}
-                className="w-full px-4 py-2 rounded-lg dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
+                className="w-full px-4 py-2 rounded-lg text-black dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
                 placeholder="Add a Message of maximum 250 characters"
               />
               <div className="flex items-center">
@@ -185,7 +185,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
             <div className="w-1/2 max-md:w-full h-full flex flex-col justify-between max-md:gap-2 max-md:pb-8">
               <Links links={links} setLinks={setLinks} maxLinks={3} />
               <div
-                className="h-10 rounded-xl dark:bg-dark_primary_comp flex-center text-lg cursor-pointer hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300"
+                className="h-10 rounded-xl bg-dark_primary_comp flex-center text-lg cursor-pointer dark:bg-dark_primary_comp_hover active:bg-dark_primary_comp_active transition-ease-300"
                 onClick={handleSubmit}
               >
                 Apply!

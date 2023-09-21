@@ -19,8 +19,8 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
         if (setClickedOnOpening) setClickedOnOpening(true);
       }}
       className={`w-full ${
-        opening.id == clickedOpening?.id ? 'bg-[#ffffff2b]' : ''
-      } font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300 cursor-pointer`}
+        opening.id == clickedOpening?.id ? 'bg-white dark:bg-[#ffffff2b]' : ''
+      } font-primary dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn hover:bg-gray-100 dark:hover:bg-transparent rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300 cursor-pointer`}
     >
       <Image
         crossOrigin="anonymous"
@@ -50,14 +50,14 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
                 return (
                   <div
                     key={tag}
-                    className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl"
+                    className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-xl"
                   >
                     {tag}
                   </div>
                 );
               })}
           {opening.tags && opening.tags.length - 3 > 0 ? (
-            <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl">
+            <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-xl">
               + {opening.tags.length - 3}
             </div>
           ) : (
