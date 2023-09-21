@@ -22,7 +22,6 @@ interface Props {
 
 const Sidebar = ({ index }: Props) => {
   const [active, setActive] = useState(index);
-  const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
 
   const dispatch = useDispatch();
   const open = useSelector(navbarOpenSelector);
@@ -32,18 +31,6 @@ const Sidebar = ({ index }: Props) => {
   useEffect(() => {
     userFetcher();
   }, []);
-
-  const toggleTheme = () => {
-    if (document.documentElement.classList.contains('dark')) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      setTheme('light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setTheme('dark');
-    }
-  };
 
   const profilePic = useSelector(profilePicSelector);
 

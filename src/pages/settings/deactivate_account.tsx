@@ -1,0 +1,79 @@
+import deleteHandler from '@/handlers/delete_handler';
+import { resetUser } from '@/slices/userSlice';
+import Protect from '@/utils/protect';
+import Toaster from '@/utils/toaster';
+import BaseWrapper from '@/wrappers/base';
+import MainWrapper from '@/wrappers/main';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Sidebar from '@/components/common/sidebar';
+import { ArrowArcLeft } from '@phosphor-icons/react';
+
+const Deactive = () => {
+  const [lockBtn, setLockBtn] = useState(false);
+
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    if (lockBtn) return;
+    setLockBtn(true);
+    const toaster = Toaster.startLoad('Deactiving your Account...');
+
+    const URL = `/users/deactive`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      Toaster.stopLoad(toaster, 'Account Deactivated', 1);
+      setLockBtn(false);
+      Cookies.remove('token');
+      Cookies.remove('id');
+      dispatch(resetUser());
+      router.push('/login');
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
+        console.log(res);
+      }
+    }
+    setLockBtn(false);
+  };
+
+  return (
+    <BaseWrapper>
+      <Sidebar index={9} />
+      <MainWrapper>
+        {/* {showDeactivate ? <ConfirmDeactiveAccount setShow={setShowDeactivate} handleSubmit={handleSubmit} /> : <></>} */}
+        <div className="w-[50vw] max-md:w-full mx-auto text-white flex flex-col gap-12 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
+          <div className="flex gap-3">
+            <ArrowArcLeft
+              onClick={() => router.replace('/settings')}
+              color="white"
+              className="w-10 h-10 p-2 bg-primary_comp_hover rounded-full cursor-pointer"
+              size={40}
+            />
+            <div className="text-4xl font-semibold text-white">Settings</div>
+          </div>
+          <div className="w-full text-center text-xl mb-16">
+            <span className="font-bold">Note:</span> Your account will not be immediately deleted. If you log in within
+            30 days, your account will be fully restored; however, should you fail to do so, it will be subject to
+            deletion.
+          </div>
+          <button
+            // onClick={() => setShowDeactivate(true)}
+            className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-2 rounded-xl font-Inconsolata text-xl hover:bg-[#ab3232] transition-all duration-200 ease-in-out"
+          >
+            Deactive My Account
+          </button>
+        </div>
+      </MainWrapper>
+    </BaseWrapper>
+  );
+};
+
+export default Protect(Deactive);
