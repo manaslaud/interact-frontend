@@ -10,7 +10,7 @@ interface Props {
 const Welcome = ({ notification }: Props) => {
   return (
     <NotificationWrapper notification={notification}>
-      <div className="w-full flex flex-col items-center justify-between">
+      <div className="w-full text-center flex flex-col items-center justify-between">
         <div className="w-full text-xl font-bold font-Helvetica text-center cursor-default">Welcome!🎉</div>
         <div className="">🥳 Woohoo! You made it to Interact!</div>
       </div>

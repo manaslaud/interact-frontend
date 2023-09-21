@@ -74,7 +74,9 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
   return (
     <div
       onClick={() => setClickedOnOptions(false)}
-      className="w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-b-[1px] max-md:p-4"
+      className={`w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn ${
+        !isRepost ? 'dark:border-b-[1px]' : 'dark:border-b-0'
+      } max-md:p-4`}
     >
       {clickedOnOptions ? (
         <>
