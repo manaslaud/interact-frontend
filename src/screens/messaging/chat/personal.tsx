@@ -81,7 +81,7 @@ const PersonalChat = () => {
   }, []);
 
   return (
-    <div className="w-full h-full border-2 max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
+    <div className="w-full h-full border-2 max-md:border-0 dark:border-dark_primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
       {chatID == '' ? (
         <></>
       ) : (
@@ -99,7 +99,7 @@ const PersonalChat = () => {
                       return <MessageGroup key={date} date={date} messages={messagesByDate[date]} />;
                     })}
                   {typingStatus.chatID == chat.id && typingStatus.user.id !== '' && typingStatus.user.id != userID ? (
-                    <div className="w-fit text-white text-sm cursor-default border-[1px] border-primary_btn rounded-xl px-4 py-2">
+                    <div className="w-fit dark:text-white text-sm cursor-default border-[1px] dark:border-dark_primary_btn rounded-xl px-4 py-2">
                       {typingStatus.user.username} is typing...
                     </div>
                   ) : (
@@ -114,7 +114,7 @@ const PersonalChat = () => {
                   <>
                     <div
                       onClick={handleAccept}
-                      className="w-full h-12 rounded-md text-white font-primary flex-center text-xl font-medium bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active cursor-pointer transition-ease-300"
+                      className="w-full h-12 rounded-md dark:text-white font-primary flex-center text-xl font-medium dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active cursor-pointer transition-ease-300"
                     >
                       Accept Chat
                     </div>

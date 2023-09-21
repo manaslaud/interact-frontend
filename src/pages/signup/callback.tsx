@@ -104,7 +104,7 @@ const SignUpCallback = ({ token }: Props) => {
             <div className="w-full flex flex-col gap-2 items-center">
               <button
                 type="submit"
-                className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#3D6DB3] hover:bg-[#345C98] active:bg-[#2D5185] border-[#d1d1d1] text-white py-2 rounded-xl border-2 font-semibold"
+                className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#3D6DB3] hover:bg-[#345C98] active:bg-[#2D5185] border-[#d1d1d1] dark:text-white py-2 rounded-xl border-2 font-semibold"
               >
                 <div> Continue</div>
                 <ArrowRight size={20} weight="regular" />

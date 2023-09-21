@@ -128,14 +128,14 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 text-white font-primary border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="text-3xl max-md:text-xl font-semibold">
           {status == 0 ? 'Select Users' : 'Confirm Invitations'}
         </div>
         <div className="w-full h-[420px] flex flex-col gap-4">
           {status == 0 ? (
             <>
-              <div className="w-full h-12 flex items-center px-4 gap-4 bg-primary_comp_hover rounded-md">
+              <div className="w-full h-12 flex items-center px-4 gap-4 dark:bg-dark_primary_comp_hover rounded-md">
                 <MagnifyingGlass size={24} />
                 <input
                   className="grow bg-transparent focus:outline-none font-medium"
@@ -156,8 +156,8 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                           onClick={() => handleClickUser(user)}
                           className={`w-full flex gap-2 rounded-lg p-2 ${
                             selectedUsers.includes(user)
-                              ? 'bg-primary_comp_active'
-                              : 'bg-primary_comp hover:bg-primary_comp_hover'
+                              ? 'dark:bg-dark_primary_comp_active'
+                              : 'dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover'
                           } cursor-pointer transition-ease-200`}
                         >
                           <Image
@@ -190,7 +190,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                 return (
                   <div
                     key={user.id}
-                    className="w-full flex gap-2 rounded-lg p-2 bg-primary_comp_hover cursor-default transition-ease-200"
+                    className="w-full flex gap-2 rounded-lg p-2 dark:bg-dark_primary_comp_hover cursor-default transition-ease-200"
                   >
                     <Image
                       crossOrigin="anonymous"
@@ -225,13 +225,13 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                                 })
                               );
                             }}
-                            className="p-2 mr-8 flex-center border-[1px] border-primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
+                            className="p-2 mr-8 flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
                           />
                         </form>
                       ) : (
                         <div
                           onClick={() => setClickedInvitationSliceIndex(index)}
-                          className="p-2 mr-8 flex-center border-[1px] border-primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
+                          className="p-2 mr-8 flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
                         >
                           {invitationSlices[index].title == '' ? 'Enter Title' : invitationSlices[index].title}
                         </div>
@@ -247,7 +247,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
           {status == 0 ? (
             <div
               onClick={() => setStatus(1)}
-              className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+              className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
             >
               Next
             </div>
@@ -255,13 +255,13 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
             <>
               <div
                 onClick={() => setStatus(0)}
-                className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Prev
               </div>
               <div
                 onClick={handleSubmit}
-                className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Submit
               </div>

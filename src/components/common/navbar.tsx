@@ -23,17 +23,20 @@ const Navbar = () => {
       <div className={`${clickedOnProfile ? '' : 'hidden'}`}>
         <ProfileDropdown setShow={setClickedOnProfile} />
       </div>
-      <div className="w-full h-navbar bg-navbar glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
-        <Link href={'/home'}>
+      <div className="w-full h-navbar bg-navbar dark:bg-dark_navbar text-gray-500 dark:text-white border-gray-300 border-b-[1px] dark:border-0 glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
+        <Link href={'/home'} className="hidden dark:flex px-4">
+          <ReactSVG src="/onboarding_logo_dark.svg" />
+        </Link>
+        <Link href={'/home'} className="static dark:hidden px-4">
           <ReactSVG src="/onboarding_logo.svg" />
         </Link>
         {user.isLoggedIn ? (
           <div className="flex items-center gap-2 z-0">
             <Link
-              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover transition-ease-300"
+              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
               href={'/messaging'}
             >
-              <ChatCircleDots color="white" className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+              <ChatCircleDots className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
             </Link>
             <div
               onClick={() => {
@@ -41,16 +44,16 @@ const Navbar = () => {
                 setClickedOnNotifications(prev => !prev);
                 // dispatch(setUnreadNotifications(0));
               }}
-              className="w-10 h-10 rounded-full flex-center relative hover:bg-primary_comp_hover transition-ease-300"
+              className="w-10 h-10 rounded-full flex-center relative hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
             >
               {notifications > 0 ? (
-                <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black text-white">
+                <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black dark:text-white">
                   {notifications}
                 </div>
               ) : (
                 <></>
               )}
-              <Bell className="cursor-pointer max-md:w-8 max-md:h-8" color="white" size={24} weight="regular" />
+              <Bell className="cursor-pointer max-md:w-8 max-md:h-8" size={24} weight="regular" />
             </div>
             <Image
               crossOrigin="anonymous"
@@ -66,7 +69,7 @@ const Navbar = () => {
             />
           </div>
         ) : (
-          <>Login, SignUp</>
+          <></>
         )}
       </div>
     </>

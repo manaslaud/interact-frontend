@@ -76,7 +76,6 @@ const Project = () => {
                           onClick={() => {
                             setDisplayChats([]);
                           }}
-                          color="white"
                           size={32}
                         />
                       </div>
@@ -93,7 +92,7 @@ const Project = () => {
                             onClick={() => {
                               setDisplayChats(chats.filter(chat => chat.projectID == project.id));
                             }}
-                            className="w-full font-primary hover:bg-primary_comp_hover text-white border-[1px] border-primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
+                            className="w-full font-primary hover:dark:bg-dark_primary_comp_hover dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
                           >
                             <Image
                               crossOrigin="anonymous"

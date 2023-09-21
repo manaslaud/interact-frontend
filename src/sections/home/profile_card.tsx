@@ -57,9 +57,9 @@ const ProfileCard = () => {
         <div
           className={`${
             open
-              ? 'w-[24vw] h-base_md pb-4 max-md:mb-12 gap-4 pt-12 max-md:pb-8 max-md:pt-4 px-4'
-              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0'
-          } transition-ease-500 max-md:h-fit sticky top-[90px] overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col text-white items-center bg-[#84478023] backdrop-blur-md border-[1px] border-primary_btn max-md:hidden max-md:bg-transparent rounded-md z-10`}
+              ? 'w-[24vw] h-[75vh] pb-4 max-md:mb-12 gap-4 pt-6 max-md:pb-8 max-md:pt-4 px-4 top-[150px]'
+              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px]'
+          } shadow-md dark:shadow-none transition-ease-500 max-md:h-fit sticky overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md z-10`}
         >
           <ArrowDownLeft
             onClick={() => setOpen(prev => !prev)}
@@ -80,7 +80,7 @@ const ProfileCard = () => {
                 src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                 className={`rounded-full max-md:mx-auto ${
                   open ? 'w-44 h-44' : 'w-0 h-0'
-                } transition-ease-500 cursor-default`}
+                } border-gray-500 border-[1px] dark:border-0 transition-ease-500 cursor-default`}
               />
               <div
                 className={`${
@@ -120,7 +120,7 @@ const ProfileCard = () => {
                         onClick={() => dispatch(setExploreTab(2))}
                         className={`flex-center ${
                           open ? 'text-sm px-4 py-1' : 'text-xxs px-0 py-0'
-                        } transition-ease-500 border-[1px] border-primary_btn rounded-md`}
+                        } transition-ease-500 border-[1px] dark:border-dark_primary_btn rounded-md`}
                         key={tag}
                       >
                         {tag}
@@ -132,7 +132,7 @@ const ProfileCard = () => {
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${
                   open ? 'mt-12' : 'mt-0'
-                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end rounded-lg`}
+                } transition-ease-500 p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end rounded-lg`}
               >
                 Edit
               </Link>

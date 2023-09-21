@@ -12,7 +12,7 @@ interface Props {
 
 const MessageGroup = ({ date, messages }: Props) => {
   return (
-    <div className="flex flex-col gap-4 mx-2 text-white font-primary pt-4 pb-2">
+    <div className="flex flex-col gap-4 mx-2 dark:text-white font-primary pt-4 pb-2">
       <div className="w-full text-center text-sm">{date}</div>
       <div className="flex flex-col-reverse gap-6">
         {messages.map(message => {

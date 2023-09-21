@@ -44,7 +44,7 @@ const Connections = ({ type, user, setShow }: Props) => {
   }, [user]);
   return (
     <>
-      <div className="w-2/5 max-md:w-5/6 h-108 fixed overflow-y-auto backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-4 gap-6 rounded-xl animate-fade_third">
+      <div className="w-2/5 max-md:w-5/6 h-108 fixed overflow-y-auto backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-4 gap-6 rounded-xl animate-fade_third">
         <div className="w-full text-center text-gradient font-semibold text-2xl capitalize">
           {type} of {user.name}
         </div>

@@ -15,14 +15,13 @@ const Openings = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   const [clickedOnOpening, setClickedOnOpening] = useState(false);
   const [clickedOpening, setClickedOpening] = useState(initialOpening);
   return (
-    <div className="w-full m-auto flex flex-col gap-4 font-primary text-white pt-8">
+    <div className="w-full m-auto flex flex-col gap-4 font-primary dark:text-white pt-8">
       <div className="flex items-center gap-2 px-16">
         <ArrowArcLeft
           onClick={() => {
             if (fetchBookmarks) fetchBookmarks();
             setClick(false);
           }}
-          color="white"
           className="cursor-pointer"
           size={32}
         />

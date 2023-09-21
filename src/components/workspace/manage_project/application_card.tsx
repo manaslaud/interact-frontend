@@ -25,7 +25,7 @@ const ApplicationCard = ({
       }}
       className={`w-full ${
         application.id == clickedApplication?.id ? 'bg-[#ffffff2b]' : ''
-      } font-primary text-white border-[1px] border-primary_btn rounded-md flex items-center justify-between p-6 transition-ease-300 cursor-pointer`}
+      } font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-md flex items-center justify-between p-6 transition-ease-300 cursor-pointer`}
     >
       <div className="flex items-center justify-between gap-6">
         <Image

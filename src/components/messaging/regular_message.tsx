@@ -25,7 +25,7 @@ const RegularMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-2/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default bg-primary_comp_hover rounded-xl px-4 py-2">
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default dark:bg-dark_primary_comp_hover rounded-xl px-4 py-2">
           {message.content}
         </div>
         <div

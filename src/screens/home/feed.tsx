@@ -12,6 +12,8 @@ import NewPost from '@/sections/home/new_post';
 import ProfileCard from '@/sections/home/profile_card';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import RePostComponent from '@/components/home/repost';
+import Image from 'next/image';
+import { USER_PROFILE_PIC_URL } from '@/config/routes';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -60,22 +62,22 @@ const Feed = () => {
       <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
         <div
           onClick={() => setClickedOnNewPost(true)}
-          className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto hover:to-primary_comp_hover bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+          className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:shadow-outer flex justify-between items-center"
         >
           <div className="flex gap-2 items-center pl-2">
-            {/* <Image
-            crossOrigin="anonymous"
-            className="w-8 h-8 rounded-full"
-            width={10000}
-            height={10000}
-            alt="user"
-            src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-          /> */}
-            <div className="font-primary text-gray-200 text-lg">Create a post</div>
+            <Image
+              crossOrigin="anonymous"
+              className="w-8 h-8 rounded-full"
+              width={10000}
+              height={10000}
+              alt="user"
+              src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
+            />
+            <div className="font-primary">Create a post</div>
           </div>
           <Plus
             size={36}
-            className="text-gray-200 flex-center rounded-full hover:bg-[#e9e9e933] p-2 transition-ease-300"
+            className="flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
             weight="regular"
           />
         </div>
@@ -89,7 +91,7 @@ const Feed = () => {
               <></>
             ) : (
               <InfiniteScroll
-                className="px-12 max-md:px-2"
+                className="px-6 max-md:px-2 flex flex-col gap-4 dark:gap-0"
                 dataLength={feed.length}
                 next={getFeed}
                 hasMore={hasMore}

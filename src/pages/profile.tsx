@@ -137,10 +137,10 @@ const Profile = () => {
                 onChange={el => setTagline(el.target.value)}
                 placeholder="Add a Professional One Liner"
                 maxLength={25}
-                className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center text-white bg-transparent z-10"
+                className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center dark:text-white bg-transparent z-10"
               />
             ) : (
-              <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center text-white">
+              <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
                 {user.tagline || 'Add a Professional One Liner'}
               </div>
             )}

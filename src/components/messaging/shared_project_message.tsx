@@ -27,8 +27,8 @@ const SharedProjectMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp_hover gap-2">
-          <div className="w-full min-w-[240px] font-primary text-white border-[1px] border-primary_btn rounded-lg p-4 flex flex-col items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer">
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 dark:bg-dark_primary_comp_hover gap-2">
+          <div className="w-full min-w-[240px] font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer">
             <Image
               crossOrigin="anonymous"
               width={10000}
@@ -55,14 +55,14 @@ const SharedProjectMessage = ({ message }: Props) => {
                       return (
                         <div
                           key={tag}
-                          className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl"
+                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl"
                         >
                           {tag}
                         </div>
                       );
                     })}
                 {message.project.tags && message.project.tags.length - 3 > 0 ? (
-                  <div className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn rounded-xl">
+                  <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl">
                     + {message.project.tags.length - 3}
                   </div>
                 ) : (

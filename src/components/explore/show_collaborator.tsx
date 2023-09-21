@@ -24,7 +24,7 @@ const Collaborators = ({ memberships }: Props) => {
                   className="w-12 h-12 rounded-full"
                 >
                   {showIndex == index ? (
-                    <div className="w-4/5 z-20 flex items-start justify-center gap-4 py-2 px-4 absolute top-12 right-1/2 translate-x-1/2 bg-primary_comp rounded-md animate-fade_third">
+                    <div className="w-4/5 z-20 flex items-start justify-center gap-4 py-2 px-4 absolute top-12 right-1/2 translate-x-1/2 dark:bg-dark_primary_comp rounded-md animate-fade_third">
                       <Image
                         crossOrigin="anonymous"
                         width={10000}

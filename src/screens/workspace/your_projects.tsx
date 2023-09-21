@@ -68,7 +68,7 @@ const YourProjects = () => {
 
       <div
         onClick={() => setClickedOnNewProject(true)}
-        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto hover:to-primary_comp_hover bg-gradient-to-l from-primary_gradient_start to-primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
+        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto hover:to-dark:dark_primary_comp_hover bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 py-3 rounded-lg cursor-pointer shadow-outer flex justify-between items-center"
       >
         <div className="font-primary text-gray-200 text-lg pl-2">Create a new project</div>
         <Plus

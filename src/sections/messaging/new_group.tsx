@@ -108,12 +108,12 @@ const NewGroup = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 text-white font-primary border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
         <div className="text-3xl max-md:text-xl font-semibold">{status == 0 ? 'Select Users' : 'Group Info'}</div>
         <div className="w-full h-[420px] flex flex-col gap-4">
           {status == 0 ? (
             <>
-              <div className="w-full h-12 flex items-center px-4 gap-4 bg-primary_comp_hover rounded-md">
+              <div className="w-full h-12 flex items-center px-4 gap-4 dark:bg-dark_primary_comp_hover rounded-md">
                 <MagnifyingGlass size={24} />
                 <input
                   className="grow bg-transparent focus:outline-none font-medium"
@@ -134,8 +134,8 @@ const NewGroup = ({ setShow }: Props) => {
                           onClick={() => handleClickUser(user)}
                           className={`w-full flex gap-2 rounded-lg p-2 ${
                             selectedUsers.includes(user)
-                              ? 'bg-primary_comp_active'
-                              : 'bg-primary_comp hover:bg-primary_comp_hover'
+                              ? 'dark:bg-dark_primary_comp_active'
+                              : 'dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover'
                           } cursor-pointer transition-ease-200`}
                         >
                           <Image
@@ -164,8 +164,8 @@ const NewGroup = ({ setShow }: Props) => {
             </>
           ) : (
             <div className="w-full flex flex-col gap-4">
-              <div className="w-full flex gap-4 px-4 py-2 bg-primary_comp_hover rounded-lg ">
-                <div className="w-16 h-16 rounded-full bg-primary_comp_hover"></div>
+              <div className="w-full flex gap-4 px-4 py-2 dark:bg-dark_primary_comp_hover rounded-lg ">
+                <div className="w-16 h-16 rounded-full dark:bg-dark_primary_comp_hover"></div>
                 <input
                   type="text"
                   className="grow bg-transparent focus:outline-none text-xl"
@@ -176,7 +176,7 @@ const NewGroup = ({ setShow }: Props) => {
                 />
               </div>
               <textarea
-                className="w-full min-h-[64px] max-h-36 px-4 py-2 bg-primary_comp rounded-lg focus:outline-none"
+                className="w-full min-h-[64px] max-h-36 px-4 py-2 dark:bg-dark_primary_comp rounded-lg focus:outline-none"
                 placeholder="Group Description"
                 maxLength={250}
                 value={description}
@@ -214,7 +214,7 @@ const NewGroup = ({ setShow }: Props) => {
           {status == 0 ? (
             <div
               onClick={() => setStatus(1)}
-              className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+              className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
             >
               Next
             </div>
@@ -222,13 +222,13 @@ const NewGroup = ({ setShow }: Props) => {
             <>
               <div
                 onClick={() => setStatus(0)}
-                className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Prev
               </div>
               <div
                 onClick={handleSubmit}
-                className="w-32 p-2 flex-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Submit
               </div>

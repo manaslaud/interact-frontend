@@ -156,7 +156,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex bg-backdrop backdrop-blur-2xl"
         >
           {clickedOnEdit ? (
             <EditProject
@@ -190,9 +190,9 @@ const ProjectView = ({
             {clickedProjectIndex != 0 ? (
               <div
                 onClick={handleClickPrev}
-                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+                className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer shadow-xl"
               >
-                <CaretLeft color="white" size={24} weight="bold" />
+                <CaretLeft size={24} weight="bold" />
               </div>
             ) : (
               <></>
@@ -228,9 +228,9 @@ const ProjectView = ({
               </div>
               <div
                 onClick={() => setClickedOnProject(false)}
-                className="md:hidden w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer"
+                className="md:hidden w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer"
               >
-                <X color="white" size={24} weight="bold" />
+                <X size={24} weight="bold" />
               </div>
             </div>
             <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
@@ -243,7 +243,7 @@ const ProjectView = ({
                 height={10000}
               />
 
-              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-primary_comp_hover flex flex-col justify-between">
+              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 dark:bg-dark_primary_comp_hover flex flex-col justify-between">
                 <div className="w-full h-fit flex flex-col gap-4">
                   <div className="flex justify-between items-center">
                     <div className="font-bold text-3xl text-gradient">{project.title}</div>
@@ -280,7 +280,7 @@ const ProjectView = ({
                         return (
                           <div
                             key={tag}
-                            className="flex-center p-2 font-primary text-xs text-white border-[1px] border-primary_btn bg-[#20032c41] rounded-lg"
+                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-[#20032c41] rounded-lg"
                           >
                             {tag}
                           </div>
@@ -296,7 +296,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                     <div
                       onClick={() => setClickedOnEdit(true)}
-                      className="w-full text-lg font-medium border-[1px] border-primary_btn py-2 flex-center hover:bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Edit Project
                     </div>
@@ -306,7 +306,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                     <div
                       onClick={() => router.push(`/workspace/manage/${projectSlugs[clickedProjectIndex]}`)}
-                      className="w-full text-lg font-medium border-[1px] border-primary_btn py-2 flex-center hover:bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Manage Project
                     </div>
@@ -331,9 +331,9 @@ const ProjectView = ({
           <div className="max-md:hidden w-16 h-screen flex flex-col items-center justify-between py-3 max-md:fixed max-md:top-0 max-md:right-0">
             <div
               onClick={() => setClickedOnProject(false)}
-              className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer"
+              className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer"
             >
-              <X color="white" size={24} weight="bold" />
+              <X size={24} weight="bold" />
             </div>
 
             <div className="max-md:hidden">
@@ -343,9 +343,9 @@ const ProjectView = ({
             {clickedProjectIndex != projectSlugs.length - 1 ? (
               <div
                 onClick={handleClickNext}
-                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+                className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer shadow-xl"
               >
-                <CaretRight color="white" size={24} weight="bold" />
+                <CaretRight size={24} weight="bold" />
               </div>
             ) : (
               <div className="w-10 h-10 rounded-full"></div>
@@ -358,9 +358,9 @@ const ProjectView = ({
                   setClickedProjectIndex(prev => prev - 1);
                   setFadeIn(false);
                 }}
-                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+                className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer shadow-xl"
               >
-                <CaretLeft color="white" size={24} weight="bold" />
+                <CaretLeft size={24} weight="bold" />
               </div>
             ) : (
               <div className="w-10 h-10 rounded-full"></div>
@@ -371,9 +371,9 @@ const ProjectView = ({
                   setClickedProjectIndex(prev => prev + 1);
                   setFadeIn(false);
                 }}
-                className="w-10 h-10 rounded-full flex-center bg-primary_comp_hover cursor-pointer shadow-xl"
+                className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer shadow-xl"
               >
-                <CaretRight color="white" size={24} weight="bold" />
+                <CaretRight size={24} weight="bold" />
               </div>
             ) : (
               <div className="w-10 h-10 rounded-full"></div>

@@ -71,7 +71,7 @@ const Applications = () => {
                     href={`/explore?oid=${application.openingID}`}
                     onClick={() => dispatch(setExploreTab(1))}
                     key={application.id}
-                    className={`w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 hover:bg-primary_comp_hover transition-ease-300 cursor-pointer`}
+                    className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 hover:dark:bg-dark_primary_comp_hover transition-ease-300 cursor-pointer`}
                   >
                     <Image
                       crossOrigin="anonymous"

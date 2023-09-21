@@ -76,7 +76,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 dark:text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffe1fc22] rounded-lg border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"
@@ -91,13 +91,13 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               <div className="text-2xl font-semibold">{name}</div>
               <div
                 onClick={handleSubmit}
-                className="max-md:hidden w-[120px] h-[48px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+                className="max-md:hidden w-[120px] h-[48px] dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
               >
                 RePost
               </div>
             </div>
 
-            <div className="w-1/2 font-primary flex gap-1 border-primary_btn border-[1px] text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
+            <div className="w-1/2 font-primary flex gap-1 dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
               <div className="w-[10%] max-md:w-[10%] h-full">
                 <div className="rounded-full">
                   <Image
@@ -129,7 +129,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
         </div>
         <div
           onClick={handleSubmit}
-          className="md:hidden w-[120px] h-[48px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+          className="md:hidden w-[120px] h-[48px] dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
         >
           Post
         </div>

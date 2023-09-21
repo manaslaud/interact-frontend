@@ -59,19 +59,19 @@ const Notifications = ({ setShow }: Props) => {
         <div className="w-full flex flex-col gap-2 max-md:gap-4 p-4 pb-2">
           <div className="w-full flex items-center justify-between">
             <div className="w-fit text-start text-2xl max-md:text-3xl font-bold text-gradient">Notification Center</div>
-            <div onClick={() => setShow(false)} className="text-xl text-white cursor-pointer md:hidden">
+            <div onClick={() => setShow(false)} className="text-xl dark:text-white cursor-pointer md:hidden">
               X
             </div>
           </div>
 
-          <div className="w-full h-[1px] bg-primary_btn"></div>
+          <div className="w-full h-[1px] bg-dark:dark_primary_btn"></div>
         </div>
         {loading ? (
           <Loader />
         ) : (
           <>
             {notifications.length === 0 ? (
-              <div className="w-full font-primary flex-center text-white py-4 cursor-default text-center">
+              <div className="w-full font-primary flex-center dark:text-white py-4 cursor-default text-center">
                 No new notifications :)
               </div>
             ) : (
@@ -106,7 +106,7 @@ const Notifications = ({ setShow }: Props) => {
             )}
           </>
         )}
-        <Link href={'/notifications'} className="text-white font-primary text-xs hover:underline my-2">
+        <Link href={'/notifications'} className="dark:text-white font-primary text-xs hover:underline my-2">
           view all
         </Link>
       </div>

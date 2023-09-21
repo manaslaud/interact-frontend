@@ -71,7 +71,7 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
 
   return (
     <>
-      <div className="fixed top-56 w-[560px] max-md:w-5/6 h-fit backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 text-white font-primary overflow-y-auto border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-56 w-[560px] max-md:w-5/6 h-fit backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 dark:text-white font-primary overflow-y-auto border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-full flex max-md:flex-col max-md:gap-4 max-md:items-start items-center justify-between">
           <div className="w-full flex gap-2">
             <Image
@@ -93,7 +93,7 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
           <select
             onChange={el => setRole(el.target.value)}
             value={role}
-            className="w-fit h-12 border-[1px] border-primary_btn text-white bg-[#10013b30] focus:outline-none border-gray-300 text-sm rounded-lg block p-2"
+            className="w-fit h-12 border-[1px] dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none border-gray-300 text-sm rounded-lg block p-2"
           >
             {canEditRoles.map((c, i) => {
               return (
@@ -120,13 +120,13 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
               onChange={el => {
                 setTitle(el.target.value);
               }}
-              className="p-2 mr-8 w-full flex-center border-[1px] border-primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
+              className="p-2 mr-8 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
             />
           </form>
         ) : (
           <div
             onClick={() => setClickedOnEditTitle(true)}
-            className="p-2 w-full flex-center border-[1px] border-primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
+            className="p-2 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
           >
             {title}
           </div>
@@ -135,7 +135,7 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
         <div className="w-full flex justify-end">
           <div
             onClick={handleSubmit}
-            className="w-[90px] h-[40px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active transition-ease-300 shrink-0 flex-center font-semibold rounded-lg cursor-pointer"
+            className="w-[90px] h-[40px] dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center font-semibold rounded-lg cursor-pointer"
           >
             Edit
           </div>

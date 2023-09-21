@@ -90,7 +90,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
                 el.stopPropagation();
                 setClickedOnSettings(prev => !prev);
               }}
-              className="h-8 w-8 flex-center glassMorphism rounded-full text-white p-1"
+              className="h-8 w-8 flex-center glassMorphism rounded-full dark:text-white p-1"
             >
               •••
             </div>
@@ -101,7 +101,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           {clickedOnSettings ? (
             <div
               onClick={el => el.stopPropagation()}
-              className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism text-white p-2"
+              className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism dark:text-white p-2"
             >
               {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                 <div
@@ -148,7 +148,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           ) : (
             <></>
           )}
-          {project.isPrivate ? <EyeSlash color="white" size={24} /> : <></>}
+          {project.isPrivate ? <EyeSlash size={24} /> : <></>}
         </div>
         <div className="w-full h-full rounded-lg absolute top-0 left-0 bg-gradient-to-b from-[#00000084] z-[5] to-transparent opacity-0 group-hover:opacity-100 transition-ease-300"></div>
         <Image
@@ -159,7 +159,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           width={10000}
           height={10000}
         />
-        <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
+        <div className="w-full glassMorphism dark:text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
           <div className="text-xl">{project.title}</div>
           <div className="w-full flex items-center justify-between">
             <div className="text-sm">{project.user.name}</div>

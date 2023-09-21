@@ -138,11 +138,11 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             onKeyDown={el => {
               if (el.key === 'Enter') submitHandler();
             }}
-            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl bg-primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
+            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
             placeholder={`Comment on this ${type}`}
           />
           <div
-            className="h-fit max-md:text-xs bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active font-medium border-[1px] border-primary_btn rounded-md py-2 px-3  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
+            className="h-fit max-md:text-xs dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active font-medium border-[1px] dark:border-dark_primary_btn rounded-md py-2 px-3  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
             onClick={submitHandler}
           >
             Comment
@@ -215,7 +215,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                       />
                     </div>
                     <div className="pl-14 max-md:pl-10">
-                      <div className="w-fit bg-primary_comp_hover py-2 px-4 max-md:text-sm rounded-xl">
+                      <div className="w-fit dark:bg-dark_primary_comp_hover py-2 px-4 max-md:text-sm rounded-xl">
                         {comment.content}
                       </div>
                       {/* <LowerComment comment={comment} type={type} /> */}

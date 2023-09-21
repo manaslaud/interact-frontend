@@ -212,7 +212,7 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
           )} */}
         </div>
       </div>
-      <div className="w-full flex items-center font-primary text-sm gap-2 text-[#ffffffb6]">
+      <div className="w-full flex items-center font-primary text-sm gap-2 text-gray-400 dark:text-[#ffffffb6]">
         <div onClick={likeHandler} className="cursor-pointer">
           {numLikes} like{numLikes == 1 ? '' : 's'}
         </div>

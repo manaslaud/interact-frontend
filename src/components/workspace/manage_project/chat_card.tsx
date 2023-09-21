@@ -31,9 +31,9 @@ const ChatCard = ({ project, chat, setClickedOnEditChat, clickedEditChat, setCli
   return (
     <div
       onClick={handleClick}
-      className={`w-full font-primary text-white ${
-        chat.id == clickedEditChat.id ? 'bg-primary_comp_hover' : ''
-      } border-[1px] border-primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
+      className={`w-full font-primary dark:text-white ${
+        chat.id == clickedEditChat.id ? 'dark:bg-dark_primary_comp_hover' : ''
+      } border-[1px] dark:border-dark_primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
     >
       {/* <Image
         crossOrigin="anonymous"
@@ -48,7 +48,7 @@ const ChatCard = ({ project, chat, setClickedOnEditChat, clickedEditChat, setCli
           <div className="text-xl font-semibold">{chat.title}</div>
           {project.userID == user.id || user.managerProjects.includes(project.id) ? (
             <div className="flex flex-col font text-xs">
-              <Pen color="white" size={24} />
+              <Pen size={24} />
             </div>
           ) : (
             <></>

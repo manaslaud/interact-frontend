@@ -123,13 +123,13 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         )}
         <div className="w-full flex items-center justify-between p-2">
           <div className="text-3xl font-semibold">Group Info</div>
-          <X onClick={() => setShow(false)} className="cursor-pointer" color="white" size={32} />
+          <X onClick={() => setShow(false)} className="cursor-pointer" size={32} />
         </div>
 
         <div className={`w-full rounded-md flex ${clickedOnEdit ? 'items-start' : 'items-center'} gap-4 px-4`}>
           {clickedOnEdit ? (
             <>
-              <div className="rounded-full w-14 h-14 bg-primary_comp_hover"></div>
+              <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
               <div className={`grow flex flex-col ${clickedOnEdit ? 'pt-1' : 'items-center'}`}>
                 <div className="w-full flex items-center justify-between pr-2">
                   <input
@@ -141,8 +141,8 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                     onChange={el => setTitle(el.target.value)}
                   />
                   <div className="flex gap-2">
-                    <CaretRight onClick={handleEdit} className="cursor-pointer" color="white" size={24} />
-                    <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" color="white" size={24} />
+                    <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
+                    <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                   </div>
                 </div>
 
@@ -157,12 +157,12 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
             </>
           ) : (
             <>
-              <div className="rounded-full w-14 h-14 bg-primary_comp_hover"></div>
+              <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
               <div className="grow flex flex-col">
                 <div className="w-full flex items-center justify-between pr-2">
                   <div className="text-2xl font-medium">{chat.title}</div>
                   {membership.role == GROUP_ADMIN ? (
-                    <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" color="white" size={24} />
+                    <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" size={24} />
                   ) : (
                     <></>
                   )}
@@ -182,10 +182,10 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
             {membership.role == GROUP_ADMIN ? (
               <div
                 onClick={() => setClickedOnAddMembers(true)}
-                className="w-full h-12 p-4 bg-primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
+                className="w-full h-12 p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
               >
                 <div className="text-lg">Add Members</div>
-                <Plus color="white" size={32} />
+                <Plus size={32} />
               </div>
             ) : (
               <></>
@@ -194,7 +194,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               return (
                 <div
                   key={m.id}
-                  className="w-full p-4 bg-primary_comp_hover rounded-md flex items-center justify-between"
+                  className="w-full p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
                     <Link href={`/explore/user/${m.user.username}`} className="rounded-full">
@@ -204,7 +204,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                         height={10000}
                         alt={'User Pic'}
                         src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
-                        className="rounded-full w-14 h-14 bg-primary_comp_hover"
+                        className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"
                       />
                     </Link>
                     <div className="flex flex-col">
@@ -221,7 +221,6 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                         setClickedOnEditMembership(true);
                       }}
                       className="cursor-pointer"
-                      color="white"
                       size={24}
                     />
                   ) : (
@@ -242,7 +241,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               return (
                 <div
                   key={invitation.id}
-                  className="w-full p-4 bg-primary_comp_hover rounded-md flex items-center justify-between"
+                  className="w-full p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
                 >
                   <Link href={`/explore/user/${invitation.user.username}`} className="flex items-center gap-4">
                     <Image
@@ -251,7 +250,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                       height={10000}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${invitation.user.profilePic}`}
-                      className="rounded-full w-14 h-14 bg-primary_comp_hover"
+                      className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"
                     />
 
                     <div className="flex flex-col">
@@ -281,11 +280,11 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         <div className="w-full  rounded-md flex flex-col gap-1 p-4">
           <div
             onClick={handleExit}
-            className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+            className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Exit Group
           </div>
-          <div className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
+          <div className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
             Report Group
           </div>
         </div>

@@ -81,11 +81,10 @@ const Applications = ({ oid }: Props) => {
             <div className="flex gap-3">
               <ArrowArcLeft
                 onClick={() => router.back()}
-                color="white"
-                className="w-10 h-10 p-2 bg-primary_comp_hover rounded-full cursor-pointer"
+                className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
                 size={40}
               />
-              <div className="text-4xl font-semibold text-white font-primary">Applications</div>
+              <div className="text-4xl font-semibold dark:text-white font-primary">Applications</div>
             </div>
             <div onClick={() => filterShortlisted(!filterStatus)} className="">
               Only Shortlisted

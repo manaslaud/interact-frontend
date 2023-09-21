@@ -39,7 +39,7 @@ const Sidebar = ({ index }: Props) => {
       <div
         className={`${
           open ? 'w-sidebar_open' : 'w-sidebar_close'
-        } h-base bg-sidebar backdrop-blur-sm pt-[40px] sticky top-navbar mt-navbar py-6 flex flex-col justify-between pl-[30px] transition-ease-out-500 max-md:hidden`}
+        } h-base bg-sidebar border-gray-300 border-r-[1px] dark:border-0 dark:bg-dark_sidebar backdrop-blur-sm pt-[40px] sticky top-navbar mt-navbar py-6 flex flex-col justify-between pl-[30px] transition-ease-out-500 max-md:hidden`}
       >
         <div className="w-full flex flex-col gap-2">
           <SidebarItem
@@ -108,7 +108,7 @@ const Sidebar = ({ index }: Props) => {
         </div>
       </label> */}
 
-        <div className="w-fit py-8 border-y-2 border-primary_btn flex flex-col gap-2">
+        <div className="w-fit py-8 border-y-2 dark:border-dark_primary_btn flex flex-col gap-2">
           <SidebarItem
             index={7}
             title="Profile"
@@ -138,7 +138,6 @@ const Sidebar = ({ index }: Props) => {
         <ArrowLineLeft
           onClick={() => dispatch(setNavbarOpen(!open))}
           className={`cursor-pointer ml-2 mt-2 ${open ? 'rotate-0' : '-rotate-180'} transition-ease-500`}
-          color="white"
           size={24}
         />
       </div>

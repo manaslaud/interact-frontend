@@ -47,9 +47,9 @@ const PersonalChatCard = ({ chat, setChats }: Props) => {
   return (
     <div
       onClick={handleClick}
-      className={`w-full font-primary text-white ${
-        chat.id == currentChatID ? 'bg-primary_comp_active' : 'hover:bg-primary_comp_hover'
-      } border-[1px] border-primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
+      className={`w-full font-primary dark:text-white ${
+        chat.id == currentChatID ? 'dark:bg-dark_primary_comp_active' : 'hover:dark:bg-dark_primary_comp_hover'
+      } border-[1px] dark:border-dark_primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
     >
       <Image
         crossOrigin="anonymous"

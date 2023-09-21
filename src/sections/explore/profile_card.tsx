@@ -55,7 +55,7 @@ const ProfileCard = ({ user }: Props) => {
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
 
-      <div className="w-[360px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#84478023] backdrop-blur-md border-[1px] border-primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10">
+      <div className="w-[360px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#84478023] backdrop-blur-md border-[1px] dark:border-dark_primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10">
         <Image
           crossOrigin="anonymous"
           width={10000}
@@ -86,7 +86,7 @@ const ProfileCard = ({ user }: Props) => {
                     href={`/explore?search=` + tag}
                     target="_blank"
                     onClick={() => dispatch(setExploreTab(2))}
-                    className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn rounded-md"
+                    className="flex-center text-sm px-4 py-1 border-[1px] dark:border-dark_primary_btn rounded-md"
                     key={tag}
                   >
                     {tag}
@@ -102,7 +102,7 @@ const ProfileCard = ({ user }: Props) => {
                     href={link}
                     target="_blank"
                     key={index}
-                    className="w-fit h-8 border-[1px] border-primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                    className="w-fit h-8 border-[1px] dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                   >
                     {getIcon(getDomainName(link), 24)}
                     <div className="capitalize">{getDomainName(link)}</div>
@@ -112,20 +112,20 @@ const ProfileCard = ({ user }: Props) => {
           </div>
         </div>
         <div className="w-fit absolute max-md:static top-4 right-4 flex gap-2">
-          <div className="p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+          <div className="p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
             <Chat onClick={handleChat} size={18} />
           </div>
           <div
             onClick={() => setClickedOnShare(true)}
-            className="p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer"
+            className="p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end transition-ease-300 rounded-full cursor-pointer"
           >
             <Share size={18} />
           </div>
-          <div className="md:hidden p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+          <div className="md:hidden p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
             <Warning size={18} />
           </div>
         </div>
-        <div className="absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r hover:from-secondary_gradient_start hover:to-secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
+        <div className="absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:dark:from-dark_secondary_gradient_start hover:dark:to-dark_secondary_gradient_end transition-ease-300 rounded-full cursor-pointer">
           <Warning size={18} />
         </div>
       </div>

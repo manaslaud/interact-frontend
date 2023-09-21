@@ -35,7 +35,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
+      <div className="w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
         <Image
           crossOrigin="anonymous"
           width={10000}
@@ -63,7 +63,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
                       View applications
                     </Link>
                   ) : (
-                    <div className="w-fit text-white text-sm max-md:text-sm underline underline-offset-4 cursor-default">
+                    <div className="w-fit dark:text-white text-sm max-md:text-sm underline underline-offset-4 cursor-default">
                       No applications
                     </div>
                   )}

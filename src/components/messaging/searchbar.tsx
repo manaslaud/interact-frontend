@@ -14,16 +14,16 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-md:w-taskbar_md h-10 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b from-primary_gradient_start to-primary_gradient_end"
+      className="w-full max-md:w-taskbar_md h-10 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end"
     >
       <input
-        className="h-full grow bg-transparent focus:outline-none font-primary text-white font-medium"
+        className="h-full grow bg-transparent focus:outline-none font-primary dark:text-white font-medium"
         type="text"
         placeholder="Search"
         value={search}
         onChange={el => setSearch(el.target.value)}
       />
-      <MagnifyingGlass color="white" size={32} className="opacity-75" />
+      <MagnifyingGlass size={32} className="opacity-75" />
     </form>
   );
 };

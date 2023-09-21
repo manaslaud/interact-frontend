@@ -21,7 +21,7 @@ const Openings = ({ openings, slug }: Props) => {
               return (
                 <div
                   key={opening.id}
-                  className="w-full flex-center bg-primary_comp_active py-4 border-[1px] border-primary_btn rounded-lg"
+                  className="w-full flex-center dark:bg-dark_primary_comp_active py-4 border-[1px] dark:border-dark_primary_btn rounded-lg"
                 >
                   {opening.title}
                 </div>
@@ -30,7 +30,7 @@ const Openings = ({ openings, slug }: Props) => {
             <Link
               href={`/explore?project=${slug}`}
               onClick={() => dispatch(setExploreTab(1))}
-              className="w-full p-4 flex-center font-medium border-[1px] border-primary_btn bg-gradient-to-r from-secondary_gradient_start to-secondary_gradient_end transition-ease-300 rounded-lg"
+              className="w-full p-4 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end transition-ease-300 rounded-lg"
             >
               Apply
             </Link>

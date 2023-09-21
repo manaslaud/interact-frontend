@@ -65,7 +65,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
           infinite={true}
           dragEnabled={true}
           isPlaying={false}
-          className="w-full h-full text-white flex items-center justify-center rounded-xl relative"
+          className="w-full h-full dark:text-white flex items-center justify-center rounded-xl relative"
         >
           <Slider className="w-full rounded-xl ">
             {selectedImageUrls.map((el, index) => {

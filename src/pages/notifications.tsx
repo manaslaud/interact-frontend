@@ -61,7 +61,7 @@ const Home = () => {
           <div className="text-3xl font-extrabold text-gradient pl-2">Notifications</div>
           <div className="w-full flex flex-col gap-2">
             {notifications.length === 0 ? (
-              <div className="w-full font-primary flex-center text-white py-4 cursor-default text-center">
+              <div className="w-full font-primary flex-center dark:text-white py-4 cursor-default text-center">
                 No notifications :)
               </div>
             ) : (

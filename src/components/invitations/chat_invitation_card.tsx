@@ -86,8 +86,8 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
   };
 
   return (
-    <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300">
-      <div className="rounded-full w-32 h-32 bg-primary_comp_hover"> </div>
+    <div className="w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300">
+      <div className="rounded-full w-32 h-32 dark:bg-dark_primary_comp_hover"> </div>
 
       <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
         <div className="grow flex flex-col gap-2">
@@ -99,19 +99,19 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
           <div className="flex gap-4">
             <div
               onClick={handleAccept}
-              className="w-24 h-10 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-24 h-10 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Accept
             </div>
             <div
               onClick={handleReject}
-              className="w-24 h-10 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-24 h-10 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Reject
             </div>
           </div>
         ) : (
-          <div className="w-24 h-10 font-semibold border-[1px] border-primary_btn shadow-xl text-white bg-primary_comp_hover flex-center rounded-lg cursor-default">
+          <div className="w-24 h-10 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white dark:bg-dark_primary_comp_hover flex-center rounded-lg cursor-default">
             {invitation.status == 1 ? 'Accepted' : 'Rejected'}
           </div>
         )}

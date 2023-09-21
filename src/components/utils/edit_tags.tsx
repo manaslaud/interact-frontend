@@ -32,7 +32,10 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
   return (
     <div className="w-fit flex flex-wrap items-center font-Helvetica gap-2 rounded-md">
       {tags.map(tag => (
-        <div key={tag} className="flex-center px-2 py-1 border-[1px] border-primary_btn rounded-md cursor-default">
+        <div
+          key={tag}
+          className="flex-center px-2 py-1 border-[1px] dark:border-dark_primary_btn rounded-md cursor-default"
+        >
           {tag}
           <svg
             onClick={() => handleTagRemove(tag)}

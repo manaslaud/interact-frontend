@@ -104,7 +104,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 p-6 font-primary text-white border-[1px] max-md:border-0 border-primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 p-6 font-primary dark:text-white border-[1px] max-md:border-0 dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
       {clickedOnEditMembership ? (
         <EditMembership
           membership={clickedEditUserMembership}
@@ -122,7 +122,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
       <div className={`w-full rounded-md flex ${clickedOnEdit ? 'items-start' : 'items-center'} gap-4`}>
         {clickedOnEdit ? (
           <>
-            <div className="rounded-full w-14 h-14 bg-primary_comp_hover"></div>
+            <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
             <div className={`grow flex flex-col ${clickedOnEdit ? 'pt-1' : 'items-center'}`}>
               <div className="w-full flex items-center justify-between pr-2">
                 <input
@@ -134,8 +134,8 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                   onChange={el => setTitle(el.target.value)}
                 />
                 <div className="flex gap-2">
-                  <CaretRight onClick={handleEdit} className="cursor-pointer" color="white" size={24} />
-                  <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" color="white" size={24} />
+                  <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
+                  <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                 </div>
               </div>
 
@@ -150,11 +150,11 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
           </>
         ) : (
           <>
-            <div className="rounded-full w-14 h-14 bg-primary_comp_hover"></div>
+            <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
             <div className="grow flex flex-col">
               <div className="w-full flex items-center justify-between pr-2">
                 <div className="text-2xl font-medium">{chat.title}</div>
-                <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" color="white" size={24} />
+                <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" size={24} />
               </div>
 
               <div className="text-sm">{chat.description}</div>
@@ -170,14 +170,17 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
         <div className="w-full flex flex-col gap-1">
           <div
             onClick={() => setClickedOnAddMembers(true)}
-            className="w-full h-12 p-4 bg-primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
+            className="w-full h-12 p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
           >
             <div className="">Add Members</div>
-            <Plus color="white" size={24} />
+            <Plus size={24} />
           </div>
           {chat.memberships.map(m => {
             return (
-              <div key={m.id} className="w-full p-4 bg-primary_comp_hover rounded-md flex items-center justify-between">
+              <div
+                key={m.id}
+                className="w-full p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
+              >
                 <div className="flex items-center gap-4">
                   <Link href={`/explore/user/${m.user.username}`} className="rounded-full">
                     <Image
@@ -186,7 +189,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                       height={10000}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
-                      className="rounded-full w-12 h-12 bg-primary_comp_hover"
+                      className="rounded-full w-12 h-12 dark:bg-dark_primary_comp_hover"
                     />
                   </Link>
                   <div className="flex flex-col">
@@ -202,7 +205,6 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                     setClickedOnEditMembership(true);
                   }}
                   className="cursor-pointer"
-                  color="white"
                   size={18}
                 />
               </div>
@@ -221,7 +223,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
 
       <div
         onClick={handleDelete}
-        className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+        className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
       >
         Delete Group
       </div>

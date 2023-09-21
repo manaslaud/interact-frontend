@@ -74,7 +74,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
   return (
     <div
       onClick={() => setClickedOnOptions(false)}
-      className="w-full relative font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:p-4"
+      className="w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-b-[1px] max-md:p-4"
     >
       {clickedOnOptions ? (
         <>
@@ -236,7 +236,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
             maxLength={500}
             value={caption}
             onChange={el => setCaption(el.target.value)}
-            className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none bg-primary_comp p-2 my-2 max-h-72"
+            className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
           />
         ) : (
           <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>

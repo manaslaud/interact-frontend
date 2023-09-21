@@ -25,7 +25,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
     if (status == 1) setClickedOnEdit(false);
   };
   return (
-    <div className="w-96 h-108 font-primary text-white">
+    <div className="w-96 h-108 font-primary dark:text-white">
       <div
         onClick={() => {
           setBookmark(bookmark);
@@ -39,12 +39,12 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
               el.stopPropagation();
               setClickedOnSettings(prev => !prev);
             }}
-            className="h-8 w-8 flex-center glassMorphism rounded-full text-white p-1"
+            className="h-8 w-8 flex-center glassMorphism rounded-full dark:text-white p-1"
           >
             •••
           </div>
           {clickedOnSettings ? (
-            <div className="w-1/2 h-fit rounded-2xl glassMorphism text-white p-2">
+            <div className="w-1/2 h-fit rounded-2xl glassMorphism dark:text-white p-2">
               <div
                 onClick={el => {
                   el.stopPropagation();
@@ -119,10 +119,10 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
             <input
               value={title}
               onChange={el => setTitle(el.target.value)}
-              className="w-full bg-transparent text-xl font-semibold border-[1px] p-2 rounded-md border-primary_btn focus:outline-none"
+              className="w-full bg-transparent text-xl font-semibold border-[1px] p-2 rounded-md dark:border-dark_primary_btn focus:outline-none"
             />
             <button type="submit">
-              <Check className="cursor-pointer" color="white" size={32} />
+              <Check className="cursor-pointer" size={32} />
             </button>
           </form>
         ) : (

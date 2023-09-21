@@ -56,7 +56,7 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-full font-primary text-white border-[1px] border-primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
+      <div className="w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
         <Image
           crossOrigin="anonymous"
           width={10000}

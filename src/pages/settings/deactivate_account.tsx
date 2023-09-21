@@ -49,15 +49,14 @@ const Deactive = () => {
       <Sidebar index={9} />
       <MainWrapper>
         {/* {showDeactivate ? <ConfirmDeactiveAccount setShow={setShowDeactivate} handleSubmit={handleSubmit} /> : <></>} */}
-        <div className="w-[50vw] max-md:w-full mx-auto text-white flex flex-col gap-12 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
+        <div className="w-[50vw] max-md:w-full mx-auto dark:text-white flex flex-col gap-12 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
           <div className="flex gap-3">
             <ArrowArcLeft
               onClick={() => router.replace('/settings')}
-              color="white"
-              className="w-10 h-10 p-2 bg-primary_comp_hover rounded-full cursor-pointer"
+              className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
               size={40}
             />
-            <div className="text-4xl font-semibold text-white">Settings</div>
+            <div className="text-4xl font-semibold dark:text-white">Settings</div>
           </div>
           <div className="w-full text-center text-xl mb-16">
             <span className="font-bold">Note:</span> Your account will not be immediately deleted. If you log in within
@@ -66,7 +65,7 @@ const Deactive = () => {
           </div>
           <button
             // onClick={() => setShowDeactivate(true)}
-            className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-2 rounded-xl font-Inconsolata text-xl hover:bg-[#ab3232] transition-all duration-200 ease-in-out"
+            className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:dark:text-white py-2 rounded-xl font-Inconsolata text-xl hover:bg-[#ab3232] transition-all duration-200 ease-in-out"
           >
             Deactive My Account
           </button>

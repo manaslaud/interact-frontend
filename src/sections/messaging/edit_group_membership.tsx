@@ -105,7 +105,7 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
 
   return (
     <>
-      <div className="absolute bottom-0 w-full backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-6 rounded-md p-10 max-md:p-5 text-white font-primary border-[1px] border-primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+      <div className="absolute bottom-0 w-full backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-6 rounded-md p-10 max-md:p-5 dark:text-white font-primary border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
         <div className="w-full flex items-center gap-4">
           <Image
             crossOrigin="anonymous"
@@ -113,34 +113,34 @@ const EditMembership = ({ setShow, membership, setChat }: Props) => {
             height={10000}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
-            className="rounded-full w-14 h-14 bg-primary_comp_hover"
+            className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"
           />
           <div className="grow flex items-center justify-between">
             <div className="flex flex-col">
               <div className="text-xl font-medium">{membership.user.name}</div>
               <div className="text-sm">Joined {moment(membership.createdAt).format('DD MMM YYYY')}</div>
             </div>
-            <X onClick={() => setShow(false)} className="cursor-pointer" color="white" size={24} />
+            <X onClick={() => setShow(false)} className="cursor-pointer" size={24} />
           </div>
         </div>
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex flex-col gap-1">
             <Link
               href={`/explore/user/${membership.user.username}`}
-              className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active rounded-lg transition-ease-300"
+              className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active rounded-lg transition-ease-300"
             >
               Info
             </Link>
             <div
               onClick={handleChangeRole}
-              className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active rounded-lg cursor-pointer transition-ease-300"
+              className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active rounded-lg cursor-pointer transition-ease-300"
             >
               {membership.role == GROUP_MEMBER ? 'Make Group Admin' : 'Make Group Member'}
             </div>
           </div>
           <div
             onClick={handleRemove}
-            className="w-full py-4 text-center bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+            className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Remove From Group
           </div>

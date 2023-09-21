@@ -18,16 +18,18 @@ const SearchBar = ({ initialValue = '' }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-taskbar max-md:w-taskbar_md h-taskbar px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b from-primary_gradient_start to-primary_gradient_end"
+      className={`w-taskbar max-md:w-taskbar_md h-taskbar px-4 text-gray-500 ${
+        search.trim().length > 0 ? 'bg-white' : ''
+      } dark:text-white flex items-center justify-between gap-8 mx-auto rounded-md border-gray-100 border-2 dark:border-0 shadow-lg dark:shadow-outer dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end transition-ease-300`}
     >
       <input
-        className="h-full grow bg-transparent focus:outline-none font-primary text-white font-medium"
+        className="h-full grow bg-transparent focus:outline-none font-primary font-medium"
         type="text"
         placeholder="Search"
         value={search}
         onChange={el => setSearch(el.target.value)}
       />
-      <MagnifyingGlass color="white" size={32} className="opacity-75" />
+      <MagnifyingGlass size={32} className="opacity-75" />
     </form>
   );
 };

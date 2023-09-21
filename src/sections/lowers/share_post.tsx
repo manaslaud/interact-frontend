@@ -92,10 +92,10 @@ const SharePost = ({ post, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/4 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-2 border-2 border-primary_btn rounded-xl">
+      <div className="w-1/4 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-2 border-2 dark:border-dark_primary_btn rounded-xl">
         <div className="text-xl text-center font-bold underline underline-offset-2">Share this Post</div>
         <div className="w-full max-h-base_md overflow-auto flex flex-col gap-2">
-          <div className="w-full font-primary flex gap-1 text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
+          <div className="w-full font-primary flex gap-1 dark:text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
             <div className="w-[10%] max-md:w-[20%] h-full">
               <div className="rounded-full">
                 <Image
