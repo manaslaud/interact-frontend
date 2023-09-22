@@ -85,7 +85,7 @@ const BookmarkPost = ({ setShow, post, setBookmark }: Props) => {
             return (
               <div
                 key={index}
-                className={`w-full h-14 hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-md cursor-pointer transition-ease-300`}
+                className={`w-full h-14 dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-md cursor-pointer transition-ease-300`}
                 onClick={() => {
                   addBookmarkItemHandler(bookmark);
                 }}

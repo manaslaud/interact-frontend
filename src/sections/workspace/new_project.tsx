@@ -166,7 +166,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             </label>
             <div
               onClick={handleSubmit}
-              className="w-36 h-12 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-36 h-12 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Build Project
             </div>

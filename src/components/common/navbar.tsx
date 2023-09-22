@@ -24,10 +24,10 @@ const Navbar = () => {
         <ProfileDropdown setShow={setClickedOnProfile} />
       </div>
       <div className="w-full h-navbar bg-navbar dark:bg-dark_navbar text-gray-500 dark:text-white border-gray-300 border-b-[1px] dark:border-0 glassMorphism backdrop-blur-sm fixed top-0 flex justify-between px-4 items-center z-20">
-        <Link href={'/home'} className="hidden dark:flex px-4">
+        <Link href={'/home'} className="hidden dark:flex px-4 max-md:px-0">
           <ReactSVG src="/onboarding_logo_dark.svg" />
         </Link>
-        <Link href={'/home'} className="static dark:hidden px-4">
+        <Link href={'/home'} className="static dark:hidden px-4 max-md:px-0">
           <ReactSVG src="/onboarding_logo.svg" />
         </Link>
         {user.isLoggedIn ? (

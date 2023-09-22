@@ -54,7 +54,7 @@ const Discover = () => {
               <></>
             ) : (
               <InfiniteScroll
-                className="px-12 max-md:px-2 flex flex-col gap-4 dark:gap-0"
+                className="px-12 max-md:px-4 flex flex-col gap-4 dark:gap-0"
                 dataLength={feed.length}
                 next={getFeed}
                 hasMore={hasMore}

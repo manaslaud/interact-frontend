@@ -75,18 +75,18 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       className="w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn dark:border-b-[1px] max-md:p-4"
     >
       {clickedOnOptions ? (
-        <div className="w-1/4 h-fit flex flex-col absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
+        <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
           {clickedOnEdit ? (
             <>
               <div
                 onClick={handleEdit}
-                className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
               >
                 Save
               </div>
               <div
                 onClick={() => setClickedOnEdit(false)}
-                className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
               >
                 Cancel
               </div>
@@ -96,7 +96,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
               {post.userID == loggedInUser.id ? (
                 <div
                   onClick={() => setClickedOnEdit(true)}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Edit
                 </div>
@@ -109,7 +109,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
                     el.stopPropagation();
                     handleDelete();
                   }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Delete
                 </div>
@@ -122,7 +122,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
                   onClick={el => {
                     el.stopPropagation();
                   }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Report
                 </div>
@@ -176,7 +176,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           </div>
         </div>
         {post.rePost && (
-          <div className="dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4">
+          <div className="dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4 max-md:px-0">
             <PostComponent post={post.rePost} isRepost={true} />
           </div>
         )}

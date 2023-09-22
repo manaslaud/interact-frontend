@@ -134,20 +134,20 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
           <div className="w-full flex flex-col gap-1">
             <Link
               href={`/explore/user/${membership.user.username}`}
-              className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active rounded-lg transition-ease-300"
+              className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active rounded-lg transition-ease-300"
             >
               Info
             </Link>
             <div
               onClick={handleChangeRole}
-              className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active rounded-lg cursor-pointer transition-ease-300"
+              className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active rounded-lg cursor-pointer transition-ease-300"
             >
               {membership.role == GROUP_MEMBER ? 'Make Group Admin' : 'Make Group Member'}
             </div>
           </div>
           <div
             onClick={handleRemove}
-            className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+            className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Remove From Group
           </div>

@@ -201,7 +201,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
           <Link
             href={`${APPLICATION_RESUME_URL}/${application.resume}`}
             target="_blank"
-            className="w-64 mx-auto p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-64 mx-auto p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             View Resume
           </Link>
@@ -214,13 +214,13 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
         <div className="w-full flex justify-center gap-12 max-md:gap-4">
           <div
             onClick={handleAccept}
-            className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             Accept
           </div>
           <div
             onClick={handleReject}
-            className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             Reject
           </div>
@@ -230,7 +230,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
               application.status == 0
                 ? 'dark:bg-dark_primary_comp'
                 : 'bg-[#482e4636] border-[1px] dark:border-dark_primary_btn'
-            } hover:dark:bg-dark_primary_comp active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg`}
+            } hover:dark:bg-dark_primary_comp dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg`}
           >
             {application.status == 0 ? 'Shortlist' : 'Shortlisted'}
           </div>

@@ -135,7 +135,7 @@ const NewGroup = ({ setShow }: Props) => {
                           className={`w-full flex gap-2 rounded-lg p-2 ${
                             selectedUsers.includes(user)
                               ? 'dark:bg-dark_primary_comp_active'
-                              : 'dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover'
+                              : 'dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover'
                           } cursor-pointer transition-ease-200`}
                         >
                           <Image
@@ -214,7 +214,7 @@ const NewGroup = ({ setShow }: Props) => {
           {status == 0 ? (
             <div
               onClick={() => setStatus(1)}
-              className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+              className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
             >
               Next
             </div>
@@ -222,13 +222,13 @@ const NewGroup = ({ setShow }: Props) => {
             <>
               <div
                 onClick={() => setStatus(0)}
-                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Prev
               </div>
               <div
                 onClick={handleSubmit}
-                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Submit
               </div>

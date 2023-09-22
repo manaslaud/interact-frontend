@@ -223,7 +223,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
 
       <div
         onClick={handleDelete}
-        className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+        className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
       >
         Delete Group
       </div>

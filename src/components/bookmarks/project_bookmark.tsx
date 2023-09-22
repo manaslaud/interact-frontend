@@ -51,11 +51,13 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                   setClickedOnEdit(prev => !prev);
                   setClickedOnSettings(false);
                 }}
-                className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+                className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
               >
                 {clickedOnEdit ? 'Cancel' : 'Edit'}
               </div>
-              <div className="w-full px-4 py-3 hover:bg-[#ffffff19] transition-ease-100 rounded-lg">Delete</div>
+              <div className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg">
+                Delete
+              </div>
             </div>
           ) : (
             <></>

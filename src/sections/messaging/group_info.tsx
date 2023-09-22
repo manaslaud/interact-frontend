@@ -280,11 +280,11 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         <div className="w-full  rounded-md flex flex-col gap-1 p-4">
           <div
             onClick={handleExit}
-            className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+            className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Exit Group
           </div>
-          <div className="w-full py-4 text-center dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
+          <div className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
             Report Group
           </div>
         </div>

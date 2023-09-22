@@ -83,18 +83,18 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
           {post.userID == loggedInUser.id && isRepost ? (
             <></>
           ) : (
-            <div className="w-1/4 h-fit flex flex-col absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
+            <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
               {clickedOnEdit ? (
                 <>
                   <div
                     onClick={handleEdit}
-                    className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                    className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
                   >
                     Save
                   </div>
                   <div
                     onClick={() => setClickedOnEdit(false)}
-                    className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                    className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
                   >
                     Cancel
                   </div>
@@ -104,7 +104,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
                   {post.userID == loggedInUser.id ? (
                     <div
                       onClick={() => setClickedOnEdit(true)}
-                      className="w-full px-4 py-2 hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                      className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
                     >
                       Edit
                     </div>
@@ -117,7 +117,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
                         el.stopPropagation();
                         handleDelete();
                       }}
-                      className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                      className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                     >
                       Delete
                     </div>
@@ -130,7 +130,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
                       onClick={el => {
                         el.stopPropagation();
                       }}
-                      className="w-full px-4 py-2 hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                      className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                     >
                       Report
                     </div>
@@ -160,7 +160,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
           />
         </Link>
       </div>
-      <div className="grow max-w-[90%] flex-col gap-3">
+      <div className="grow max-w-[85%] flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}

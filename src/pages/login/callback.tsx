@@ -13,6 +13,7 @@ import { BACKEND_URL } from '@/config/routes';
 import nookies from 'nookies';
 import { SERVER_ERROR } from '@/config/errors';
 import useUserStateFetcher from '@/hooks/user_fetcher';
+import configuredAxios from '@/config/axios';
 
 interface Props {
   token: string;
@@ -26,8 +27,8 @@ const LoginCallback = ({ token }: Props) => {
   const userStateFetcher = useUserStateFetcher();
 
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/auth/login`, { headers: { Authorization: 'Bearer ' + token } })
+    configuredAxios
+      .get(`${BACKEND_URL}/auth/login`, { headers: { Authorization: 'Bearer ' + token }, withCredentials: true })
       .then(res => {
         if (res.status == 200) {
           Toaster.success('Logged In');

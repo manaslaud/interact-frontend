@@ -113,13 +113,13 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
           <div className="flex gap-4">
             <div
               onClick={handleAccept}
-              className="w-24 h-10 font-semibold border-[1px] border-gray-400 dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-24 h-10 font-semibold border-[1px] border-gray-400 dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Accept
             </div>
             <div
               onClick={handleReject}
-              className="w-24 h-10 font-semibold border-[1px] border-gray-400 dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-24 h-10 font-semibold border-[1px] border-gray-400 dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Reject
             </div>

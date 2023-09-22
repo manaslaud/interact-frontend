@@ -120,13 +120,13 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
               onChange={el => {
                 setTitle(el.target.value);
               }}
-              className="p-2 mr-8 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
+              className="p-2 mr-8 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
             />
           </form>
         ) : (
           <div
             onClick={() => setClickedOnEditTitle(true)}
-            className="p-2 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
+            className="p-2 w-full flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
           >
             {title}
           </div>
@@ -135,7 +135,7 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
         <div className="w-full flex justify-end">
           <div
             onClick={handleSubmit}
-            className="w-[90px] h-[40px] dark:bg-dark_primary_comp hover:dark:bg-dark_primary_comp_hover active:dark:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center font-semibold rounded-lg cursor-pointer"
+            className="w-[90px] h-[40px] dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center font-semibold rounded-lg cursor-pointer"
           >
             Edit
           </div>
