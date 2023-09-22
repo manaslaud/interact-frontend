@@ -159,6 +159,12 @@ const Login = () => {
               <div onClick={() => router.push('/signup')} className="text-gray-400 text-sm cursor-pointer">
                 Don&apos;t have an Account? <span className="font-medium underline underline-offset-2">Sign Up</span>
               </div>
+              <div
+                onClick={() => router.push('/forgot_password')}
+                className="text-gray-400 font-medium hover:underline hover:underline-offset-2 text-sm cursor-pointer"
+              >
+                Forgot Password?
+              </div>
             </div>
           </form>
           <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
