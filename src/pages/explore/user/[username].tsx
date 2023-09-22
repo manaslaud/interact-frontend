@@ -64,16 +64,20 @@ const User = ({ username }: Props) => {
       <Sidebar index={2} />
       <MainWrapper>
         <div className="w-full max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">
-          <Image
-            crossOrigin="anonymous"
-            width={10000}
-            height={10000}
-            alt={'User Pic'}
-            src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
-            className={`${
-              open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-            } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
-          />
+          {user.coverPic != '' ? (
+            <Image
+              crossOrigin="anonymous"
+              width={10000}
+              height={10000}
+              alt={'User Pic'}
+              src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
+              className={`${
+                open ? 'w-no_side_base_open' : 'w-no_side_base_close'
+              } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+            />
+          ) : (
+            <></>
+          )}
           {loading ? <ProfileCardLoader /> : <ProfileCard user={user} />}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
             {user.tagline && user.tagline != '' ? (

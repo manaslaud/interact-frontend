@@ -106,16 +106,22 @@ const Profile = () => {
               />
             </>
           ) : (
-            <Image
-              crossOrigin="anonymous"
-              width={10000}
-              height={10000}
-              alt={'User Pic'}
-              src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
-              className={`${
-                open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-              } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
-            />
+            <>
+              {user.coverPic != '' ? (
+                <Image
+                  crossOrigin="anonymous"
+                  width={10000}
+                  height={10000}
+                  alt={'User Pic'}
+                  src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
+                  className={`${
+                    open ? 'w-no_side_base_open' : 'w-no_side_base_close'
+                  } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+                />
+              ) : (
+                <></>
+              )}
+            </>
           )}
 
           {loading ? (
@@ -140,9 +146,20 @@ const Profile = () => {
                 className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center dark:text-white bg-transparent z-10"
               />
             ) : (
-              <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
-                {user.tagline || 'Add a Professional One Liner'}
-              </div>
+              <>
+                {user.tagline != '' ? (
+                  <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
+                    {user.tagline}
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => setClickedOnEdit(true)}
+                    className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white cursor-pointer"
+                  >
+                    Add A Tagline
+                  </div>
+                )}
+              </>
             )}
 
             <TabMenu

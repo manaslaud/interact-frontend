@@ -92,7 +92,7 @@ const Project = () => {
                             onClick={() => {
                               setDisplayChats(chats.filter(chat => chat.projectID == project.id));
                             }}
-                            className="w-full font-primary dark:hover:bg-dark_primary_comp_hover dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
+                            className="w-full font-primary dark:hover:bg-dark_primary_comp_hover dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
                           >
                             <Image
                               crossOrigin="anonymous"

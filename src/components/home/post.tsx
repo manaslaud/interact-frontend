@@ -160,7 +160,11 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
           />
         </Link>
       </div>
-      <div className="grow max-w-[85%] flex-col gap-3">
+      <div
+        className={`grow ${
+          isRepost ? 'max-w-[92%] max-md:max-w-[85%]' : 'max-w-[94%] max-md:max-w-[90%]'
+        } flex-col gap-3`}
+      >
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
@@ -237,6 +241,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
           <textarea
             maxLength={500}
             value={caption}
+            autoFocus={true}
             onChange={el => setCaption(el.target.value)}
             className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
           />

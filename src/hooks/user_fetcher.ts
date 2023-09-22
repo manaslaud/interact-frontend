@@ -67,7 +67,7 @@ const useUserStateFetcher = () => {
     getHandler(URL)
       .then(res => {
         if (res.statusCode == 200) {
-          const followingObjArr: User[] = res.data.following || [];
+          const followingObjArr: User[] = res.data.users || [];
           const following: string[] = [];
           followingObjArr.forEach(el => {
             following.push(el.id);

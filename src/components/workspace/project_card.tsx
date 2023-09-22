@@ -105,7 +105,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
               {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                 <div
                   onClick={() => setClickedOnEdit(true)}
-                  className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
                 >
                   Edit
                 </div>
@@ -116,7 +116,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
                 <Link
                   href={`/workspace/manage/${project.slug}`}
                   target="_blank"
-                  className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
                 >
                   Manage
                 </Link>
@@ -126,7 +126,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
               {project.userID == user.id ? (
                 <div
                   onClick={handleDelete}
-                  className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
+                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
                 >
                   Delete
                 </div>
@@ -136,7 +136,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
               {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                 <div
                   onClick={handleUnPublish}
-                  className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
                 >
                   {project.isPrivate ? 'Publish' : 'UnPublish'}
                 </div>

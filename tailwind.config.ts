@@ -48,6 +48,7 @@ const config: Config = {
         dark_primary_gradient_end: '#5b406b',
         dark_secondary_gradient_start: '#be76bf',
         dark_secondary_gradient_end: '#607ee7',
+        primary_btn: '#9ca3af',
         dark_primary_btn: '#9275b9ba',
         primary_comp: '#478eeb18',
         dark_primary_comp: '#c578bf1b',

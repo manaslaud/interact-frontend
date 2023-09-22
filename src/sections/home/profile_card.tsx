@@ -65,7 +65,7 @@ const ProfileCard = () => {
             onClick={() => setOpen(prev => !prev)}
             className={`absolute ${
               open ? 'top-0 right-0' : 'top-2 right-2 rotate-180'
-            } transition-ease-500 cursor-pointer`}
+            } text-gray-500 dark:text-white transition-ease-500 cursor-pointer`}
             size={32}
           />
           {loading ? (
@@ -120,7 +120,7 @@ const ProfileCard = () => {
                         onClick={() => dispatch(setExploreTab(2))}
                         className={`flex-center ${
                           open ? 'text-sm px-4 py-1' : 'text-xxs px-0 py-0'
-                        } transition-ease-500 border-[1px] dark:border-dark_primary_btn rounded-md`}
+                        } transition-ease-500 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md`}
                         key={tag}
                       >
                         {tag}
@@ -132,7 +132,7 @@ const ProfileCard = () => {
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${
                   open ? 'mt-12' : 'mt-0'
-                } transition-ease-500 p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
+                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
               >
                 Edit
               </Link>

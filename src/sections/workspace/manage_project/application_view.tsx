@@ -137,7 +137,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col justify-between gap-8 p-8 font-primary dark:text-white border-[1px] max-md:border-0 dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col justify-between gap-8 p-8 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
       <div className="w-full flex flex-col gap-10 max-md:gap-8">
         <ArrowArcLeft
           className="cursor-pointer md:hidden"
@@ -186,7 +186,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
                 application.user.tags.map(tag => {
                   return (
                     <div
-                      className="flex-center text-xs px-2 py-1 border-[1px] dark:border-dark_primary_btn rounded-md"
+                      className="flex-center text-xs px-2 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md"
                       key={tag}
                     >
                       {tag}
@@ -201,7 +201,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
           <Link
             href={`${APPLICATION_RESUME_URL}/${application.resume}`}
             target="_blank"
-            className="w-64 mx-auto p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-64 mx-auto p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             View Resume
           </Link>
@@ -214,13 +214,13 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
         <div className="w-full flex justify-center gap-12 max-md:gap-4">
           <div
             onClick={handleAccept}
-            className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             Accept
           </div>
           <div
             onClick={handleReject}
-            className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             Reject
           </div>
@@ -229,7 +229,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
             className={`w-32 p-2 flex-center ${
               application.status == 0
                 ? 'dark:bg-dark_primary_comp'
-                : 'bg-[#482e4636] border-[1px] dark:border-dark_primary_btn'
+                : 'bg-[#482e4636] border-[1px] border-primary_btn  dark:border-dark_primary_btn'
             } hover:dark:bg-dark_primary_comp dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg`}
           >
             {application.status == 0 ? 'Shortlist' : 'Shortlisted'}

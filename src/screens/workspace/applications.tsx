@@ -64,14 +64,14 @@ const Applications = () => {
       ) : (
         <>
           {applications.length > 0 ? (
-            <div className="w-[50vw] max-md:w-screen max-md:px-6 mx-auto flex flex-col gap-6 py-2">
+            <div className="w-[50vw] max-md:w-screen max-md:px-6 mx-auto flex flex-col gap-4 py-2">
               {applications.map(application => {
                 return (
                   <Link
                     href={`/explore?oid=${application.openingID}`}
                     onClick={() => dispatch(setExploreTab(1))}
                     key={application.id}
-                    className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 dark:hover:bg-dark_primary_comp_hover transition-ease-300 cursor-pointer`}
+                    className={`w-full font-primary dark:text-white border-[1px] border-gray-400 bg-gray-100 dark:bg-transparent  dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 dark:hover:bg-dark_primary_comp_hover transition-ease-300 cursor-pointer`}
                   >
                     <Image
                       crossOrigin="anonymous"

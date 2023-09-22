@@ -280,7 +280,7 @@ const ProjectView = ({
                         return (
                           <div
                             key={tag}
-                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] rounded-lg"
+                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400  dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] rounded-lg"
                           >
                             {tag}
                           </div>
@@ -296,7 +296,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                     <div
                       onClick={() => setClickedOnEdit(true)}
-                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active  dark:border-dark_primary_btn dark:active:bg-dark_primary_gradient_end py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Edit Project
                     </div>
@@ -306,7 +306,7 @@ const ProjectView = ({
                   {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                     <div
                       onClick={() => router.push(`/workspace/manage/${projectSlugs[clickedProjectIndex]}`)}
-                      className="w-full text-lg font-medium border-[1px] dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:active:bg-dark_primary_gradient_end dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Manage Project
                     </div>

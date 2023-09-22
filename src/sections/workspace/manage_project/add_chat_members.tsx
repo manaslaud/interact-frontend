@@ -96,7 +96,7 @@ const AddChatMembers = ({ setShow, chat, project, setChats }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
         <div className="text-3xl max-md:text-xl font-semibold">Select Users</div>
         <div className="w-full h-[420px] flex flex-col gap-4">
           <div className="w-full h-12 flex items-center px-4 gap-4 dark:bg-dark_primary_comp_hover rounded-md">
@@ -141,7 +141,7 @@ const AddChatMembers = ({ setShow, chat, project, setChats }: Props) => {
         <div className="w-full flex justify-end">
           <div
             onClick={handleSubmit}
-            className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+            className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
           >
             Add
           </div>

@@ -135,7 +135,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-[5%] max-md:w-[10%] h-full">
+      <div className="h-full">
         <Link
           href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
           className="rounded-full"
@@ -150,7 +150,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           />
         </Link>
       </div>
-      <div className="w-[95%] max-md:w-[90%] flex flex-col gap-3">
+      <div className="grow max-w-[94%] max-md:max-w-[90%] flex-col gap-3">
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
@@ -176,7 +176,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           </div>
         </div>
         {post.rePost && (
-          <div className="dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4 max-md:px-0">
+          <div className="border-primary_btn  dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4 max-md:px-0">
             <PostComponent post={post.rePost} isRepost={true} />
           </div>
         )}

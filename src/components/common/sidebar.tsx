@@ -92,7 +92,7 @@ const Sidebar = ({ index }: Props) => {
           /> */}
         </div>
 
-        <div className="w-fit py-8 border-y-2 dark:border-dark_primary_btn flex flex-col gap-2">
+        <div className="w-fit py-8 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">
           <SidebarItem
             index={7}
             title="Profile"

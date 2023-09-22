@@ -15,7 +15,7 @@ const UserCard = ({ user }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   const loggedInUser = useSelector(userSelector);
   return (
-    <div className="w-full font-primary dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn bg-gray-100 dark:bg-transparent hover:bg-white dark:hover:bg-transparent rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
+    <div className="w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gray-100 dark:bg-transparent hover:bg-white dark:hover:bg-transparent rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
       <div className="flex items-center justify-between w-full">
         <Link
           className="flex items-center gap-2 w-fit"

@@ -104,7 +104,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 p-6 font-primary dark:text-white border-[1px] max-md:border-0 dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 p-6 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
       {clickedOnEditMembership ? (
         <EditMembership
           membership={clickedEditUserMembership}
@@ -223,7 +223,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
 
       <div
         onClick={handleDelete}
-        className="w-full py-4 text-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+        className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
       >
         Delete Group
       </div>

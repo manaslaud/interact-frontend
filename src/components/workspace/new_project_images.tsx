@@ -48,7 +48,7 @@ const Images = ({ setSelectedFile, initialImage }: Props) => {
 
       <label htmlFor="image">
         {selectedImageUrl == '' ? (
-          <div className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 bg-[#fffcea] flex-center transition-ease-500 cursor-pointer hover:bg-[#fff7cb]">
+          <div className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 bg-primary_comp hover:bg-primary_comp_hover dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover flex-center transition-ease-500 cursor-pointer">
             add Image
           </div>
         ) : (

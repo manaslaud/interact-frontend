@@ -35,7 +35,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       ) : (
         <></>
       )}
-      <div className="w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
+      <div className="w-full bg-gray-100 hover:bg-white dark:hover:bg-transparent dark:bg-transparent font-primary dark:text-white border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
         <Image
           crossOrigin="anonymous"
           width={10000}

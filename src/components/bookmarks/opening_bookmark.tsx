@@ -121,7 +121,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
             <input
               value={title}
               onChange={el => setTitle(el.target.value)}
-              className="w-full bg-transparent text-xl font-semibold border-[1px] p-2 rounded-md dark:border-dark_primary_btn focus:outline-none"
+              className="w-full bg-transparent text-xl font-semibold border-[1px] p-2 rounded-md border-primary_btn  dark:border-dark_primary_btn focus:outline-none"
             />
             <button type="submit">
               <Check className="cursor-pointer" size={32} />

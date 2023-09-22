@@ -18,7 +18,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   const [clickedOnApply, setClickedOnApply] = useState(false);
   const applications = useSelector(userSelector).applications;
   return (
-    <div className="sticky max-md:fixed top-[158px] bg-gray-100 dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary dark:text-white border-[1px] border-gray-400 max-md:border-0 dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] bg-gray-100 dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary dark:text-white border-[1px] border-gray-400 max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
       {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
       <div className="flex flex-col gap-2 max-md:gap-6">
         <ArrowArcLeft
@@ -56,7 +56,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
               return (
                 <div
                   key={tag}
-                  className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-xl"
+                  className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
                 >
                   {tag}
                 </div>
@@ -65,7 +65,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
         </div>
       </div>
       {applications?.includes(opening.id) ? (
-        <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-gray-400 dark:border-dark_primary_btn bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end rounded-lg cursor-default">
+        <div className="w-[120px] p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end rounded-lg cursor-default">
           Applied
         </div>
       ) : (

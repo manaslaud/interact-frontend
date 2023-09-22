@@ -34,7 +34,7 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
       {tags.map(tag => (
         <div
           key={tag}
-          className="flex-center px-2 py-1 border-[1px] dark:border-dark_primary_btn rounded-md cursor-default"
+          className="flex-center px-2 py-1 border-[1px] border-gray-400  dark:border-dark_primary_btn rounded-md cursor-default"
         >
           {tag}
           <svg

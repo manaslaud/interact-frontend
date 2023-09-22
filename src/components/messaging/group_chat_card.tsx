@@ -39,7 +39,7 @@ const GroupChatCard = ({ chat }: Props) => {
       onClick={handleClick}
       className={`w-full font-primary dark:text-white ${
         chat.id == currentChatID ? 'dark:bg-dark_primary_comp_active' : 'dark:hover:bg-dark_primary_comp_hover'
-      } border-[1px] dark:border-dark_primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
+      } border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg flex gap-4 px-5 py-4 cursor-pointer transition-ease-300`}
     >
       {/* <Image
         crossOrigin="anonymous"

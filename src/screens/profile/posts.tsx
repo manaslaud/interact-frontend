@@ -9,7 +9,7 @@ interface Props {
 
 const Posts = ({ posts }: Props) => {
   return (
-    <div className="w-[45vw] mx-auto max-md:w-screen flex flex-col gap-2 max-md:px-4">
+    <div className="w-[45vw] mx-auto max-md:w-screen flex flex-col gap-2 max-md:px-4 pb-2">
       {posts.length === 0 ? (
         <>No Posts</>
       ) : (

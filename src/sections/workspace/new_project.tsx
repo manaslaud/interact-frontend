@@ -36,6 +36,10 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       Toaster.error('Enter Title');
       return;
     }
+    if (description.trim() == '') {
+      Toaster.error('Enter Description');
+      return;
+    }
     if (category.trim() == '') {
       Toaster.error('Select Category');
       return;
@@ -97,7 +101,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         
         </div> */}
 
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#4e4e4e8b] dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 text-white font-primary overflow-y-auto border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-2/5 max-md:w-full md:sticky md:top-0">
           <Images setSelectedFile={setImage} />
         </div>
@@ -106,7 +110,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             <input
               value={title}
               onChange={el => setTitle(el.target.value)}
-              maxLength={25}
+              maxLength={20}
               type="text"
               placeholder="Untitled Project"
               className="w-full text-5xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
@@ -114,7 +118,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
             <select
               onChange={el => setCategory(el.target.value)}
-              className="w-fit h-12 border-[1px] dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none border-gray-300 text-sm rounded-lg block p-2"
+              className="w-fit h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
             >
               {categories.map((c, i) => {
                 return (
@@ -130,6 +134,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             <input
               value={tagline}
               onChange={el => setTagline(el.target.value)}
+              maxLength={40}
               type="text"
               placeholder="Write your Tagline here..."
               className="w-full text-lg bg-transparent focus:outline-none"
@@ -138,6 +143,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             <textarea
               value={description}
               onChange={el => setDescription(el.target.value)}
+              maxLength={500}
               className="w-full max-h-80 bg-transparent focus:outline-none"
               placeholder="Explain your project"
             />
@@ -166,7 +172,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             </label>
             <div
               onClick={handleSubmit}
-              className="w-36 h-12 font-semibold border-[1px] dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+              className="w-36 h-12 font-semibold border-[1px] border-gray-300 dark:border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Build Project
             </div>

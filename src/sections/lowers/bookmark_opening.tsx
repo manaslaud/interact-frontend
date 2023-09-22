@@ -80,14 +80,14 @@ const BookmarkOpening = ({ setShow, opening, setBookmark }: Props) => {
   };
   return (
     <>
-      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max flex flex-col items-center gap-4 right-1/2 translate-x-1/2 rounded-lg px-4 py-6 dark:text-white font-primary dark:bg-dark_primary_comp backdrop-blur-lg border-2 dark:border-dark_primary_btn animate-fade_third z-30">
+      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max flex flex-col items-center gap-4 right-1/2 translate-x-1/2 rounded-lg px-4 py-6 dark:text-white font-primary dark:bg-dark_primary_comp backdrop-blur-lg border-2 border-primary_btn  dark:border-dark_primary_btn animate-fade_third z-30">
         <div className="text-xl text-center font-bold underline underline-offset-2">Bookmark this Opening</div>
         <div className="w-full flex flex-col gap-2">
           {bookmarks.map((bookmark, index: number) => {
             return (
               <div
                 key={index}
-                className={`w-full h-14 dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-md cursor-pointer transition-ease-300`}
+                className={`w-full h-14 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-md cursor-pointer transition-ease-300`}
                 onClick={() => {
                   addBookmarkItemHandler(bookmark);
                 }}
@@ -100,7 +100,7 @@ const BookmarkOpening = ({ setShow, opening, setBookmark }: Props) => {
 
         <form className="w-full" onSubmit={addBookmarkHandler}>
           <input
-            className={`w-full h-14 px-2 flex-center rounded-md bg-transparent border-[1px] dark:border-dark_primary_btn focus:outline-none`}
+            className={`w-full h-14 px-2 flex-center rounded-md bg-transparent border-[1px] border-primary_btn  dark:border-dark_primary_btn focus:outline-none`}
             value={bookmarkTitle}
             onChange={el => setBookmarkTitle(el.target.value)}
             placeholder="Create a new Bookmark"

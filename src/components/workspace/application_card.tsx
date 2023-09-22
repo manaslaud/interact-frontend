@@ -17,7 +17,7 @@ const ApplicationCard = ({ application, setClickedOnApplication, setClickedAppli
         setClickedApplication(application);
         setClickedOnApplication(true);
       }}
-      className={`w-full font-primary dark:text-white border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex justify-between transition-ease-300 cursor-pointer`}
+      className={`w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex justify-between transition-ease-300 cursor-pointer`}
     >
       <div className="w-fit flex items-center gap-12  max-md:gap-4">
         <Image

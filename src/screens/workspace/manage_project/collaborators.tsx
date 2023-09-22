@@ -44,11 +44,13 @@ const Collaborators = ({ project, setProject }: Props) => {
         </div>
         <div
           onClick={() => setClickedOnInvitations(prev => !prev)}
-          className="w-1/5 max-md:w-1/3 h-full max-md:text-sm text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-sm dark:shadow-outer flex justify-between items-center"
+          className={`w-1/5 max-md:w-1/3  h-full max-md:text-sm text-gray-400 dark:text-gray-200 ${
+            clickedOnInvitations ? 'bg-primary_comp_hover dark:bg-white text-primary_text dark:text-white' : 'bg-white'
+          }  dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-sm dark:shadow-outer flex justify-between items-center transition-ease-300`}
         >
           <div
             className={`w-full h-full rounded-lg ${
-              clickedOnInvitations ? 'bg-[#0E0C2A59] shadow-inner' : ''
+              clickedOnInvitations ? 'dark:bg-[#0E0C2A59] dark:shadow-inner' : ''
             } flex-center transition-ease-200`}
           >
             Invitations

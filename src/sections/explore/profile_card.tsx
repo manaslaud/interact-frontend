@@ -86,7 +86,7 @@ const ProfileCard = ({ user }: Props) => {
                     href={`/explore?search=` + tag}
                     target="_blank"
                     onClick={() => dispatch(setExploreTab(2))}
-                    className="flex-center text-sm px-4 py-1 border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer"
+                    className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md cursor-pointer"
                     key={tag}
                   >
                     {tag}
@@ -102,7 +102,7 @@ const ProfileCard = ({ user }: Props) => {
                     href={link}
                     target="_blank"
                     key={index}
-                    className="w-fit h-8 border-[1px] border-gray-400 dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                    className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                   >
                     {getIcon(getDomainName(link), 24)}
                     <div className="capitalize">{getDomainName(link)}</div>
@@ -112,20 +112,20 @@ const ProfileCard = ({ user }: Props) => {
           </div>
         </div>
         <div className="dark:text-white w-fit absolute max-md:static top-4 right-4 flex gap-2">
-          <div className="hover:text-white p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
+          <div className="hover:text-white p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
             <Chat onClick={handleChat} size={18} />
           </div>
           <div
             onClick={() => setClickedOnShare(true)}
-            className="hover:text-white p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer"
+            className="hover:text-white p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer"
           >
             <Share size={18} />
           </div>
-          <div className="hover:text-white md:hidden p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
+          <div className="hover:text-white md:hidden p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
             <Warning size={18} />
           </div>
         </div>
-        <div className="hover:text-white absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
+        <div className="hover:text-white absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
           <Warning size={18} />
         </div>
       </div>

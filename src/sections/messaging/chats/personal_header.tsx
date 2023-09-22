@@ -14,7 +14,7 @@ interface Props {
 const ChatHeader = ({ chat }: Props) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-full h-[72px] dark:text-white font-primary flex justify-between gap-2 items-center border-b-[1px] dark:border-dark_primary_btn pb-2">
+    <div className="w-full h-[72px] dark:text-white font-primary flex justify-between gap-2 items-center border-b-[1px] border-primary_btn  dark:border-dark_primary_btn pb-2">
       <div className="flex gap-2 items-center">
         <ArrowArcLeft onClick={() => dispatch(setCurrentChatID(''))} className="md:hidden" size={24} />
         <Image

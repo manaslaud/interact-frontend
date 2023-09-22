@@ -1,8 +1,8 @@
 import Links from '@/components/utils/edit_links';
-import { VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import { APPLICATION_URL, PROJECT_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { userSelector } from '@/slices/userSlice';
+import { setApplications, userSelector } from '@/slices/userSlice';
 import { Opening } from '@/types';
 import Toaster from '@/utils/toaster';
 import { FilePdf, FileText } from '@phosphor-icons/react';
@@ -10,7 +10,7 @@ import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface Props {
   opening: Opening;
@@ -25,7 +25,11 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
   let profilePic = useSelector(userSelector).profilePic;
 
+  const applications = useSelector(userSelector).applications;
+
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     profilePic;
@@ -53,15 +57,16 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
     const formData = new FormData();
     formData.append('content', message);
     if (resume) formData.append('resume', resume);
-    // links.forEach(link => formData.append('links', link));
+    links.forEach(link => formData.append('links', link));
 
     const URL = `${APPLICATION_URL}/${opening.id}`;
     const res = await postHandler(URL, formData, 'multipart/form-data');
     if (res.statusCode === 201) {
-      Toaster.stopLoad(toaster, 'Applied to the Opening!', 1);
       setOpening(prev => {
         return { ...prev, noOfApplications: prev.noOfApplications + 1 };
       });
+      dispatch(setApplications([...applications, opening.id]));
+      Toaster.stopLoad(toaster, 'Applied to the Opening!', 1);
       setShow(false);
     } else {
       if (res.data.message) {
@@ -70,7 +75,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
           router.push('/verification');
         } else Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
-        Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
         console.log(res);
       }
     }
@@ -78,10 +83,10 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
   return (
     <>
-      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 text-white fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Apply to Opening</div>
         <div className="w-full h-full flex max-md:flex-col gap-4 items-center">
-          <div className="w-1/3 h-full max-md:w-full font-primary text-white border-[1px] dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
+          <div className="w-1/3 h-full max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
               width={10000}
@@ -108,14 +113,14 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                       return (
                         <div
                           key={tag}
-                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl"
+                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
                         >
                           {tag}
                         </div>
                       );
                     })}
                 {opening.tags && opening.tags.length - 3 > 0 ? (
-                  <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] dark:border-dark_primary_btn rounded-xl">
+                  <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl">
                     + {opening.tags.length - 3}
                   </div>
                 ) : (
@@ -131,9 +136,9 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                 onChange={el => {
                   setMessage(el.target.value);
                 }}
-                maxLength={250}
+                maxLength={500}
                 className="w-full px-4 py-2 rounded-lg text-black dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
-                placeholder="Add a Message of maximum 250 characters"
+                placeholder="Add a Message of maximum 500 characters"
               />
               <div className="flex items-center">
                 <input
@@ -153,7 +158,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
                 <label className="w-full" htmlFor="resume">
                   <div
-                    className={`w-full rounded-lg py-2 relative flex-center flex-col cursor-pointer border-[1px] dark:border-dark_primary_btn transition-ease-300 ${
+                    className={`w-full rounded-lg py-2 relative flex-center flex-col cursor-pointer border-[1px] border-primary_btn  dark:border-dark_primary_btn transition-ease-300 ${
                       !resume ? 'hover:scale-105' : 'hover:scale-100'
                     }`}
                   >
@@ -185,7 +190,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
             <div className="w-1/2 max-md:w-full h-full flex flex-col justify-between max-md:gap-2 max-md:pb-8">
               <Links links={links} setLinks={setLinks} maxLinks={3} />
               <div
-                className="h-10 rounded-xl bg-dark_primary_comp flex-center text-lg cursor-pointer dark:bg-dark_primary_comp_hover active:bg-dark_primary_comp_active transition-ease-300"
+                className="h-10 rounded-xl dark:bg-dark_primary_comp bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center text-lg cursor-pointer dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300"
                 onClick={handleSubmit}
               >
                 Apply!

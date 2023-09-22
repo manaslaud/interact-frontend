@@ -128,7 +128,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-gray-100 dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="text-3xl max-md:text-xl font-semibold">
           {status == 0 ? 'Select Users' : 'Confirm Invitations'}
         </div>
@@ -156,8 +156,8 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                           onClick={() => handleClickUser(user)}
                           className={`w-full flex gap-2 rounded-lg p-2 ${
                             selectedUsers.includes(user)
-                              ? 'dark:bg-dark_primary_comp_active'
-                              : 'dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover'
+                              ? 'bg-primary_comp_hover dark:bg-dark_primary_comp_active'
+                              : 'hover:bg-primary_comp dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover'
                           } cursor-pointer transition-ease-200`}
                         >
                           <Image
@@ -170,7 +170,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                           />
                           <div className="w-5/6 flex flex-col">
                             <div className="text-lg font-bold">{user.name}</div>
-                            <div className="text-sm text-gray-200">@{user.username}</div>
+                            <div className="text-sm dark:text-gray-200">@{user.username}</div>
                             {user.tagline && user.tagline != '' ? (
                               <div className="text-sm mt-2">{user.tagline}</div>
                             ) : (
@@ -203,7 +203,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                     <div className="grow flex flex-wrap justify-between items-center">
                       <div className="flex flex-col">
                         <div className="text-lg font-bold">{user.name}</div>
-                        <div className="text-sm text-gray-200">@{user.username}</div>
+                        <div className="text-sm dark:text-gray-200">@{user.username}</div>
                       </div>
                       {clickedInvitationSliceIndex == index ? (
                         <form
@@ -225,13 +225,13 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
                                 })
                               );
                             }}
-                            className="p-2 mr-8 flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
+                            className="p-2 mr-8 flex-center border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active focus:outline-none transition-ease-300 cursor-pointer rounded-lg font-medium"
                           />
                         </form>
                       ) : (
                         <div
                           onClick={() => setClickedInvitationSliceIndex(index)}
-                          className="p-2 mr-8 flex-center border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
+                          className="p-2 mr-8 flex-center border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium"
                         >
                           {invitationSlices[index].title == '' ? 'Enter Title' : invitationSlices[index].title}
                         </div>
@@ -247,7 +247,7 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
           {status == 0 ? (
             <div
               onClick={() => setStatus(1)}
-              className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+              className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
             >
               Next
             </div>
@@ -255,13 +255,13 @@ const AddCollaborators = ({ setShow, project, setProject }: Props) => {
             <>
               <div
                 onClick={() => setStatus(0)}
-                className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Prev
               </div>
               <div
                 onClick={handleSubmit}
-                className="w-32 p-2 flex-center dark:bg-dark_primary_comp dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
+                className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"
               >
                 Submit
               </div>

@@ -26,7 +26,7 @@ const Posts = ({ bookmark, setClick, fetchBookmarks }: Props) => {
       {bookmark.postItems.length === 0 ? (
         <>No Items</>
       ) : (
-        <div className="">
+        <div className="w-full flex flex-col gap-2">
           {bookmark.postItems.map(postItem => {
             return <PostComponent key={postItem.id} post={postItem.post} />;
           })}

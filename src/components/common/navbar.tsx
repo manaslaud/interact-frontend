@@ -1,6 +1,6 @@
 import Notifications from '@/sections/navbar/notifications';
 import { unreadNotificationsSelector } from '@/slices/feedSlice';
-import { Bell, ChatCircleDots } from '@phosphor-icons/react';
+import { Bell, ChatCircleDots, MagnifyingGlass } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
@@ -32,6 +32,12 @@ const Navbar = () => {
         </Link>
         {user.isLoggedIn ? (
           <div className="flex items-center gap-2 z-0">
+            <Link
+              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
+              href={'/explore'}
+            >
+              <MagnifyingGlass className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+            </Link>
             <Link
               className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
               href={'/messaging'}

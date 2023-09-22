@@ -98,6 +98,7 @@ const Projects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
+                    size={64}
                     project={project}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}

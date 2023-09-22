@@ -60,8 +60,8 @@ const Messaging = () => {
               <div className="text-3xl font-extrabold text-gradient">Messaging</div>
               <PencilSimpleLine onClick={() => setClickedOnNew(prev => !prev)} className="cursor-pointer" size={32} />
               {clickedOnNew ? (
-                <div className="w-1/3 flex flex-col gap-2 backdrop-blur-sm border-[1px] dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:text-white font-primary p-3 absolute translate-y-full -bottom-2 right-0 rounded-md z-50">
-                  {/* <div className="p-2 rounded-md dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer">
+                <div className="w-1/3 flex flex-col gap-2 backdrop-blur-sm border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:text-white font-primary p-3 absolute translate-y-full -bottom-2 right-0 rounded-md z-50">
+                  {/* <div className="p-2 rounded-md hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer">
                     New Chat
                   </div> */}
                   <div
@@ -69,7 +69,7 @@ const Messaging = () => {
                       setClickedOnNewGroup(true);
                       setClickedOnNew(false);
                     }}
-                    className="p-2 rounded-md dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer"
+                    className="p-2 rounded-md hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer"
                   >
                     New Group
                   </div>
