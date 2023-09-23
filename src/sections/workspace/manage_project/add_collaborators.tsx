@@ -1,11 +1,9 @@
-import { MEMBERSHIP_URL, OPENING_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MEMBERSHIP_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { Invitation, Opening, Project, User } from '@/types';
+import { Invitation, Project, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Tags from '@/components/utils/edit_tags';
-import patchHandler from '@/handlers/patch_handler';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';

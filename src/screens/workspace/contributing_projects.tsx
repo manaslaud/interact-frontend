@@ -6,6 +6,7 @@ import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import ProjectView from '../../sections/workspace/project_view';
+import NoProjects from '@/components/empty_fillers/contributing_projects';
 
 const ContributingProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -75,7 +76,7 @@ const ContributingProjects = () => {
               })}
             </div>
           ) : (
-            <div>No projects found</div>
+            <NoProjects />
           )}
         </>
       )}

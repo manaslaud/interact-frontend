@@ -1,12 +1,14 @@
 const getDomainName = (link: string): string => {
   try {
-    return new URL(link).hostname
-      .replace('.com', '')
-      .replace('.co', '')
-      .replace('.in', '')
-      .replace('.org', '')
-      .replace('.net', '')
-      .replace('www.', '');
+    const hostname = new URL(link).hostname;
+    const regex = /(?:www\.)?(.*?)\.[^.]+$/;
+    const match = hostname.match(regex);
+
+    if (match) {
+      return match[1];
+    } else {
+      return '';
+    }
   } catch {
     return '';
   }

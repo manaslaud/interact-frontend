@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { configSelector } from '@/slices/configSlice';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import patchHandler from '@/handlers/patch_handler';
+import NoOpeningBookmarks from '@/components/empty_fillers/opening_bookmarks';
 
 const Openings = () => {
   const [bookmarks, setBookmarks] = useState<OpeningBookmark[]>([]);
@@ -141,7 +142,7 @@ const Openings = () => {
                   })}
                 </div>
               ) : (
-                <div>No Bookmarks found</div>
+                <NoOpeningBookmarks />
               )}
             </>
           )}

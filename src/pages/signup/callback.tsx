@@ -101,6 +101,7 @@ const SignUpCallback = ({ token }: Props) => {
             <div className="w-full flex flex-col gap-2">
               <div className="font-medium">Username</div>
               <input
+                maxLength={16}
                 value={username}
                 onChange={el => setUsername(el.target.value)}
                 type="text"

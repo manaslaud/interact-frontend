@@ -1,4 +1,5 @@
 import Loader from '@/components/common/loader';
+import NoChats from '@/components/empty_fillers/chats';
 import PersonalChatCard from '@/components/messaging/personal_chat_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { MESSAGING_URL } from '@/config/routes';
@@ -73,7 +74,7 @@ const Request = () => {
                   })}
                 </>
               ) : (
-                <div>No Chats found</div>
+                <NoChats />
               )}
             </>
           ) : (
@@ -85,7 +86,7 @@ const Request = () => {
                   })}
                 </>
               ) : (
-                <div>No Chats found</div>
+                <NoChats />
               )}
             </>
           )}

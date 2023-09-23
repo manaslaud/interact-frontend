@@ -10,6 +10,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setExploreTab } from '@/slices/feedSlice';
+import NoApplications from '@/components/empty_fillers/applications';
 
 const Applications = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -101,7 +102,7 @@ const Applications = () => {
               })}
             </div>
           ) : (
-            <div>No applications found</div>
+            <NoApplications />
           )}
         </>
       )}

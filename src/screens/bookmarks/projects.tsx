@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { configSelector } from '@/slices/configSlice';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import patchHandler from '@/handlers/patch_handler';
+import NoProjectBookmarks from '@/components/empty_fillers/project_bookmarks';
 
 const Projects = () => {
   const [bookmarks, setBookmarks] = useState<ProjectBookmark[]>([]);
@@ -141,7 +142,7 @@ const Projects = () => {
                   })}
                 </div>
               ) : (
-                <div>No Bookmarks found</div>
+                <NoProjectBookmarks />
               )}
             </>
           )}

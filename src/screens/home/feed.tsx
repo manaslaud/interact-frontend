@@ -14,6 +14,7 @@ import { navbarOpenSelector, setHomeTab } from '@/slices/feedSlice';
 import RePostComponent from '@/components/home/repost';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
+import NoFeed from '@/components/empty_fillers/feed';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -64,7 +65,7 @@ const Feed = () => {
       <div className="w-[50vw] px-6 max-md:px-4 max-md:w-screen flex flex-col gap-2">
         <div
           onClick={() => setClickedOnNewPost(true)}
-          className="w-full h-taskbar mx-auto shadow-md text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:shadow-outer flex justify-between items-center"
+          className="w-full h-taskbar mx-auto shadow-md hover:shadow-lg transition-ease-300 text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
         >
           <div className="flex gap-2 items-center pl-2">
             <Image
@@ -89,12 +90,7 @@ const Feed = () => {
         ) : (
           <>
             {feed.length === 0 ? (
-              <div
-                onClick={() => dispatch(setHomeTab(1))}
-                className="w-full h-24 rounded-md border-gray-300 border-[1px] bg-white dark:bg-transparent flex-center cursor-pointer"
-              >
-                Click on Discover to Find What&apos;s Going On!
-              </div>
+              <NoFeed />
             ) : (
               <InfiniteScroll
                 className="flex flex-col gap-4 dark:gap-0"

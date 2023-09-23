@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { userSelector, setFollowing } from '@/slices/userSlice';
-import Cookies from 'js-cookie';
-import Toaster from '@/utils/toaster';
-import getHandler from '@/handlers/get_handler';
-import { configSelector, setUpdatingFollowing } from '@/slices/configSlice';
-import Semaphore from '@/utils/semaphore';
 import { CONNECTION_URL } from '@/config/routes';
 import socketService from '@/config/ws';
+import getHandler from '@/handlers/get_handler';
+import { configSelector, setUpdatingFollowing } from '@/slices/configSlice';
+import { setFollowing, userSelector } from '@/slices/userSlice';
+import Semaphore from '@/utils/semaphore';
+import Toaster from '@/utils/toaster';
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;

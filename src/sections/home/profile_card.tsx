@@ -58,7 +58,7 @@ const ProfileCard = () => {
           className={`${
             open
               ? 'w-[24vw] h-[75vh] pb-4 max-md:mb-12 gap-4 pt-8 max-md:pb-8 max-md:pt-4 px-4 top-[150px]'
-              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px]'
+              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg'
           } shadow-md dark:shadow-none transition-ease-500 max-md:h-fit sticky overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md z-10`}
         >
           <ArrowDownLeft

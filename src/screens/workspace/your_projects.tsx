@@ -10,6 +10,7 @@ import NewProject from '@/sections/workspace/new_project';
 import { Plus } from '@phosphor-icons/react';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
+import NoProjects from '@/components/empty_fillers/projects';
 
 const YourProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -68,7 +69,7 @@ const YourProjects = () => {
 
       <div
         onClick={() => setClickedOnNewProject(true)}
-        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md border-gray-300 border-[1px] dark:border-0 dark:shadow-outer flex justify-between items-center"
+        className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-ease-300 border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
       >
         <div className="font-primary dark:text-gray-200 text-lg pl-2">Create a new project</div>
         <Plus
@@ -110,7 +111,7 @@ const YourProjects = () => {
               })}
             </div>
           ) : (
-            <div>No projects found</div>
+            <NoProjects setClickedOnNewProject={setClickedOnNewProject} />
           )}
         </>
       )}

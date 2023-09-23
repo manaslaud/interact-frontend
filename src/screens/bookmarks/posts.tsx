@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import { configSelector, setUpdateBookmark } from '@/slices/configSlice';
 import patchHandler from '@/handlers/patch_handler';
+import NoPostBookmarks from '@/components/empty_fillers/post_bookmarks';
 
 const Posts = () => {
   const [bookmarks, setBookmarks] = useState<PostBookmark[]>([]);
@@ -142,7 +143,7 @@ const Posts = () => {
                   })}
                 </div>
               ) : (
-                <div>No Bookmarks found</div>
+                <NoPostBookmarks />
               )}
             </>
           )}

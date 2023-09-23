@@ -166,7 +166,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
       </div>
       <div
         className={`grow ${
-          isRepost ? 'max-w-[92%] max-md:max-w-[85%]' : 'max-w-[94%] max-md:max-w-[90%]'
+          isRepost ? 'max-w-[92%] max-md:max-w-[80%]' : 'max-w-[94%] max-md:max-w-[85%]'
         } flex-col gap-3`}
       >
         <div className="w-full h-fit flex justify-between">

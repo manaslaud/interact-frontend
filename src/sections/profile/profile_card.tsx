@@ -129,6 +129,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
           <div>
             <div className="text-sm ml-1 font-medium">Name</div>
             <input
+              maxLength={25}
               value={name}
               onChange={el => setName(el.target.value)}
               placeholder="Interact User"

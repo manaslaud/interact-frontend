@@ -153,6 +153,7 @@ const SignUp = () => {
                   <div className="font-medium">Name</div>
                   <input
                     name="name"
+                    maxLength={25}
                     value={name}
                     onChange={el => setName(el.target.value)}
                     type="text"
@@ -163,6 +164,7 @@ const SignUp = () => {
                   <div className="font-medium">Username</div>
                   <input
                     name="username"
+                    maxLength={16}
                     value={username}
                     onChange={el => setUsername(el.target.value)}
                     type="text"

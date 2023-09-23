@@ -1,6 +1,8 @@
 import Loader from '@/components/common/loader';
 import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
+import NoChatInvitations from '@/components/empty_fillers/chat_invitations';
+import NoProjectInvitations from '@/components/empty_fillers/project_invitations';
 import ChatInvitationCard from '@/components/invitations/chat_invitation_card';
 import ProjectInvitationCard from '@/components/invitations/project_invitation_card';
 import { SERVER_ERROR } from '@/config/errors';
@@ -71,7 +73,7 @@ const Invitations = () => {
                       })}
                     </div>
                   ) : (
-                    <div>No Invitations found</div>
+                    <NoProjectInvitations />
                   )}
                 </div>
               </div>
@@ -91,7 +93,7 @@ const Invitations = () => {
                       })}
                     </div>
                   ) : (
-                    <div>No Invitations found</div>
+                    <NoChatInvitations />
                   )}
                 </div>
               </div>
