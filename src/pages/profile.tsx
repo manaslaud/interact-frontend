@@ -38,7 +38,8 @@ const Profile = () => {
         if (res.statusCode === 200) {
           setUser(res.data.user);
           const projects: Project[] = [];
-          res.data.user.memberships.map((membership: Membership) => {
+          console.log(res.data.user);
+          res.data.user.memberships?.map((membership: Membership) => {
             projects.push(membership.project);
           });
           setCollaboratingProjects(projects);
@@ -147,17 +148,23 @@ const Profile = () => {
               />
             ) : (
               <>
-                {user.tagline != '' ? (
-                  <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
-                    {user.tagline}
-                  </div>
+                {loading ? (
+                  <></>
                 ) : (
-                  <div
-                    onClick={() => setClickedOnEdit(true)}
-                    className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white cursor-pointer"
-                  >
-                    Add A Tagline
-                  </div>
+                  <>
+                    {user.tagline != '' ? (
+                      <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
+                        {user.tagline}
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => setClickedOnEdit(true)}
+                        className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white cursor-pointer z-10"
+                      >
+                        Add A Tagline
+                      </div>
+                    )}
+                  </>
                 )}
               </>
             )}

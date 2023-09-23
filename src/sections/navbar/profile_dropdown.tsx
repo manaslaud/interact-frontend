@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import { resetUser } from '@/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { profilePicSelector, resetUser, userSelector } from '@/slices/userSlice';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ArrowRight } from '@phosphor-icons/react';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,24 +22,40 @@ const ProfileDropdown = ({ setShow }: Props) => {
 
     router.replace('/login');
   };
+
+  const user = useSelector(userSelector);
   return (
     <>
-      <div className="w-72 max-md:border-b-[1px] max-md:border-primary_btn bg-gray-200 bg-opacity-50 dark:bg-transparent dark:border-dark_primary_btn dark:text-white font-primary max-md:w-full max-h-[480px] max-md:max-h-none overflow-y-auto fixed top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-2xl max-md:rounded-none backdrop-blur-lg backdrop p-2 z-50 animate-fade_third">
+      <div className="w-72 max-md:border-b-[1px] max-md:border-primary_btn bg-gray-200 bg-opacity-50 dark:bg-transparent dark:border-dark_primary_btn dark:text-white font-primary max-md:w-full max-h-[480px] max-md:max-h-none overflow-y-auto fixed top-[72px] max-md:top-navbar right-4 max-md:right-0 rounded-xl max-md:rounded-none backdrop-blur-lg backdrop p-2 z-50 animate-fade_third">
         <Link
           href={'/profile'}
-          className="w-full flex-center py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-[#ffffff] dark:hover:bg-[#52525246]"
+          className="w-full group flex-center gap-3 py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-gray-100 dark:hover:bg-[#52525246]"
         >
-          Profile
+          <Image
+            crossOrigin="anonymous"
+            width={10000}
+            height={10000}
+            alt={'User Pic'}
+            src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+            className={'rounded-full w-12 h-12 cursor-default'}
+          />
+          <div className="flex flex-col">
+            <div className="text-lg font-semibold">{user.name}</div>
+            <div className="w-fit flex gap-1 relative">
+              <div className="text-xs"> Go to Profile</div>
+              <ArrowRight className="absolute -right-2 opacity-0 group-hover:-right-5 group-hover:opacity-100 transition-ease-300" />
+            </div>
+          </div>
         </Link>
         <Link
           href={'/settings'}
-          className="w-full flex-center py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-[#ffffff] dark:hover:bg-[#52525246]"
+          className="w-full flex-center py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-gray-100 dark:hover:bg-[#52525246]"
         >
           Settings
         </Link>
         <div
           onClick={handleLogout}
-          className="w-full flex-center py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-[#ffffff] dark:hover:bg-[#52525246]"
+          className="w-full flex-center py-4 rounded-lg cursor-pointer transition-ease-200 hover:bg-gray-100 dark:hover:bg-[#52525246]"
         >
           Log Out
         </div>

@@ -81,7 +81,7 @@ const PersonalChat = () => {
   }, []);
 
   return (
-    <div className="w-full h-full border-2 max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
+    <div className="w-full h-full bg-gray-100 dark:bg-transparent border-2 max-md:border-0 border-primary_btn dark:border-dark_primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
       {chatID == '' ? (
         <></>
       ) : (

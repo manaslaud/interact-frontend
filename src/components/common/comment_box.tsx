@@ -138,7 +138,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             onKeyDown={el => {
               if (el.key === 'Enter') submitHandler();
             }}
-            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl text-black dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
+            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
             placeholder={`Comment on this ${type}`}
           />
           <div
@@ -226,7 +226,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             </div>
           ) : (
             // </InfiniteScroll>
-            <div className="font-Inconsolata text-2xl">No Comments Yet:)</div>
+            <div className="text-2xl">No Comments Yet:)</div>
           )}
         </>
       )}

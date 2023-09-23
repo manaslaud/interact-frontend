@@ -83,7 +83,9 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                  <div className="p-2">
+                    <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                  </div>
                 )}
               </>
             ) : (
@@ -112,7 +114,9 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
             )}
           </>
         ) : (
-          <></>
+          <div className="p-2">
+            <div className="w-full h-[368px] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+          </div>
         )}
       </div>
       <div className="w-full flex flex-col p-4">
@@ -131,7 +135,7 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
           <div className="w-full text-3xl font-semibold">{bookmark.title}</div>
         )}
         <div>
-          {bookmark.projectItems.length || 0} Project{bookmark.projectItems.length != 1 ? 's' : ''}
+          {bookmark.projectItems?.length || 0} Project{bookmark.projectItems?.length != 1 ? 's' : ''}
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ const TabMenu = ({ items, active, setReduxState, setState, width = '500px' }: Pr
           className={`${
             active === index
               ? 'bg-primary_comp_hover dark:bg-[#0E0C2A59] dark:shadow-inner text-primary_text dark:text-white'
-              : 'hover: dark:hover:bg-dark_primary_comp_active text-gray-500 dark:text-white'
+              : 'hover:bg-primary_comp dark:hover:bg-dark_primary_comp_active text-gray-500 dark:text-white'
           } w-1/2 h-full font-primary font-medium flex-center text-lg max-md:text-sm rounded-md transition-ease-300 cursor-pointer`}
         >
           {item}

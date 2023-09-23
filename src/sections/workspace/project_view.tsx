@@ -58,7 +58,9 @@ const ProjectView = ({
       const URL = `${PROJECT_URL}/${slug}`;
       const res = await getHandler(URL, abortController.signal);
       if (res.statusCode == 200) {
-        setProject(res.data.project);
+        const projectData: Project = res.data.project;
+        projectData.privateLinks = res.data.privateLinks;
+        setProject(projectData);
         setLoading(false);
       } else {
         if (res.status != -1) {
@@ -251,6 +253,7 @@ const ProjectView = ({
                       <LowerProject project={project} />
                     </div>
                   </div>
+                  <div className="font-semibold text-lg">{project.tagline}</div>
 
                   <div className="text-sm">
                     {project.description.length > 200 ? (
@@ -280,14 +283,14 @@ const ProjectView = ({
                         return (
                           <div
                             key={tag}
-                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400  dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] rounded-lg"
+                            className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-gray-400  dark:border-dark_primary_btn bg-gray-200 dark:bg-[#20032c41] cursor-default rounded-lg"
                           >
                             {tag}
                           </div>
                         );
                       })}
                   </div>
-                  <Collaborators memberships={project.memberships} />
+                  <Collaborators memberships={project.memberships} workspace={true} />
                   <Links links={project.links} />
                   <Links links={project.privateLinks} title="Private Links" />
                 </div>
@@ -316,7 +319,7 @@ const ProjectView = ({
                   {project.userID != user.id ? (
                     <div
                       onClick={handleLeaveProject}
-                      className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
+                      className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:text-white hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
                     >
                       Leave Project
                     </div>

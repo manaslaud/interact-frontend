@@ -139,7 +139,7 @@ const Verification = () => {
                 ) : (
                   <></>
                 )}
-                <div className="font-Inconsolata text-xs">( Check your spam folder )</div>
+                <div className="text-xs">( Check your spam folder )</div>
               </div>
             )}
           </div>

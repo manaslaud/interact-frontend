@@ -1,8 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
-import { Chat, GroupChat } from '@/types';
-import getMessagingUser from '@/utils/get_messaging_user';
+import { GroupChat } from '@/types';
 import { ArrowArcLeft, Info } from '@phosphor-icons/react';
 import { useDispatch } from 'react-redux';
 import { setCurrentChatID } from '@/slices/messagingSlice';
@@ -21,7 +19,7 @@ const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
         <div className="rounded-full w-12 h-12 dark:bg-dark_primary_comp_hover"></div>
         <div className="flex flex-col">
           <div className="text-lg font-medium">{chat.title}</div>
-          {/* <div className="text-xs">@{getMessagingUser(chat).username}</div> */}
+          {chat.project ? <div className="text-xs">@{chat.project.title}</div> : <></>}
         </div>
       </div>
       <Info onClick={() => setClickedOnInfo(true)} className="cursor-pointer" size={32} />

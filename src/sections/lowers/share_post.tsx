@@ -92,7 +92,7 @@ const SharePost = ({ post, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/4 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-2 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl">
+      <div className="w-1/4 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffffff] dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col px-8 py-8 gap-2 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl">
         <div className="text-xl text-center font-bold underline underline-offset-2">Share this Post</div>
         <div className="w-full max-h-base_md overflow-auto flex flex-col gap-2">
           <div className="w-full font-primary flex gap-1 dark:text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
@@ -108,7 +108,7 @@ const SharePost = ({ post, setShow }: Props) => {
                 />
               </div>
             </div>
-            <div className="w-[90%] max-md:w-[80%] flex flex-col gap-3">
+            <div className="w-[90%] max-md:w-[80%] flex flex-col gap-1">
               <div className="w-full h-fit flex justify-between">
                 <div className="font-medium">{post.user.username}</div>
                 <div className="text-xs">{getDisplayTime(post.postedAt, false)}</div>
@@ -129,10 +129,11 @@ const SharePost = ({ post, setShow }: Props) => {
                         onClick={() => {
                           handleSelectChat(chat.id);
                         }}
-                        style={{
-                          backgroundColor: selectedChats.includes(chat.id) ? '#ffe1fc22' : '',
-                        }}
-                        className="w-full flex gap-2 rounded-lg py-2 px-2 cursor-pointer transition-all ease-in-out duration-200 hover:bg-[#ffe1fc10]"
+                        className={`w-full flex items-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-ease-200 ${
+                          selectedChats.includes(chat.id)
+                            ? 'bg-primary_comp_hover dark:bg-[#ffe1fc22]'
+                            : 'hover:bg-primary_comp dark:hover:bg-[#ffe1fc10]'
+                        }`}
                       >
                         <Image
                           crossOrigin="anonymous"
@@ -143,8 +144,8 @@ const SharePost = ({ post, setShow }: Props) => {
                           className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}
                         />
                         <div className="w-5/6 flex flex-col">
-                          <div className="text-lg font-bold">{getMessagingUser(chat).name}</div>
-                          <div className="text-sm">@{getMessagingUser(chat).username}</div>
+                          <div className="font-bold">{getMessagingUser(chat).name}</div>
+                          <div className="text-xs">@{getMessagingUser(chat).username}</div>
                         </div>
                       </div>
                     );
@@ -158,14 +159,14 @@ const SharePost = ({ post, setShow }: Props) => {
         </div>
         <div className="w-full flex flex-col gap-1">
           <textarea
-            className="bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
+            className="bg-primary_comp dark:bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
             placeholder="Add a message"
             value={message}
             onChange={el => setMessage(el.target.value)}
           />
           <div
             onClick={handleSubmit}
-            className="w-full text-center py-2 rounded-lg border-[1px] border-[#ffe1fc10] hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+            className="w-full text-center py-2 rounded-lg border-[1px] border-gray-300 dark:border-dark_primary_btn hover:bg-primary_comp dark:hover:bg-dark_primary_comp active:bg-primary_comp_hover dark:active:bg-dark_primary_comp_hover cursor-pointer transition-ease-300"
           >
             Send Message
           </div>

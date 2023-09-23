@@ -93,7 +93,7 @@ const ShareOpening = ({ opening, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-Helvetica px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Share this Opening</div>
         <div className="w-full flex max-md:flex-col gap-4 items-center">
           <div className="w-1/2 max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">

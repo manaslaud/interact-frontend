@@ -50,6 +50,8 @@ const Login = () => {
         if (res.status === 200) {
           Toaster.stopLoad(toaster, 'Logged In!', 1);
           const user: User = res.data.user;
+          user.email = res.data.email;
+          user.phoneNo = res.data.phoneNo || '';
           Cookies.set('token', res.data.token, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });

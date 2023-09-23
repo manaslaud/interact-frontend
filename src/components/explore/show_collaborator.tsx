@@ -5,9 +5,10 @@ import { Membership } from '@/types';
 
 interface Props {
   memberships: Membership[];
+  workspace?: boolean;
 }
 
-const Collaborators = ({ memberships }: Props) => {
+const Collaborators = ({ memberships, workspace = false }: Props) => {
   const [showIndex, setShowIndex] = useState(-1);
   return (
     <>
@@ -37,6 +38,7 @@ const Collaborators = ({ memberships }: Props) => {
                         <div className="flex flex-col">
                           <div className="font-bold text-lg text-gradient">{membership.user.name}</div>
                           <div className="text-sm">{membership.title}</div>
+                          {workspace ? <div className="text-sm font-semibold mt-2">{membership.role}</div> : <></>}
                         </div>
 
                         <div className="w-full text-xs flex justify-start gap-4">

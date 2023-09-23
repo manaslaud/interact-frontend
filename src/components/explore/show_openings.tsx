@@ -30,7 +30,7 @@ const Openings = ({ openings, slug }: Props) => {
             <Link
               href={`/explore?project=${slug}`}
               onClick={() => dispatch(setExploreTab(1))}
-              className="w-full p-4 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end transition-ease-300 rounded-lg"
+              className="w-full p-4 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end transition-ease-300 rounded-lg"
             >
               Apply
             </Link>

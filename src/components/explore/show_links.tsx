@@ -17,7 +17,7 @@ const Links = ({ links, title = 'Links' }: Props) => {
           <div className="w-full flex gap-4 justify-start flex-wrap">
             {links.map(link => {
               return (
-                <Link key={link} href={link}>
+                <Link key={link} href={link} target="_blank">
                   {getIcon(getDomainName(link), 40)}
                 </Link>
               );

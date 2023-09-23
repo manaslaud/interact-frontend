@@ -76,7 +76,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 dark:text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 dark:text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"

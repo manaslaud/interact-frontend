@@ -10,7 +10,7 @@ const BottomBar = ({ index }: Props) => {
   const [active, setActive] = useState(index);
 
   return (
-    <div className="w-full h-bottomBar flex justify-evenly items-center bg-white dark:bg-transparent backdrop-blur-xl backdrop-brightness-150 fixed bottom-0 right-0 md:hidden border-gray-300 border-t-[1px] z-30">
+    <div className="w-full h-bottomBar flex justify-evenly items-center bg-white dark:bg-transparent backdrop-blur-xl backdrop-brightness-150 fixed bottom-0 right-0 md:hidden border-gray-300 border-t-[1px] z-20">
       <BottomBarItem index={1} title="Home" icon={<HouseLine size={32} />} active={active} setActive={setActive} />
       <BottomBarItem
         index={2}

@@ -82,14 +82,14 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
         onMouseLeave={() => setClickedOnSettings(false)}
         className="w-72 h-72 rounded-lg relative group cursor-pointer"
       >
-        <div className="w-full h-full absolute top-0 hidden group-hover:flex justify-between gap-4 animate-fade_third z-[6] rounded-lg p-2">
+        <div className="w-full h-full absolute top-0 hidden group-hover:flex justify-between gap-4 text-white animate-fade_third z-[6] rounded-lg p-2">
           {project.userID == user.id || user.editorProjects.includes(project.id) ? (
             <div
               onClick={el => {
                 el.stopPropagation();
                 setClickedOnSettings(prev => !prev);
               }}
-              className="h-8 w-8 flex-center glassMorphism rounded-full text-white p-1"
+              className="h-8 w-8 flex-center glassMorphism rounded-full p-1"
             >
               •••
             </div>
@@ -100,7 +100,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           {clickedOnSettings ? (
             <div
               onClick={el => el.stopPropagation()}
-              className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism text-white p-2"
+              className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism p-2"
             >
               {project.userID == user.id || user.editorProjects.includes(project.id) ? (
                 <div
@@ -161,7 +161,11 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
         <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
           <div className="text-xl">{project.title}</div>
           <div className="w-full flex items-center justify-between">
-            <div className="text-sm">{project.user.name}</div>
+            {project.userID != user.id ? (
+              <div className="text-sm">{project.user.name}</div>
+            ) : (
+              <div className="text-sm">{project.tagline}</div>
+            )}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-xs">
                 <HeartStraight size={16} />

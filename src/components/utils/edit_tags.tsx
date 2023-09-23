@@ -30,7 +30,7 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
   };
 
   return (
-    <div className="w-fit flex flex-wrap items-center font-Helvetica gap-2 rounded-md">
+    <div className="w-fit flex flex-wrap items-center gap-2 rounded-md">
       {tags.map(tag => (
         <div
           key={tag}

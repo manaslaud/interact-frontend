@@ -14,10 +14,7 @@ interface Props {
 const SharedPostMessage = ({ message }: Props) => {
   const userID = Cookies.get('id');
   return (
-    <div
-      key={message.id}
-      className={`w-full flex gap-2 font-Helvetica ${message.userID === userID ? 'flex-row-reverse' : ''}`}
-    >
+    <div key={message.id} className={`w-full flex gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
       <Image
         crossOrigin="anonymous"
         width={10000}
@@ -27,9 +24,9 @@ const SharedPostMessage = ({ message }: Props) => {
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
-        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 dark:bg-dark_primary_comp_hover gap-2">
+        <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp dark:bg-dark_primary_comp_hover gap-2">
           <Link href={`/explore/post/${message.postID}`} className={`w-56 flex flex-col cursor-pointer gap-2`}>
-            <div className="w-full font-primary flex gap-1 dark:text-white py-2 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
+            <div className="w-full font-primary flex gap-1 dark:text-white py-2 border-primary_btn dark:border-dark_primary_btn border-b-[1px] max-md:px-4 max-md:py-4">
               <div className="w-[15%] h-full">
                 <div className="rounded-full">
                   <Image

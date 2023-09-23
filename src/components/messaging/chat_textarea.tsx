@@ -84,7 +84,7 @@ const ChatTextarea = ({ chat }: Props) => {
       onKeyDown={handleKeyDown}
       // style={{ height: height, resize: 'none' }}
       placeholder="Message..."
-      className="w-full h-[64px] min-h-[64px] max-h-[132px] backdrop-blur-md bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn overflow-auto focus:outline-none"
+      className="w-full h-[64px] min-h-[64px] max-h-[132px] backdrop-blur-md bg-primary_comp dark:bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn overflow-auto focus:outline-none"
     />
   );
 };

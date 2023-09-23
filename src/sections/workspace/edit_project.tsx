@@ -111,80 +111,80 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-[#ffffffa2] dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-12 max-md:top-20 w-[953px] max-md:w-5/6 h-[680px] max-md:h-5/6 backdrop-blur-2xl bg-[#ffffffc1] dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg max-md:rounded-md p-8 pb-2 gap-8 max-md:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-2/5 max-md:w-full md:sticky md:top-0">
           <Images initialImage={projectToEdit.coverPic} setSelectedFile={setImage} />
         </div>
-        <div className="w-3/5 max-md:w-full">
-          <div className="w-full max-md:w-full flex flex-col gap-4 pb-8 max-md:pb-4">
-            <div className="w-full text-5xl max-md:text-3xl font-bold cursor-default">{projectToEdit.title}</div>
 
-            <select
-              onChange={el => setCategory(el.target.value)}
-              value={category}
-              className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
-            >
-              {categories.map((c, i) => {
-                return (
-                  <option className="bg-[#10013b30]" key={i} value={c}>
-                    {c}
-                  </option>
-                );
-              })}
-            </select>
+        <div className="w-3/5 max-md:w-full h-fit flex flex-col max-md:items-center gap-4 max-md:gap-6 max-md:pb-4">
+          <div className="w-fit text-5xl max-md:text-3xl font-bold cursor-default">{projectToEdit.title}</div>
 
-            <Tags tags={tags} setTags={setTags} />
+          <select
+            onChange={el => setCategory(el.target.value)}
+            value={category}
+            className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+          >
+            {categories.map((c, i) => {
+              return (
+                <option className="bg-[#10013b30]" key={i} value={c}>
+                  {c}
+                </option>
+              );
+            })}
+          </select>
 
-            <input
-              value={tagline}
-              onChange={el => setTagline(el.target.value)}
-              type="text"
-              maxLength={40}
-              placeholder="Write your Tagline here..."
-              className="w-full text-lg bg-transparent focus:outline-none"
-            />
+          <Tags tags={tags} setTags={setTags} />
 
-            <textarea
-              value={description}
-              onChange={el => setDescription(el.target.value)}
-              maxLength={500}
-              className="w-full max-h-80 bg-transparent focus:outline-none"
-              placeholder="Explain your project"
-            />
-            <Links links={links} setLinks={setLinks} />
+          <input
+            value={tagline}
+            onChange={el => setTagline(el.target.value)}
+            type="text"
+            maxLength={40}
+            placeholder="Write your Tagline here..."
+            className="w-full text-lg bg-transparent focus:outline-none"
+          />
 
-            <Links title="Private Links" links={privateLinks} setLinks={setPrivateLinks} />
+          <textarea
+            value={description}
+            onChange={el => setDescription(el.target.value)}
+            maxLength={500}
+            className="w-full min-h-[96px] max-h-80 p-2 bg-primary_comp dark:bg-transparent focus:outline-none"
+            placeholder="Explain your project"
+          />
+          <Links links={links} setLinks={setLinks} />
 
-            <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
-              <div>Keep this Project Private</div>
-              <div className="relative">
-                <input
-                  type="checkbox"
-                  checked={isPrivate}
-                  onChange={() => setIsPrivate(prev => !prev)}
-                  className="sr-only"
-                />
-                <div
-                  className={`box block h-6 w-10 rounded-full ${
-                    isPrivate ? 'bg-blue-300' : 'bg-black'
-                  } transition-ease-300`}
-                ></div>
-                <div
-                  className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
-                    isPrivate ? 'translate-x-full' : ''
-                  }`}
-                ></div>
-              </div>
-            </label>
-            <div
-              onClick={handleSubmit}
-              className="w-36 h-12 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
-            >
-              Edit Project
+          <Links title="Private Links" links={privateLinks} setLinks={setPrivateLinks} />
+
+          <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
+            <div>Keep this Project Private</div>
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => setIsPrivate(prev => !prev)}
+                className="sr-only"
+              />
+              <div
+                className={`box block h-6 w-10 rounded-full ${
+                  isPrivate ? 'bg-blue-300' : 'bg-black'
+                } transition-ease-300`}
+              ></div>
+              <div
+                className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
+                  isPrivate ? 'translate-x-full' : ''
+                }`}
+              ></div>
             </div>
+          </label>
+          <div
+            onClick={handleSubmit}
+            className="w-36 h-12 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+          >
+            Edit Project
           </div>
         </div>
       </div>
+
       <div
         onClick={() => setShow(false)}
         className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"

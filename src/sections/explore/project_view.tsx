@@ -192,6 +192,7 @@ const ProjectView = ({
                     <LowerProject project={project} />
                   </div>
                 </div>
+                <div className="font-semibold text-lg">{project.tagline}</div>
 
                 <div className="text-sm">
                   {project.description.length > 200 ? (

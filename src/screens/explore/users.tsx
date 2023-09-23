@@ -38,7 +38,7 @@ const Users = () => {
       ) : (
         <>
           {users.length > 0 ? (
-            <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-4">
+            <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-2">
               {users.map(user => {
                 return <UserCard key={user.id} user={user} />;
               })}

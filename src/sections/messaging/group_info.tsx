@@ -129,7 +129,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         <div className={`w-full rounded-md flex ${clickedOnEdit ? 'items-start' : 'items-center'} gap-4 px-4`}>
           {clickedOnEdit ? (
             <>
-              <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
+              <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
               <div className={`grow flex flex-col ${clickedOnEdit ? 'pt-1' : 'items-center'}`}>
                 <div className="w-full flex items-center justify-between pr-2">
                   <input
@@ -157,7 +157,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
             </>
           ) : (
             <>
-              <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
+              <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
               <div className="grow flex flex-col">
                 <div className="w-full flex items-center justify-between pr-2">
                   <div className="text-2xl font-medium">{chat.title}</div>
@@ -182,7 +182,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
             {membership.role == GROUP_ADMIN ? (
               <div
                 onClick={() => setClickedOnAddMembers(true)}
-                className="w-full h-12 p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
+                className="w-full h-12 p-4 bg-primary_comp_hover dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
               >
                 <div className="text-lg">Add Members</div>
                 <Plus size={32} />
@@ -194,7 +194,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               return (
                 <div
                   key={m.id}
-                  className="w-full p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
+                  className="w-full py-4 dark:p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
                     <Link href={`/explore/user/${m.user.username}`} className="rounded-full">
@@ -204,7 +204,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                         height={10000}
                         alt={'User Pic'}
                         src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
-                        className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"
+                        className="rounded-full w-14 h-14"
                       />
                     </Link>
                     <div className="flex flex-col">
@@ -241,7 +241,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               return (
                 <div
                   key={invitation.id}
-                  className="w-full p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
+                  className="w-full py-4 dark:p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between"
                 >
                   <Link href={`/explore/user/${invitation.user.username}`} className="flex items-center gap-4">
                     <Image
@@ -250,7 +250,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                       height={10000}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${invitation.user.profilePic}`}
-                      className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"
+                      className="rounded-full w-14 h-14"
                     />
 
                     <div className="flex flex-col">

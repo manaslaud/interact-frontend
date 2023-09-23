@@ -81,7 +81,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                         setSelectedFiles(prev => prev.filter((file, i) => i != index));
                         setSelectedImageUrls(prev => prev.filter((img, i) => i != index));
                       }}
-                      className="w-6 h-6 absolute top-5 left-80 rounded-full flex-center p-2 translate-x-1/2 -translate-y-1/2 cursor-pointer bg-[#000000b2]"
+                      className="w-6 h-6 absolute top-5 left-80 rounded-full flex-center p-2 translate-x-1/2 -translate-y-1/2 cursor-pointer bg-white dark:bg-black"
                     >
                       X
                     </div>

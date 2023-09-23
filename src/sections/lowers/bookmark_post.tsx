@@ -78,7 +78,7 @@ const BookmarkPost = ({ setShow, post, setBookmark }: Props) => {
   };
   return (
     <>
-      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max flex flex-col items-center gap-4 right-1/2 translate-x-1/2 rounded-lg px-4 py-6 dark:text-white font-primary dark:bg-dark_primary_comp backdrop-blur-lg border-2 border-primary_btn  dark:border-dark_primary_btn animate-fade_third z-30">
+      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max flex flex-col items-center gap-4 right-1/2 translate-x-1/2 rounded-lg px-4 py-6 dark:text-white font-primary bg-white dark:bg-dark_primary_comp backdrop-blur-lg border-2 border-primary_btn  dark:border-dark_primary_btn animate-fade_third z-30">
         <div className="text-xl text-center font-bold underline underline-offset-2">Bookmark this Post</div>
         <div className="w-full flex flex-col gap-2">
           {bookmarks.map((bookmark, index: number) => {

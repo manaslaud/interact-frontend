@@ -33,7 +33,7 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
         />
         <div className="font-medium text-xl cursor-default">{bookmark.title}</div>
       </div>
-      {bookmark.projectItems.length > 0 ? (
+      {bookmark.projectItems?.length > 0 ? (
         <div
           className={`w-full grid ${
             open ? 'grid-cols-3' : 'grid-cols-4'

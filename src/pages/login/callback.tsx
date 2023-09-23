@@ -33,6 +33,8 @@ const LoginCallback = ({ token }: Props) => {
         if (res.status == 200) {
           Toaster.success('Logged In');
           const user: User = res.data.user;
+          user.email = res.data.email;
+          user.phoneNo = res.data.phoneNo || '';
           Cookies.set('token', res.data.token, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });

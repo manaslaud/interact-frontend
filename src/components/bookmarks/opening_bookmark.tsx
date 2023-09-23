@@ -83,7 +83,9 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                  <div className="p-2">
+                    <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                  </div>
                 )}
               </>
             ) : (

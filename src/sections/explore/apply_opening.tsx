@@ -137,7 +137,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                   setMessage(el.target.value);
                 }}
                 maxLength={500}
-                className="w-full px-4 py-2 rounded-lg text-black dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
+                className="w-full px-4 py-2 rounded-lg text-black bg-primary_comp dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
                 placeholder="Add a Message of maximum 500 characters"
               />
               <div className="flex items-center">

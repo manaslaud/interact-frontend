@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import postHandler from '@/handlers/post_handler';
-import isEmail from 'validator/lib/isEmail';
 import { ReactSVG } from 'react-svg';
 import { ArrowRight, Eye, EyeClosed, Info } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';

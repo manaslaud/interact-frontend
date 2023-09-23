@@ -80,7 +80,7 @@ const Projects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-4 gap-y-5">
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center pt-4 gap-y-5">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}

@@ -26,8 +26,9 @@ const ProjectViewLoader = ({ setClickedOnProject, fadeIn }: Props) => {
 
           <div className="w-1/4 max-md:w-full border-gray-400 border-t-[1px] border-r-[1px] dark:border-0 h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
             <div className="flex justify-between items-center">
-              <div className="animate-pulse delay-300 w-64 h-12 bg-gray-200 dark:bg-dark_primary_comp_active rounded-md"></div>
+              <div className="animate-pulse delay-300 w-64 h-10 bg-gray-200 dark:bg-dark_primary_comp_active rounded-md"></div>
             </div>
+            <div className="animate-pulse delay-300 w-48 h-6 bg-gray-200 dark:bg-dark_primary_comp_active rounded-md"></div>
 
             <div className="animate-pulse delay-400 w-full flex flex-col gap-1">
               <div className="w-full h-4 bg-gray-200 dark:bg-dark_primary_comp_active rounded-sm"></div>

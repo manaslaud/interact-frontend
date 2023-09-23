@@ -14,7 +14,7 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-md:w-taskbar_md h-10 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-outer bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end"
+      className="w-full max-md:w-taskbar_md h-10 px-4 flex items-center justify-between gap-8 mx-auto rounded-md shadow-md dark:shadow-outer bg-white dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end"
     >
       <input
         className="h-full grow bg-transparent focus:outline-none font-primary dark:text-white font-medium"
@@ -23,7 +23,7 @@ const SearchBar = () => {
         value={search}
         onChange={el => setSearch(el.target.value)}
       />
-      <MagnifyingGlass size={32} className="opacity-75" />
+      <MagnifyingGlass size={32} className="text-gray-600 opacity-75" />
     </form>
   );
 };

@@ -36,7 +36,7 @@ const User = ({ username }: Props) => {
         if (res.statusCode === 200) {
           setUser(res.data.user);
           const projects: Project[] = [];
-          res.data.user.memberships.map((membership: Membership) => {
+          res.data.user.memberships?.map((membership: Membership) => {
             projects.push(membership.project);
           });
           setCollaboratingProjects(projects);

@@ -49,6 +49,7 @@ const Messaging = () => {
       <Sidebar index={-1} />
       <MainWrapper>
         <div
+          onClick={() => setClickedOnNew(false)}
           className={`w-fit h-[calc(100vh-65px)] max-md:h-fit mx-auto flex max-md:flex-col ${
             open ? 'gap-2' : 'gap-16'
           } transition-ease-out-500 font-primary`}
@@ -58,9 +59,16 @@ const Messaging = () => {
           <div className="w-[37.5vw] max-md:w-screen h-full flex flex-col pt-4 pl-4 max-md:pl-0 gap-4 ">
             <div className="w-full flex items-center justify-between max-md:px-4 relative">
               <div className="text-3xl font-extrabold text-gradient">Messaging</div>
-              <PencilSimpleLine onClick={() => setClickedOnNew(prev => !prev)} className="cursor-pointer" size={32} />
+              <PencilSimpleLine
+                onClick={el => {
+                  el.stopPropagation();
+                  setClickedOnNew(prev => !prev);
+                }}
+                className="text-gray-600 dark:text-white cursor-pointer"
+                size={32}
+              />
               {clickedOnNew ? (
-                <div className="w-1/3 flex flex-col gap-2 backdrop-blur-sm border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:text-white font-primary p-3 absolute translate-y-full -bottom-2 right-0 rounded-md z-50">
+                <div className="w-1/3 flex flex-col gap-2 backdrop-blur-sm border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:bg-dark_primary_comp dark:text-white font-primary p-2 absolute translate-y-full -bottom-2 right-0 rounded-md z-50">
                   {/* <div className="p-2 rounded-md hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer">
                     New Chat
                   </div> */}

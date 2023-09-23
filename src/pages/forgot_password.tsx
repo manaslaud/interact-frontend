@@ -99,7 +99,7 @@ const ForgotPassword = () => {
                 ) : (
                   <></>
                 )}
-                <div className="font-Inconsolata text-sm">( Don&apos;t forget to check the spam folder )</div>
+                <div className="text-sm">( Don&apos;t forget to check the spam folder )</div>
               </div>
             )}
           </div>
