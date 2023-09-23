@@ -72,7 +72,9 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
         <div
           onClick={submitHandler}
           className={`${
-            isFollowing ? 'w-20 border-2 border-[#60497e]' : 'w-16 bg-gray-800 text-white'
+            isFollowing
+              ? 'w-20 border-2 border-primary_btn dark:border-dark_primary_btn'
+              : 'w-16 bg-zinc-800 dark:bg-purple-950 text-white'
           } h-8 rounded-3xl flex justify-center items-center cursor-pointer text-sm transition-ease-150`}
         >
           {isFollowing ? 'following' : 'follow'}

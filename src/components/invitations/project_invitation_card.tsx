@@ -10,6 +10,7 @@ import getHandler from '@/handlers/get_handler';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMemberProjects, userSelector } from '@/slices/userSlice';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   invitation: Invitation;
@@ -18,6 +19,7 @@ interface Props {
 
 const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [mutex, setMutex] = useState(false);
+  const [clickedOnReject, setClickedOnReject] = useState(false);
 
   const user = useSelector(userSelector);
 
@@ -72,6 +74,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
+      setClickedOnReject(false);
       Toaster.stopLoad(toaster, 'Invitation Rejected', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -86,6 +89,11 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
 
   return (
     <div className="w-full font-primary bg-white dark:bg-transparent dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300">
+      {clickedOnReject ? (
+        <ConfirmDelete setShow={setClickedOnReject} handleDelete={handleReject} title="Confirm Reject?" />
+      ) : (
+        <></>
+      )}
       <Link target="_blank" href={`/explore?pid=${invitation.project.slug}`}>
         <Image
           crossOrigin="anonymous"
@@ -101,11 +109,11 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
           <Link
             target="_blank"
             href={`/explore?pid=${invitation.project.slug}`}
-            className="text-3xl font-semibold text-gradient"
+            className="text-3xl font-bold text-gradient"
           >
             {invitation.project.title}
           </Link>
-          <div className="font-medium">{invitation.title}</div>
+          <div className="font-semibold">{invitation.title}</div>
           <div className="font-medium">{'Member'}</div>
           <div className="text-xs">Invited {moment(invitation.createdAt).format('DD MMM YYYY')}</div>
         </div>
@@ -118,7 +126,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
               Accept
             </div>
             <div
-              onClick={handleReject}
+              onClick={() => setClickedOnReject(true)}
               className="w-24 h-10 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Reject

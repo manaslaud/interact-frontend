@@ -12,6 +12,7 @@ import deleteHandler from '@/handlers/delete_handler';
 import Toaster from '@/utils/toaster';
 import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   post: Post;
@@ -23,6 +24,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
   const loggedInUser = useSelector(userSelector);
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const [caption, setCaption] = useState(post.content);
 
@@ -35,6 +37,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
 
     if (res.statusCode === 204) {
       if (setFeed) setFeed(prev => prev.filter(p => p.id != post.id));
+      setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Post Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, SERVER_ERROR, 0);
@@ -74,6 +77,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       onClick={() => setClickedOnOptions(false)}
       className="w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn dark:border-b-[1px] max-md:p-4"
     >
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       {clickedOnOptions ? (
         <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
           {clickedOnEdit ? (
@@ -107,7 +111,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
                 <div
                   onClick={el => {
                     el.stopPropagation();
-                    handleDelete();
+                    setClickedOnDelete(true);
                   }}
                   className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >
@@ -181,7 +185,17 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           </div>
         )}
 
-        <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>
+        {clickedOnEdit ? (
+          <textarea
+            maxLength={500}
+            value={caption}
+            autoFocus={true}
+            onChange={el => setCaption(el.target.value)}
+            className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
+          />
+        ) : (
+          <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>
+        )}
         {showLowerPost ? <LowerPost post={post} /> : <></>}
       </div>
     </div>

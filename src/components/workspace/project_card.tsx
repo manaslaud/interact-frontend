@@ -10,6 +10,7 @@ import Link from 'next/link';
 import patchHandler from '@/handlers/patch_handler';
 import Toaster from '@/utils/toaster';
 import deleteHandler from '@/handlers/delete_handler';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   index: number;
@@ -21,8 +22,10 @@ interface Props {
 
 const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClickedProjectIndex }: Props) => {
   const [clickedOnSettings, setClickedOnSettings] = useState(false);
-  const user = useSelector(userSelector);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
+
+  const user = useSelector(userSelector);
 
   const handleUnPublish = async () => {
     const toaster = Toaster.startLoad('Editing your project...');
@@ -60,6 +63,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
 
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
+      setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
@@ -74,6 +78,8 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
       ) : (
         <></>
       )}
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+
       <div
         onClick={() => {
           setClickedOnProject(true);
@@ -125,7 +131,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
               )}
               {project.userID == user.id ? (
                 <div
-                  onClick={handleDelete}
+                  onClick={() => setClickedOnDelete(true)}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
                 >
                   Delete

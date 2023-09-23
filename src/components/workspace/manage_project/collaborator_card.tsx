@@ -12,6 +12,7 @@ import patchHandler from '@/handlers/patch_handler';
 import Toaster from '@/utils/toaster';
 import { title } from 'process';
 import deleteHandler from '@/handlers/delete_handler';
+import ConfirmDelete from '@/components/common/confirm_delete';
 
 interface Props {
   membership: Membership;
@@ -22,6 +23,7 @@ interface Props {
 const CollaboratorCard = ({ membership, project, setProject }: Props) => {
   const user = useSelector(userSelector);
   const [clickedOnEditCollaborator, setClickedOnEditCollaborator] = useState(false);
+  const [clickedOnRemoveCollaborator, setClickedOnRemoveCollaborator] = useState(false);
 
   const handleRemove = async () => {
     const toaster = Toaster.startLoad('Removing Collaborator...');
@@ -38,6 +40,7 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
             memberships: prev.memberships.filter(m => m.id != membership.id),
           };
         });
+      setClickedOnRemoveCollaborator(false);
       Toaster.stopLoad(toaster, 'Collaborator Removed', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
@@ -56,6 +59,12 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnRemoveCollaborator ? (
+        <ConfirmDelete setShow={setClickedOnRemoveCollaborator} handleDelete={handleRemove} title="Confirm Remove?" />
+      ) : (
+        <></>
+      )}
+
       <div className="w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
         <Image
           crossOrigin="anonymous"
@@ -85,7 +94,7 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
           <div className="w-full flex items-center justify-between text-sm max-md:text-xs">
             <div className="text-gray-400">Joined {moment(membership.createdAt).format('DD MMM YYYY')}</div>
             {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-              <div onClick={handleRemove} className="text-primary_danger cursor-pointer">
+              <div onClick={() => setClickedOnRemoveCollaborator(true)} className="text-primary_danger cursor-pointer">
                 Remove Collaborator
               </div>
             ) : (

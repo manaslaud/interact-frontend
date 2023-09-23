@@ -16,6 +16,7 @@ import deleteHandler from '@/handlers/delete_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChats, userSelector } from '@/slices/userSlice';
 import { setCurrentGroupChatID } from '@/slices/messagingSlice';
+import ConfirmDelete from '@/components/common/confirm_delete';
 
 interface Props {
   chat: GroupChat;
@@ -30,6 +31,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
   const [clickedOnAddMembers, setClickedOnAddMembers] = useState(false);
 
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const [title, setTitle] = useState(chat.title);
   const [description, setDescription] = useState(chat.description);
@@ -91,6 +93,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
     if (res.statusCode === 204) {
       setStateChats(prev => prev.filter(c => c.id != chat.id));
       if (chats.includes(chat.id)) dispatch(setChats(chats.filter(chatID => chatID != chat.id)));
+      setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Group Deleted', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -104,7 +107,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 p-6 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 bg-white dark:bg-transparent p-6 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-20">
       {clickedOnEditMembership ? (
         <EditMembership
           membership={clickedEditUserMembership}
@@ -119,10 +122,11 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       <div className={`w-full rounded-md flex ${clickedOnEdit ? 'items-start' : 'items-center'} gap-4`}>
         {clickedOnEdit ? (
           <>
-            <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
+            <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
             <div className={`grow flex flex-col ${clickedOnEdit ? 'pt-1' : 'items-center'}`}>
               <div className="w-full flex items-center justify-between pr-2">
                 <input
@@ -143,6 +147,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                 className="text-sm bg-transparent focus:outline-none min-h-[64px] max-h-36"
                 maxLength={250}
                 autoFocus={true}
+                placeholder="Description"
                 value={description}
                 onChange={el => setDescription(el.target.value)}
               />
@@ -150,7 +155,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
           </>
         ) : (
           <>
-            <div className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"></div>
+            <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
             <div className="grow flex flex-col">
               <div className="w-full flex items-center justify-between pr-2">
                 <div className="text-2xl font-medium">{chat.title}</div>
@@ -170,7 +175,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
         <div className="w-full flex flex-col gap-1">
           <div
             onClick={() => setClickedOnAddMembers(true)}
-            className="w-full h-12 p-4 dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
+            className="w-full h-12 p-4 bg-primary_comp dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
           >
             <div className="">Add Members</div>
             <Plus size={24} />
@@ -222,7 +227,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
       </div>
 
       <div
-        onClick={handleDelete}
+        onClick={() => setClickedOnDelete(true)}
         className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
       >
         Delete Group

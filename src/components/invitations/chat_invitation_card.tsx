@@ -1,7 +1,7 @@
 import { Invitation } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { INVITATION_URL, PROJECT_PIC_URL } from '@/config/routes';
+import { INVITATION_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import Toaster from '@/utils/toaster';
@@ -9,7 +9,9 @@ import { VERIFICATION_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChats, setMemberProjects, userSelector } from '@/slices/userSlice';
+import { setChats, userSelector } from '@/slices/userSlice';
+import socketService from '@/config/ws';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   invitation: Invitation;
@@ -18,6 +20,7 @@ interface Props {
 
 const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [mutex, setMutex] = useState(false);
+  const [clickedOnReject, setClickedOnReject] = useState(false);
 
   const user = useSelector(userSelector);
 
@@ -40,7 +43,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
           })
         );
       dispatch(setChats([...user.chats, invitation.chatID]));
-      //TODO add chat to socket chats
+      socketService.setupChats([...user.chats, invitation.chatID]);
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
       if (res.data.message) {
@@ -73,6 +76,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
+      setClickedOnReject(false);
       Toaster.stopLoad(toaster, 'Invitation Rejected', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -87,11 +91,16 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
 
   return (
     <div className="w-full font-primary bg-white dark:bg-transparent dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300">
+      {clickedOnReject ? (
+        <ConfirmDelete setShow={setClickedOnReject} handleDelete={handleReject} title="Confirm Reject?" />
+      ) : (
+        <></>
+      )}
       <div className="rounded-full w-32 h-32 dark:bg-dark_primary_comp_hover"> </div>
 
       <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
         <div className="grow flex flex-col gap-2">
-          <div className="text-3xl font-semibold text-gradient">{invitation.chat.title}</div>
+          <div className="text-3xl font-bold text-gradient">{invitation.chat.title}</div>
           <div className="font-medium line-clamp-2">{invitation.chat.description}</div>
           <div className="text-xs">Invited {moment(invitation.createdAt).format('DD MMM YYYY')}</div>
         </div>
@@ -104,7 +113,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
               Accept
             </div>
             <div
-              onClick={handleReject}
+              onClick={() => setClickedOnReject(true)}
               className="w-24 h-10 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Reject

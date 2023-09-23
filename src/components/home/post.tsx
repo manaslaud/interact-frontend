@@ -13,6 +13,7 @@ import deleteHandler from '@/handlers/delete_handler';
 import Toaster from '@/utils/toaster';
 import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   post: Post;
@@ -25,6 +26,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
   const loggedInUser = useSelector(userSelector);
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const [caption, setCaption] = useState(post.content);
 
@@ -37,6 +39,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
 
     if (res.statusCode === 204) {
       if (setFeed) setFeed(prev => prev.filter(p => p.id != post.id));
+      setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Post Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, SERVER_ERROR, 0);
@@ -78,6 +81,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
         !isRepost ? 'dark:border-b-[1px]' : 'dark:border-b-0'
       } max-md:p-4`}
     >
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       {clickedOnOptions ? (
         <>
           {post.userID == loggedInUser.id && isRepost ? (
@@ -115,7 +119,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
                     <div
                       onClick={el => {
                         el.stopPropagation();
-                        handleDelete();
+                        setClickedOnDelete(true);
                       }}
                       className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                     >

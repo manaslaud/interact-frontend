@@ -178,7 +178,7 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
           </label>
           <div
             onClick={handleSubmit}
-            className="w-36 h-12 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
+            className="w-36 h-12 font-semibold border-[1px] border-primary_btn dark:border-dark_primary_btn dark:shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
           >
             Edit Project
           </div>

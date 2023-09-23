@@ -3,6 +3,7 @@ import { ProjectBookmark } from '@/types';
 import { Check } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import ConfirmDelete from '../common/confirm_delete';
 
 interface Props {
   bookmark: ProjectBookmark;
@@ -16,6 +17,7 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
   let count = 0;
   const [clickedOnSettings, setClickedOnSettings] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const [title, setTitle] = useState(bookmark.title);
 
@@ -24,8 +26,21 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
     const status = await handleEdit(bookmark.id, title);
     if (status == 1) setClickedOnEdit(false);
   };
+
   return (
     <div className="w-96 h-108 font-primary dark:text-white">
+      {clickedOnDelete ? (
+        <ConfirmDelete
+          setShow={setClickedOnDelete}
+          handleDelete={async () => {
+            await handleDelete(bookmark.id);
+            setClickedOnDelete(false);
+          }}
+        />
+      ) : (
+        <></>
+      )}
+
       <div
         onClick={() => {
           setBookmark(bookmark);
@@ -55,7 +70,13 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
               >
                 {clickedOnEdit ? 'Cancel' : 'Edit'}
               </div>
-              <div className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg">
+              <div
+                onClick={el => {
+                  el.stopPropagation();
+                  setClickedOnDelete(true);
+                }}
+                className="w-full px-4 py-3 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+              >
                 Delete
               </div>
             </div>

@@ -65,7 +65,7 @@ const Deactive = () => {
           </div>
           <button
             // onClick={() => setShowDeactivate(true)}
-            className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:dark:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] transition-ease-200"
+            className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] cursor-pointer transition-ease-200"
           >
             Deactive My Account
           </button>

@@ -22,6 +22,7 @@ import Cookies from 'js-cookie';
 import { GROUP_ADMIN, GROUP_MEMBER } from '@/config/constants';
 import moment from 'moment';
 import Link from 'next/link';
+import ConfirmDelete from '@/components/common/confirm_delete';
 
 interface Props {
   membership: GroupChatMembership;
@@ -31,6 +32,7 @@ interface Props {
 
 const EditMembership = ({ setShow, membership, setChats }: Props) => {
   const [mutex, setMutex] = useState(false);
+  const [clickedOnRemove, setClickedOnRemove] = useState(false);
 
   const handleChangeRole = async () => {
     if (mutex) return;
@@ -97,6 +99,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
           } else return chat;
         })
       );
+      setClickedOnRemove(false);
       setShow(false);
       Toaster.stopLoad(toaster, 'Member Removed from Group', 1);
     } else {
@@ -112,7 +115,12 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
 
   return (
     <>
-      <div className="absolute bottom-0 w-full backdrop-blur-2xl bg-[#ffe1fc22] flex flex-col gap-6 rounded-md p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+      {clickedOnRemove ? (
+        <ConfirmDelete setShow={setClickedOnRemove} handleDelete={handleRemove} title="Confirm Remove?" />
+      ) : (
+        <></>
+      )}
+      <div className="absolute bottom-0 w-full backdrop-blur-xl dark:backdrop-blur-2xl dark:bg-[#ffe1fc22] flex flex-col gap-6 rounded-b-md p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-20">
         <div className="w-full flex items-center gap-4">
           <Image
             crossOrigin="anonymous"
@@ -146,7 +154,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
             </div>
           </div>
           <div
-            onClick={handleRemove}
+            onClick={() => setClickedOnRemove(true)}
             className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Remove From Group
@@ -156,7 +164,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
 
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+        className="w-screen h-screen fixed top-0 left-0 animate-fade_third z-10"
       ></div>
     </>
   );

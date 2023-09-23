@@ -16,6 +16,7 @@ import deleteHandler from '@/handlers/delete_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChats, userSelector } from '@/slices/userSlice';
 import { setCurrentGroupChatID } from '@/slices/messagingSlice';
+import ConfirmDelete from '@/components/common/confirm_delete';
 
 interface Props {
   chat: GroupChat;
@@ -30,6 +31,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
   const [clickedOnAddMembers, setClickedOnAddMembers] = useState(false);
 
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnExit, setClickedOnExit] = useState(false);
 
   const [title, setTitle] = useState(chat.title);
   const [description, setDescription] = useState(chat.description);
@@ -121,6 +123,12 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         ) : (
           <></>
         )}
+        {clickedOnExit ? (
+          <ConfirmDelete setShow={setClickedOnExit} handleDelete={handleExit} title="Confirm Exit?" />
+        ) : (
+          <></>
+        )}
+
         <div className="w-full flex items-center justify-between p-2">
           <div className="text-3xl font-semibold">Group Info</div>
           <X onClick={() => setShow(false)} className="cursor-pointer" size={32} />
@@ -279,7 +287,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
         <div className="w-full  rounded-md flex flex-col gap-1 p-4">
           <div
-            onClick={handleExit}
+            onClick={() => setClickedOnExit(true)}
             className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
           >
             Exit Group

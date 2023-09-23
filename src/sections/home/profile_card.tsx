@@ -132,7 +132,7 @@ const ProfileCard = () => {
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${
                   open ? 'mt-12' : 'mt-0'
-                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
+                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
               >
                 Edit
               </Link>

@@ -20,6 +20,7 @@ import getIcon from '@/utils/get_icon';
 import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
 import { useSwipeable } from 'react-swipeable';
+import ConfirmDelete from '@/components/common/confirm_delete';
 interface Props {
   projectSlugs: string[];
   clickedProjectIndex: number;
@@ -44,6 +45,8 @@ const ProjectView = ({
 
   const [clickedOnReadMore, setClickedOnReadMore] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnLeave, setClickedOnLeave] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const router = useRouter();
 
@@ -90,8 +93,26 @@ const ProjectView = ({
           query: { ...query },
         });
       }
+      setClickedOnLeave(false);
       setClickedOnProject(false);
       Toaster.stopLoad(toaster, 'Left the Project', 1);
+    } else {
+      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+      console.log(res);
+    }
+  };
+
+  const handleDelete = async () => {
+    const toaster = Toaster.startLoad('Deleting your project...');
+
+    const URL = `${PROJECT_URL}/${project.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
+      setClickedOnDelete(false);
+      Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
       console.log(res);
@@ -151,6 +172,8 @@ const ProjectView = ({
     onSwipedLeft: handleClickNext,
   });
 
+  const variations = ['left-0', 'left-1', 'left-2', 'w-4', 'w-8', 'w-12'];
+
   return (
     <>
       {loading ? (
@@ -170,6 +193,12 @@ const ProjectView = ({
           ) : (
             <></>
           )}
+          {clickedOnLeave ? (
+            <ConfirmDelete setShow={setClickedOnLeave} handleDelete={handleDelete} title="Confirm Leave?" />
+          ) : (
+            <></>
+          )}
+          {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleLeaveProject} /> : <></>}
           <div className="max-md:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
             <div className="w-10 h-10 relative">
               <Image
@@ -180,14 +209,6 @@ const ProjectView = ({
                 src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
                 className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-0 z-10'}
               />
-              {/* <Image
-                crossOrigin="anonymous"
-                width={10000}
-                height={10000}
-                alt={'User Pic'}
-                src={`${USER_PROFILE_PIC_URL}/${project.memberships[0].user.profilePic}`}
-                className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-2'}
-              /> */}
             </div>
             {clickedProjectIndex != 0 ? (
               <div
@@ -215,16 +236,50 @@ const ProjectView = ({
                 <div>
                   <div className="w-fit font-bold cursor-default">{project.title}</div>
                   <div // convert to link
-                    className="w-fit text-xs font-medium"
+                    className="w-fit flex gap-1 text-xs font-medium"
                   >
-                    <span
+                    <div
                       onClick={() => router.push(`/explore/user/${project.user.username}`)}
                       className="cursor-pointer hover:underline hover:underline-offset-2"
                     >
-                      {project.user.name}{' '}
-                    </span>
-
-                    <span>{project.memberships.length > 0 ? `+${project.memberships.length}` : ''}</span>
+                      {project.user.name}
+                    </div>
+                    {project.memberships?.length > 0 ? (
+                      <div className="flex gap-1">
+                        <div>+</div>
+                        <div
+                          className={`w-${
+                            4 *
+                            project.memberships.filter((m, index) => {
+                              return index >= 0 && index < 3;
+                            }).length
+                          } h-4 relative mr-1`}
+                        >
+                          {project.memberships
+                            .filter((m, index) => {
+                              return index >= 0 && index < 3;
+                            })
+                            .map((m, index) => {
+                              return (
+                                <Image
+                                  key={index}
+                                  crossOrigin="anonymous"
+                                  width={10000}
+                                  height={10000}
+                                  alt={'User Pic'}
+                                  src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
+                                  className={`w-4 h-4 rounded-full cursor-default absolute top-0 left-${index}`}
+                                />
+                              );
+                            })}
+                        </div>
+                        <div>
+                          {project.memberships.length} other{project.memberships.length != 1 ? 's' : ''}
+                        </div>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -245,7 +300,7 @@ const ProjectView = ({
                 height={10000}
               />
 
-              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
+              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col justify-between gap-4">
                 <div className="w-full h-fit flex flex-col gap-4">
                   <div className="flex justify-between items-center">
                     <div className="font-bold text-3xl text-gradient">{project.title}</div>
@@ -316,15 +371,20 @@ const ProjectView = ({
                   ) : (
                     <></>
                   )}
-                  {project.userID != user.id ? (
+                  {project.userID == user.id ? (
                     <div
-                      onClick={handleLeaveProject}
+                      onClick={() => setClickedOnDelete(true)}
+                      className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:text-white hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
+                    >
+                      Delete Project
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => setClickedOnLeave(true)}
                       className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:text-white hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
                     >
                       Leave Project
                     </div>
-                  ) : (
-                    <></>
                   )}
                 </div>
               </div>

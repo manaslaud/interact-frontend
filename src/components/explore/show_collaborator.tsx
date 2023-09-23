@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { Membership } from '@/types';
+import Link from 'next/link';
 
 interface Props {
   memberships: Membership[];
@@ -56,15 +57,16 @@ const Collaborators = ({ memberships, workspace = false }: Props) => {
                   ) : (
                     <></>
                   )}
-
-                  <Image
-                    crossOrigin="anonymous"
-                    width={10000}
-                    height={10000}
-                    alt={'User Pic'}
-                    src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
-                    className={'w-12 h-12 rounded-full cursor-pointer '}
-                  />
+                  <Link href={`/explore/user/${membership.user.username}`} target="_blank">
+                    <Image
+                      crossOrigin="anonymous"
+                      width={10000}
+                      height={10000}
+                      alt={'User Pic'}
+                      src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
+                      className="w-12 h-12 rounded-full"
+                    />
+                  </Link>
                 </div>
               );
             })}

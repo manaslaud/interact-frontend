@@ -17,7 +17,7 @@ interface Props {
 const InvitationCard = ({ invitation, project, setProject }: Props) => {
   const user = useSelector(userSelector);
   return (
-    <div className="w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
+    <div className="w-full font-primary bg-white dark:bg-transparent dark:text-white border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
       <Image
         crossOrigin="anonymous"
         width={10000}

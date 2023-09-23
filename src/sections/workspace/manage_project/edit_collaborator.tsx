@@ -93,7 +93,7 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
           <select
             onChange={el => setRole(el.target.value)}
             value={role}
-            className="w-fit h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none border-gray-300 text-sm rounded-lg block p-2"
+            className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
           >
             {canEditRoles.map((c, i) => {
               return (

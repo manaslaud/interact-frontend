@@ -97,6 +97,8 @@ const ProjectView = ({
     },
   });
 
+  const variations = ['left-0', 'left-1', 'left-2', 'w-4', 'w-8', 'w-12'];
+
   return (
     <>
       {loading ? (
@@ -116,14 +118,6 @@ const ProjectView = ({
                 src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
                 className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-0 z-10'}
               />
-              {/* <Image
-                crossOrigin="anonymous"
-                width={10000}
-                height={10000}
-                alt={'User Pic'}
-                src={`${USER_PROFILE_PIC_URL}/${project.memberships[0].user.profilePic}`}
-                className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-2'}
-              /> */}
             </div>
             {clickedProjectIndex != 0 ? (
               <div
@@ -154,16 +148,50 @@ const ProjectView = ({
                 <div>
                   <div className="w-fit font-bold cursor-default">{project.title}</div>
                   <div // convert to link
-                    className="w-fit text-xs font-medium"
+                    className="w-fit flex gap-1 text-xs font-medium"
                   >
-                    <span
+                    <div
                       onClick={() => router.push(`/explore/user/${project.user.username}`)}
                       className="cursor-pointer hover:underline hover:underline-offset-2"
                     >
-                      {project.user.name}{' '}
-                    </span>
-
-                    <span>{project.memberships.length > 0 ? `+${project.memberships.length}` : ''}</span>
+                      {project.user.name}
+                    </div>
+                    {project.memberships?.length > 0 ? (
+                      <div className="flex gap-1">
+                        <div>+</div>
+                        <div
+                          className={`w-${
+                            4 *
+                            project.memberships.filter((m, index) => {
+                              return index >= 0 && index < 3;
+                            }).length
+                          } h-4 relative mr-1`}
+                        >
+                          {project.memberships
+                            .filter((m, index) => {
+                              return index >= 0 && index < 3;
+                            })
+                            .map((m, index) => {
+                              return (
+                                <Image
+                                  key={index}
+                                  crossOrigin="anonymous"
+                                  width={10000}
+                                  height={10000}
+                                  alt={'User Pic'}
+                                  src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
+                                  className={`w-4 h-4 rounded-full cursor-default absolute top-0 left-${index}`}
+                                />
+                              );
+                            })}
+                        </div>
+                        <div>
+                          {project.memberships.length} other{project.memberships.length != 1 ? 's' : ''}
+                        </div>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
