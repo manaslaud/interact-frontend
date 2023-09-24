@@ -89,20 +89,20 @@ const User = ({ username }: Props) => {
             )}
 
             <TabMenu
-              items={['Posts', 'Projects', 'Collaborating', 'Openings']}
+              items={['Posts', 'Projects', 'Collaborating']}
               active={active}
               setState={setActive}
               width={'640px'}
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              <Posts posts={user.posts} />
+              <Posts posts={user.posts || []} />
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              <Projects projects={user.projects} />
+              <Projects projects={user.projects || []} />
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              <Projects projects={collaboratingProjects} />
+              <Projects projects={collaboratingProjects || []} />
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>

@@ -1,4 +1,5 @@
 import Loader from '@/components/common/loader';
+import NoSearch from '@/components/empty_fillers/search';
 import OpeningCard from '@/components/explore/opening_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL, OPENING_URL } from '@/config/routes';
@@ -96,7 +97,7 @@ const Openings = () => {
               )}
             </div>
           ) : (
-            <div>No Openings found</div>
+            <NoSearch />
           )}
         </>
       )}

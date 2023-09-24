@@ -1,3 +1,4 @@
+import NoUserItems from '@/components/empty_fillers/user_items';
 import PostComponent from '@/components/home/post';
 import RePostComponent from '@/components/home/repost';
 import { Post } from '@/types';
@@ -11,7 +12,7 @@ const Posts = ({ posts }: Props) => {
   return (
     <div className="w-[45vw] mx-auto max-md:w-screen flex flex-col gap-2 max-md:px-4 pb-2">
       {posts.length === 0 ? (
-        <>No Posts</>
+        <NoUserItems />
       ) : (
         <>
           {posts.map(post => {

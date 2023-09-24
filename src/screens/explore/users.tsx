@@ -7,6 +7,7 @@ import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Loader from '@/components/common/loader';
 import UserCard from '@/components/explore/user_card';
+import NoSearch from '@/components/empty_fillers/search';
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -44,7 +45,7 @@ const Users = () => {
               })}
             </div>
           ) : (
-            <div>No Users found</div>
+            <NoSearch />
           )}
         </>
       )}

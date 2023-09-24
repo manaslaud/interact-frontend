@@ -38,7 +38,6 @@ const Profile = () => {
         if (res.statusCode === 200) {
           setUser(res.data.user);
           const projects: Project[] = [];
-          console.log(res.data.user);
           res.data.user.memberships?.map((membership: Membership) => {
             projects.push(membership.project);
           });
@@ -170,20 +169,20 @@ const Profile = () => {
             )}
 
             <TabMenu
-              items={['Posts', 'Projects', 'Collaborating', 'Openings']}
+              items={['Posts', 'Projects', 'Collaborating']}
               active={active}
               setState={setActive}
               width={'640px'}
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              <Posts posts={user.posts} />
+              <Posts posts={user.posts || []} />
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              <Projects projects={projects} setProjects={setProjects} displayOnProfile={true} />
+              <Projects projects={projects || []} setProjects={setProjects} displayOnProfile={true} />
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              <Projects projects={collaboratingProjects} />
+              <Projects projects={collaboratingProjects || []} />
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>

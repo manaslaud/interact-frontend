@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import ProjectView from '@/sections/explore/project_view';
 import { useDispatch } from 'react-redux';
 import { setExploreTab } from '@/slices/feedSlice';
+import NoSearch from '@/components/empty_fillers/search';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -74,13 +75,13 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full p-2">
       {loading ? (
         <Loader />
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center pt-4 gap-y-5">
+            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center gap-y-5">
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -107,7 +108,7 @@ const Projects = () => {
               })}
             </div>
           ) : (
-            <div>No projects found</div>
+            <NoSearch />
           )}
         </>
       )}

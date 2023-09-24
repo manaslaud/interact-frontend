@@ -5,6 +5,7 @@ import ProjectView from '../../sections/explore/project_view';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import NewProject from '@/sections/workspace/new_project';
+import NoUserItems from '@/components/empty_fillers/user_items';
 
 interface Props {
   projects: Project[];
@@ -22,9 +23,9 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
   const navbarOpen = useSelector(navbarOpenSelector);
 
   return (
-    <div className="w-full flex flex-col gap-12 px-2 pb-8">
+    <div className="w-full flex flex-col gap-12 px-2 pb-8 max-md:px-0 max-md:pb-2">
       <div
-        className={`w-fit grid ${
+        className={`${projects.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'}  ${
           navbarOpen ? 'grid-cols-2 gap-6' : 'grid-cols-3 gap-8'
         } max-md:grid-cols-1 mx-auto max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
       >
@@ -70,7 +71,7 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
             })}
           </>
         ) : (
-          <div>No projects found</div>
+          <>{!displayOnProfile ? <NoUserItems /> : <></>}</>
         )}
       </div>
     </div>
