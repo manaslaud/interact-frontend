@@ -90,7 +90,7 @@ const ProfileCard = () => {
                 {user.name}
               </div>
               <div className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 text-center line-clamp-6`}>
-                {user.bio || 'Add a Professional Bio'}
+                {user.bio}
               </div>
               <div
                 className={`w-full ${

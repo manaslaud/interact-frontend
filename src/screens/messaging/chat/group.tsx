@@ -16,6 +16,7 @@ import ChatTextarea from '@/components/messaging/group_chat_textarea';
 import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import GroupInfo from '@/sections/messaging/group_info';
+import { useWindowWidth } from '@react-hook/window-size';
 
 const GroupChat = () => {
   const [chat, setChat] = useState<GroupChat>(initialGroupChat);
@@ -62,6 +63,20 @@ const GroupChat = () => {
       socketService.setupGroupChatWindowRoutes(setMessages, typingStatus, setTypingStatus);
     }
   }, [chatID]);
+
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    if (windowWidth < 640) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
+
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
+  }, []);
 
   const messagesByDate = groupBy(messages, message => new Date(message.createdAt).toLocaleDateString());
 

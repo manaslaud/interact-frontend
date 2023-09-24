@@ -23,6 +23,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   let profilePic = useSelector(userSelector).profilePic;
   let name = useSelector(userSelector).name;
+  let username = useSelector(userSelector).username;
 
   useEffect(() => {
     document.documentElement.style.overflowY = 'hidden';
@@ -30,6 +31,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
     profilePic = profilePic == '' ? 'default.jpg' : profilePic;
     name = name == '' ? 'Interact User' : name;
+    username = username == '' ? 'interactUser' : username;
 
     return () => {
       document.documentElement.style.overflowY = 'auto';
@@ -76,7 +78,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] h-[470px] flex flex-col justify-between p-8 dark:text-white font-primary overflow-y-auto max-md:w-5/6 backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 w-[953px] max-md:w-5/6 h-[470px] max-md:h-2/3 flex flex-col justify-between max-md:gap-4 p-8 max-md:px-4 dark:text-white font-primary overflow-y-auto backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"
@@ -87,17 +89,18 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
           />
           <div className="grow flex flex-col gap-2">
-            <div className="flex justify-between items-center">
+            <div className="flex max-md:flex-col justify-between items-center max-md:items-start">
               <div className="text-2xl font-semibold">{name}</div>
+              <div className="md:hidden font-medium">@{username}</div>
               <div
                 onClick={handleSubmit}
-                className="max-md:hidden w-[120px] h-[48px] dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+                className="max-md:hidden w-[120px] h-[48px] bg-primary_comp dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
               >
                 RePost
               </div>
             </div>
 
-            <div className="w-1/2 font-primary flex gap-1 border-primary_btn  dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
+            <div className="max-md:hidden w-1/2 max-md:w-full font-primary flex gap-1 border-primary_btn dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
               <div className="w-[10%] max-md:w-[10%] h-full">
                 <div className="rounded-full">
                   <Image
@@ -120,7 +123,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
             </div>
 
             <textarea
-              className="w-full mt-4 bg-transparent focus:outline-none min-h-[154px]"
+              className="max-md:hidden w-full mt-4 bg-transparent focus:outline-none min-h-[154px]"
               value={content}
               onChange={el => setContent(el.target.value)}
               maxLength={1000}
@@ -128,9 +131,42 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
             ></textarea>
           </div>
         </div>
+
+        <div className="md:hidden w-full flex flex-col">
+          <div className="w-1/2 max-md:w-full font-primary flex gap-1 border-primary_btn dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
+            <div className="w-[10%] max-md:w-[15%] h-full">
+              <div className="rounded-full">
+                <Image
+                  crossOrigin="anonymous"
+                  width={10000}
+                  height={10000}
+                  alt={'User Pic'}
+                  src={`${USER_PROFILE_PIC_URL}/${post.user.profilePic}`}
+                  className={'rounded-full w-8 h-8'}
+                />
+              </div>
+            </div>
+            <div className="w-[90%] max-md:w-[85%] flex flex-col gap-3">
+              <div className="w-full h-fit flex justify-between items-center">
+                <div className="font-medium">@{post.user.username}</div>
+                <div className="flex gap-2 font-light text-xxs">{getDisplayTime(post.postedAt, false)}</div>
+              </div>
+              <div className="w-full text-sm whitespace-pre-wrap mb-2 line-clamp-4">{post.content}</div>
+            </div>
+          </div>
+
+          <textarea
+            className="w-full mt-4 bg-transparent focus:outline-none min-h-[154px]"
+            value={content}
+            onChange={el => setContent(el.target.value)}
+            maxLength={1000}
+            placeholder="Add to conversation..."
+          ></textarea>
+        </div>
+
         <div
           onClick={handleSubmit}
-          className="md:hidden w-[120px] h-[48px] dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
+          className="md:hidden w-[120px] h-[48px] bg-primary_comp dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 shrink-0 flex-center text-lg font-semibold rounded-lg cursor-pointer"
         >
           Post
         </div>

@@ -56,17 +56,17 @@ const UpdateEmail = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 h-1/2 max-md:w-5/6 max-md:h-2/5 fixed backdrop-blur-xl dark:text-white bg-white dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-gray-500 dark:border-dark_primary_btn animate-fade_third rounded-xl">
+      <div className="w-1/2 h-1/2 max-md:w-5/6 max-md:h-fit fixed backdrop-blur-xl dark:text-white bg-white dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-gray-500 dark:border-dark_primary_btn animate-fade_third rounded-xl">
         <form
           onSubmit={el => handleSubmit(el)}
-          className="w-full h-full flex flex-col justify-between px-32 max-md:px-2 py-4 max-md:py-8"
+          className="w-full h-full flex flex-col max-md:gap-6 justify-between px-32 max-md:px-2 py-4 max-md:py-8"
         >
           <div className="text-center cursor-default">
             Current Email Address: <span className=" text-xl font-bold">{currentEmail}</span>
           </div>
           <div className="flex flex-col gap-4">
             <input
-              className="bg-slate-200 text-black p-3 rounded-lg  text-xl transition-ease-200 focus:bg-[#1f1f1f] focus:text-white focus:outline-none"
+              className="bg-slate-200 text-black p-3 rounded-lg text-xl max-md:text-base transition-ease-200 focus:bg-[#1f1f1f] focus:text-white focus:outline-none"
               type="email"
               placeholder="Enter your new email address"
               value={newEmail}
@@ -74,7 +74,7 @@ const UpdateEmail = ({ setShow }: Props) => {
             />
             <button
               type="submit"
-              className="w-1/4 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-1 rounded-xl text-lg hover:bg-[#1f1f1f] transition-ease-200"
+              className="w-1/4 max-md:w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-1 rounded-xl text-lg hover:bg-[#1f1f1f] transition-ease-200"
             >
               Submit
             </button>

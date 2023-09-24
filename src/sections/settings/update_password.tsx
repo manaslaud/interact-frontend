@@ -71,7 +71,7 @@ const UpdatePassword = ({ setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/3 h-3/5 max-md:w-5/6 max-md:h-1/2 fixed backdrop-blur-xl dark:text-white bg-white dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-gray-500 dark:border-dark_primary_btn animate-fade_third rounded-xl">
+      <div className="w-1/3 h-3/5 max-md:w-5/6 max-md:h-fit fixed backdrop-blur-xl dark:text-white bg-white dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-gray-500 dark:border-dark_primary_btn animate-fade_third rounded-xl">
         <div className="w-full flex flex-col gap-6 p-4 max-md:px-8 max-md:py-8">
           <div className="flex flex-col gap-2">
             <div className="font-medium">Password</div>
@@ -163,7 +163,7 @@ const UpdatePassword = ({ setShow }: Props) => {
           </div>
           <button
             onClick={handleSubmit}
-            className="w-1/3 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-1 rounded-xl text-xl hover:bg-[#1f1f1f] transition-ease-200"
+            className="w-1/3 max-md:w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-1 rounded-xl text-xl hover:bg-[#1f1f1f] transition-ease-200"
           >
             Submit
           </button>
