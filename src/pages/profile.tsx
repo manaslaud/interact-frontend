@@ -67,7 +67,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Profile">
       <Sidebar index={7} />
       <MainWrapper>
         <div className="w-full max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">

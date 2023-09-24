@@ -45,7 +45,7 @@ const Deactive = () => {
   };
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Settings">
       <Sidebar index={9} />
       <MainWrapper>
         {/* {showDeactivate ? <ConfirmDeactiveAccount setShow={setShowDeactivate} handleSubmit={handleSubmit} /> : <></>} */}

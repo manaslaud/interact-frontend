@@ -53,7 +53,7 @@ const Home = () => {
       });
   };
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Notifications">
       <Sidebar index={8} />
       <MainWrapper>
         <div className="w-full max-lg:w-full mx-auto flex flex-col gap-4 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">

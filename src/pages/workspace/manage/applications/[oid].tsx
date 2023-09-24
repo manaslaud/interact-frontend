@@ -73,7 +73,7 @@ const Applications = ({ oid }: Props) => {
   }, [clickedApplication]);
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Applications">
       <Sidebar index={3} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">

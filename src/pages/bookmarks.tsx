@@ -14,7 +14,7 @@ import Openings from '@/screens/bookmarks/openings';
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Bookmarks">
       <Sidebar index={6} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">

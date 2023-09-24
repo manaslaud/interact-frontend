@@ -15,7 +15,7 @@ const Explore = () => {
   const active = useSelector(exploreTabSelector);
   const initialSearch = new URLSearchParams(window.location.search).get('search');
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Explore">
       <Sidebar index={2} />
       <MainWrapper>
         <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>

@@ -52,7 +52,7 @@ const Post = ({ id }: Props) => {
   }, []);
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Post">
       <Sidebar index={2} />
       <MainWrapper>
         <div className="w-[50vw] pt-6 mx-auto max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">

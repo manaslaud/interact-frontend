@@ -50,7 +50,7 @@ const ManageProject = ({ slug }: Props) => {
   }, [slug]);
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Manage Project">
       <Sidebar index={3} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">

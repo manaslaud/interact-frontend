@@ -45,7 +45,7 @@ const Messaging = () => {
   }, [window.location.search]);
 
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Messaging">
       <Sidebar index={-1} />
       <MainWrapper>
         <div

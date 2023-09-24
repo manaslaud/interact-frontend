@@ -13,7 +13,7 @@ import Protect from '@/utils/protect';
 const Workspace = () => {
   const active = useSelector(workspaceTabSelector);
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Workspace">
       <Sidebar index={3} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-4 py-base_padding">

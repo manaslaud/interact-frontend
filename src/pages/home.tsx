@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 const Home = () => {
   const active = useSelector(homeTabSelector);
   return (
-    <BaseWrapper>
+    <BaseWrapper title="Home">
       <Sidebar index={1} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center relative gap-4 px-9 max-md:px-2 py-base_padding">
@@ -25,9 +25,6 @@ const Home = () => {
           </div>
         </div>
       </MainWrapper>
-      {/* <SideWrapper>
-        <div></div>
-      </SideWrapper> */}
     </BaseWrapper>
   );
 };
