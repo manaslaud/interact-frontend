@@ -8,6 +8,8 @@ import { ArrowArcLeft } from '@phosphor-icons/react';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import router from 'next/router';
+import getDomainName from '@/utils/get_domain_name';
+import socketService from '@/config/ws';
 
 interface Props {
   application: Application;
@@ -45,6 +47,10 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
           })
         );
       }
+      socketService.sendNotification(
+        application.userID,
+        `Your Application for ${application.project.title} got Selected!`
+      );
       Toaster.stopLoad(toaster, 'Application accepted!', 1);
       router.back();
     } else {
@@ -84,6 +90,10 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
           })
         );
       }
+      socketService.sendNotification(
+        application.userID,
+        `Your Application for ${application.project.title} got Rejected`
+      );
       Toaster.stopLoad(toaster, 'Application rejected', 1);
       router.back();
     } else {
@@ -165,9 +175,13 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
                 {application.user.name}
               </Link>
               <div className="flex gap-4">
-                {getIcon('google', 24)}
-                {getIcon('facebook', 24)}
-                {getIcon('drive', 24)}
+                {application.links?.map((link, index) => {
+                  return (
+                    <Link key={index} href={link} target="_blank">
+                      {getIcon(getDomainName(link), 24)}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
             <div className="font-medium">{application.user.tagline}</div>

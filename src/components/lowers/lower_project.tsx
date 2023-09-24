@@ -15,6 +15,7 @@ import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/co
 import { HeartStraight } from '@phosphor-icons/react';
 import ShareProject from '@/sections/lowers/share_project';
 import CommentProject from '@/sections/lowers/comment_project';
+import socketService from '@/config/ws';
 
 interface Props {
   project: Project;
@@ -40,8 +41,9 @@ const LowerProject = ({ project }: Props) => {
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
   const [mutex, setMutex] = useState(false);
 
-  const likes = useSelector(userSelector).likes;
-  const bookmarks = useSelector(userSelector).projectBookmarks;
+  const user = useSelector(userSelector);
+  const likes = user.likes;
+  const bookmarks = user.projectBookmarks;
 
   const dispatch = useDispatch();
 
@@ -100,6 +102,7 @@ const LowerProject = ({ project }: Props) => {
         newLikes.splice(newLikes.indexOf(project.id), 1);
       } else {
         newLikes.push(project.id);
+        socketService.sendNotification(project.userID, `${user.name} liked your project!`);
       }
       dispatch(setLikes(newLikes));
     } else {

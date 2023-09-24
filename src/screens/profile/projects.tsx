@@ -25,7 +25,7 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
   return (
     <div className="w-full flex flex-col gap-12 px-2 pb-8 max-md:px-0 max-md:pb-2">
       <div
-        className={`${projects.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'}  ${
+        className={`${projects?.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'}  ${
           navbarOpen ? 'grid-cols-2 gap-6' : 'grid-cols-3 gap-8'
         } max-md:grid-cols-1 mx-auto max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
       >
@@ -43,7 +43,7 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
         ) : (
           <></>
         )}
-        {projects.length > 0 ? (
+        {projects?.length > 0 ? (
           <>
             {clickedOnProject ? (
               <ProjectView

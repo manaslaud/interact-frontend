@@ -15,6 +15,7 @@ import { ChatCircleText, HeartStraight, Repeat } from '@phosphor-icons/react';
 import RePost from '../../sections/home/repost';
 import SharePost from '@/sections/lowers/share_post';
 import CommentPost from '@/sections/lowers/comment_post';
+import socketService from '@/config/ws';
 
 interface Props {
   post: Post;
@@ -43,10 +44,9 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
   const [clickedOnRePost, setClickedOnRePost] = useState(false);
   const [mutex, setMutex] = useState(false);
 
-  const likes = useSelector(userSelector).likes;
-  const bookmarks = useSelector(userSelector).postBookmarks;
-
-  const userID = Cookies.get('id');
+  const user = useSelector(userSelector);
+  const likes = user.likes;
+  const bookmarks = user.postBookmarks;
 
   const dispatch = useDispatch();
 
@@ -105,6 +105,7 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
         newLikes.splice(newLikes.indexOf(post.id), 1);
       } else {
         newLikes.push(post.id);
+        socketService.sendNotification(post.userID, `${user.name} liked your post!`);
       }
       dispatch(setLikes(newLikes));
     } else {
@@ -168,7 +169,7 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
           />
           {/* <Link className="flex items-center gap-2" href={`/explore/post/comments/${post.id}`}>
           </Link> */}
-          {post.userID != userID && !post.rePost ? (
+          {post.userID != user.id && !post.rePost ? (
             <Repeat
               onClick={() => {
                 setClickedOnRePost(true);

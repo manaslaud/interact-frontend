@@ -81,7 +81,7 @@ const SendMessage = ({ user, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Message</div>
         <div className="w-full flex max-md:flex-col gap-4 items-center">
           <div className="w-1/2 max-md:w-full font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
@@ -116,7 +116,7 @@ const SendMessage = ({ user, setShow }: Props) => {
               />
               <button
                 type="submit"
-                className="w-full text-center py-2 rounded-lg border-[1px] border-[#ffe1fc10] hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+                className="w-full text-center py-2 rounded-lg border-[1px] border-primary_btn dark:border-[#ffe1fc10] bg-primary_comp dark:bg-transparent hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-[#ffe1fc10] dark:active:bg-dark_primary_comp_active cursor-pointer transition-ease-200"
               >
                 Send Message
               </button>

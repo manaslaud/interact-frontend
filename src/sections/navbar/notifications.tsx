@@ -10,8 +10,8 @@ import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import Welcome from '@/components/notifications/welcome';
 import ChatRequest from '@/components/notifications/chatRequest';
-import { useSelector } from 'react-redux';
-import { unreadNotificationsSelector } from '@/slices/feedSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUnreadNotifications, unreadNotificationsSelector } from '@/slices/feedSlice';
 import { NOTIFICATION_URL } from '@/config/routes';
 import Link from 'next/link';
 
@@ -23,32 +23,33 @@ const Notifications = ({ setShow }: Props) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const totalUnreadNotification = useSelector(unreadNotificationsSelector);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getNotifications();
+    return () => {
+      dispatch(setUnreadNotifications(0));
+    };
   }, []);
 
   const getNotifications = () => {
-    // if (totalUnreadNotification == 0) return;
     setLoading(true);
     const URL = `${NOTIFICATION_URL}/unread`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          const notificationsData: Notification[] = res.data.notifications;
-          setNotifications(notificationsData);
+          setNotifications(res.data.notifications);
           setLoading(false);
         } else {
-          if (res.data.message) Toaster.error(res.data.message);
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error');
+            Toaster.error('Internal Server Error', 'error_toaster');
             console.log(res);
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error');
+        Toaster.error('Internal Server Error', 'error_toaster');
         console.log(err);
       });
   };

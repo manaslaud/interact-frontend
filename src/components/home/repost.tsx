@@ -180,7 +180,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           </div>
         </div>
         {post.rePost && (
-          <div className="border-primary_btn  dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4 max-md:px-0">
+          <div className="w-full border-primary_btn  dark:border-dark_primary_btn dark:border-[1px] rounded-md px-4 max-md:px-0">
             <PostComponent post={post.rePost} isRepost={true} />
           </div>
         )}

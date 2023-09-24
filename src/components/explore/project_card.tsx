@@ -13,14 +13,14 @@ interface Props {
 }
 
 const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClickedProjectIndex }: Props) => {
-  const variants = ['w-72', 'w-64', 'w-56', 'h-72', 'h-64', 'h-56'];
+  const variants = ['w-80', 'w-72', 'w-64', 'w-56', 'h-80', 'h-72', 'h-64', 'h-56'];
   return (
     <div
       onClick={() => {
         setClickedOnProject(true);
         setClickedProjectIndex(index);
       }}
-      className={`w-${size} h-${size} rounded-lg relative group cursor-pointer`}
+      className={`w-${size} h-${size} max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
     >
       <div className="w-full h-full absolute top-0 hidden group-hover:flex animate-fade_third justify-end z-[6] rounded-lg p-1">
         {/* <BookmarkSimple size={24}  className="opacity-75" /> */}

@@ -9,7 +9,6 @@ import { SERVER_ERROR } from '@/config/errors';
 import { INVITATION_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { invitationsTabSelector, setInvitationsTab } from '@/slices/feedSlice';
-import { userSelector } from '@/slices/userSlice';
 import { Invitation } from '@/types';
 import Protect from '@/utils/protect';
 import Toaster from '@/utils/toaster';
@@ -23,8 +22,6 @@ const Invitations = () => {
   const [projectInvitations, setProjectInvitations] = useState<Invitation[]>([]);
   const [groupChatInvitations, setGroupChatInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const user = useSelector(userSelector);
 
   const fetchInvitations = async () => {
     setLoading(true);
@@ -40,8 +37,8 @@ const Invitations = () => {
       );
       setLoading(false);
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 

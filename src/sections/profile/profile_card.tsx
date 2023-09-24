@@ -102,7 +102,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
               }}
             />
             <label className="relative" htmlFor="userPic">
-              <div className="w-44 h-44 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50">
+              <div className="w-44 h-44 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50">
                 <Pen color="black" size={32} />
               </div>
               <Image

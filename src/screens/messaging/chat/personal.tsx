@@ -33,8 +33,8 @@ const PersonalChat = () => {
       setChat(res.data.chat);
       await fetchMessages();
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
@@ -45,8 +45,8 @@ const PersonalChat = () => {
       setMessages(res.data.messages || []);
       setLoading(false);
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
@@ -56,8 +56,8 @@ const PersonalChat = () => {
     if (res.statusCode == 200) {
       setChat({ ...chat, accepted: true });
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 

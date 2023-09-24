@@ -5,7 +5,6 @@ import { configSelector, setUpdatingFollowing } from '@/slices/configSlice';
 import { setFollowing, userSelector } from '@/slices/userSlice';
 import Semaphore from '@/utils/semaphore';
 import Toaster from '@/utils/toaster';
-import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +20,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
   const updatingFollowing = useSelector(configSelector).updatingFollowing;
   const dispatch = useDispatch();
 
-  const userID = Cookies.get('id');
+  const user = useSelector(userSelector);
 
   useEffect(() => {
     if (following.includes(toFollowID)) setIsFollowing(true);
@@ -48,7 +47,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
         newFollowing.splice(newFollowing.indexOf(toFollowID), 1);
       } else {
         newFollowing.push(toFollowID);
-        socketService.sendNotification(toFollowID, 'New Follower.');
+        socketService.sendNotification(toFollowID, `${user.name} started following you!`);
       }
       dispatch(setFollowing(newFollowing));
     } else {
@@ -60,7 +59,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
         }
       }
       setIsFollowing(prev => !prev);
-      Toaster.error(res.data.message);
+      Toaster.error(res.data.message, 'error_toaster');
     }
 
     semaphore.release();
@@ -68,7 +67,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
 
   return (
     <>
-      {toFollowID !== userID ? (
+      {toFollowID !== user.id ? (
         <div
           onClick={submitHandler}
           className={`${

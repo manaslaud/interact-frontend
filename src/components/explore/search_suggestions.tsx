@@ -33,15 +33,15 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
           setSearches(res.data.searches || []);
           setLoading(false);
         } else if (res.status != -1) {
-          if (res.data.message) Toaster.error(res.data.message);
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error(SERVER_ERROR);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
             console.log(res);
           }
         }
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };

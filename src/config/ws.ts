@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-import { SOCKET_URL } from './routes';
 import {
   ChatSetupEvent,
   MeStopTyping,
@@ -14,11 +12,13 @@ import {
   routeMessagingWindowEvents,
   sendEvent,
 } from '@/helpers/ws';
+import { incrementUnreadNotifications } from '@/slices/feedSlice';
+import { store } from '@/store';
 import { Chat, GroupChat, GroupChatMessage, Message, TypingStatus, User } from '@/types';
 import { messageToastSettings } from '@/utils/toaster';
+import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-import { store } from '@/store';
-import { incrementUnreadNotifications } from '@/slices/feedSlice';
+import { SOCKET_URL } from './routes';
 
 class SocketService {
   private static instance: SocketService | null = null;
@@ -144,7 +144,7 @@ class SocketService {
 
   public setupChatNotifications() {
     if (this.socket) {
-      this.socket.onmessage = function (evt) {
+      this.socket.addEventListener('message', function (evt) {
         const event = getWSEvent(evt);
         if (event.type === undefined) {
           alert('No Type in the Event');
@@ -170,13 +170,13 @@ class SocketService {
           default:
             break;
         }
-      };
+      });
     }
   }
 
   public setupPushNotifications() {
     if (this.socket) {
-      this.socket.onmessage = function (evt) {
+      this.socket.addEventListener('message', function (evt) {
         const event = getWSEvent(evt);
         if (event.type === undefined) {
           alert('No Type in the Event');
@@ -187,10 +187,12 @@ class SocketService {
             type WS_Notification = {
               userID: string;
               content: string;
+              //TODO add notification type
             };
             const notificationEventPayload = event.payload as WS_Notification;
             toast.info(notificationEventPayload.content, {
               ...messageToastSettings,
+              autoClose: 1000,
               icon: '🐵',
             });
             store.dispatch(incrementUnreadNotifications());
@@ -198,7 +200,7 @@ class SocketService {
           default:
             break;
         }
-      };
+      });
     }
   }
 }

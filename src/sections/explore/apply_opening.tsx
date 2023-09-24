@@ -1,6 +1,7 @@
 import Links from '@/components/utils/edit_links';
 import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import { APPLICATION_URL, PROJECT_PIC_URL } from '@/config/routes';
+import socketService from '@/config/ws';
 import postHandler from '@/handlers/post_handler';
 import { setApplications, userSelector } from '@/slices/userSlice';
 import { Opening } from '@/types';
@@ -23,7 +24,8 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
   const [resume, setResume] = useState<File>();
   const [links, setLinks] = useState<string[]>([]);
 
-  let profilePic = useSelector(userSelector).profilePic;
+  const user = useSelector(userSelector);
+  let profilePic = user.profilePic;
 
   const applications = useSelector(userSelector).applications;
 
@@ -66,6 +68,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
         return { ...prev, noOfApplications: prev.noOfApplications + 1 };
       });
       dispatch(setApplications([...applications, opening.id]));
+      socketService.sendNotification(opening.userID, `${user.name} applied at an opening!`);
       Toaster.stopLoad(toaster, 'Applied to the Opening!', 1);
       setShow(false);
     } else {

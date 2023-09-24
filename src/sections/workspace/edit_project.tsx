@@ -122,11 +122,11 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
           <select
             onChange={el => setCategory(el.target.value)}
             value={category}
-            className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+            className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
           >
             {categories.map((c, i) => {
               return (
-                <option className="bg-[#10013b30]" key={i} value={c}>
+                <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
                   {c}
                 </option>
               );

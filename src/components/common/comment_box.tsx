@@ -7,15 +7,15 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { Comment, Post, Project } from '@/types';
 import deleteHandler from '@/handlers/delete_handler';
-import { useRouter } from 'next/router';
 import moment from 'moment';
 import getHandler from '@/handlers/get_handler';
 import Loader from '@/components/common/loader';
 import Link from 'next/link';
-import { profilePicSelector, userSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import postHandler from '@/handlers/post_handler';
 import Trash from '@phosphor-icons/react/dist/icons/Trash';
+import socketService from '@/config/ws';
 
 interface Props {
   type: string;
@@ -31,6 +31,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
   const [comments, setComments] = useState<Comment[]>([]);
 
   const [commentBody, setCommentBody] = useState('');
+
+  const userID = Cookies.get('id');
 
   useEffect(() => {
     getComments();
@@ -49,16 +51,16 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
 
           setLoading(false);
         } else {
-          if (res.data.message) Toaster.error(res.data.message);
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error');
+            Toaster.error('Internal Server Error', 'error_toaster');
             console.log(res);
           }
         }
       })
       .catch(err => {
         console.log(err);
-        Toaster.error('Internal Server Error');
+        Toaster.error('Internal Server Error', 'error_toaster');
       });
   };
 
@@ -85,6 +87,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       setComments(newComments);
       setNoComments(prev => prev + 1);
       setCommentBody('');
+      socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
     } else {
       if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
@@ -115,8 +118,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
     }
   };
 
-  const profilePic = useSelector(userSelector).profilePic;
   const loggedInUser = useSelector(userSelector);
+  const profilePic = loggedInUser.profilePic;
 
   return (
     <div className="w-full h-full overflow-auto flex flex-col px-12 py-8 font-primary gap-8 max-md:px-4">
@@ -205,14 +208,18 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                           </div>
                         </div>
                       </div>
-                      <Trash
-                        onClick={() => {
-                          deleteComment(comment.id);
-                        }}
-                        className="cursor-pointer mr-1 max-md:w-4 max-md:h-4 transition-all ease-in-out duration-200 hover:scale-110"
-                        size={24}
-                        weight="regular"
-                      />
+                      {comment.userID == userID ? (
+                        <Trash
+                          onClick={() => {
+                            deleteComment(comment.id);
+                          }}
+                          className="cursor-pointer mr-1 max-md:w-4 max-md:h-4 transition-all ease-in-out duration-200 hover:scale-110"
+                          size={24}
+                          weight="regular"
+                        />
+                      ) : (
+                        <></>
+                      )}
                     </div>
                     <div className="pl-14 max-md:pl-10">
                       <div className="w-fit dark:bg-dark_primary_comp_hover py-2 px-4 max-md:text-sm rounded-xl">

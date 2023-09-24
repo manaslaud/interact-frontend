@@ -1,3 +1,5 @@
+import { PROJECT_EDITOR, PROJECT_MANAGER, PROJECT_MEMBER } from '@/config/constants';
+import { SERVER_ERROR } from '@/config/errors';
 import {
   BOOKMARK_URL,
   CONNECTION_URL,
@@ -21,6 +23,7 @@ import {
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadNotifications,
 } from '@/slices/configSlice';
+import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
 import {
   ChatSlice,
   setApplications,
@@ -35,7 +38,6 @@ import {
   setPostBookmarks,
   setProjectBookmarks,
 } from '@/slices/userSlice';
-import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
 import {
   Application,
   Chat,
@@ -43,16 +45,13 @@ import {
   Membership,
   OpeningBookmark,
   PostBookmark,
-  Project,
   ProjectBookmark,
   User,
 } from '@/types';
 import Toaster from '@/utils/toaster';
-import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { SERVER_ERROR } from '@/config/errors';
 import moment from 'moment';
-import { PROJECT_EDITOR, PROJECT_MANAGER, PROJECT_MEMBER } from '@/config/constants';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useUserStateFetcher = () => {
   const dispatch = useDispatch();
@@ -77,7 +76,7 @@ const useUserStateFetcher = () => {
         }
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -94,7 +93,7 @@ const useUserStateFetcher = () => {
         }
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -123,7 +122,7 @@ const useUserStateFetcher = () => {
         }
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -149,10 +148,10 @@ const useUserStateFetcher = () => {
           dispatch(setPersonalChatSlices(personalChatSlices));
           dispatch(setChats(chats));
           dispatch(setFetchedChats(new Date().toUTCString()));
-        } else Toaster.error(res.data.message);
+        } else Toaster.error(res.data.message, 'error_toaster');
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -187,10 +186,10 @@ const useUserStateFetcher = () => {
           dispatch(setEditorProjects(editorProjects));
           dispatch(setMemberProjects(memberProjects));
           dispatch(setFetchedContributingProjects(new Date().toUTCString()));
-        } else Toaster.error(res.data.message);
+        } else Toaster.error(res.data.message, 'error_toaster');
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -207,10 +206,10 @@ const useUserStateFetcher = () => {
           });
           dispatch(setApplications(applications));
           dispatch(setFetchedApplications(new Date().toUTCString()));
-        } else Toaster.error(res.data.message);
+        } else Toaster.error(res.data.message, 'error_toaster');
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -224,10 +223,10 @@ const useUserStateFetcher = () => {
           const count: number = res.data.count;
           dispatch(setUnreadNotifications(count));
           dispatch(setLastFetchedUnreadNotifications(new Date().toUTCString()));
-        } else Toaster.error(res.data.message);
+        } else Toaster.error(res.data.message, 'error_toaster');
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };
@@ -241,10 +240,10 @@ const useUserStateFetcher = () => {
           const count: number = res.data.count;
           dispatch(setUnreadInvitations(count));
           dispatch(setLastFetchedUnreadInvitations(new Date().toUTCString()));
-        } else Toaster.error(res.data.message);
+        } else Toaster.error(res.data.message, 'error_toaster');
       })
       .catch(err => {
-        Toaster.error(SERVER_ERROR);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
         console.log(err);
       });
   };

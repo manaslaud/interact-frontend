@@ -17,9 +17,7 @@ const Navbar = () => {
   const user = useSelector(userSelector);
   return (
     <>
-      <div className={`${clickedOnNotifications ? '' : 'hidden'}`}>
-        <Notifications setShow={setClickedOnNotifications} />
-      </div>
+      {clickedOnNotifications ? <Notifications setShow={setClickedOnNotifications} /> : <></>}
       <div className={`${clickedOnProfile ? '' : 'hidden'}`}>
         <ProfileDropdown setShow={setClickedOnProfile} />
       </div>

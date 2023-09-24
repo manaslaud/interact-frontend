@@ -34,8 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <main className={`${inter.variable}`}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ToastContainer containerId="main" />
-          <ToastContainer containerId="messaging" limit={5} />
+          <ToastContainer />
           <Component {...pageProps} />
         </PersistGate>
       </Provider>

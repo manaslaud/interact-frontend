@@ -1,9 +1,8 @@
-import { toast, Id, ToastOptions, UpdateOptions } from 'react-toastify';
+import { Id, ToastOptions, UpdateOptions, toast } from 'react-toastify';
 
 class Toaster {
   //TODO add different ids to toasters
   static toastSettings: ToastOptions = {
-    containerId: 'main',
     position: 'top-center',
     autoClose: 2000,
     hideProgressBar: false,
@@ -36,7 +35,6 @@ class Toaster {
 }
 
 export const messageToastSettings: ToastOptions = {
-  containerId: 'messaging',
   position: 'bottom-right',
   autoClose: 3000,
   hideProgressBar: true,

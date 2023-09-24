@@ -7,34 +7,41 @@ import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState, useEffect } from 'react';
 import ProjectView from '@/sections/explore/project_view';
-import { useDispatch } from 'react-redux';
-import { setExploreTab } from '@/slices/feedSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { navbarOpenSelector, setExploreTab } from '@/slices/feedSlice';
 import NoSearch from '@/components/empty_fillers/search';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
   const [fadeInProjectView, setFadeInProjectView] = useState(true);
 
+  const navbarOpen = useSelector(navbarOpenSelector);
+
   const dispatch = useDispatch();
 
   const fetchProjects = async (search: string | null) => {
-    setLoading(true);
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/projects/trending${'?search=' + search}`
-        : `${EXPLORE_URL}/projects/recommended`;
+        ? `${EXPLORE_URL}/projects/trending?page=${page}&limit=${10}${'&search=' + search}`
+        : `${EXPLORE_URL}/projects/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setProjects(res.data.projects || []);
+      const addedProjects = [...projects, ...(res.data.projects || [])];
+      if (addedProjects.length === projects.length) setHasMore(false);
+      setProjects(addedProjects);
+      setPage(prev => prev + 1);
       setLoading(false);
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
@@ -53,8 +60,8 @@ const Projects = () => {
 
       setLoading(false);
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
@@ -81,7 +88,15 @@ const Projects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center gap-y-5">
+            <InfiniteScroll
+              className={`w-full grid ${
+                navbarOpen ? 'grid-cols-3 px-16 gap-16' : 'grid-cols-4 px-12 gap-12'
+              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
+              dataLength={projects.length}
+              next={() => fetchProjects(new URLSearchParams(window.location.search).get('search'))}
+              hasMore={hasMore}
+              loader={<Loader />}
+            >
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -99,14 +114,14 @@ const Projects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
-                    size={64}
+                    size={navbarOpen ? 80 : 72}
                     project={project}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}
                   />
                 );
               })}
-            </div>
+            </InfiniteScroll>
           ) : (
             <NoSearch />
           )}

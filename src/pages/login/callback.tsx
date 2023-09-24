@@ -52,7 +52,7 @@ const LoginCallback = ({ token }: Props) => {
         if (err.response?.data?.message) {
           Toaster.error(err.response.data.message);
         } else {
-          Toaster.error(SERVER_ERROR);
+          Toaster.error(SERVER_ERROR, 'error_toaster');
         }
         console.log(err);
         router.replace('/login');

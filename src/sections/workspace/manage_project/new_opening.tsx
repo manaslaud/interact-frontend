@@ -24,6 +24,10 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
       Toaster.error('Title Cannot be Empty');
       return;
     }
+    if (description.trim() == '') {
+      Toaster.error('Description Cannot be Empty');
+      return;
+    }
 
     if (mutex) return;
     setMutex(true);
@@ -52,8 +56,11 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
       setTags([]);
       setShow(false);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+        console.log(res);
+      }
     }
     setMutex(false);
   };

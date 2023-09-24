@@ -40,8 +40,8 @@ const ManageProject = ({ slug }: Props) => {
       setProject(res.data.project);
       setLoading(false);
     } else {
-      if (res.data.message) Toaster.error(res.data.message);
-      else Toaster.error(SERVER_ERROR);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
@@ -57,7 +57,7 @@ const ManageProject = ({ slug }: Props) => {
           <div className="flex gap-3 p-base_padding">
             <ArrowArcLeft
               onClick={() => router.back()}
-              className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
+              className="w-10 h-10 p-2 dark:text-white dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
               size={40}
             />
             <div className="text-4xl font-semibold dark:text-white font-primary">Manage Project</div>
