@@ -1,8 +1,8 @@
+import Toaster from '@/utils/toaster';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { BACKEND_URL, FRONTEND_URL } from './routes';
 import Cookies from 'js-cookie';
 import { TOKEN_EXPIRATION_ERROR } from './errors';
-import Toaster from '@/utils/toaster';
+import { BACKEND_URL, FRONTEND_URL } from './routes';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -35,6 +35,7 @@ configuredAxios.interceptors.request.use(
 
     if (token && token !== '') {
       config.headers['Authorization'] = `Bearer ${token}`;
+      // config.headers['Authentication'] = process.env.NEXT_PUBLIC_API_TOKEN;
     }
 
     return config;

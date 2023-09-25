@@ -56,7 +56,7 @@ const User = ({ username }: Props) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [username]);
 
   return (
     <BaseWrapper title={username}>

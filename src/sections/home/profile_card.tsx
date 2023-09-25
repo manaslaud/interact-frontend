@@ -7,11 +7,13 @@ import { setExploreTab } from '@/slices/feedSlice';
 import { initialUser } from '@/types/initials';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
-import { ArrowDownLeft } from '@phosphor-icons/react';
+import { ArrowDownLeft, Plus } from '@phosphor-icons/react';
 import Loader from '@/components/common/loader';
 import ProfileCardLoader from '@/components/loaders/feed_profile_card';
 import Connections from '../explore/connections_view';
 import { SERVER_ERROR } from '@/config/errors';
+import getDomainName from '@/utils/get_domain_name';
+import getIcon from '@/utils/get_icon';
 
 const ProfileCard = () => {
   const [user, setUser] = useState(initialUser);
@@ -88,9 +90,18 @@ const ProfileCard = () => {
               >
                 {user.name}
               </div>
-              <div className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 text-center line-clamp-6`}>
-                {user.bio}
-              </div>
+              {user.bio != '' ? (
+                <div className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 text-center line-clamp-6`}>
+                  {user.bio}
+                </div>
+              ) : (
+                <Link
+                  href={'/profile?action=edit'}
+                  className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 opacity-50 text-center line-clamp-6`}
+                >
+                  Add a descriptive Bio!
+                </Link>
+              )}
               <div
                 className={`w-full ${
                   open ? 'text-base gap-6' : 'text-xxs gap-0'
@@ -105,14 +116,13 @@ const ProfileCard = () => {
                   <div>Following</div>
                 </div>
               </div>
-
-              <div
-                className={`w-full ${
-                  open ? 'gap-2 mt-12' : 'gap-0 mt-0'
-                } transition-ease-500 flex flex-wrap items-center justify-center`}
-              >
-                {user.tags &&
-                  user.tags.map(tag => {
+              {user.tags && user.tags.length > 0 ? (
+                <div
+                  className={`w-full ${
+                    open ? 'gap-2 mt-12' : 'gap-0 mt-0'
+                  } transition-ease-500 flex flex-wrap items-center justify-center`}
+                >
+                  {user.tags.map(tag => {
                     return (
                       <Link
                         href={`/explore?search=` + tag}
@@ -126,7 +136,49 @@ const ProfileCard = () => {
                       </Link>
                     );
                   })}
-              </div>
+                </div>
+              ) : (
+                <Link
+                  href={'/profile?action=edit'}
+                  className={`flex-center gap-2 mt-2 ${
+                    open ? 'text-sm px-2 py-1' : 'text-xxs px-0 py-0'
+                  } transition-ease-500 border-[1px] border-dashed border-primary_btn  dark:border-dark_primary_btn rounded-md`}
+                >
+                  <Plus /> <div>Add Tags</div>
+                </Link>
+              )}
+
+              {user.links && user.links.length > 0 ? (
+                <div
+                  className={`w-full ${
+                    open ? 'gap-2 mt-4' : 'gap-0 mt-0'
+                  } transition-ease-500 flex flex-wrap items-center justify-center`}
+                >
+                  {user.links.map((link, index) => {
+                    return (
+                      <Link
+                        href={link}
+                        target="_blank"
+                        key={index}
+                        className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                      >
+                        {getIcon(getDomainName(link), 24)}
+                        <div className="capitalize">{getDomainName(link)}</div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Link
+                  href={'/profile?action=edit'}
+                  className={`flex-center gap-2 mt-2 ${
+                    open ? 'text-sm px-2 py-1' : 'text-xxs px-0 py-0'
+                  } transition-ease-500 border-[1px] border-dashed border-primary_btn  dark:border-dark_primary_btn rounded-md`}
+                >
+                  <Plus /> <div>Add Links</div>
+                </Link>
+              )}
+
               <Link
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${

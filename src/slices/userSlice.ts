@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
 import { OpeningBookmark, PostBookmark, ProjectBookmark, User } from '@/types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface ChatSlice {
   userID: string;
@@ -11,10 +11,13 @@ interface UserState {
   id: string;
   name: string;
   username: string;
+  bio: string;
+  tagline: string;
   email: string;
   phoneNo: string;
   following: string[];
   likes: string[];
+  links: string[];
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   openingBookmarks: OpeningBookmark[];
@@ -33,12 +36,15 @@ const initialState: UserState = {
   id: '',
   name: '',
   username: '',
+  bio: '',
+  tagline: '',
   email: '',
   phoneNo: '',
   isLoggedIn: false,
   profilePic: '',
   following: [],
   likes: [],
+  links: [],
   postBookmarks: [],
   projectBookmarks: [],
   openingBookmarks: [],
@@ -59,11 +65,14 @@ export const userSlice = createSlice({
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.username = action.payload.username;
+      state.bio = action.payload.bio;
+      state.tagline = action.payload.tagline;
       state.email = action.payload.email;
       state.profilePic = action.payload.profilePic;
       state.isLoggedIn = true;
       state.phoneNo = action.payload.phoneNo;
       state.isVerified = action.payload.isVerified;
+      state.links = action.payload.links;
       state.chats = [];
       state.personalChatSlices = [];
       state.memberProjects = [];
@@ -80,6 +89,8 @@ export const userSlice = createSlice({
       state.id = '';
       state.name = '';
       state.username = '';
+      state.bio = '';
+      state.tagline = '';
       state.email = '';
       state.profilePic = 'default.jpg';
       state.isLoggedIn = false;
@@ -93,6 +104,7 @@ export const userSlice = createSlice({
       state.applications = [];
       state.following = [];
       state.likes = [];
+      state.links = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];

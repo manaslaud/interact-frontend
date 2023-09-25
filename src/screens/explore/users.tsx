@@ -9,6 +9,7 @@ import Loader from '@/components/common/loader';
 import UserCard from '@/components/explore/user_card';
 import NoSearch from '@/components/empty_fillers/search';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ProfileCompletion from '@/sections/explore/profile_completion';
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -51,6 +52,7 @@ const Users = () => {
               hasMore={hasMore}
               loader={<Loader />}
             >
+              <ProfileCompletion />
               {users.map(user => {
                 return <UserCard key={user.id} user={user} />;
               })}

@@ -2,6 +2,7 @@ import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import Discover from '@/screens/home/discover';
 import Feed from '@/screens/home/feed';
+import ProfileCompletion from '@/sections/home/profile_completion';
 import { homeTabSelector, setHomeTab } from '@/slices/feedSlice';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
@@ -23,6 +24,7 @@ const Home = () => {
           <div className={`${active === 1 ? 'block' : 'hidden'}`}>
             <Discover />
           </div>
+          <ProfileCompletion />
         </div>
       </MainWrapper>
     </BaseWrapper>

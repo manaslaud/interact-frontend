@@ -36,8 +36,6 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
         <div className="flex gap-2 text-sm max-md:flex-wrap">
           <div>{opening.project.title}</div>
           <div>•</div>
-          <div>Delhi, India</div>
-          <div>•</div>
           <div>{moment(opening.createdAt).fromNow()}</div>
           <div>•</div>
           <div>
