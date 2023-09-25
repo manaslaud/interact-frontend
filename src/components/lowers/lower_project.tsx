@@ -102,7 +102,8 @@ const LowerProject = ({ project }: Props) => {
         newLikes.splice(newLikes.indexOf(project.id), 1);
       } else {
         newLikes.push(project.id);
-        socketService.sendNotification(project.userID, `${user.name} liked your project!`);
+        if (project.userID != user.id)
+          socketService.sendNotification(project.userID, `${user.name} liked your project!`);
       }
       dispatch(setLikes(newLikes));
     } else {

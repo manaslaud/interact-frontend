@@ -9,6 +9,7 @@ import { ReactSVG } from 'react-svg';
 import { ArrowRight, Eye, EyeClosed, Info } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import isStrongPassword from 'validator/lib/isStrongPassword';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   userID: string;
@@ -65,8 +66,7 @@ const AccountRecovery = ({ userID, token }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 

@@ -36,13 +36,11 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
             Toaster.error(SERVER_ERROR, 'error_toaster');
-            console.log(res);
           }
         }
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 

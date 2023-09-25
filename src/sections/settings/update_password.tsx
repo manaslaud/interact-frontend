@@ -4,6 +4,7 @@ import patchHandler from '@/handlers/patch_handler';
 import Cookies from 'js-cookie';
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import { Eye, EyeClosed, Info } from '@phosphor-icons/react';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,8 +63,7 @@ const UpdatePassword = ({ setShow }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setLockBtn(false);

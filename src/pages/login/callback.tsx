@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from 'next/types';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Toaster from '@/utils/toaster';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import socketService from '@/config/ws';
 import { resetConfig } from '@/slices/configSlice';
@@ -54,7 +53,7 @@ const LoginCallback = ({ token }: Props) => {
         } else {
           Toaster.error(SERVER_ERROR, 'error_toaster');
         }
-        console.log(err);
+
         router.replace('/login');
       });
   }, []);

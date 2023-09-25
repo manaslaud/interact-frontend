@@ -32,14 +32,18 @@ const SignUpCallback = ({ token }: Props) => {
 
   const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
     el.preventDefault();
-    if (!/^[a-z][a-z0-9_]{3,}/.test(username.trim().toLowerCase())) {
+    if (username.trim().length < 4) {
+      Toaster.error('Username too short');
+      return;
+    } else if (!/^([a-z][a-z0-9_]{4,})$/.test(username.trim().toLowerCase())) {
       Toaster.error('Enter a Valid Username');
       return;
     }
+
     if (mutex) return;
     setMutex(true);
     const formData = {
-      username: username.toLowerCase(),
+      username: username.trim().toLowerCase(),
     };
     const toaster = Toaster.startLoad('Creating your account...');
 
@@ -78,7 +82,6 @@ const SignUpCallback = ({ token }: Props) => {
           Toaster.stopLoad(toaster, SERVER_ERROR, 0);
         }
         setMutex(false);
-        console.log(err);
       });
   };
 

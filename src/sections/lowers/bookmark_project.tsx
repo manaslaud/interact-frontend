@@ -5,6 +5,7 @@ import Toaster from '@/utils/toaster';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BOOKMARK_URL } from '@/config/routes';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,8 +38,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setMutex(false);

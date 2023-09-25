@@ -1,7 +1,9 @@
 import Loader from '@/components/common/loader';
+import { SERVER_ERROR } from '@/config/errors';
 import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
+
 import { Chat, Post } from '@/types';
 import getDisplayTime from '@/utils/get_display_time';
 import getMessagingUser from '@/utils/get_messaging_user';
@@ -39,14 +41,12 @@ const SharePost = ({ post, setShow }: Props) => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   }, [post]);
 
@@ -79,8 +79,7 @@ const SharePost = ({ post, setShow }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
   };

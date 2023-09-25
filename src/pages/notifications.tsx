@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Home = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -42,14 +43,12 @@ const Home = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
   return (

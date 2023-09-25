@@ -13,6 +13,7 @@ import Toaster from '@/utils/toaster';
 import { title } from 'process';
 import deleteHandler from '@/handlers/delete_handler';
 import ConfirmDelete from '@/components/common/confirm_delete';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   membership: Membership;
@@ -43,8 +44,7 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
       setClickedOnRemoveCollaborator(false);
       Toaster.stopLoad(toaster, 'Collaborator Removed', 1);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
   return (

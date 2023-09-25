@@ -11,6 +11,7 @@ import patchHandler from '@/handlers/patch_handler';
 import Toaster from '@/utils/toaster';
 import deleteHandler from '@/handlers/delete_handler';
 import ConfirmDelete from '../common/confirm_delete';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   index: number;
@@ -57,8 +58,7 @@ const ProjectCard = ({
         );
       Toaster.stopLoad(toaster, 'Project Added', 1);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
@@ -74,8 +74,7 @@ const ProjectCard = ({
       setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 

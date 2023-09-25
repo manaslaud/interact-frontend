@@ -105,7 +105,7 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
         newLikes.splice(newLikes.indexOf(post.id), 1);
       } else {
         newLikes.push(post.id);
-        socketService.sendNotification(post.userID, `${user.name} liked your post!`);
+        if (post.userID != user.id) socketService.sendNotification(post.userID, `${user.name} liked your post!`);
       }
       dispatch(setLikes(newLikes));
     } else {

@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);
@@ -37,8 +38,7 @@ const Deactive = () => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setLockBtn(false);

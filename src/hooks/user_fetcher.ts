@@ -10,6 +10,7 @@ import {
   WORKSPACE_URL,
 } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
+
 import {
   configSelector,
   setFetchedApplications,
@@ -77,7 +78,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -94,7 +94,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -123,7 +122,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -152,7 +150,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -190,7 +187,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -210,7 +206,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -227,7 +222,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 
@@ -244,7 +238,6 @@ const useUserStateFetcher = () => {
       })
       .catch(err => {
         Toaster.error(SERVER_ERROR, 'error_toaster');
-        console.log(err);
       });
   };
 

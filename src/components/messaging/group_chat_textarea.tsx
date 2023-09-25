@@ -8,6 +8,7 @@ import Toaster from '@/utils/toaster';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import { initialUser } from '@/types/initials';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   chat: GroupChat;
@@ -75,8 +76,7 @@ const ChatTextarea = ({ chat }: Props) => {
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
       else {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(res);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       }
     }
   };

@@ -15,6 +15,7 @@ import RePostComponent from '@/components/home/repost';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import NoFeed from '@/components/empty_fillers/feed';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -42,14 +43,12 @@ const Feed = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

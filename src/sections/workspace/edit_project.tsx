@@ -104,7 +104,6 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
       Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
     }
     setMutex(false);
   };

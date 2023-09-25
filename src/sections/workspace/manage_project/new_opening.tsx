@@ -59,7 +59,6 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
         Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-        console.log(res);
       }
     }
     setMutex(false);

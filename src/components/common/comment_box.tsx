@@ -17,6 +17,8 @@ import postHandler from '@/handlers/post_handler';
 import Trash from '@phosphor-icons/react/dist/icons/Trash';
 import socketService from '@/config/ws';
 
+import { SERVER_ERROR } from '@/config/errors';
+
 interface Props {
   type: string;
   item: Project | Post;
@@ -53,14 +55,12 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        console.log(err);
-        Toaster.error('Internal Server Error', 'error_toaster');
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 
@@ -87,12 +87,12 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       setComments(newComments);
       setNoComments(prev => prev + 1);
       setCommentBody('');
-      socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
+      if (item.userID != loggedInUser.id)
+        socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
     } else {
       if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
   };
@@ -112,8 +112,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
     } else {
       if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
   };

@@ -43,7 +43,6 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
       Toaster.stopLoad(toaster, 'Post Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-      console.log(res);
     }
   };
 

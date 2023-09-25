@@ -71,7 +71,6 @@ const Login = () => {
         if (err.response?.data?.message) Toaster.stopLoad(toaster, err.response.data.message, 0);
         else {
           Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-          console.log(err);
         }
         setMutex(false);
       });

@@ -10,6 +10,7 @@ import Toaster from '@/utils/toaster';
 import router from 'next/router';
 import getDomainName from '@/utils/get_domain_name';
 import socketService from '@/config/ws';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   application: Application;
@@ -56,8 +57,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 
@@ -99,8 +99,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 
@@ -138,8 +137,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 

@@ -5,7 +5,7 @@ import { INVITATION_URL, PROJECT_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import Toaster from '@/utils/toaster';
-import { VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,8 +50,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
           router.push('/verification');
         } else Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 
@@ -79,8 +78,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
 

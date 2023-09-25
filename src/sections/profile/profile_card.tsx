@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { setExploreTab } from '@/slices/feedSlice';
 import isArrEdited from '@/utils/check_array_edited';
 import Connections from '../explore/connections_view';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   user: User;
@@ -72,8 +73,7 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setMutex(false);

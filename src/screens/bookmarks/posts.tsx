@@ -67,7 +67,6 @@ const Posts = () => {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-        console.log(res);
       }
     }
     setMutex(false);
@@ -97,8 +96,7 @@ const Posts = () => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
       setMutex(false);
       return 0;

@@ -4,7 +4,7 @@ class Toaster {
   //TODO add different ids to toasters
   static toastSettings: ToastOptions = {
     position: 'top-center',
-    autoClose: 2000,
+    autoClose: 1000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,

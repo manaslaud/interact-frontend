@@ -52,7 +52,6 @@ const EditOpening = ({ setShow, opening, project, setProject }: Props) => {
       setShow(false);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
     }
     setMutex(false);
   };

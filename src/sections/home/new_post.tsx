@@ -74,7 +74,6 @@ const NewPost = ({ setShow, setFeed }: Props) => {
         } else Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-        console.log(res);
       }
     }
   };

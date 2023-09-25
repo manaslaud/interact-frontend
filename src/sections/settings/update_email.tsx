@@ -5,6 +5,7 @@ import patchHandler from '@/handlers/patch_handler';
 import isEmail from 'validator/lib/isEmail';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setVerificationStatus, userSelector } from '@/slices/userSlice';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,8 +46,7 @@ const UpdateEmail = ({ setShow }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setLockBtn(false);

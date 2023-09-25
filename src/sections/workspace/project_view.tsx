@@ -98,7 +98,6 @@ const ProjectView = ({
       Toaster.stopLoad(toaster, 'Left the Project', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
     }
   };
 
@@ -115,7 +114,6 @@ const ProjectView = ({
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
     }
   };
 

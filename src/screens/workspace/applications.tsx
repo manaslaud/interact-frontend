@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setExploreTab } from '@/slices/feedSlice';
 import NoApplications from '@/components/empty_fillers/applications';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Applications = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -28,14 +29,12 @@ const Applications = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

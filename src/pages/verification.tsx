@@ -13,6 +13,7 @@ import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
 import Protect from '@/utils/protect';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Verification = () => {
   const [sentOTP, setSentOTP] = useState(false);
@@ -43,14 +44,12 @@ const Verification = () => {
         } else {
           if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
           else {
-            Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-            console.log(res);
+            Toaster.stopLoad(toaster, SERVER_ERROR, 0);
           }
         }
       })
       .catch(err => {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(err);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       });
   };
 
@@ -66,14 +65,12 @@ const Verification = () => {
         } else {
           if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
           else {
-            Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-            console.log(res);
+            Toaster.stopLoad(toaster, SERVER_ERROR, 0);
           }
         }
       })
       .catch(err => {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(err);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       });
   };
 

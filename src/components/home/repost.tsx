@@ -41,7 +41,6 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       Toaster.stopLoad(toaster, 'Post Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-      console.log(res);
     }
   };
 

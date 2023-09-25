@@ -8,6 +8,7 @@ import postHandler from '@/handlers/post_handler';
 import isEmail from 'validator/lib/isEmail';
 import { ReactSVG } from 'react-svg';
 import { ArrowRight } from '@phosphor-icons/react';
+import { SERVER_ERROR } from '@/config/errors';
 
 const ForgotPassword = () => {
   const [sentURL, setSentURL] = useState(false);
@@ -34,14 +35,12 @@ const ForgotPassword = () => {
         } else {
           if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
           else {
-            Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-            console.log(res);
+            Toaster.stopLoad(toaster, SERVER_ERROR, 0);
           }
         }
       })
       .catch(err => {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(err);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       });
 
     setMutex(false);

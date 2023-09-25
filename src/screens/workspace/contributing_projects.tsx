@@ -9,6 +9,7 @@ import ProjectView from '../../sections/workspace/project_view';
 import NoProjects from '@/components/empty_fillers/contributing_projects';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import { useSelector } from 'react-redux';
+import { SERVER_ERROR } from '@/config/errors';
 
 const ContributingProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -31,14 +32,12 @@ const ContributingProjects = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

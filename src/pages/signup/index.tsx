@@ -47,7 +47,10 @@ const SignUp = () => {
       Toaster.error('Enter a Valid Email');
       return;
     }
-    if (!/^[a-z][a-z0-9_]{3,}/.test(username.trim().toLowerCase())) {
+    if (username.trim().length < 4) {
+      Toaster.error('Username too short');
+      return;
+    } else if (!/^([a-z][a-z0-9_]{4,})$/.test(username.trim().toLowerCase())) {
       Toaster.error('Enter a Valid Username');
       return;
     }
@@ -74,7 +77,7 @@ const SignUp = () => {
     const formData = {
       email,
       name: name.trim(),
-      username: username.toLowerCase(),
+      username: username.trim().toLowerCase(),
       password,
       confirmPassword,
     };
@@ -108,7 +111,6 @@ const SignUp = () => {
         if (err.response?.data?.message) Toaster.stopLoad(toaster, err.response.data.message, 0);
         else {
           Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-          console.log(err);
         }
         setMutex(false);
       });

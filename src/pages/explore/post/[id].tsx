@@ -17,6 +17,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import ProfileCard from '@/sections/explore/profile_card';
 import PostComponent from '@/components/home/post';
 import Loader from '@/components/common/loader';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   id: string;
@@ -36,14 +37,12 @@ const Post = ({ id }: Props) => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

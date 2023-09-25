@@ -11,6 +11,7 @@ import { ArrowDownLeft } from '@phosphor-icons/react';
 import Loader from '@/components/common/loader';
 import ProfileCardLoader from '@/components/loaders/feed_profile_card';
 import Connections from '../explore/connections_view';
+import { SERVER_ERROR } from '@/config/errors';
 
 const ProfileCard = () => {
   const [user, setUser] = useState(initialUser);
@@ -32,14 +33,12 @@ const ProfileCard = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

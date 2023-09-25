@@ -4,6 +4,7 @@ import patchHandler from '@/handlers/patch_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPhoneNumber, userSelector } from '@/slices/userSlice';
 import isMobilePhone from 'validator/lib/isMobilePhone';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,8 +41,7 @@ const UpdatePhoneNumber = ({ setShow }: Props) => {
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
-        Toaster.stopLoad(toaster, 'Internal Server Error', 0);
-        console.log(res);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setLockBtn(false);

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import RePostComponent from '@/components/home/repost';
 import { EXPLORE_URL } from '@/config/routes';
+import { SERVER_ERROR } from '@/config/errors';
 
 const Discover = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -27,14 +28,12 @@ const Discover = () => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

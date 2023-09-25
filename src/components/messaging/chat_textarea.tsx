@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   chat: Chat;
@@ -71,8 +72,7 @@ const ChatTextarea = ({ chat }: Props) => {
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
       else {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(res);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       }
     }
   };

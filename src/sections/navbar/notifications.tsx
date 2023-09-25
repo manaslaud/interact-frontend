@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUnreadNotifications, unreadNotificationsSelector } from '@/slices/feedSlice';
 import { NOTIFICATION_URL } from '@/config/routes';
 import Link from 'next/link';
+import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,14 +44,12 @@ const Notifications = ({ setShow }: Props) => {
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
-            Toaster.error('Internal Server Error', 'error_toaster');
-            console.log(res);
+            Toaster.error(SERVER_ERROR, 'error_toaster');
           }
         }
       })
       .catch(err => {
-        Toaster.error('Internal Server Error', 'error_toaster');
-        console.log(err);
+        Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
 

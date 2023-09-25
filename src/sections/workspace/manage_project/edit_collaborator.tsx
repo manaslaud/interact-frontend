@@ -61,7 +61,6 @@ const EditCollaborator = ({ setShow, membership, project, setProject }: Props) =
       setShow(false);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
-      console.log(res);
     }
     setMutex(false);
   };
