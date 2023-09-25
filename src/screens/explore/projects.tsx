@@ -90,7 +90,7 @@ const Projects = () => {
           {projects.length > 0 ? (
             <InfiniteScroll
               className={`w-full grid ${
-                navbarOpen ? 'grid-cols-3 px-16 gap-16' : 'grid-cols-4 px-12 gap-12'
+                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
               } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
               dataLength={projects.length}
               next={() => fetchProjects(new URLSearchParams(window.location.search).get('search'))}
@@ -114,7 +114,7 @@ const Projects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
-                    size={navbarOpen ? 80 : 72}
+                    size={navbarOpen || projects.length < 4 ? 80 : 72}
                     project={project}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}

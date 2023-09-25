@@ -15,12 +15,20 @@ import ConfirmDelete from '../common/confirm_delete';
 interface Props {
   index: number;
   project: Project;
+  size?: number;
   setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
   setClickedOnProject: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedProjectIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClickedProjectIndex }: Props) => {
+const ProjectCard = ({
+  index,
+  project,
+  size = 72,
+  setProjects,
+  setClickedOnProject,
+  setClickedProjectIndex,
+}: Props) => {
   const [clickedOnSettings, setClickedOnSettings] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
@@ -71,6 +79,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
     }
   };
 
+  const variants = ['w-80', 'w-72', 'w-64', 'w-56', 'h-80', 'h-72', 'h-64', 'h-56'];
   return (
     <>
       {clickedOnEdit ? (
@@ -86,7 +95,7 @@ const ProjectCard = ({ index, project, setProjects, setClickedOnProject, setClic
           setClickedProjectIndex(index);
         }}
         onMouseLeave={() => setClickedOnSettings(false)}
-        className="w-72 h-72 rounded-lg relative group cursor-pointer"
+        className={`w-${size} h-${size} max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
       >
         <div className="w-full h-full absolute top-0 hidden group-hover:flex justify-between gap-4 text-white animate-fade_third z-[6] rounded-lg p-2">
           {project.userID == user.id || user.editorProjects.includes(project.id) ? (

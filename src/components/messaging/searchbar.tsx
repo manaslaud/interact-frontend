@@ -23,7 +23,7 @@ const SearchBar = () => {
         value={search}
         onChange={el => setSearch(el.target.value)}
       />
-      <MagnifyingGlass size={32} className="text-gray-600 opacity-75" />
+      <MagnifyingGlass size={32} className="text-gray-600 dark:text-white opacity-75" />
     </form>
   );
 };

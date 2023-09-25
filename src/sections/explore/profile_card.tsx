@@ -65,7 +65,7 @@ const ProfileCard = ({ user }: Props) => {
           className={'rounded-full max-md:mx-auto w-44 h-44 cursor-default'}
         />
         <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
-        <div className="text-sm text-center">{user.bio || 'Professional Bio'}</div>
+        <div className="text-sm text-center">{user.bio}</div>
         <div className="w-full flex justify-center gap-6">
           <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
             <div className="font-bold">{numFollowers}</div>

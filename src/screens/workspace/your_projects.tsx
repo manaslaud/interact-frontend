@@ -11,6 +11,7 @@ import { Plus } from '@phosphor-icons/react';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import NoProjects from '@/components/empty_fillers/your_projects';
+import { navbarOpenSelector } from '@/slices/feedSlice';
 
 const YourProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -23,6 +24,7 @@ const YourProjects = () => {
 
   const [fadeIn, setFadeIn] = useState(true);
 
+  const navbarOpen = useSelector(navbarOpenSelector);
   const user = useSelector(userSelector);
 
   const getProjects = () => {
@@ -83,7 +85,11 @@ const YourProjects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8 gap-y-5">
+            <div
+              className={`w-full grid ${
+                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
+              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
+            >
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -102,6 +108,7 @@ const YourProjects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
+                    size={navbarOpen || projects.length < 4 ? 80 : 72}
                     project={project}
                     setProjects={setProjects}
                     setClickedOnProject={setClickedOnProject}

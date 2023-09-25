@@ -7,6 +7,8 @@ import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import ProjectView from '../../sections/workspace/project_view';
 import NoProjects from '@/components/empty_fillers/contributing_projects';
+import { navbarOpenSelector } from '@/slices/feedSlice';
+import { useSelector } from 'react-redux';
 
 const ContributingProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -16,6 +18,8 @@ const ContributingProjects = () => {
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
 
   const [fadeIn, setFadeIn] = useState(true);
+
+  const navbarOpen = useSelector(navbarOpenSelector);
 
   const getProjects = () => {
     const URL = `${WORKSPACE_URL}/contributing`;
@@ -48,7 +52,11 @@ const ContributingProjects = () => {
       ) : (
         <>
           {projects.length > 0 ? (
-            <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-1 max-md:gap-6 justify-items-center py-8">
+            <div
+              className={`w-full grid ${
+                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
+              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
+            >
               {clickedOnProject ? (
                 <ProjectView
                   projectSlugs={projects.map(project => project.slug)}
@@ -67,6 +75,7 @@ const ContributingProjects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
+                    size={navbarOpen || projects.length < 4 ? 80 : 72}
                     project={project}
                     setProjects={setProjects}
                     setClickedOnProject={setClickedOnProject}
