@@ -4,13 +4,13 @@ import Images from '@/components/workspace/new_project_images';
 import { VERIFICATION_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { userSelector } from '@/slices/userSlice';
+import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
 import router from 'next/router';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +30,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     if (title.trim() == '') {
@@ -78,6 +80,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       setTags([]);
       setLinks([]);
       setImage(undefined);
+      dispatch(setOwnerProjects([...user.ownerProjects, project.id]));
       setShow(false);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);

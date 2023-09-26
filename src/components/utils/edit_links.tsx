@@ -10,9 +10,10 @@ interface Props {
   setLinks: React.Dispatch<React.SetStateAction<string[]>>;
   maxLinks?: number;
   title?: string;
+  blackBorder?: boolean;
 }
 
-const Links = ({ links, setLinks, maxLinks = 5, title = 'Links' }: Props) => {
+const Links = ({ links, setLinks, maxLinks = 5, title = 'Links', blackBorder = false }: Props) => {
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
@@ -80,7 +81,11 @@ const Links = ({ links, setLinks, maxLinks = 5, title = 'Links' }: Props) => {
           {links.length < maxLinks ? (
             <form onSubmit={addLink}>
               <input
-                className="w-full h-12 bg-transparent dark:bg-[#10013b30] focus:outline-none border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg px-4 py-2"
+                className={`w-full h-12  ${
+                  blackBorder
+                    ? 'border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
+                    : 'bg-transparent dark:bg-[#10013b30] border-gray-400 dark:border-dark_primary_btn'
+                } focus:outline-none border-[1px] rounded-lg px-4 py-2`}
                 value={newLink}
                 onChange={el => setNewLink(el.target.value)}
                 placeholder="Add a New Link"

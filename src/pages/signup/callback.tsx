@@ -68,7 +68,8 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1));
           socketService.connect(user.id);
-          router.replace('/home');
+          sessionStorage.setItem('onboarding-redirect', 'signup-callback');
+          router.replace('/onboarding');
         }
         setMutex(false);
       })

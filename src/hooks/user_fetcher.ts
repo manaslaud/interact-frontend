@@ -21,6 +21,7 @@ import {
   setFetchedOpeningBookmarks,
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
+  setFetchedProjects,
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadNotifications,
 } from '@/slices/configSlice';
@@ -35,6 +36,7 @@ import {
   setManagerProjects,
   setMemberProjects,
   setOpeningBookmarks,
+  setOwnerProjects,
   setPersonalChatSlices,
   setPostBookmarks,
   setProjectBookmarks,
@@ -46,6 +48,7 @@ import {
   Membership,
   OpeningBookmark,
   PostBookmark,
+  Project,
   ProjectBookmark,
   User,
 } from '@/types';
@@ -153,6 +156,26 @@ const useUserStateFetcher = () => {
       });
   };
 
+  const fetchProjects = () => {
+    if (moment().utc().diff(config.lastFetchedProjects, 'minute') < 30) return;
+    const URL = `${WORKSPACE_URL}/my`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const projects: string[] = [];
+
+          res.data.projects?.forEach((project: Project) => {
+            projects.push(project.id);
+          });
+          dispatch(setOwnerProjects(projects));
+          dispatch(setFetchedProjects(new Date().toUTCString()));
+        } else Toaster.error(res.data.message, 'error_toaster');
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
   const fetchContributingProjects = () => {
     if (moment().utc().diff(config.lastFetchedContributingProjects, 'minute') < 30) return;
     const URL = `${WORKSPACE_URL}/memberships`;
@@ -246,6 +269,7 @@ const useUserStateFetcher = () => {
     fetchLikes();
     fetchBookmarks();
     fetchChats();
+    fetchProjects();
     fetchContributingProjects();
     fetchApplications();
     fetchUnreadNotifications();

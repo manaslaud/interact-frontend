@@ -21,6 +21,7 @@ interface UserState {
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   openingBookmarks: OpeningBookmark[];
+  ownerProjects: string[];
   memberProjects: string[];
   editorProjects: string[];
   managerProjects: string[];
@@ -50,6 +51,7 @@ const initialState: UserState = {
   openingBookmarks: [],
   chats: [],
   personalChatSlices: [],
+  ownerProjects: [],
   memberProjects: [],
   editorProjects: [],
   managerProjects: [],
@@ -75,6 +77,7 @@ export const userSlice = createSlice({
       state.links = action.payload.links;
       state.chats = [];
       state.personalChatSlices = [];
+      state.ownerProjects = [];
       state.memberProjects = [];
       state.editorProjects = [];
       state.managerProjects = [];
@@ -98,6 +101,7 @@ export const userSlice = createSlice({
       state.isVerified = false;
       state.chats = [];
       state.personalChatSlices = [];
+      state.ownerProjects = [];
       state.memberProjects = [];
       state.editorProjects = [];
       state.managerProjects = [];
@@ -115,11 +119,23 @@ export const userSlice = createSlice({
     setProfilePic: (state, action: PayloadAction<string>) => {
       state.profilePic = action.payload;
     },
+    setReduxTagline: (state, action: PayloadAction<string>) => {
+      state.tagline = action.payload;
+    },
+    setReduxBio: (state, action: PayloadAction<string>) => {
+      state.bio = action.payload;
+    },
     setFollowing: (state, action: PayloadAction<string[]>) => {
       state.following = action.payload;
     },
     setLikes: (state, action: PayloadAction<string[]>) => {
       state.likes = action.payload;
+    },
+    setReduxLinks: (state, action: PayloadAction<string[]>) => {
+      state.links = action.payload;
+    },
+    resetReduxLinks: state => {
+      state.links = [];
     },
     setPostBookmarks: (state, action: PayloadAction<PostBookmark[]>) => {
       state.postBookmarks = action.payload;
@@ -148,6 +164,9 @@ export const userSlice = createSlice({
     setManagerProjects: (state, action: PayloadAction<string[]>) => {
       state.managerProjects = action.payload;
     },
+    setOwnerProjects: (state, action: PayloadAction<string[]>) => {
+      state.ownerProjects = action.payload;
+    },
     setApplications: (state, action: PayloadAction<string[]>) => {
       state.applications = action.payload;
     },
@@ -168,8 +187,12 @@ export const {
   resetUser,
   setReduxName,
   setProfilePic,
+  setReduxTagline,
+  setReduxBio,
   setFollowing,
   setLikes,
+  setReduxLinks,
+  resetReduxLinks,
   setPostBookmarks,
   setProjectBookmarks,
   setOpeningBookmarks,
@@ -179,6 +202,7 @@ export const {
   setMemberProjects,
   setEditorProjects,
   setManagerProjects,
+  setOwnerProjects,
   setApplications,
   setEmail,
   setPhoneNumber,

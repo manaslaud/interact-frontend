@@ -3,8 +3,8 @@ import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL, PROJECT_URL } from '@/config/routes';
 import { CircleDashed, Eye, EyeSlash, HeartStraight } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
-import { userSelector } from '@/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setManagerProjects, setOwnerProjects, userSelector } from '@/slices/userSlice';
 import EditProject from '@/sections/workspace/edit_project';
 import Link from 'next/link';
 import patchHandler from '@/handlers/patch_handler';
@@ -35,6 +35,8 @@ const ProjectCard = ({
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
   const user = useSelector(userSelector);
+
+  const dispatch = useDispatch();
 
   const handleUnPublish = async () => {
     const toaster = Toaster.startLoad('Editing your project...');
@@ -71,6 +73,7 @@ const ProjectCard = ({
 
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
+      dispatch(setOwnerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
       setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {

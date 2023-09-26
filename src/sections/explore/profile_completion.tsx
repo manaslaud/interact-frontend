@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const ProfileCompletion = () => {
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(true);
 
   const user = useSelector(userSelector);
 
@@ -15,14 +15,14 @@ const ProfileCompletion = () => {
     if (user.links || [].length != 0) counter++;
     if (user.tagline != '') counter++;
     if (user.email != '') counter++;
-    if (user.isVerified) counter++;
+    if (user.ownerProjects || [].length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
 
   const completionPercentage = getPercentage();
 
   useEffect(() => {
-    if (completionPercentage == 100) setHide(true);
+    if (completionPercentage != 100) setHide(false);
     const circleBackground = document.getElementById('circleBackground');
     const circleLength = 2 * Math.PI * parseFloat(circleBackground?.getAttribute('r') as string);
     const dashOffset = circleLength * ((100 - completionPercentage) / 100);

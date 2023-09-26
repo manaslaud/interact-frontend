@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const ProfileCompletion = () => {
   const [open, setOpen] = useState(false);
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(true);
 
   const user = useSelector(userSelector);
 
@@ -17,14 +17,14 @@ const ProfileCompletion = () => {
     if (user.links || [].length != 0) counter++;
     if (user.tagline != '') counter++;
     if (user.email != '') counter++;
-    if (user.isVerified) counter++;
+    if (user.ownerProjects || [].length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
 
   const completionPercentage = getPercentage();
 
   useEffect(() => {
-    if (completionPercentage == 100) setHide(true);
+    if (completionPercentage != 100) setHide(false);
     const circleBackground = document.getElementById('circleBackground');
     const circleLength = 2 * Math.PI * 40;
     const dashOffset = circleLength * ((100 - completionPercentage) / 100);
@@ -71,7 +71,7 @@ const ProfileCompletion = () => {
             cx="50"
             cy="50"
             r={`${open ? '40' : '75'}`}
-            className="transition-ease-500 stroke-black dark:stroke-dark_primary_btn"
+            className="transition-ease-500 stroke-dark_primary_btn"
             fill="transparent"
             stroke-width="5"
             stroke-dasharray="251.3274"
@@ -93,7 +93,15 @@ const ProfileCompletion = () => {
           <ArrowUpRight weight="bold" />
         </Link>
       </div>
-      <div className={`w-full ${open ? 'opacity-100' : 'opacity-0'} transition-ease-500 text-gray-800 dark:text-white`}>
+      <div
+        className={`w-full ${
+          open ? 'opacity-100' : 'opacity-0'
+        } cursor-default transition-ease-500 text-gray-800 dark:text-white`}
+      >
+        <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
+          {user.ownerProjects || [].length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
+          <div>Create a Project</div>
+        </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.links || [].length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
           <div>Add Links to your social media</div>
@@ -105,11 +113,6 @@ const ProfileCompletion = () => {
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.tagline != '' ? <CheckCircle size={32} /> : <Circle size={32} />}
           <div>Add a Tagline</div>
-        </div>
-        <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
-          {user.isVerified ? <CheckCircle size={32} /> : <Circle size={32} />}
-          {/* <div>Create a Project</div> */}
-          <div>Verify your account</div>
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.email != '' ? <CheckCircle size={32} /> : <Circle size={32} />}

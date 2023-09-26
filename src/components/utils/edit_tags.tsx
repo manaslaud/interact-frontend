@@ -4,9 +4,10 @@ interface Props {
   tags: string[];
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
   maxTags?: number;
+  blackBorder?: boolean;
 }
 
-const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
+const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false }: Props) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +35,9 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
       {tags.map(tag => (
         <div
           key={tag}
-          className="flex-center px-2 py-1 border-[1px] border-gray-400  dark:border-dark_primary_btn rounded-md cursor-default"
+          className={`flex-center px-3 py-2 border-[1px] ${
+            blackBorder ? 'border-black' : 'border-gray-400 dark:border-dark_primary_btn'
+          } rounded-md cursor-default`}
         >
           {tag}
           <svg
@@ -51,8 +54,12 @@ const Tags = ({ tags, setTags, maxTags = 5 }: Props) => {
       {tags.length < maxTags ? (
         <input
           type="text"
-          className="w-fit bg-transparent outline-none"
-          placeholder="Add tags"
+          className={`w-36 border-[1px] ${
+            blackBorder
+              ? 'border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
+              : 'bg-transparent border-gray-400 dark:border-dark_primary_btn'
+          } rounded-md px-3 py-2 outline-none`}
+          placeholder="tags here"
           value={tagInput}
           onChange={handleTagInputChange}
           onKeyDown={handleTagInputKeyDown}

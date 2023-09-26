@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface ConfigState {
   updatingFollowing: boolean;
@@ -11,6 +11,7 @@ interface ConfigState {
   lastFetchedProjectBookmarks: string;
   lastFetchedOpeningBookmarks: string;
   lastFetchedChats: string;
+  lastFetchedProjects: string;
   lastFetchedContributingProjects: string;
   lastFetchedApplications: string;
   lastFetchedUnreadNotifications: string;
@@ -44,6 +45,7 @@ const initialState: ConfigState = {
   lastFetchedProjectBookmarks: getInitialDate(),
   lastFetchedOpeningBookmarks: getInitialDate(),
   lastFetchedChats: getInitialDate(),
+  lastFetchedProjects: getInitialDate(),
   lastFetchedContributingProjects: getInitialDate(),
   lastFetchedApplications: getInitialDate(),
   lastFetchedUnreadNotifications: getInitialNotificationDate(),
@@ -63,7 +65,7 @@ export const configSlice = createSlice({
       state.lastFetchedProjectBookmarks = getInitialDate();
       state.lastFetchedOpeningBookmarks = getInitialDate();
       state.lastFetchedChats = getInitialDate();
-      state.lastFetchedContributingProjects = getInitialDate();
+      (state.lastFetchedProjects = getInitialDate()), (state.lastFetchedContributingProjects = getInitialDate());
       state.lastFetchedApplications = getInitialDate();
       state.lastFetchedUnreadNotifications = getInitialNotificationDate();
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();
@@ -84,6 +86,7 @@ export const configSlice = createSlice({
       state.lastFetchedProjectBookmarks = new Date().toUTCString();
       state.lastFetchedOpeningBookmarks = new Date().toUTCString();
       state.lastFetchedChats = new Date().toUTCString();
+      state.lastFetchedProjects = new Date().toUTCString();
       state.lastFetchedContributingProjects = new Date().toUTCString();
       state.lastFetchedUnreadNotifications = new Date().toUTCString();
       state.lastFetchedUnreadInvitations = new Date().toUTCString();
@@ -105,6 +108,9 @@ export const configSlice = createSlice({
     },
     setFetchedChats: (state, action: PayloadAction<string>) => {
       state.lastFetchedChats = action.payload;
+    },
+    setFetchedProjects: (state, action: PayloadAction<string>) => {
+      state.lastFetchedProjects = action.payload;
     },
     setFetchedContributingProjects: (state, action: PayloadAction<string>) => {
       state.lastFetchedContributingProjects = action.payload;
@@ -133,6 +139,7 @@ export const {
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setFetchedOpeningBookmarks,
+  setFetchedProjects,
   setFetchedContributingProjects,
   setFetchedApplications,
   setLastFetchedUnreadNotifications,

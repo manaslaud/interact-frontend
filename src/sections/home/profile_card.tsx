@@ -119,7 +119,7 @@ const ProfileCard = () => {
               {user.tags && user.tags.length > 0 ? (
                 <div
                   className={`w-full ${
-                    open ? 'gap-2 mt-12' : 'gap-0 mt-0'
+                    open ? 'gap-2 mt-2' : 'gap-0 mt-0'
                   } transition-ease-500 flex flex-wrap items-center justify-center`}
                 >
                   {user.tags.map(tag => {
@@ -151,7 +151,7 @@ const ProfileCard = () => {
               {user.links && user.links.length > 0 ? (
                 <div
                   className={`w-full ${
-                    open ? 'gap-2 mt-4' : 'gap-0 mt-0'
+                    open ? 'gap-2 mt-2' : 'gap-0 mt-0'
                   } transition-ease-500 flex flex-wrap items-center justify-center`}
                 >
                   {user.links.map((link, index) => {
@@ -182,7 +182,7 @@ const ProfileCard = () => {
               <Link
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${
-                  open ? 'mt-12' : 'mt-0'
+                  open ? 'mt-4' : 'mt-0'
                 } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
               >
                 Edit

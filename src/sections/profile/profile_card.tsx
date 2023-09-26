@@ -8,7 +8,14 @@ import { resizeImage } from '@/utils/resize_image';
 import { ArrowArcLeft, Check, Pen } from '@phosphor-icons/react';
 import { useDispatch } from 'react-redux';
 import patchHandler from '@/handlers/patch_handler';
-import { setProfilePic, setReduxName } from '@/slices/userSlice';
+import {
+  resetReduxLinks,
+  setProfilePic,
+  setReduxBio,
+  setReduxLinks,
+  setReduxName,
+  setReduxTagline,
+} from '@/slices/userSlice';
 import Links from '@/components/utils/edit_links';
 import getDomainName from '@/utils/get_domain_name';
 import getIcon from '@/utils/get_icon';
@@ -53,8 +60,10 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
     if (name != user.name) formData.append('name', name);
     if (bio != user.bio) formData.append('bio', bio);
     if (tagline != user.tagline) formData.append('tagline', tagline);
-    if (isArrEdited(tags, user.tags)) tags.forEach(tag => formData.append('tags', tag));
-    if (isArrEdited(links, user.links)) links.forEach(link => formData.append('links', link));
+    // if (isArrEdited(tags, user.tags))
+    tags.forEach(tag => formData.append('tags', tag));
+    // if (isArrEdited(links, user.links))
+    links.forEach(link => formData.append('links', link));
 
     const URL = `${USER_URL}/me`;
 
@@ -65,7 +74,13 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
       const coverPic = res.data.user.coverPic;
       setUser(prev => ({ ...prev, name, bio, tags, links, tagline, profilePic, coverPic }));
       dispatch(setProfilePic(profilePic));
-      dispatch(setReduxName(name));
+      if (name != user.name) dispatch(setReduxName(name));
+      if (bio != user.bio) dispatch(setReduxBio(bio));
+      if (tagline != user.tagline) dispatch(setReduxTagline(tagline));
+      if (isArrEdited(links, user.links)) {
+        if (links.length > 0) dispatch(setReduxLinks(links));
+        else dispatch(resetReduxLinks()); //! not working
+      }
       Toaster.stopLoad(toaster, 'Profile Updated', 1);
       setClickedOnEdit(false);
     } else if (res.statusCode == 413) {
