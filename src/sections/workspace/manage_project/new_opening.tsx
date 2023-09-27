@@ -28,6 +28,10 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
       Toaster.error('Description Cannot be Empty');
       return;
     }
+    if (tags.length == 0) {
+      Toaster.error('Tags Cannot be Empty');
+      return;
+    }
 
     if (mutex) return;
     setMutex(true);

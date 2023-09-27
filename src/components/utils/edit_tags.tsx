@@ -31,12 +31,18 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false }: Props) => {
   };
 
   return (
-    <div className="w-fit flex flex-wrap items-center gap-2 rounded-md">
+    <div
+      className={`w-full ${
+        blackBorder
+          ? 'p-4 border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
+          : 'p-2 bg-transparent border-black dark:border-dark_primary_btn'
+      } border-[1px] flex flex-wrap items-center gap-2 rounded-md`}
+    >
       {tags.map(tag => (
         <div
           key={tag}
           className={`flex-center px-3 py-2 border-[1px] ${
-            blackBorder ? 'border-black' : 'border-gray-400 dark:border-dark_primary_btn'
+            blackBorder ? 'border-black bg-[#ffffff40]' : 'border-gray-400 dark:border-dark_primary_btn'
           } rounded-md cursor-default`}
         >
           {tag}
@@ -54,10 +60,10 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false }: Props) => {
       {tags.length < maxTags ? (
         <input
           type="text"
-          className={`w-36 border-[1px] ${
+          className={`grow min-w-[24px] border-[1px] ${
             blackBorder
-              ? 'border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
-              : 'bg-transparent border-gray-400 dark:border-dark_primary_btn'
+              ? 'border-transparent placeholder:text-[#202020c6] bg-transparent'
+              : 'bg-transparent border-transparent'
           } rounded-md px-3 py-2 outline-none`}
           placeholder="tags here"
           value={tagInput}

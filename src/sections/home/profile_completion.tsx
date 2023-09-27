@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, CheckCircle, Circle } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
+import { profileCompletionOpenSelector, setProfileCompletionOpen } from '@/slices/feedSlice';
 
 const ProfileCompletion = () => {
-  const [open, setOpen] = useState(false);
   const [hide, setHide] = useState(true);
 
   const user = useSelector(userSelector);
+  const open = useSelector(profileCompletionOpenSelector);
+
+  const dispatch = useDispatch();
 
   const getPercentage = (): number => {
     const totalPoints = 5;
     var counter = 0;
     if (user.bio != '') counter++;
-    if (user.links || [].length != 0) counter++;
+    if ((user.links || []).length != 0) counter++;
     if (user.tagline != '') counter++;
     if (user.email != '') counter++;
-    if (user.ownerProjects || [].length != 0) counter++;
+    if ((user.ownerProjects || []).length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
 
@@ -42,7 +45,7 @@ const ProfileCompletion = () => {
       } shadow-md transition-ease-500 max-md:h-fit fixed overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-400 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-xl z-10`}
     >
       <div
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => dispatch(setProfileCompletionOpen(!open))}
         className={`absolute ${
           open ? 'top-2 right-2' : 'top-[8px] right-[6px]'
         } text-gray-500 dark:text-white transition-ease-500 cursor-pointer`}
@@ -99,20 +102,60 @@ const ProfileCompletion = () => {
         } cursor-default transition-ease-500 text-gray-800 dark:text-white`}
       >
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
-          {user.ownerProjects || [].length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
-          <div>Create a Project</div>
+          {(user.ownerProjects || []).length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
+          {(user.ownerProjects || []).length != 0 ? (
+            <div className="cursor-default">Create a Project</div>
+          ) : (
+            <Link
+              href={'/workspace?action=new_project'}
+              onClick={() => dispatch(setProfileCompletionOpen(false))}
+              className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
+            >
+              Create a Project
+            </Link>
+          )}
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
-          {user.links || [].length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
-          <div>Add Links to your social media</div>
+          {(user.links || []).length != 0 ? <CheckCircle size={32} /> : <Circle size={32} />}
+          {(user.links || []).length != 0 ? (
+            <div className="cursor-default">Add Links to your social media</div>
+          ) : (
+            <Link
+              href={'/profile?action=edit'}
+              onClick={() => dispatch(setProfileCompletionOpen(false))}
+              className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
+            >
+              Add Links to your social media
+            </Link>
+          )}
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.bio != '' ? <CheckCircle size={32} /> : <Circle size={32} />}
-          <div>Add a Descriptive Bio</div>
+          {user.bio != '' ? (
+            <div className="cursor-default">Add a Descriptive Bio</div>
+          ) : (
+            <Link
+              href={'/profile?action=edit'}
+              onClick={() => dispatch(setProfileCompletionOpen(false))}
+              className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
+            >
+              Add a Descriptive Bio
+            </Link>
+          )}
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.tagline != '' ? <CheckCircle size={32} /> : <Circle size={32} />}
-          <div>Add a Tagline</div>
+          {user.tagline != '' ? (
+            <div className="cursor-default">Add a Tagline</div>
+          ) : (
+            <Link
+              href={'/profile?action=edit'}
+              onClick={() => dispatch(setProfileCompletionOpen(false))}
+              className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
+            >
+              Add a Tagline
+            </Link>
+          )}
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
           {user.email != '' ? <CheckCircle size={32} /> : <Circle size={32} />}

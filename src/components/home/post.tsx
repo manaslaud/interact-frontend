@@ -30,6 +30,28 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
 
   const [caption, setCaption] = useState(post.content);
 
+  const renderCaptionWithLinks = (caption: string) => {
+    const words = caption.split(' ');
+
+    return words.map((word, index) => {
+      if (word.startsWith('https://')) {
+        return (
+          <a
+            key={index}
+            href={word}
+            className="hover:text-primary_text underline underline-offset-2 transition-ease-100"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {word}
+          </a>
+        );
+      }
+
+      return <span key={index}>{word} </span>;
+    });
+  };
+
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your post...');
 
@@ -252,7 +274,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
             className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
           />
         ) : (
-          <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>
+          <div className="w-full text-sm whitespace-pre-wrap mb-2">{renderCaptionWithLinks(post.content)}</div>
         )}
         {showLowerPost ? <LowerPost setFeed={setFeed} post={post} /> : <></>}
       </div>

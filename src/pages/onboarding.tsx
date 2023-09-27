@@ -272,7 +272,7 @@ const Onboarding = () => {
 
               <div className="font-medium text-center break-words">{tagline || 'Here goes your Tagline'}</div>
 
-              <div className={`w-full text-sm text-center line-clamp-6`}>
+              <div className={`w-full ${bio == '' ? 'italic' : ''} text-sm text-center line-clamp-6`}>
                 {bio || 'Space for you to describe yourself'}
               </div>
 

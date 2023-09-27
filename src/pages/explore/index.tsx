@@ -4,6 +4,7 @@ import SearchBar from '@/components/explore/searchbar';
 import Openings from '@/screens/explore/openings';
 import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
+import ProfileCompletion from '@/sections/home/profile_completion';
 import { exploreTabSelector, setExploreTab } from '@/slices/feedSlice';
 import Protect from '@/utils/protect';
 import BaseWrapper from '@/wrappers/base';
@@ -31,6 +32,7 @@ const Explore = () => {
             <Users />
           </div>
         </div>
+        <ProfileCompletion />
       </MainWrapper>
       {/* <SideWrapper>
         <div></div>

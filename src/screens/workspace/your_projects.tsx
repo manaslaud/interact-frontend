@@ -62,8 +62,10 @@ const YourProjects = () => {
   };
 
   useEffect(() => {
+    const action = new URLSearchParams(window.location.search).get('action');
+    if (action && action == 'new_project') setClickedOnNewProject(true);
     getProjects();
-  }, []);
+  }, [window.location.search]);
   return (
     <div className="w-full px-2">
       {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}

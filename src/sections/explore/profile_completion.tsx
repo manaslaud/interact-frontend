@@ -1,21 +1,25 @@
+import { profileCompletionOpenSelector, setProfileCompletionOpen } from '@/slices/feedSlice';
 import { userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileCompletion = () => {
   const [hide, setHide] = useState(true);
 
   const user = useSelector(userSelector);
+  const open = useSelector(profileCompletionOpenSelector);
+
+  const dispatch = useDispatch();
 
   const getPercentage = (): number => {
     const totalPoints = 5;
     var counter = 0;
     if (user.bio != '') counter++;
-    if (user.links || [].length != 0) counter++;
+    if ((user.links || []).length != 0) counter++;
     if (user.tagline != '') counter++;
     if (user.email != '') counter++;
-    if (user.ownerProjects || [].length != 0) counter++;
+    if ((user.ownerProjects || []).length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
 
@@ -29,11 +33,11 @@ const ProfileCompletion = () => {
     circleBackground?.setAttribute('stroke-dashoffset', String(dashOffset));
   }, []);
   return (
-    <Link
-      href={'/profile?action=edit'}
+    <div
+      onClick={() => dispatch(setProfileCompletionOpen(!open))}
       className={`${
         hide ? 'hidden' : ''
-      } w-full py-4 p-8 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md transition-ease-500`}
+      } w-full py-4 p-8 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer transition-ease-500`}
     >
       <div className="flex flex-col gap-1">
         <div className="text-gradient text-5xl font-bold">Complete Profile</div>
@@ -56,7 +60,7 @@ const ProfileCompletion = () => {
           />
         </svg>
       </div>
-    </Link>
+    </div>
   );
 };
 

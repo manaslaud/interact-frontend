@@ -84,6 +84,8 @@ const Projects = () => {
     if (tab && tab == 'users') dispatch(setExploreTab(2));
   }, []);
 
+  const variants = ['grid-cols-1', 'grid-cols-2', 'grid-cols-3'];
+
   return (
     <div className="w-full py-2">
       {loading ? (
@@ -93,7 +95,11 @@ const Projects = () => {
           {projects.length > 0 ? (
             <InfiniteScroll
               className={`w-full grid ${
-                navbarOpen ? 'grid-cols-3 px-4 gap-12' : 'grid-cols-4 px-12 gap-8'
+                projects.length < 4
+                  ? `grid-cols-${projects.length} px-12`
+                  : navbarOpen
+                  ? 'grid-cols-3 px-4 gap-12'
+                  : 'grid-cols-4 px-12 gap-8'
               } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 items-center justify-items-center transition-ease-out-500`}
               // className={`${
               //   navbarOpen ? 'w-[calc(100vw-380px)]' : 'w-[calc(100vw-180px)]'

@@ -1,11 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface FeedState {
   unreadNotifications: number;
   unreadInvitations: number;
   navbarOpen: boolean;
+  profileCompletionOpen: boolean;
   homeTab: number;
   exploreTab: number;
   workspaceTab: number;
@@ -17,6 +18,7 @@ const initialState: FeedState = {
   unreadNotifications: 0,
   unreadInvitations: 0,
   navbarOpen: true,
+  profileCompletionOpen: false,
   homeTab: 0,
   exploreTab: 0,
   workspaceTab: 0,
@@ -30,6 +32,9 @@ export const feedSlice = createSlice({
   reducers: {
     setNavbarOpen: (state, action: PayloadAction<boolean>) => {
       state.navbarOpen = action.payload;
+    },
+    setProfileCompletionOpen: (state, action: PayloadAction<boolean>) => {
+      state.profileCompletionOpen = action.payload;
     },
     setHomeTab: (state, action: PayloadAction<number>) => {
       state.homeTab = action.payload;
@@ -63,6 +68,7 @@ export const feedSlice = createSlice({
 
 export const {
   setNavbarOpen,
+  setProfileCompletionOpen,
   setHomeTab,
   setExploreTab,
   setWorkspaceTab,
@@ -77,6 +83,7 @@ export const {
 export default feedSlice.reducer;
 
 export const navbarOpenSelector = (state: RootState) => state.feed.navbarOpen;
+export const profileCompletionOpenSelector = (state: RootState) => state.feed.profileCompletionOpen;
 export const homeTabSelector = (state: RootState) => state.feed.homeTab;
 export const workspaceTabSelector = (state: RootState) => state.feed.workspaceTab;
 export const exploreTabSelector = (state: RootState) => state.feed.exploreTab;
