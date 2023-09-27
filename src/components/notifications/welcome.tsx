@@ -10,8 +10,8 @@ const Welcome = ({ notification }: Props) => {
   return (
     <NotificationWrapper notification={notification}>
       <div className="w-fit text-center flex-center gap-4">
-        <div className="text-xl font-bold text-center cursor-default">Welcome!🎉</div>
-        <div className="">Woohoo! You made it to Interact 🥳</div>
+        <div className="text-xl font-bold text-center cursor-default">Welcome!</div>
+        <div className="">Woohoo! You made it to Interact 🎉🥳</div>
       </div>
     </NotificationWrapper>
   );

@@ -18,6 +18,7 @@ import axios from 'axios';
 import nookies from 'nookies';
 import { SERVER_ERROR } from '@/config/errors';
 import configuredAxios from '@/config/axios';
+import generateRandomProfilePicture from '@/utils/generate_profile_picture';
 
 interface Props {
   token: string;
@@ -42,14 +43,18 @@ const SignUpCallback = ({ token }: Props) => {
 
     if (mutex) return;
     setMutex(true);
-    const formData = {
-      username: username.trim().toLowerCase(),
-    };
+
+    const randomProfilePic = await generateRandomProfilePicture(1080, 1080);
+
+    const formData = new FormData();
+    formData.append('username', username.trim().toLowerCase());
+    if (randomProfilePic) formData.append('profilePic', randomProfilePic);
+
     const toaster = Toaster.startLoad('Creating your account...');
 
     await configuredAxios
       .post(`${BACKEND_URL}/auth/signup`, formData, {
-        headers: { Authorization: 'Bearer ' + token },
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + token },
         withCredentials: true,
       })
       .then(res => {

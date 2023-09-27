@@ -32,7 +32,7 @@ export const resizeImage = async (file: File, width: number, height: number): Pr
         ctx?.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
 
         canvas.toBlob(
-          (croppedBlob) => {
+          croppedBlob => {
             if (croppedBlob) {
               // Create a File object with the cropped blob
               const fileName = file.name;
@@ -47,14 +47,14 @@ export const resizeImage = async (file: File, width: number, height: number): Pr
         );
       };
 
-      img.onerror = (error) => {
-        console.log(error)
+      img.onerror = error => {
+        console.log(error);
         reject(new Error('Failed to load the image.'));
       };
 
       img.src = URL.createObjectURL(file);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       reject(new Error('Error in Cropping: ' + err));
     }
   });

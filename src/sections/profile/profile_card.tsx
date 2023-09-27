@@ -50,6 +50,11 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
+    if (name.trim() == '') {
+      Toaster.error('Name Cannot be empty', 'validation_toaster');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
 

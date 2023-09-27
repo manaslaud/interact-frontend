@@ -85,7 +85,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="w-full p-2">
+    <div className="w-full py-2">
       {loading ? (
         <Loader />
       ) : (
@@ -93,8 +93,11 @@ const Projects = () => {
           {projects.length > 0 ? (
             <InfiniteScroll
               className={`w-full grid ${
-                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
-              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
+                navbarOpen ? 'grid-cols-3 px-4 gap-12' : 'grid-cols-4 px-12 gap-8'
+              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 items-center justify-items-center transition-ease-out-500`}
+              // className={`${
+              //   navbarOpen ? 'w-[calc(100vw-380px)]' : 'w-[calc(100vw-180px)]'
+              // } mx-auto flex justify-center gap-8 flex-wrap max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
               dataLength={projects.length}
               next={() => fetchProjects(new URLSearchParams(window.location.search).get('search'))}
               hasMore={hasMore}
@@ -117,7 +120,8 @@ const Projects = () => {
                   <ProjectCard
                     key={project.id}
                     index={index}
-                    size={navbarOpen || projects.length < 4 ? 80 : 72}
+                    // size={navbarOpen || projects.length < 4 ? '[21vw]' : '80'}
+                    size={navbarOpen || projects.length < 4 ? '[22vw]' : '72'}
                     project={project}
                     setClickedOnProject={setClickedOnProject}
                     setClickedProjectIndex={setClickedProjectIndex}

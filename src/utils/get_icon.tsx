@@ -23,6 +23,7 @@ import {
   GoogleLogo,
   GooglePhotosLogo,
   GooglePlayLogo,
+  InstagramLogo,
   Link,
   LinkedinLogo,
   LinuxLogo,
@@ -102,6 +103,8 @@ const getIcon = (str: string, size = 32): ReactElement => {
       return <GooglePhotosLogo size={size} weight="duotone" />;
     case 'play':
       return <GooglePlayLogo size={size} weight="duotone" />;
+    case 'instagram':
+      return <InstagramLogo size={size} weight="duotone" />;
     case 'linkedin':
       return <LinkedinLogo size={size} weight="duotone" />;
     case 'linux':

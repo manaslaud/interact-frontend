@@ -51,6 +51,11 @@ const Onboarding = () => {
   }, []);
 
   const handleSubmit = async () => {
+    if (name.trim() == '') {
+      Toaster.error('Name Cannot be empty', 'validation_toaster');
+      return;
+    }
+
     const toaster = Toaster.startLoad('Setting your Profile...');
     const formData = new FormData();
     if (userPic) formData.append('profilePic', userPic);
@@ -140,6 +145,7 @@ const Onboarding = () => {
                   <input
                     className="w-full bg-[#ffffff40] border-[1px] text-lg max-md:text-base border-black rounded-lg p-2 focus:outline-none"
                     type="text"
+                    maxLength={25}
                     value={name}
                     onChange={el => setName(el.target.value)}
                   />
@@ -155,6 +161,7 @@ const Onboarding = () => {
                   <input
                     className="w-full bg-[#ffffff40] placeholder:text-[#202020c6] border-[1px] text-lg max-md:text-base border-black rounded-lg p-2 focus:outline-none"
                     type="text"
+                    maxLength={25}
                     placeholder="A Professional Tagline"
                     value={tagline}
                     onChange={el => setTagline(el.target.value)}
@@ -164,6 +171,7 @@ const Onboarding = () => {
                 <>
                   <textarea
                     className="bg-[#ffffff40] h-[96px] min-h-[96px] max-h-64 placeholder:text-[#202020c6] border-[1px] border-black rounded-lg p-2 focus:outline-none"
+                    maxLength={300}
                     placeholder="A descriptive Bio"
                     value={bio}
                     onChange={el => setBio(el.target.value)}

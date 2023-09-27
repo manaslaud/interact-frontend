@@ -15,8 +15,12 @@ const Discover = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  const [option, setOption] = useState(1);
+
+  const [clickedOnOptions, setClickedOnOptions] = useState(false);
+
   const getFeed = () => {
-    const URL = `${EXPLORE_URL}/posts?page=${page}&limit=${5}`;
+    const URL = `${EXPLORE_URL}/posts/trending?page=${page}&limit=${5}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -38,11 +42,37 @@ const Discover = () => {
   };
 
   useEffect(() => {
+    // setPage(1);
+    // setFeed([]);
     getFeed();
-  }, []);
+  }, [option]);
 
   return (
     <div className="w-full">
+      {/* <div
+        onClick={() => setClickedOnOptions(prev => !prev)}
+        className="h-12 rotate-90 text-primary_text dark:text-white fixed flex-center top-[90px] right-[25vw] cursor-pointer"
+      >
+        •••
+      </div>
+      {clickedOnOptions ? (
+        <div className="w-fit h-fit p-2 font-primary text-xl flex flex-col fixed top-[150px] right-[25vw] rounded-xl glassMorphism z-20">
+          <div
+            onClick={() => setOption(1)}
+            className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+          >
+            Trending
+          </div>
+          <div
+            onClick={() => setOption(2)}
+            className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
+          >
+            Latest
+          </div>
+        </div>
+      ) : (
+        <></>
+      )} */}
       <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
         {loading ? (
           <Loader />

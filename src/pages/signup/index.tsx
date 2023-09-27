@@ -22,6 +22,7 @@ import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
+import generateRandomProfilePicture from '@/utils/generate_profile_picture';
 
 const SignUp = () => {
   const router = useRouter();
@@ -74,13 +75,17 @@ const SignUp = () => {
 
     if (mutex) return;
     setMutex(true);
-    const formData = {
-      email,
-      name: name.trim(),
-      username: username.trim().toLowerCase(),
-      password,
-      confirmPassword,
-    };
+
+    const randomProfilePic = await generateRandomProfilePicture(1080, 1080);
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('name', name);
+    formData.append('username', username.trim().toLowerCase());
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    if (randomProfilePic) formData.append('profilePic', randomProfilePic);
+
     const toaster = Toaster.startLoad('Creating your Account...');
 
     await configuredAxios
