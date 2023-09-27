@@ -1,12 +1,16 @@
 import { Invitation, Project } from '@/types';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
+import { INVITATION_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import { Pen } from '@phosphor-icons/react';
 import moment from 'moment';
 import getInvitationStatus from '@/utils/get_invitation_status';
+import { SERVER_ERROR } from '@/config/errors';
+import deleteHandler from '@/handlers/delete_handler';
+import Toaster from '@/utils/toaster';
+import ConfirmDelete from '@/components/common/confirm_delete';
 
 interface Props {
   invitation: Invitation;
@@ -15,9 +19,38 @@ interface Props {
 }
 
 const InvitationCard = ({ invitation, project, setProject }: Props) => {
+  const [clickedOnWithdraw, setClickedOnWithdraw] = useState(false);
   const user = useSelector(userSelector);
+
+  const handleWithdraw = async () => {
+    const toaster = Toaster.startLoad('Withdrawing Invitation...');
+
+    const URL = `${INVITATION_URL}/withdraw/${invitation.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setProject)
+        setProject(prev => {
+          return {
+            ...prev,
+            invitations: prev.invitations.filter(inv => inv.id != invitation.id),
+          };
+        });
+      setClickedOnWithdraw(false);
+      Toaster.stopLoad(toaster, 'Invitation Withdrawn', 1);
+    } else {
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
   return (
     <div className="w-full font-primary bg-white dark:bg-transparent dark:text-white border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-md flex justify-start gap-6 p-6 transition-ease-300">
+      {clickedOnWithdraw ? (
+        <ConfirmDelete setShow={setClickedOnWithdraw} handleDelete={handleWithdraw} title="Confirm Withdraw?" />
+      ) : (
+        <></>
+      )}
       <Image
         crossOrigin="anonymous"
         width={10000}
@@ -41,7 +74,9 @@ const InvitationCard = ({ invitation, project, setProject }: Props) => {
           {invitation.status == 0 ? (
             <>
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                <div className="text-primary_danger cursor-pointer">Withdraw Invitation</div>
+                <div onClick={() => setClickedOnWithdraw(true)} className="text-primary_danger cursor-pointer">
+                  Withdraw Invitation
+                </div>
               ) : (
                 <></>
               )}

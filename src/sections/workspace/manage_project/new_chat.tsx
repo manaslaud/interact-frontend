@@ -1,11 +1,12 @@
-import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { GROUP_CHAT_PIC_URL, MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import { GroupChat, Project, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { MagnifyingGlass, Pen } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
+import { resizeImage } from '@/utils/resize_image';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,9 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+
+  const [groupPic, setGroupPic] = useState<File>();
+  const [groupPicView, setGroupPicView] = useState<string>(`${GROUP_CHAT_PIC_URL}/default.jpg`);
 
   const handleChange = (el: React.ChangeEvent<HTMLInputElement>) => {
     fetchUsers(el.target.value);
@@ -68,13 +72,13 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
 
     const userIDs = selectedUsers.map(user => user.id);
 
-    const formData = {
-      title,
-      description,
-      userIDs,
-    };
+    const formData = new FormData();
+    if (groupPic) formData.append('coverPic', groupPic);
+    formData.append('title', title);
+    formData.append('description', description);
+    userIDs.forEach(userID => formData.append('userIDs', userID));
 
-    const res = await postHandler(URL, formData);
+    const res = await postHandler(URL, formData, 'multipart/form-data');
     if (res.statusCode === 201) {
       const chat: GroupChat = res.data.chat;
 
@@ -142,7 +146,35 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
           ) : (
             <div className="w-full flex flex-col gap-4">
               <div className="w-full flex gap-4 px-4 py-2 dark:bg-dark_primary_comp_hover rounded-lg ">
-                <div className="w-16 h-16 rounded-full dark:bg-dark_primary_comp_hover"></div>
+                <input
+                  type="file"
+                  className="hidden"
+                  id="groupPic"
+                  multiple={false}
+                  onChange={async ({ target }) => {
+                    if (target.files && target.files[0]) {
+                      const file = target.files[0];
+                      if (file.type.split('/')[0] == 'image') {
+                        const resizedPic = await resizeImage(file, 500, 500);
+                        setGroupPicView(URL.createObjectURL(resizedPic));
+                        setGroupPic(resizedPic);
+                      } else Toaster.error('Only Image Files can be selected');
+                    }
+                  }}
+                />
+                <label className="relative w-16 h-16 rounded-full cursor-pointer" htmlFor="groupPic">
+                  <div className="w-16 h-16 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
+                    <Pen color="black" size={24} />
+                  </div>
+                  <Image
+                    crossOrigin="anonymous"
+                    className="w-16 h-16 rounded-full object-cover"
+                    width={10000}
+                    height={10000}
+                    alt="/"
+                    src={groupPicView}
+                  />
+                </label>{' '}
                 <input
                   type="text"
                   className="grow bg-transparent focus:outline-none text-xl"

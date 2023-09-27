@@ -103,6 +103,7 @@ const SignUp = () => {
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
           socketService.connect(user.id);
+          sessionStorage.setItem('verification-redirect', 'signup-callback');
           router.push('/verification');
         }
         setMutex(false);

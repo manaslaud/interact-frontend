@@ -34,10 +34,12 @@ const Projects = () => {
         : `${EXPLORE_URL}/projects/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      const addedProjects = [...projects, ...(res.data.projects || [])];
-      if (addedProjects.length === projects.length) setHasMore(false);
-      setProjects(addedProjects);
-      setPage(prev => prev + 1);
+      if (search && search != '') {
+        const addedProjects = [...projects, ...(res.data.projects || [])];
+        if (addedProjects.length === projects.length) setHasMore(false);
+        setProjects(addedProjects);
+        setPage(prev => prev + 1);
+      } else setProjects(res.data.projects || []);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');

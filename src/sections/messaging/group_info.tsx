@@ -4,9 +4,9 @@ import { GROUP_ADMIN } from '@/config/constants';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
-import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { GROUP_CHAT_PIC_URL, INVITATION_URL, MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import { GroupChat, GroupChatMembership } from '@/types';
-import { initialGroupChatMembership } from '@/types/initials';
+import { initialGroupChatMembership, initialInvitation } from '@/types/initials';
 import EditMembership from './edit_group_membership';
 import AddGroupMembers from './add_group_members';
 import { SERVER_ERROR } from '@/config/errors';
@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setChats, userSelector } from '@/slices/userSlice';
 import { setCurrentGroupChatID } from '@/slices/messagingSlice';
 import ConfirmDelete from '@/components/common/confirm_delete';
+import { resizeImage } from '@/utils/resize_image';
 
 interface Props {
   chat: GroupChat;
@@ -29,18 +30,44 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
   const [clickedOnEditMembership, setClickedOnEditMembership] = useState(false);
   const [clickedEditUserMembership, setClickedEditUserMembership] = useState(initialGroupChatMembership);
   const [clickedOnAddMembers, setClickedOnAddMembers] = useState(false);
+  const [clickedOnWithdrawInvitation, setClickedOnWithdrawInvitation] = useState(false);
+  const [clickedInvitationToWithdraw, setClickedInvitationToWithdraw] = useState(initialInvitation);
 
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnExit, setClickedOnExit] = useState(false);
 
   const [title, setTitle] = useState(chat.title);
   const [description, setDescription] = useState(chat.description);
+  const [groupPic, setGroupPic] = useState<File>();
+  const [groupPicView, setGroupPicView] = useState<string>(`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`);
 
   const [mutex, setMutex] = useState(false);
 
   const chats = useSelector(userSelector).chats;
 
   const dispatch = useDispatch();
+
+  const handleWithdrawInvitaion = async () => {
+    const toaster = Toaster.startLoad('Withdrawing Invitation...');
+
+    const URL = `${INVITATION_URL}/withdraw/${clickedInvitationToWithdraw.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setChat)
+        setChat(prev => {
+          return {
+            ...prev,
+            invitations: prev.invitations.filter(inv => inv.id != clickedInvitationToWithdraw.id),
+          };
+        });
+      setClickedOnWithdrawInvitation(false);
+      Toaster.stopLoad(toaster, 'Invitation Withdrawn', 1);
+    } else {
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
 
   const handleEdit = async () => {
     if (title.trim() == '') {
@@ -55,20 +82,23 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
     const URL = `${MESSAGING_URL}/group/${chat.id}`;
 
-    const formData = {
-      title,
-      description,
-    };
+    const formData = new FormData();
+    if (groupPic) formData.append('coverPic', groupPic);
+    if (title != chat.title) formData.append('title', title);
+    if (description != chat.description) formData.append('description', description);
 
-    const res = await patchHandler(URL, formData);
+    const res = await patchHandler(URL, formData, 'multipart/form-data');
     if (res.statusCode === 200) {
+      const editedChat = res.data.chat;
       setChat(prev => {
         return {
           ...prev,
           title,
           description,
+          coverPic: editedChat.coverPic,
         };
       });
+      setGroupPic(undefined);
       setClickedOnEdit(false);
       Toaster.stopLoad(toaster, 'Group Details Edited!', 1);
     } else {
@@ -106,6 +136,15 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
   return (
     <>
+      {clickedOnWithdrawInvitation ? (
+        <ConfirmDelete
+          setShow={setClickedOnWithdrawInvitation}
+          handleDelete={handleWithdrawInvitaion}
+          title="Confirm Withdraw?"
+        />
+      ) : (
+        <></>
+      )}
       <div className="w-full h-full overflow-y-auto flex flex-col gap-4">
         {clickedOnEditMembership ? (
           <EditMembership
@@ -132,38 +171,85 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
           <X onClick={() => setShow(false)} className="cursor-pointer" size={32} />
         </div>
 
-        <div className={`w-full rounded-md flex ${clickedOnEdit ? 'items-start' : 'items-center'} gap-4 px-4`}>
+        <div
+          className={`w-full rounded-md flex ${
+            clickedOnEdit ? 'items-start max-md:flex-col max-md:items-center' : 'items-center'
+          } gap-4 px-4`}
+        >
           {clickedOnEdit ? (
             <>
-              <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
-              <div className={`grow flex flex-col ${clickedOnEdit ? 'pt-1' : 'items-center'}`}>
+              <input
+                type="file"
+                className="hidden"
+                id="groupPic"
+                multiple={false}
+                onChange={async ({ target }) => {
+                  if (target.files && target.files[0]) {
+                    const file = target.files[0];
+                    if (file.type.split('/')[0] == 'image') {
+                      const resizedPic = await resizeImage(file, 500, 500);
+                      setGroupPicView(URL.createObjectURL(resizedPic));
+                      setGroupPic(resizedPic);
+                    } else Toaster.error('Only Image Files can be selected');
+                  }
+                }}
+              />
+              <label
+                className="relative w-14 h-14 max-md:w-32 max-md:h-32 rounded-full cursor-pointer"
+                htmlFor="groupPic"
+              >
+                <div className="w-14 h-14 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
+                  <Pen color="black" size={24} />
+                </div>
+                <Image
+                  crossOrigin="anonymous"
+                  className="w-14 h-14 max-md:w-32 max-md:h-32 rounded-full object-cover"
+                  width={10000}
+                  height={10000}
+                  alt="/"
+                  src={groupPicView}
+                />
+              </label>
+              <div className="grow flex flex-col pt-1 gap-2">
                 <div className="w-full flex items-center justify-between pr-2">
                   <input
                     type="text"
-                    className="text-2xl font-medium bg-transparent focus:outline-none"
+                    className="text-2xl max-md:text-center font-medium bg-transparent focus:outline-none"
                     autoFocus={true}
                     maxLength={25}
                     value={title}
                     onChange={el => setTitle(el.target.value)}
                   />
-                  <div className="flex gap-2">
-                    <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
+                  <div className="max-md:hidden flex gap-2">
                     <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
+                    <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
                   </div>
                 </div>
 
                 <textarea
                   className="text-sm bg-transparent focus:outline-none min-h-[64px] max-h-36"
                   maxLength={250}
-                  autoFocus={true}
+                  placeholder="Group Description"
                   value={description}
                   onChange={el => setDescription(el.target.value)}
                 />
+
+                <div className="md:hidden w-full flex justify-end">
+                  <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
+                  <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
+                </div>
               </div>
             </>
           ) : (
             <>
-              <div className="rounded-full w-14 h-14 bg-primary_comp_hover dark:bg-dark_primary_comp_hover"></div>
+              <Image
+                crossOrigin="anonymous"
+                className="w-14 h-14 rounded-full object-cover"
+                width={10000}
+                height={10000}
+                alt="/"
+                src={`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`}
+              />
               <div className="grow flex flex-col">
                 <div className="w-full flex items-center justify-between pr-2">
                   <div className="text-2xl font-medium">{chat.title}</div>
@@ -265,7 +351,15 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                     </div>
                   </Link>
                   {membership.role == GROUP_ADMIN ? (
-                    <div className="text-xs text-primary_danger cursor-pointer">Withdraw Invitation</div>
+                    <div
+                      onClick={() => {
+                        setClickedInvitationToWithdraw(invitation);
+                        setClickedOnWithdrawInvitation(true);
+                      }}
+                      className="text-xs text-primary_danger cursor-pointer"
+                    >
+                      Withdraw Invitation
+                    </div>
                   ) : (
                     <></>
                   )}

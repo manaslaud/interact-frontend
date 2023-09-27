@@ -30,17 +30,19 @@ const Openings = () => {
     if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      const addedOpenings = [...openings, ...(res.data.openings || [])];
-      if (addedOpenings.length === openings.length) setHasMore(false);
-      setOpenings(addedOpenings);
-      setPage(prev => prev + 1);
-      if (clickedOnOpening) {
-        if (addedOpenings.length > 0) setClickedOpening(addedOpenings[0]);
-        else {
-          setClickedOnOpening(false);
-          setClickedOpening(initialOpening);
+      if (search && search != '') {
+        const addedOpenings = [...openings, ...(res.data.openings || [])];
+        if (addedOpenings.length === openings.length) setHasMore(false);
+        setOpenings(addedOpenings);
+        setPage(prev => prev + 1);
+        if (clickedOnOpening) {
+          if (addedOpenings.length > 0) setClickedOpening(addedOpenings[0]);
+          else {
+            setClickedOnOpening(false);
+            setClickedOpening(initialOpening);
+          }
         }
-      }
+      } else setOpenings(res.data.openings || []);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');

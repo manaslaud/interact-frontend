@@ -4,6 +4,7 @@ import { GroupChat } from '@/types';
 import { ArrowArcLeft, Info } from '@phosphor-icons/react';
 import { useDispatch } from 'react-redux';
 import { setCurrentChatID } from '@/slices/messagingSlice';
+import { GROUP_CHAT_PIC_URL } from '@/config/routes';
 
 interface Props {
   chat: GroupChat;
@@ -16,10 +17,17 @@ const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
     <div className="w-full h-[72px] dark:text-white font-primary flex justify-between gap-2 items-center border-b-[1px] border-primary_btn  dark:border-dark_primary_btn pb-2">
       <div className="flex gap-2 items-center">
         <ArrowArcLeft onClick={() => dispatch(setCurrentChatID(''))} className="md:hidden" size={24} />
-        <div className="rounded-full w-12 h-12 dark:bg-dark_primary_comp_hover"></div>
+        <Image
+          crossOrigin="anonymous"
+          className="w-12 h-12 rounded-full object-cover"
+          width={10000}
+          height={10000}
+          alt="/"
+          src={`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`}
+        />
         <div className="flex flex-col">
           <div className="text-lg font-medium">{chat.title}</div>
-          {chat.project ? <div className="text-xs">@{chat.project.title}</div> : <></>}
+          {chat.project.title != '' ? <div className="text-xs">@{chat.project.title}</div> : <></>}
         </div>
       </div>
       <Info onClick={() => setClickedOnInfo(true)} className="cursor-pointer" size={32} />

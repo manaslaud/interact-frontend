@@ -24,10 +24,12 @@ const Users = () => {
         : `${EXPLORE_URL}/users/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      const addedUsers = [...users, ...(res.data.users || [])];
-      if (addedUsers.length === users.length) setHasMore(false);
-      setUsers(addedUsers);
-      setPage(prev => prev + 1);
+      if (search && search != '') {
+        const addedUsers = [...users, ...(res.data.users || [])];
+        if (addedUsers.length === users.length) setHasMore(false);
+        setUsers(addedUsers);
+        setPage(prev => prev + 1);
+      } else setUsers(res.data.users || []);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');

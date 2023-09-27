@@ -42,7 +42,7 @@ const Openings = ({ project, setProject }: Props) => {
       </div>
 
       {project.openings ? (
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 pb-4">
           {project.openings.map(opening => {
             return <OpeningCard key={opening.id} opening={opening} project={project} setProject={setProject} />;
           })}

@@ -64,7 +64,7 @@ const ChatTextarea = ({ chat }: Props) => {
 
     setValue('');
 
-    const URL = `/messaging/content/`;
+    const URL = `/messaging/content/group/`;
     const formData = {
       content: value,
       chatID: chat.id,

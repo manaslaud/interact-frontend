@@ -303,6 +303,7 @@ export interface GroupChat {
   id: string;
   title: string;
   description: string;
+  coverPic: string;
   userID: string;
   user: User;
   organizationID: string;

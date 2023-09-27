@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Opening, Project } from '@/types';
-import { PROJECT_PIC_URL } from '@/config/routes';
+import { INVITATION_URL, OPENING_URL, PROJECT_PIC_URL } from '@/config/routes';
 import { Pen, TrashSimple } from '@phosphor-icons/react';
 import EditOpening from '@/sections/workspace/manage_project/edit_opening';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import ConfirmDelete from '@/components/common/confirm_delete';
+import { SERVER_ERROR } from '@/config/errors';
+import deleteHandler from '@/handlers/delete_handler';
+import Toaster from '@/utils/toaster';
 
 interface Props {
   opening: Opening;
@@ -16,6 +20,7 @@ interface Props {
 
 const OpeningCard = ({ opening, project, setProject }: Props) => {
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
+  const [clickedOnDelete, setClickedOnDelete] = useState(false);
   const user = useSelector(userSelector);
 
   useEffect(() => {
@@ -28,6 +33,28 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       }
   }, []);
 
+  const handleDelete = async () => {
+    const toaster = Toaster.startLoad('Deleting Opening...');
+
+    const URL = `${OPENING_URL}/${opening.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setProject)
+        setProject(prev => {
+          return {
+            ...prev,
+            openings: prev.openings.filter(o => o.id != opening.id),
+          };
+        });
+      setClickedOnDelete(false);
+      Toaster.stopLoad(toaster, 'Opening Deleted', 1);
+    } else {
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
   return (
     <>
       {clickedOnEdit ? (
@@ -35,6 +62,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       <div className="w-full bg-gray-100 hover:bg-white dark:hover:bg-transparent dark:bg-transparent font-primary dark:text-white border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
         <Image
           crossOrigin="anonymous"
@@ -75,7 +103,13 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
             <div className="flex gap-3">
               <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" size={24} />
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                <TrashSimple className="cursor-pointer" size={24} color="#ea333e" weight="fill" />
+                <TrashSimple
+                  onClick={() => setClickedOnDelete(true)}
+                  className="cursor-pointer"
+                  size={24}
+                  color="#ea333e"
+                  weight="fill"
+                />
               ) : (
                 <></>
               )}

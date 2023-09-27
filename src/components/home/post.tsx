@@ -47,7 +47,10 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
   };
 
   const handleEdit = async () => {
-    if (caption == post.content) return;
+    if (caption == post.content) {
+      setClickedOnEdit(false);
+      return;
+    }
     const toaster = Toaster.startLoad('Editing Post...');
 
     const URL = `${POST_URL}/${post.id}`;

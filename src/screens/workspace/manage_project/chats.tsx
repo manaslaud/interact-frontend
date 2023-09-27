@@ -67,7 +67,7 @@ const Chats = ({ project }: Props) => {
       ) : (
         <>
           {chats ? (
-            <div className="flex justify-evenly px-4">
+            <div className="flex justify-evenly px-4 pb-4">
               <div className={`${clickedOnEditChat ? 'w-[40%]' : 'w-[720px]'} max-md:w-[720px] flex flex-col gap-4`}>
                 {chats.map(chat => {
                   return (

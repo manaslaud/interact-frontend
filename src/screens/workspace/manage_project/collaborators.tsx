@@ -61,7 +61,7 @@ const Collaborators = ({ project, setProject }: Props) => {
       {clickedOnInvitations ? (
         <>
           {project.invitations ? (
-            <div className="w-full flex flex-col gap-2 max-md:px-4 pb-8">
+            <div className="w-full flex flex-col gap-2 max-md:px-4 pb-4">
               {project.invitations.map(invitation => {
                 return (
                   <InvitationCard
@@ -80,7 +80,7 @@ const Collaborators = ({ project, setProject }: Props) => {
       ) : (
         <>
           {project.memberships ? (
-            <div className="w-full flex flex-col gap-2 max-md:px-4 pb-8">
+            <div className="w-full flex flex-col gap-2 max-md:px-4 pb-4">
               {project.memberships.map(membership => {
                 return (
                   <CollaboratorCard

@@ -61,7 +61,12 @@ const Verification = () => {
         if (res.statusCode === 200) {
           Toaster.stopLoad(toaster, 'Account Verified', 1);
           dispatch(setVerificationStatus(true));
-          router.back();
+          const signUpRedirect = sessionStorage.getItem('verification-redirect');
+          if (signUpRedirect && signUpRedirect.startsWith('signup')) {
+            sessionStorage.removeItem('verification-redirect');
+            sessionStorage.setItem('onboarding-redirect', 'signup-callback');
+            router.replace('/onboarding');
+          } else router.back();
         } else {
           if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
           else {
