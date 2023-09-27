@@ -65,7 +65,8 @@ export const configSlice = createSlice({
       state.lastFetchedProjectBookmarks = getInitialDate();
       state.lastFetchedOpeningBookmarks = getInitialDate();
       state.lastFetchedChats = getInitialDate();
-      (state.lastFetchedProjects = getInitialDate()), (state.lastFetchedContributingProjects = getInitialDate());
+      state.lastFetchedProjects = getInitialDate();
+      state.lastFetchedContributingProjects = getInitialDate();
       state.lastFetchedApplications = getInitialDate();
       state.lastFetchedUnreadNotifications = getInitialNotificationDate();
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();

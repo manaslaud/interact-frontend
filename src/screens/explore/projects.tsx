@@ -30,16 +30,17 @@ const Projects = () => {
   const fetchProjects = async (search: string | null) => {
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/projects/trending?page=${page}&limit=${10}${'&search=' + search}`
+        ? `${EXPLORE_URL}/projects/trending?${'search=' + search}`
         : `${EXPLORE_URL}/projects/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (search && search != '') {
+      if (search && search != '') setProjects(res.data.projects || []);
+      else {
         const addedProjects = [...projects, ...(res.data.projects || [])];
         if (addedProjects.length === projects.length) setHasMore(false);
         setProjects(addedProjects);
         setPage(prev => prev + 1);
-      } else setProjects(res.data.projects || []);
+      }
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');

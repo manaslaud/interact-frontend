@@ -23,14 +23,15 @@ const Openings = () => {
   const fetchOpenings = async (search: string | null) => {
     let URL =
       search && search != ''
-        ? `${EXPLORE_URL}/openings/trending?page=${page}&limit=${10}${'&search=' + search}`
+        ? `${EXPLORE_URL}/openings/trending?${'search=' + search}`
         : `${EXPLORE_URL}/openings/recommended?page=${page}&limit=${10}`;
 
     const projectSlug = new URLSearchParams(window.location.search).get('project');
     if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (search && search != '') {
+      if (search && search != '') setOpenings(res.data.openings || []);
+      else {
         const addedOpenings = [...openings, ...(res.data.openings || [])];
         if (addedOpenings.length === openings.length) setHasMore(false);
         setOpenings(addedOpenings);
@@ -42,7 +43,7 @@ const Openings = () => {
             setClickedOpening(initialOpening);
           }
         }
-      } else setOpenings(res.data.openings || []);
+      }
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
