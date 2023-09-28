@@ -304,6 +304,7 @@ export interface GroupChat {
   title: string;
   description: string;
   coverPic: string;
+  adminOnly: boolean;
   userID: string;
   user: User;
   organizationID: string;

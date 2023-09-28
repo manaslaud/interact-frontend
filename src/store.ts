@@ -1,10 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import feedReducer from '@/slices/feedSlice';
-import userReducer from '@/slices/userSlice';
 import messagingReducer from '@/slices/messagingSlice';
-import configReducer from './slices/configSlice';
-import storage from 'redux-persist/lib/storage';
+import userReducer from '@/slices/userSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import configReducer from './slices/configSlice';
 
 const persistConfig = {
   key: 'root',

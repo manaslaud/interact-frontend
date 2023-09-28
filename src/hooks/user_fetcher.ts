@@ -50,7 +50,6 @@ import {
   PostBookmark,
   Project,
   ProjectBookmark,
-  User,
 } from '@/types';
 import Toaster from '@/utils/toaster';
 import Cookies from 'js-cookie';
@@ -66,16 +65,12 @@ const useUserStateFetcher = () => {
 
   const fetchFollowing = () => {
     if (moment().utc().diff(config.lastFetchedFollowing, 'minute') < 30) return;
-    const URL = `${CONNECTION_URL}/following/${userID}`;
+    const URL = `${CONNECTION_URL}/following/me`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode == 200) {
-          const followingObjArr: User[] = res.data.users || [];
-          const following: string[] = [];
-          followingObjArr.forEach(el => {
-            following.push(el.id);
-          });
-          dispatch(setFollowing(following));
+          const followingIDsArr: string[] = res.data.userIDs || [];
+          dispatch(setFollowing(followingIDsArr));
           dispatch(setFetchedFollowing(new Date().toUTCString()));
         }
       })

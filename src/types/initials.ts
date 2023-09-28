@@ -252,6 +252,7 @@ export const initialGroupChat: GroupChat = {
   title: '',
   description: '',
   coverPic: '',
+  adminOnly: false,
   userID: '',
   user: initialUser,
   projectID: '',

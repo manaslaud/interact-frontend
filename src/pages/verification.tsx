@@ -11,7 +11,7 @@ import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
 import Protect from '@/utils/protect';
-import { SERVER_ERROR } from '@/config/errors';
+import { ALREADY_VERIFIED_ERROR, SERVER_ERROR } from '@/config/errors';
 
 const Verification = () => {
   const [sentOTP, setSentOTP] = useState(false);
@@ -40,8 +40,13 @@ const Verification = () => {
           if (sentOTP) setResentOTP(true);
           setSentOTP(true);
         } else {
-          if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
-          else {
+          if (res.data.message) {
+            Toaster.stopLoad(toaster, res.data.message, 0);
+            if (res.data.message == ALREADY_VERIFIED_ERROR) {
+              dispatch(setVerificationStatus(true));
+              router.back();
+            }
+          } else {
             Toaster.stopLoad(toaster, SERVER_ERROR, 0);
           }
         }

@@ -15,7 +15,6 @@ import patchHandler from '@/handlers/patch_handler';
 import deleteHandler from '@/handlers/delete_handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChats, userSelector } from '@/slices/userSlice';
-import { setCurrentGroupChatID } from '@/slices/messagingSlice';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import { resizeImage } from '@/utils/resize_image';
 
@@ -38,6 +37,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
 
   const [title, setTitle] = useState(chat.title);
   const [description, setDescription] = useState(chat.description);
+  const [isAdminOnly, setIsAdminOnly] = useState(chat.adminOnly);
   const [groupPic, setGroupPic] = useState<File>();
   const [groupPicView, setGroupPicView] = useState<string>(`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`);
 
@@ -69,6 +69,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
     if (groupPic) formData.append('coverPic', groupPic);
     if (title != chat.title) formData.append('title', title);
     if (description != chat.description) formData.append('description', description);
+    formData.append('adminOnly', String(isAdminOnly));
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
     const editedChat = res.data.chat;
@@ -199,6 +200,28 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                 onChange={el => setDescription(el.target.value)}
               />
 
+              <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
+                <div>Admin Only Chat</div>
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={isAdminOnly}
+                    onChange={() => setIsAdminOnly(prev => !prev)}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`box block h-6 w-10 rounded-full ${
+                      isAdminOnly ? 'bg-blue-300' : 'bg-black'
+                    } transition-ease-300`}
+                  ></div>
+                  <div
+                    className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
+                      isAdminOnly ? 'translate-x-full' : ''
+                    }`}
+                  ></div>
+                </div>
+              </label>
+
               <div className="md:hidden w-full flex justify-end">
                 <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                 <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
@@ -276,6 +299,14 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
           })}
         </div>
       </div>
+
+      {chat.adminOnly ? (
+        <div className="text-center opacity-75 text-xs">
+          This is an <span className="font-semibold">Admin Only</span> chat.
+        </div>
+      ) : (
+        <></>
+      )}
 
       <div className="text-center opacity-75 text-sm">
         Created By{' '}

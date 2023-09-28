@@ -59,6 +59,7 @@ export const configSlice = createSlice({
     resetConfig: state => {
       state.updatingFollowing = false;
       state.updatingLikes = false;
+      state.updateBookmark = false;
       state.lastFetchedFollowing = getInitialDate();
       state.lastFetchedLikes = getInitialDate();
       state.lastFetchedPostBookmarks = getInitialDate();

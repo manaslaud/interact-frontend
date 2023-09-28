@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { MeStopTyping, MeTyping, sendEvent } from '@/utils/ws';
-import { Chat, GroupChat, User } from '@/types';
+import { Chat, GroupChat, GroupChatMembership, User } from '@/types';
 import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import postHandler from '@/handlers/post_handler';
@@ -9,12 +9,14 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import { initialUser } from '@/types/initials';
 import { SERVER_ERROR } from '@/config/errors';
+import { GROUP_MEMBER } from '@/config/constants';
 
 interface Props {
   chat: GroupChat;
+  membership: GroupChatMembership;
 }
 
-const ChatTextarea = ({ chat }: Props) => {
+const ChatTextarea = ({ chat, membership }: Props) => {
   const [height, setHeight] = useState('auto');
   const [value, setValue] = useState('');
 
@@ -81,7 +83,11 @@ const ChatTextarea = ({ chat }: Props) => {
     }
   };
 
-  return (
+  return chat.adminOnly && membership.role == GROUP_MEMBER ? (
+    <div className="w-full h-[64px] backdrop-blur-md bg-primary_comp dark:bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn">
+      Only Admins can send messages
+    </div>
+  ) : (
     <textarea
       value={value}
       onChange={handleChange}
