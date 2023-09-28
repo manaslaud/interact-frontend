@@ -85,6 +85,7 @@ const Login = () => {
     <>
       <Head>
         <title>Login | Interact</title>
+        <meta name="description" content="Log into Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives." />
       </Head>
       <div className="h-screen flex">
         <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
