@@ -153,19 +153,23 @@ class SocketService {
         switch (event.type) {
           case 'new_message':
             const messageEventPayload = event.payload as Message;
-            toast.info('New Message from: ' + messageEventPayload.user.name, {
-              ...messageToastSettings,
-              toastId: messageEventPayload.chatID,
-              icon: '🐵',
-              // icon: () => (
-              //   <Image
-              //     width={100}
-              //     height={100}
-              //     src={`${USER_PROFILE_PIC_URL}/${messageEventPayload.user.profilePic}`}
-              //     alt="User"
-              //   />
-              // ),
-            });
+            if (
+              store.getState().messaging.currentChatID != messageEventPayload.chatID &&
+              store.getState().messaging.currentGroupChatID != messageEventPayload.chatID
+            )
+              toast.info('New Message from: ' + messageEventPayload.user.name, {
+                ...messageToastSettings,
+                toastId: messageEventPayload.chatID,
+                icon: '🐵',
+                // icon: () => (
+                //   <Image
+                //     width={100}
+                //     height={100}
+                //     src={`${USER_PROFILE_PIC_URL}/${messageEventPayload.user.profilePic}`}
+                //     alt="User"
+                //   />
+                // ),
+              });
             break;
           default:
             break;

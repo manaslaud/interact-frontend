@@ -266,9 +266,9 @@ function generateRandomProfilePicture(width: number, height: number): Promise<Fi
         const baseColor = getRandomHexColor();
 
         // Generate random pattern of squares
-        const numSquares = 20; // Reduced number of squares
+        const numSquares = 25; // Reduced number of squares
         const minSquareSize = 120;
-        const maxSquareSize = 200;
+        const maxSquareSize = 250;
         const squares: Square[] = [];
 
         for (let i = 0; i < numSquares; i++) {
@@ -278,7 +278,7 @@ function generateRandomProfilePicture(width: number, height: number): Promise<Fi
 
           var overlapChecker = true;
           // Try up to 100 times to find a non-overlapping position
-          for (let attempt = 0; attempt < 100; attempt++) {
+          for (let attempt = 0; attempt < 150; attempt++) {
             overlapChecker = true;
             squareSize = Math.random() * (maxSquareSize - minSquareSize) + minSquareSize;
             squareX = Math.random() * (tempCanvas.width - squareSize);

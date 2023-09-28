@@ -2,12 +2,14 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useState } from 'react';
 import Sidebar from '@/components/common/sidebar';
-import { At, Phone, Password, SmileyXEyes } from '@phosphor-icons/react';
+import { At, Phone, Password, SmileyXEyes, IdentificationBadge } from '@phosphor-icons/react';
 import UpdateEmail from '@/sections/settings/update_email';
 import Protect from '@/utils/protect';
 import UpdatePassword from '@/sections/settings/update_password';
 import UpdatePhoneNumber from '@/sections/settings/update_phone_number';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
 
 const Settings = () => {
   const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
@@ -15,6 +17,8 @@ const Settings = () => {
   const [clickedOnChangeEmail, setClickedOnChangeEmail] = useState(false);
   const [clickedOnChangePhoneNo, setClickedOnChangePhoneNo] = useState(false);
   const [clickedOnChangePassword, setClickedOnChangePassword] = useState(false);
+
+  const user = useSelector(userSelector);
 
   const toggleTheme = () => {
     if (document.documentElement.classList.contains('dark')) {
@@ -70,6 +74,17 @@ const Settings = () => {
             <div>Update Your Password</div>
             <Password size={40} weight="duotone" />
           </div>
+          {!user.isVerified ? (
+            <Link
+              href={'/verification'}
+              className="w-full h-16 text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300"
+            >
+              <div>Verify Your Account</div>
+              <IdentificationBadge size={40} weight="duotone" />
+            </Link>
+          ) : (
+            <></>
+          )}
           <Link
             href={'/settings/deactivate_account'}
             className="w-full h-16 text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300"

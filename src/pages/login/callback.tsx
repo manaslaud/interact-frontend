@@ -44,7 +44,10 @@ const LoginCallback = ({ token }: Props) => {
           dispatch(resetConfig());
           socketService.connect(user.id);
           userStateFetcher();
-          router.replace('/home');
+          if (user.isVerified) {
+            Cookies.set('verified', 'true');
+            router.replace('/home');
+          } else router.push('/verification');
         }
       })
       .catch(err => {

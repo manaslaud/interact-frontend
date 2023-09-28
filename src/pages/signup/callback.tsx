@@ -73,6 +73,7 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1));
           socketService.connect(user.id);
+          Cookies.set('verified', 'true');
           sessionStorage.setItem('onboarding-redirect', 'signup-callback');
           router.replace('/onboarding');
         }

@@ -13,6 +13,7 @@ import Toaster from '@/utils/toaster';
 import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
 import ConfirmDelete from '../common/confirm_delete';
+import renderContentWithLinks from '@/utils/render_content_with_links';
 
 interface Props {
   post: Post;
@@ -77,62 +78,43 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       className="w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn dark:border-b-[1px] max-md:p-4"
     >
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
-      {clickedOnOptions ? (
+      {!clickedOnEdit && clickedOnOptions ? (
         <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
-          {clickedOnEdit ? (
-            <>
-              <div
-                onClick={handleEdit}
-                className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
-              >
-                Save
-              </div>
-              <div
-                onClick={() => setClickedOnEdit(false)}
-                className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
-              >
-                Cancel
-              </div>
-            </>
+          {post.userID == loggedInUser.id ? (
+            <div
+              onClick={() => setClickedOnEdit(true)}
+              className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Edit
+            </div>
           ) : (
-            <>
-              {post.userID == loggedInUser.id ? (
-                <div
-                  onClick={() => setClickedOnEdit(true)}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
-                >
-                  Edit
-                </div>
-              ) : (
-                <></>
-              )}
-              {post.userID == loggedInUser.id ? (
-                <div
-                  onClick={el => {
-                    el.stopPropagation();
-                    setClickedOnDelete(true);
-                  }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
-                >
-                  Delete
-                </div>
-              ) : (
-                <></>
-              )}
+            <></>
+          )}
+          {post.userID == loggedInUser.id ? (
+            <div
+              onClick={el => {
+                el.stopPropagation();
+                setClickedOnDelete(true);
+              }}
+              className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Delete
+            </div>
+          ) : (
+            <></>
+          )}
 
-              {post.userID != loggedInUser.id ? (
-                <div
-                  onClick={el => {
-                    el.stopPropagation();
-                  }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
-                >
-                  Report
-                </div>
-              ) : (
-                <></>
-              )}
-            </>
+          {post.userID != loggedInUser.id ? (
+            <div
+              onClick={el => {
+                el.stopPropagation();
+              }}
+              className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+            >
+              Report
+            </div>
+          ) : (
+            <></>
           )}
         </div>
       ) : (
@@ -163,7 +145,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           </Link>
           <div className="flex gap-2 font-light text-xs">
             <div>{moment(post.postedAt).fromNow()}</div>
-            {showLowerPost ? (
+            {!clickedOnEdit && showLowerPost ? (
               <div
                 onClick={el => {
                   el.stopPropagation();
@@ -185,15 +167,32 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
         )}
 
         {clickedOnEdit ? (
-          <textarea
-            maxLength={500}
-            value={caption}
-            autoFocus={true}
-            onChange={el => setCaption(el.target.value)}
-            className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
-          />
+          <div className="relative">
+            <textarea
+              maxLength={500}
+              value={caption}
+              autoFocus={true}
+              onChange={el => setCaption(el.target.value)}
+              className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
+            />
+
+            <div className="dark:text-white flex items-center gap-4 absolute -bottom-8 right-0">
+              <div
+                onClick={() => setClickedOnEdit(false)}
+                className="text-sm hover-underline-animation after:bg-black dark:after:bg-white cursor-pointer"
+              >
+                cancel
+              </div>
+              <div
+                onClick={handleEdit}
+                className="text-sm hover:text-primary_text dark:hover:text-dark_primary_btn cursor-pointer transition-ease-200"
+              >
+                save
+              </div>
+            </div>
+          </div>
         ) : (
-          <div className="w-full text-sm whitespace-pre-wrap mb-2">{post.content}</div>
+          <div className="w-full text-sm whitespace-pre-wrap mb-2">{renderContentWithLinks(post.content)}</div>
         )}
         {showLowerPost ? <LowerPost post={post} /> : <></>}
       </div>

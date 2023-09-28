@@ -62,8 +62,10 @@ const Login = () => {
           dispatch(resetConfig());
           socketService.connect(user.id);
           userStateFetcher();
-          if (user.isVerified) router.replace('/home');
-          else router.push('/verification');
+          if (user.isVerified) {
+            Cookies.set('verified', 'true');
+            router.replace('/home');
+          } else router.push('/verification');
         }
         setMutex(false);
       })

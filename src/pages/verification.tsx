@@ -7,8 +7,6 @@ import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVerificationStatus, userSelector } from '@/slices/userSlice';
 import Head from 'next/head';
-import { GetServerSidePropsContext } from 'next/types';
-import nookies from 'nookies';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
@@ -29,7 +27,7 @@ const Verification = () => {
     Toaster.error('Please Log in again');
     Cookies.remove('token');
     Cookies.remove('id');
-    router.push('/login');
+    router.replace('/login');
   } else if (user.isVerified) router.back();
 
   const sendOTP = () => {
@@ -61,6 +59,7 @@ const Verification = () => {
         if (res.statusCode === 200) {
           Toaster.stopLoad(toaster, 'Account Verified', 1);
           dispatch(setVerificationStatus(true));
+          Cookies.set('verified', 'true');
           const signUpRedirect = sessionStorage.getItem('verification-redirect');
           if (signUpRedirect && signUpRedirect.startsWith('signup')) {
             sessionStorage.removeItem('verification-redirect');
@@ -96,19 +95,22 @@ const Verification = () => {
           </div>
           <div className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             {!sentOTP ? (
-              <div className="flex flex-col gap-2 px-16 max-md:px-8 py-24 max-md:py-16 font-Helvetica">
-                <div className="text-xl text-center">
-                  An OTP (One Time Password) will be sent to <b>{user.email}</b> for the verification of your account on
-                  Interact.
+              <div className="flex flex-col gap-6 max-md:px-8 py-12 max-md:py-16">
+                <div className="text-2xl font-medium text-center">
+                  Your profile won&apos;t be <span className="font-bold">discoverable</span> until you verify your
+                  account.
                 </div>
-                <div onClick={sendOTP} className="m-auto underline-offset-2 cursor-pointer hover:underline">
+                <div className="text-xl text-center">
+                  An OTP will be sent to <b>{user.email}</b> for the verification of your account.
+                </div>
+                <div onClick={sendOTP} className="mx-auto underline-offset-2 cursor-pointer hover:underline">
                   Click Here to send OTP
                 </div>
               </div>
             ) : (
-              <div className="w-full flex flex-col items-center gap-2 px-16 max-md:px-8 py-24 max-md:py-16 font-Helvetica">
+              <div className="w-full flex flex-col items-center gap-2 px-16 max-md:px-8 py-24 max-md:py-16">
                 <div className="text-xl text-center">
-                  Enter the OTP sent to <b>{user.email}</b> for the verification of your account on Interact.
+                  Enter the OTP sent to <b>{user.email}</b> for the verification of your account.
                 </div>
 
                 <OTPInput
