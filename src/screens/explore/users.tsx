@@ -24,8 +24,10 @@ const Users = () => {
         : `${EXPLORE_URL}/users/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (search && search != '') setUsers(res.data.users || []);
-      else {
+      if (search && search != '') {
+        setUsers(res.data.users || []);
+        setHasMore(false);
+      } else {
         const addedUsers = [...users, ...(res.data.users || [])];
         if (addedUsers.length === users.length) setHasMore(false);
         setUsers(addedUsers);

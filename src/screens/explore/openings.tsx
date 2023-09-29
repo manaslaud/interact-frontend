@@ -30,8 +30,10 @@ const Openings = () => {
     if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (search && search != '') setOpenings(res.data.openings || []);
-      else {
+      if (search && search != '') {
+        setOpenings(res.data.openings || []);
+        setHasMore(false);
+      } else {
         const addedOpenings = [...openings, ...(res.data.openings || [])];
         if (addedOpenings.length === openings.length) setHasMore(false);
         setOpenings(addedOpenings);

@@ -34,8 +34,10 @@ const Projects = () => {
         : `${EXPLORE_URL}/projects/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (search && search != '') setProjects(res.data.projects || []);
-      else {
+      if (search && search != '') {
+        setProjects(res.data.projects || []);
+        setHasMore(false);
+      } else {
         const addedProjects = [...projects, ...(res.data.projects || [])];
         if (addedProjects.length === projects.length) setHasMore(false);
         setProjects(addedProjects);

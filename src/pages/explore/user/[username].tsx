@@ -17,6 +17,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import ProfileCard from '@/sections/explore/profile_card';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
+import Loader from '@/components/common/loader';
 
 interface Props {
   username: string;
@@ -95,13 +96,13 @@ const User = ({ username }: Props) => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              <Posts posts={user.posts || []} />
+              {loading ? <Loader /> : <Posts posts={user.posts || []} />}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              <Projects projects={user.projects || []} />
+              {loading ? <Loader /> : <Projects projects={user.projects || []} />}
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              <Projects projects={collaboratingProjects || []} />
+              {loading ? <Loader /> : <Projects projects={collaboratingProjects || []} />}
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>
