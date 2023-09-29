@@ -18,6 +18,7 @@ import { Pen } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
+import Loader from '@/components/common/loader';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -175,13 +176,17 @@ const Profile = () => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              <Posts posts={user.posts || []} />
+              {loading ? <Loader /> : <Posts posts={user.posts || []} />}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              <Projects projects={projects || []} setProjects={setProjects} displayOnProfile={true} />
+              {loading ? (
+                <Loader />
+              ) : (
+                <Projects projects={projects || []} setProjects={setProjects} displayOnProfile={true} />
+              )}
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              <Projects projects={collaboratingProjects || []} />
+              {loading ? <Loader /> : <Projects projects={collaboratingProjects || []} />}
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>
