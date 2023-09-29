@@ -156,12 +156,12 @@ const AccountRecovery = ({ userID, token }: Props) => {
             </button>
           </div>
 
-          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          {/* <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Privacy Policy.</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
