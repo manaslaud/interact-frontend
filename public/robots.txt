@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+Allow: /login
+Allow: /signup
+
+sitemap: https://interactnow.in/sitemap.xml

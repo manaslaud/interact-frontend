@@ -39,8 +39,8 @@ const config: Config = {
         inner: '0px 0px 10px 1px #262626a1 inset;',
       },
       backgroundImage: {
-        onboarding: "url('/assets/onboarding.png')",
-        new_post: "url('/assets/new_post.png')",
+        onboarding: "url('/assets/onboarding.webp')",
+        new_post: "url('/assets/new_post.webp')",
       },
       colors: {
         primary_text: '#478EE1',
