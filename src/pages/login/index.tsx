@@ -85,7 +85,10 @@ const Login = () => {
     <>
       <Head>
         <title>Login | Interact</title>
-        <meta name="description" content="Log into Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives." />
+        <meta
+          name="description"
+          content="Log into Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives."
+        />
       </Head>
       <div className="h-screen flex">
         <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
@@ -171,12 +174,12 @@ const Login = () => {
               </div>
             </div>
           </form>
-          {/* <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Privacy Policy.</span>
-          </div> */}
+          </div>
         </div>
         <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
       </div>
