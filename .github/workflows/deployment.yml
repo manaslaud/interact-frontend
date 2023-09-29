@@ -16,3 +16,4 @@ jobs:
       - name: Build and Deploy
         run: |
           sudo docker compose up --build -d
+        working-directory: /home/prathamm0409/interact/interact-frontend
