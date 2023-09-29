@@ -15,6 +15,7 @@ jobs:
 
       - name: Pull Changes
         run: git pull origin main
+        working-directory: /home/prathamm0409/interact/interact-frontend
 
       - name: Build and Deploy
         run: |
