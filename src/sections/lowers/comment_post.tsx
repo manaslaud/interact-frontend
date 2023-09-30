@@ -24,7 +24,10 @@ const CommentPost = ({ post, setShow, setNoComments }: Props) => {
     <>
       <div className="w-[80%] h-[90%] max-md:w-5/6 max-md:overflow-y-auto fixed backdrop-blur-xl dark:text-white dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-56 right-1/2 flex max-md:flex-col font-primary p-8 max-md:p-4 gap-2 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl">
         <div className="w-1/3 max-md:w-full h-full max-md:h-fit">
-          <PostComponent post={post} showLowerPost={false} />
+          <PostComponent post={post} showLowerPost={false} isRepost={true} />
+          {
+            // isRepost true to increase width for image
+          }
         </div>
         <div className="w-2/3 max-md:w-full h-full max-md:h-fit">
           <CommentBox item={post} type="post" setNoComments={setNoComments} />

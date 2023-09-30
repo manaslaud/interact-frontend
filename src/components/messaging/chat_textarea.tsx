@@ -53,6 +53,11 @@ const ChatTextarea = ({ chat }: Props) => {
     return chat.acceptedBy;
   };
 
+  const isBlocked = (chat: Chat) => {
+    if (userID === chat.createdByID) return chat.blockedByAcceptingUser;
+    return chat.blockedByCreatingUser;
+  };
+
   const handleSubmit = async () => {
     if (value.trim() == '') return;
     socketService.sendMessage(value, chat.id, userID || '', getSelf(chat));
@@ -77,7 +82,11 @@ const ChatTextarea = ({ chat }: Props) => {
     }
   };
 
-  return (
+  return isBlocked(chat) ? (
+    <div className="w-full h-[64px] backdrop-blur-md bg-primary_comp text-gray-600 dark:bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn cursor-default">
+      Chat is Blocked
+    </div>
+  ) : (
     <textarea
       value={value}
       onChange={handleChange}

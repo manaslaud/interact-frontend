@@ -144,7 +144,8 @@ const ShareOpening = ({ opening, setShow }: Props) => {
                 );
                 Toaster.success('Copied to Clipboard!');
               }}
-              className="w-full text-center py-2 flex justify-center gap-2 rounded-lg border-[1px] border-[#ffe1fc10] hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+              className="w-full text-center py-2 flex justify-center gap-2 rounded-lg border-[1px] border-primary_btn dark:border-[#ffe1fc10] 
+hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
             >
               <ClipboardText size={24} />
               <div> Copy Link</div>
@@ -164,10 +165,11 @@ const ShareOpening = ({ opening, setShow }: Props) => {
                           onClick={() => {
                             handleSelectChat(chat.id);
                           }}
-                          style={{
-                            backgroundColor: selectedChats.includes(chat.id) ? '#ffe1fc22' : '',
-                          }}
-                          className="w-full flex gap-2 rounded-lg py-2 px-2 cursor-pointer transition-all ease-in-out duration-200 hover:bg-[#ffe1fc10]"
+                          className={`w-full flex gap-2 rounded-lg py-2 px-2 cursor-pointer ${
+                            selectedChats.includes(chat.id)
+                              ? 'bg-primary_comp_hover dark:bg-[#ffe1fc22]'
+                              : 'hover:bg-primary_comp dark:hover:bg-[#ffe1fc10]'
+                          } transition-all ease-in-out duration-200`}
                         >
                           <Image
                             crossOrigin="anonymous"

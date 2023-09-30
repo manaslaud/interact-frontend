@@ -297,6 +297,8 @@ export interface Chat {
   lastReadMessageByCreatingUserID: string;
   lastReadMessageByAcceptingUserID: string;
   accepted: boolean;
+  blockedByCreatingUser: boolean;
+  blockedByAcceptingUser: boolean;
 }
 
 export interface GroupChat {

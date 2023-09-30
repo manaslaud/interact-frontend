@@ -9,9 +9,10 @@ import { setCurrentChatID } from '@/slices/messagingSlice';
 
 interface Props {
   chat: Chat;
+  setClickedOnInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ChatHeader = ({ chat }: Props) => {
+const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
   const dispatch = useDispatch();
   return (
     <div className="w-full h-[72px] dark:text-white font-primary flex justify-between gap-2 items-center border-b-[1px] border-primary_btn  dark:border-dark_primary_btn pb-2">
@@ -30,7 +31,9 @@ const ChatHeader = ({ chat }: Props) => {
           <div className="text-xs">@{getMessagingUser(chat).username}</div>
         </div>
       </div>
-      <div className="text-xs cursor-pointer pr-2">•••</div>
+      <div onClick={() => setClickedOnInfo(true)} className="text-xs cursor-pointer pr-2">
+        •••
+      </div>
     </div>
   );
 };

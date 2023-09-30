@@ -310,7 +310,11 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
 
       <div className="text-center opacity-75 text-sm">
         Created By{' '}
-        <Link href={`/explore/user/${chat.user.username}`} className="font-semibold underline underline-offset-2">
+        <Link
+          href={`/explore/user/${chat.user.username}`}
+          target="_blank"
+          className="font-semibold underline underline-offset-2"
+        >
           {chat.user.name}
         </Link>{' '}
         on {moment(chat.createdAt).format('DD MMM YYYY')}

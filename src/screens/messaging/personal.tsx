@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const Personal = () => {
+  const [allChats, setAllChats] = useState<Chat[]>([]);
   const [chats, setChats] = useState<Chat[]>([]);
   const [filteredChats, setFilteredChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,11 +36,24 @@ const Personal = () => {
     }
   };
 
+  const fetchAllChats = async () => {
+    setLoading(true);
+    const URL = `${MESSAGING_URL}/personal/unfiltered`;
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      setAllChats(res.data.chats || []);
+      setLoading(false);
+    } else {
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
+    }
+  };
+
   const filterChats = (search: string | null) => {
     if (!search || search == '') setFilteredChats(chats);
     else
       setFilteredChats(
-        chats.filter(chat => {
+        allChats.filter(chat => {
           const messagingUser = getMessagingUser(chat);
           if (
             messagingUser.name.match(new RegExp(search, 'i')) ||
@@ -53,6 +67,7 @@ const Personal = () => {
 
   useEffect(() => {
     fetchChats();
+    fetchAllChats();
     socketService.setupChatListRoutes(setChats);
   }, [currentChats]);
 

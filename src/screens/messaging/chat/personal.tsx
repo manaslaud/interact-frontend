@@ -16,12 +16,14 @@ import ChatTextarea from '@/components/messaging/chat_textarea';
 import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import { useWindowWidth } from '@react-hook/window-size';
+import ChatInfo from '@/sections/messaging/chat_info';
 
 const PersonalChat = () => {
   const [chat, setChat] = useState<Chat>(initialChat);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [typingStatus, setTypingStatus] = useState<TypingStatus>({ user: initialUser, chatID: '' });
+  const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const chatID = useSelector(currentChatIDSelector);
   const userID = Cookies.get('id');
@@ -103,9 +105,11 @@ const PersonalChat = () => {
         <>
           {loading ? (
             <Loader />
+          ) : clickedOnInfo ? (
+            <ChatInfo chat={chat} setShow={setClickedOnInfo} setChat={setChat} />
           ) : (
             <>
-              <ChatHeader chat={chat} />
+              <ChatHeader chat={chat} setClickedOnInfo={setClickedOnInfo} />
               <div className="w-full h-[calc(100%-72px)] max-h-full flex flex-col gap-6 overflow-hidden">
                 <ScrollableFeed>
                   {Object.keys(messagesByDate)

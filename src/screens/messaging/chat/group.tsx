@@ -98,36 +98,30 @@ const GroupChat = () => {
         <>
           {loading ? (
             <Loader />
+          ) : clickedOnInfo ? (
+            <GroupInfo chat={chat} membership={membership} setShow={setClickedOnInfo} setChat={setChat} />
           ) : (
             <>
-              {clickedOnInfo ? (
-                <GroupInfo chat={chat} membership={membership} setShow={setClickedOnInfo} setChat={setChat} />
-              ) : (
-                <>
-                  <ChatHeader chat={chat} setClickedOnInfo={setClickedOnInfo} />
-                  <div className="w-full h-[calc(100%-72px)] max-h-full flex flex-col gap-6 overflow-hidden">
-                    <ScrollableFeed>
-                      {Object.keys(messagesByDate)
-                        .reverse()
-                        .map(date => {
-                          return <MessageGroup key={date} date={date} messages={messagesByDate[date]} />;
-                        })}
-                      {typingStatus.chatID == chat.id &&
-                      typingStatus.user.id !== '' &&
-                      typingStatus.user.id != userID ? (
-                        <div className="w-fit dark:text-white text-sm cursor-default border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl px-4 py-2">
-                          {typingStatus.user.username} is typing...
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </ScrollableFeed>
-                  </div>
-                  <div className="flex w-[calc(100%-16px)] max-md:w-[99%] items-end gap-2 absolute max-md:sticky bottom-2 right-1/2 translate-x-1/2 max-md:translate-x-0">
-                    <ChatTextarea chat={chat} membership={membership} />
-                  </div>
-                </>
-              )}
+              <ChatHeader chat={chat} setClickedOnInfo={setClickedOnInfo} />
+              <div className="w-full h-[calc(100%-72px)] max-h-full flex flex-col gap-6 overflow-hidden">
+                <ScrollableFeed>
+                  {Object.keys(messagesByDate)
+                    .reverse()
+                    .map(date => {
+                      return <MessageGroup key={date} date={date} messages={messagesByDate[date]} />;
+                    })}
+                  {typingStatus.chatID == chat.id && typingStatus.user.id !== '' && typingStatus.user.id != userID ? (
+                    <div className="w-fit dark:text-white text-sm cursor-default border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl px-4 py-2">
+                      {typingStatus.user.username} is typing...
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </ScrollableFeed>
+              </div>
+              <div className="flex w-[calc(100%-16px)] max-md:w-[99%] items-end gap-2 absolute max-md:sticky bottom-2 right-1/2 translate-x-1/2 max-md:translate-x-0">
+                <ChatTextarea chat={chat} membership={membership} />
+              </div>
             </>
           )}
         </>

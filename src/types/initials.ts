@@ -245,6 +245,8 @@ export const initialChat: Chat = {
   lastReadMessageByAcceptingUserID: '',
   lastReadMessageByCreatingUserID: '',
   accepted: false,
+  blockedByCreatingUser: false,
+  blockedByAcceptingUser: false,
 };
 
 export const initialGroupChat: GroupChat = {

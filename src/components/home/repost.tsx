@@ -135,7 +135,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           />
         </Link>
       </div>
-      <div className="grow max-w-[94%] max-md:max-w-[90%] flex-col gap-3">
+      <div className="grow max-w-[94%] max-md:max-w-[89%] flex flex-col gap-2">
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}

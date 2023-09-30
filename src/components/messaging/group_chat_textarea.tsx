@@ -84,7 +84,7 @@ const ChatTextarea = ({ chat, membership }: Props) => {
   };
 
   return chat.adminOnly && membership.role == GROUP_MEMBER ? (
-    <div className="w-full h-[64px] backdrop-blur-md bg-primary_comp dark:bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn">
+    <div className="w-full h-[64px] backdrop-blur-md bg-primary_comp text-gray-600 dark:bg-[#c578bf10] rounded-xl p-4 dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn cursor-default">
       Only Admins can send messages
     </div>
   ) : (
