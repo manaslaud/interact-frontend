@@ -18,6 +18,7 @@ import socketService from '@/config/ws';
 import { useWindowWidth } from '@react-hook/window-size';
 import ChatInfo from '@/sections/messaging/chat_info';
 import patchHandler from '@/handlers/patch_handler';
+import { setUnreadChats, unreadChatsSelector } from '@/slices/feedSlice';
 
 const PersonalChat = () => {
   const [chat, setChat] = useState<Chat>(initialChat);
@@ -27,6 +28,7 @@ const PersonalChat = () => {
   const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const chatID = useSelector(currentChatIDSelector);
+  const unreadChatIDs = useSelector(unreadChatsSelector);
   const userID = Cookies.get('id');
 
   const dispatch = useDispatch();
@@ -93,8 +95,9 @@ const PersonalChat = () => {
       fetchChat();
       socketService.setupChatWindowRoutes(setMessages, typingStatus, setTypingStatus);
       socketService.setupChatReadRoutes(setChat);
+      updateLastRead();
+      if (unreadChatIDs.includes(chatID)) dispatch(setUnreadChats(unreadChatIDs.filter(id => id != chatID)));
     }
-    updateLastRead();
 
     return () => {
       updateLastRead();

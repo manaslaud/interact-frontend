@@ -16,6 +16,7 @@ interface ConfigState {
   lastFetchedApplications: string;
   lastFetchedUnreadNotifications: string;
   lastFetchedUnreadInvitations: string;
+  lastFetchedUnreadChats: string;
 }
 
 const getInitialDate = (): string => {
@@ -50,6 +51,7 @@ const initialState: ConfigState = {
   lastFetchedApplications: getInitialDate(),
   lastFetchedUnreadNotifications: getInitialNotificationDate(),
   lastFetchedUnreadInvitations: getInitialInvitationDate(),
+  lastFetchedUnreadChats: getInitialInvitationDate(),
 };
 
 export const configSlice = createSlice({
@@ -71,6 +73,7 @@ export const configSlice = createSlice({
       state.lastFetchedApplications = getInitialDate();
       state.lastFetchedUnreadNotifications = getInitialNotificationDate();
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();
+      state.lastFetchedUnreadChats = getInitialInvitationDate();
     },
     setUpdatingFollowing: (state, action: PayloadAction<boolean>) => {
       state.updatingFollowing = action.payload;
@@ -126,6 +129,9 @@ export const configSlice = createSlice({
     setLastFetchedUnreadInvitations: (state, action: PayloadAction<string>) => {
       state.lastFetchedUnreadInvitations = action.payload;
     },
+    setLastFetchedUnreadChats: (state, action: PayloadAction<string>) => {
+      state.lastFetchedUnreadChats = action.payload;
+    },
   },
 });
 
@@ -146,6 +152,7 @@ export const {
   setFetchedApplications,
   setLastFetchedUnreadNotifications,
   setLastFetchedUnreadInvitations,
+  setLastFetchedUnreadChats,
 } = configSlice.actions;
 
 export default configSlice.reducer;

@@ -122,7 +122,7 @@ export function routeMessagingWindowEvents(
     case 'new_message':
       const messageEventPayload = event.payload as Message;
       if (messageEventPayload.chatID == currentChatID) setMessages(prev => [messageEventPayload, ...prev]);
-      else {
+      else if (currentChatID != '') {
         toast.info(messageEventPayload.user.name + ': ' + messageEventPayload.content, {
           ...messageToastSettings,
           icon: '🐵',
@@ -173,7 +173,7 @@ export function routeGroupMessagingWindowEvents(
     case 'new_message':
       const messageEventPayload = event.payload as GroupChatMessage;
       if (messageEventPayload.chatID == currentGroupChatID) setMessages(prev => [messageEventPayload, ...prev]);
-      else {
+      else if (currentGroupChatID != '') {
         toast.info(messageEventPayload.user.name + ': ' + messageEventPayload.content, {
           ...messageToastSettings,
           icon: '🐵',

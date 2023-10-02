@@ -14,7 +14,7 @@ import {
   routeMessagingWindowEvents,
   sendEvent,
 } from '@/helpers/ws';
-import { incrementUnreadNotifications } from '@/slices/feedSlice';
+import { incrementUnreadNotifications, setUnreadChats } from '@/slices/feedSlice';
 import { store } from '@/store';
 import { Chat, GroupChat, GroupChatMessage, Message, TypingStatus, User } from '@/types';
 import { messageToastSettings } from '@/utils/toaster';
@@ -176,10 +176,16 @@ class SocketService {
         switch (event.type) {
           case 'new_message':
             const messageEventPayload = event.payload as Message;
+            const userID = store.getState().user.id;
+            const unreadChatIDs = store.getState().feed.unreadChats;
+            const currentChatID = store.getState().messaging.currentChatID;
             if (
-              store.getState().messaging.currentChatID != messageEventPayload.chatID &&
-              store.getState().messaging.currentGroupChatID != messageEventPayload.chatID
+              messageEventPayload.userID != userID &&
+              !unreadChatIDs.includes(messageEventPayload.chatID) &&
+              messageEventPayload.chatID != currentChatID
             )
+              store.dispatch(setUnreadChats([...unreadChatIDs, messageEventPayload.chatID]));
+            if (store.getState().messaging.currentChatID == '' && store.getState().messaging.currentGroupChatID == '')
               toast.info('New Message from: ' + messageEventPayload.user.name, {
                 ...messageToastSettings,
                 toastId: messageEventPayload.chatID,

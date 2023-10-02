@@ -5,6 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface FeedState {
   unreadNotifications: number;
   unreadInvitations: number;
+  unreadChats: string[];
   navbarOpen: boolean;
   profileCompletionOpen: boolean;
   homeTab: number;
@@ -17,6 +18,7 @@ export interface FeedState {
 const initialState: FeedState = {
   unreadNotifications: 0,
   unreadInvitations: 0,
+  unreadChats: [],
   navbarOpen: true,
   profileCompletionOpen: false,
   homeTab: 0,
@@ -63,6 +65,9 @@ export const feedSlice = createSlice({
     incrementUnreadInvitations: state => {
       state.unreadInvitations = state.unreadInvitations + 1;
     },
+    setUnreadChats: (state, action: PayloadAction<string[]>) => {
+      state.unreadChats = action.payload;
+    },
   },
 });
 
@@ -78,6 +83,7 @@ export const {
   incrementUnreadNotifications,
   setUnreadInvitations,
   incrementUnreadInvitations,
+  setUnreadChats,
 } = feedSlice.actions;
 
 export default feedSlice.reducer;
@@ -91,3 +97,4 @@ export const bookmarksTabSelector = (state: RootState) => state.feed.bookmarksTa
 export const invitationsTabSelector = (state: RootState) => state.feed.invitationsTab;
 export const unreadNotificationsSelector = (state: RootState) => state.feed.unreadNotifications;
 export const unreadInvitationsSelector = (state: RootState) => state.feed.unreadInvitations;
+export const unreadChatsSelector = (state: RootState) => state.feed.unreadChats;

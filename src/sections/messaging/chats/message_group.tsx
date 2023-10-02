@@ -32,7 +32,7 @@ const MessageGroup = ({ date, messages, chat }: Props) => {
               ) : (
                 <RegularMessage message={message} />
               )}
-              {chat && (
+              {chat && chat.accepted && (
                 <>
                   {userID == chat.acceptedByID && chat.lastReadMessageByCreatingUserID == message.id ? (
                     <div className="w-fit text-xs self-end opacity-75">• Seen</div>

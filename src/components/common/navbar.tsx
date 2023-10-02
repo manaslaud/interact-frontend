@@ -1,5 +1,5 @@
 import Notifications from '@/sections/navbar/notifications';
-import { unreadNotificationsSelector } from '@/slices/feedSlice';
+import { unreadChatsSelector, unreadNotificationsSelector } from '@/slices/feedSlice';
 import { Bell, ChatCircleDots, MagnifyingGlass } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   const notifications = useSelector(unreadNotificationsSelector);
+  const chats = (useSelector(unreadChatsSelector) || []).length;
   const [clickedOnNotifications, setClickedOnNotifications] = useState(false);
   const [clickedOnProfile, setClickedOnProfile] = useState(false);
   const user = useSelector(userSelector);
@@ -37,9 +38,16 @@ const Navbar = () => {
               <MagnifyingGlass className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
             </Link>
             <Link
-              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
+              className="w-10 h-10 rounded-full flex-center relative hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
               href={'/messaging'}
             >
+              {chats > 0 ? (
+                <div className="w-4 h-4 animate-pulse rounded-full absolute top-0 right-0 flex items-center justify-center text-xs bg-black dark:text-white">
+                  {chats}
+                </div>
+              ) : (
+                <></>
+              )}
               <ChatCircleDots className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
             </Link>
             <div

@@ -18,8 +18,14 @@ const configPersistConfig = {
   blacklist: ['updatingFollowing', 'updatingLikes', 'updateBookmark'],
 };
 
+const feedPersistConfig = {
+  key: 'feed',
+  storage,
+  whitelist: ['unreadNotifications', 'unreadInvitations', 'unreadChats'],
+};
+
 const rootReducer = combineReducers({
-  feed: feedReducer,
+  feed: persistReducer(feedPersistConfig, feedReducer),
   user: userReducer,
   messaging: messagingReducer,
   config: persistReducer(configPersistConfig, configReducer),

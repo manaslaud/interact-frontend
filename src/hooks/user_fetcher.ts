@@ -22,10 +22,11 @@ import {
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setFetchedProjects,
+  setLastFetchedUnreadChats,
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadNotifications,
 } from '@/slices/configSlice';
-import { setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
+import { setUnreadChats, setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
 import {
   ChatSlice,
   setApplications,
@@ -259,6 +260,22 @@ const useUserStateFetcher = () => {
       });
   };
 
+  const fetchUnreadChats = () => {
+    if (moment().utc().diff(config.lastFetchedUnreadChats, 'minute') < 2) return;
+    const URL = `${MESSAGING_URL}/personal/unread`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const chatIDs: string[] = res.data.chatIDs;
+          dispatch(setUnreadChats(chatIDs));
+          dispatch(setLastFetchedUnreadChats(new Date().toUTCString()));
+        } else Toaster.error(res.data.message, 'error_toaster');
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
   const fetchUserState = () => {
     fetchFollowing();
     fetchLikes();
@@ -269,6 +286,7 @@ const useUserStateFetcher = () => {
     fetchApplications();
     fetchUnreadNotifications();
     fetchUnreadInvitations();
+    fetchUnreadChats();
   };
 
   return fetchUserState;
