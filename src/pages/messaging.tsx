@@ -1,7 +1,6 @@
 import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/messaging/searchbar';
-import socketService from '@/config/ws';
 import GroupChat from '@/screens/messaging/chat/group';
 import PersonalChat from '@/screens/messaging/chat/personal';
 import Group from '@/screens/messaging/group';
@@ -16,7 +15,6 @@ import {
   messagingTabSelector,
   setMessagingTab,
 } from '@/slices/messagingSlice';
-import { userSelector } from '@/slices/userSlice';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import { PencilSimpleLine } from '@phosphor-icons/react';
@@ -31,14 +29,8 @@ const Messaging = () => {
   const currentGroupChatID = useSelector(currentGroupChatIDSelector);
   const [chatType, setChatType] = useState('personal');
 
-  const chats = useSelector(userSelector).chats;
-
   const [clickedOnNew, setClickedOnNew] = useState(false);
   const [clickedOnNewGroup, setClickedOnNewGroup] = useState(false);
-
-  useEffect(() => {
-    socketService.setupChats(chats);
-  }, []);
 
   useEffect(() => {
     setChatType(String(new URLSearchParams(window.location.search).get('chat')));

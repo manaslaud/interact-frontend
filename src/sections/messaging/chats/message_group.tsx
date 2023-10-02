@@ -19,9 +19,8 @@ const MessageGroup = ({ date, messages, chat }: Props) => {
       <div className="w-full text-center text-sm">{date}</div>
       <div className="flex flex-col-reverse gap-6">
         {messages.map(message => {
-          if (chat?.lastReadMessageByCreatingUserID == message.id) console.log(message);
           return (
-            <>
+            <div key={message.id} className="flex flex-col gap-2">
               {message.postID != null ? (
                 <SharedPostMessage message={message} />
               ) : message.projectID != null ? (
@@ -36,15 +35,15 @@ const MessageGroup = ({ date, messages, chat }: Props) => {
               {chat && (
                 <>
                   {userID == chat.acceptedByID && chat.lastReadMessageByCreatingUserID == message.id ? (
-                    <div>•Seen</div>
+                    <div className="w-fit text-xs self-end opacity-75">• Seen</div>
                   ) : userID == chat.createdByID && chat.lastReadMessageByAcceptingUserID == message.id ? (
-                    <div>•Seen</div>
+                    <div className="w-fit text-xs self-end opacity-75">• Seen</div>
                   ) : (
                     <></>
                   )}
                 </>
               )}
-            </>
+            </div>
           );
         })}
       </div>

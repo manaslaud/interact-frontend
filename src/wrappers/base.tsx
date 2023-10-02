@@ -16,7 +16,7 @@ const BaseWrapper: React.FC<WrapperProps> = ({ children, title = '' }) => {
       </Head>
       <Navbar />
       <div className="w-full flex">{children}</div>
-      <ReactSVG className="w-screen h-screen fixed -z-50 top-0 right-0" src="/assets/base.svg" />
+      <ReactSVG className="w-screen h-screen hidden dark:block fixed -z-50 top-0 right-0" src="/assets/base.svg" />
       {/* <div className="w-screen h-screen main_bg fixed -z-50 top-0 right-0"></div> */}
     </>
   );

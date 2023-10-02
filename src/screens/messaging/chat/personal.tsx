@@ -1,12 +1,12 @@
 import { SERVER_ERROR } from '@/config/errors';
 import { MESSAGING_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { currentChatIDSelector } from '@/slices/messagingSlice';
+import { currentChatIDSelector, setCurrentChatID } from '@/slices/messagingSlice';
 import { initialChat, initialUser } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import { Chat, Message, TypingStatus } from '@/types';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '@/components/common/loader';
 import { groupBy } from 'lodash';
 import ChatHeader from '@/sections/messaging/chats/personal_header';
@@ -17,6 +17,7 @@ import Cookies from 'js-cookie';
 import socketService from '@/config/ws';
 import { useWindowWidth } from '@react-hook/window-size';
 import ChatInfo from '@/sections/messaging/chat_info';
+import patchHandler from '@/handlers/patch_handler';
 
 const PersonalChat = () => {
   const [chat, setChat] = useState<Chat>(initialChat);
@@ -28,34 +29,36 @@ const PersonalChat = () => {
   const chatID = useSelector(currentChatIDSelector);
   const userID = Cookies.get('id');
 
+  const dispatch = useDispatch();
+
   const fetchChat = async () => {
     setLoading(true);
     const URL = `${MESSAGING_URL}/${chatID}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setChat(res.data.chat);
-      await fetchMessages();
+      await fetchMessages(res.data.chat);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
       else Toaster.error(SERVER_ERROR, 'error_toaster');
     }
   };
 
-  const fetchMessages = async () => {
+  const fetchMessages = async (chat: Chat) => {
     const URL = `${MESSAGING_URL}/content/${chatID}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       const messageData: Message[] = res.data.messages || [];
-      messageData.forEach(message => {
+      for (const message of messageData) {
         if (userID == chat.acceptedByID && message.userID == chat.createdByID) {
           socketService.sendReadMessage(userID, message.id, chat.id);
-          return;
-        }
-        if (userID == chat.createdByID && message.userID == chat.acceptedByID) {
+          break;
+        } else if (userID == chat.createdByID && message.userID == chat.acceptedByID) {
           socketService.sendReadMessage(userID, message.id, chat.id);
-          return;
+          break;
         }
-      });
+      }
+
       setMessages(messageData);
       setLoading(false);
     } else {
@@ -75,12 +78,28 @@ const PersonalChat = () => {
     }
   };
 
+  const updateLastRead = async () => {
+    const URL = `${MESSAGING_URL}/chat/last_read/${chatID}`;
+    const res = await patchHandler(URL, {});
+    if (res.statusCode == 200) {
+    } else {
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
+    }
+  };
+
   useEffect(() => {
     if (chatID != '') {
       fetchChat();
       socketService.setupChatWindowRoutes(setMessages, typingStatus, setTypingStatus);
       socketService.setupChatReadRoutes(setChat);
     }
+    updateLastRead();
+
+    return () => {
+      updateLastRead();
+      dispatch(setCurrentChatID(''));
+    };
   }, [chatID]);
 
   const windowWidth = useWindowWidth();

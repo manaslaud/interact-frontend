@@ -114,7 +114,10 @@ export function routeMessagingWindowEvents(
   if (event.type === undefined) {
     alert('No Type in the Event');
   }
+
+  const userID = store.getState().user.id;
   const currentChatID = store.getState().messaging.currentChatID;
+
   switch (event.type) {
     case 'new_message':
       const messageEventPayload = event.payload as Message;
@@ -133,6 +136,9 @@ export function routeMessagingWindowEvents(
           // ),
         });
       }
+
+      if (messageEventPayload.userID != userID && currentChatID == messageEventPayload.chatID)
+        socketService.sendReadMessage(userID, messageEventPayload.id, messageEventPayload.chatID);
       break;
     case 'user_typing':
       const userTypingEventPayload = event.payload as TypingStatus;
@@ -265,26 +271,19 @@ export function routeChatReadEvents(event: WSEvent, setChat: React.Dispatch<Reac
   }
 
   const userID = store.getState().user.id;
+  const currentChatID = store.getState().messaging.currentChatID;
 
   switch (event.type) {
-    case 'new_message':
-      const currentChatID = store.getState().messaging.currentChatID;
-      const messageEventPayload = event.payload as Message;
-
-      if (messageEventPayload.userID != userID && currentChatID == messageEventPayload.chatID)
-        socketService.sendReadMessage(userID, messageEventPayload.id, messageEventPayload.chatID);
-
-      break;
     case 'read_message':
-      alert('here');
+      //TODO handle a case where user 1 has sent message and his screen has socket ids and other user opens then chat and send read message socket request of backend id
       const payload = event.payload as Message;
-      setChat(prev => {
-        if (prev.id == payload.chatID) {
+      if (payload.userID != userID && currentChatID == payload.chatID)
+        setChat(prev => {
           if (prev.acceptedByID == userID) return { ...prev, lastReadMessageByCreatingUserID: payload.id };
           else if (prev.createdByID == userID) return { ...prev, lastReadMessageByAcceptingUserID: payload.id };
-        }
-        return prev;
-      });
+
+          return prev;
+        });
       break;
     default:
       break;
@@ -296,7 +295,8 @@ export function sendEvent(eventName: string, payloadEvent: any, conn: WebSocket)
 
   try {
     conn.send(JSON.stringify(event));
-  } catch {
-    alert('Socket connection error');
+  } catch (err) {
+    console.log(err);
+    alert('Socket connection error: ' + eventName);
   }
 }

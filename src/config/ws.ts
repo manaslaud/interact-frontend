@@ -49,6 +49,7 @@ class SocketService {
       if (!userID || userID == '') return;
       this.socket = new WebSocket(`${SOCKET_URL}?userID=${userID}`);
       this.socket.addEventListener('open', event => {
+        this.setupChats();
         this.setupChatNotifications();
         this.setupPushNotifications();
       });
@@ -62,8 +63,11 @@ class SocketService {
     }
   }
 
-  public setupChats(chats: string[]): void {
+  public setupChats(chats?: string[]): void {
     if (this.socket) {
+      if (!chats) {
+        chats = store.getState().user.chats;
+      }
       this.chatIDs = chats;
       const outgoingEvent = new ChatSetupEvent(chats);
       sendEvent('chat_setup', outgoingEvent, this.socket);
