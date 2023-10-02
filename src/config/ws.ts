@@ -3,10 +3,12 @@ import {
   MeStopTyping,
   MeTyping,
   SendMessageEvent,
+  SendMessageReadEvent,
   SendNotificationEvent,
   WSEvent,
   getWSEvent,
   routeChatListEvents,
+  routeChatReadEvents,
   routeGroupChatListEvents,
   routeGroupMessagingWindowEvents,
   routeMessagingWindowEvents,
@@ -94,6 +96,13 @@ class SocketService {
     }
   }
 
+  public sendReadMessage(userID: string, messageID: string, chatID: string) {
+    if (this.socket) {
+      const outgoingNotificationEvent = new SendMessageReadEvent(userID, messageID, chatID);
+      sendEvent('send_read_message', outgoingNotificationEvent, this.socket);
+    }
+  }
+
   public setupChatWindowRoutes(
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>,
     typingStatus: TypingStatus,
@@ -138,6 +147,16 @@ class SocketService {
         const eventData = JSON.parse(evt.data);
         const event = new WSEvent(eventData.type, eventData.payload);
         routeGroupChatListEvents(event, setChats);
+      });
+    }
+  }
+
+  public setupChatReadRoutes(setChat: React.Dispatch<React.SetStateAction<Chat>>) {
+    if (this.socket) {
+      this.socket.addEventListener('message', function (evt) {
+        const eventData = JSON.parse(evt.data);
+        const event = new WSEvent(eventData.type, eventData.payload);
+        routeChatReadEvents(event, setChat);
       });
     }
   }

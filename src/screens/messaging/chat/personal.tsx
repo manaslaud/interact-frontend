@@ -4,7 +4,7 @@ import getHandler from '@/handlers/get_handler';
 import { currentChatIDSelector } from '@/slices/messagingSlice';
 import { initialChat, initialUser } from '@/types/initials';
 import Toaster from '@/utils/toaster';
-import { Chat, Message, TypingStatus, User } from '@/types';
+import { Chat, Message, TypingStatus } from '@/types';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loader from '@/components/common/loader';
@@ -45,7 +45,18 @@ const PersonalChat = () => {
     const URL = `${MESSAGING_URL}/content/${chatID}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      setMessages(res.data.messages || []);
+      const messageData: Message[] = res.data.messages || [];
+      messageData.forEach(message => {
+        if (userID == chat.acceptedByID && message.userID == chat.createdByID) {
+          socketService.sendReadMessage(userID, message.id, chat.id);
+          return;
+        }
+        if (userID == chat.createdByID && message.userID == chat.acceptedByID) {
+          socketService.sendReadMessage(userID, message.id, chat.id);
+          return;
+        }
+      });
+      setMessages(messageData);
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -68,6 +79,7 @@ const PersonalChat = () => {
     if (chatID != '') {
       fetchChat();
       socketService.setupChatWindowRoutes(setMessages, typingStatus, setTypingStatus);
+      socketService.setupChatReadRoutes(setChat);
     }
   }, [chatID]);
 
@@ -115,7 +127,7 @@ const PersonalChat = () => {
                   {Object.keys(messagesByDate)
                     .reverse()
                     .map(date => {
-                      return <MessageGroup key={date} date={date} messages={messagesByDate[date]} />;
+                      return <MessageGroup key={date} date={date} messages={messagesByDate[date]} chat={chat} />;
                     })}
                   {typingStatus.chatID == chat.id && typingStatus.user.id !== '' && typingStatus.user.id != userID ? (
                     <div className="w-fit dark:text-white text-sm cursor-default border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl px-4 py-2">

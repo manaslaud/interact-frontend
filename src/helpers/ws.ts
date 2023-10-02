@@ -1,10 +1,10 @@
-import { GroupChat, GroupChatMessage, TypingStatus } from '@/types';
-import { Chat, Message, User } from '@/types';
-import { initialMessage, initialUser } from '@/types/initials';
+import socketService from '@/config/ws';
+import { store } from '@/store';
+import { Chat, GroupChat, GroupChatMessage, Message, TypingStatus, User } from '@/types';
+import { initialUser } from '@/types/initials';
+import sortChats, { sortGroupChats } from '@/utils/sort_chats';
 import { toast } from 'react-toastify';
 import { messageToastSettings } from '../utils/toaster';
-import { store } from '@/store';
-import sortChats, { sortGroupChats } from '@/utils/sort_chats';
 
 export class WSEvent {
   type = '';
@@ -58,6 +58,18 @@ export class SendNotificationEvent {
   constructor(userID: string, content: string) {
     this.content = content;
     this.userID = userID;
+  }
+}
+
+export class SendMessageReadEvent {
+  userID = '';
+  messageID = '';
+  chatID = '';
+
+  constructor(userID: string, messageID: string, chatID: string) {
+    this.userID = userID;
+    this.messageID = messageID;
+    this.chatID = chatID;
   }
 }
 
@@ -137,7 +149,6 @@ export function routeMessagingWindowEvents(
       }
       break;
     default:
-      alert('Message type not supported');
       break;
   }
 }
@@ -186,7 +197,6 @@ export function routeGroupMessagingWindowEvents(
       }
       break;
     default:
-      alert('Message type not supported');
       break;
   }
 }
@@ -243,6 +253,38 @@ export function routeGroupChatListEvents(
           })
         )
       );
+      break;
+    default:
+      break;
+  }
+}
+
+export function routeChatReadEvents(event: WSEvent, setChat: React.Dispatch<React.SetStateAction<Chat>>) {
+  if (event.type === undefined) {
+    alert('No Type in the Event');
+  }
+
+  const userID = store.getState().user.id;
+
+  switch (event.type) {
+    case 'new_message':
+      const currentChatID = store.getState().messaging.currentChatID;
+      const messageEventPayload = event.payload as Message;
+
+      if (messageEventPayload.userID != userID && currentChatID == messageEventPayload.chatID)
+        socketService.sendReadMessage(userID, messageEventPayload.id, messageEventPayload.chatID);
+
+      break;
+    case 'read_message':
+      alert('here');
+      const payload = event.payload as Message;
+      setChat(prev => {
+        if (prev.id == payload.chatID) {
+          if (prev.acceptedByID == userID) return { ...prev, lastReadMessageByCreatingUserID: payload.id };
+          else if (prev.createdByID == userID) return { ...prev, lastReadMessageByAcceptingUserID: payload.id };
+        }
+        return prev;
+      });
       break;
     default:
       break;
