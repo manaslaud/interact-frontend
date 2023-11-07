@@ -126,7 +126,7 @@ const Applications = ({ oid }: Props) => {
                     )}
                   </div>
                 ) : (
-                  <div>No Openings found</div>
+                  <div>No Applications found</div>
                 )}
               </>
             )}

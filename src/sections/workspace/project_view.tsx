@@ -8,7 +8,7 @@ import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CaretLeft, CaretRight, Link, X } from '@phosphor-icons/react';
-import LowerProject from '@/components/lowers/lower_project';
+import LowerWorkspaceProject from '@/components/lowers/lower_workspace_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
@@ -300,10 +300,10 @@ const ProjectView = ({
 
               <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col justify-between gap-4">
                 <div className="w-full h-fit flex flex-col gap-4">
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-wrap justify-between items-center gap-2">
                     <div className="font-bold text-3xl text-gradient">{project.title}</div>
                     <div className="md:hidden w-fit">
-                      <LowerProject project={project} />
+                      <LowerWorkspaceProject project={project} />
                     </div>
                   </div>
                   <div className="font-semibold text-lg">{project.tagline}</div>
@@ -398,7 +398,7 @@ const ProjectView = ({
             </div>
 
             <div className="max-md:hidden">
-              <LowerProject project={project} />
+              <LowerWorkspaceProject project={project} />
             </div>
 
             {clickedProjectIndex != projectSlugs.length - 1 ? (

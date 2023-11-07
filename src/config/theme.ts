@@ -9,10 +9,10 @@ const ThemeCheck = () => {
   //   if (userTheme !== 'light') localStorage.setItem('theme', 'light');
   // }
 
-  if (userTheme && userTheme == 'dark') document.documentElement.classList.add('dark');
-  else {
-    if (userTheme !== 'light') localStorage.setItem('theme', 'light');
-  }
+  // if (userTheme && userTheme == 'dark') document.documentElement.classList.add('dark');
+  // else {
+  //   if (userTheme !== 'light') localStorage.setItem('theme', 'light');
+  // }
 };
 
 export default ThemeCheck;

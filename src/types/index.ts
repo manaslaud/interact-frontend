@@ -348,3 +348,26 @@ export interface Invitation {
   isRead: boolean;
   createdAt: Date;
 }
+
+export interface SubTask {
+  id: string;
+  taskID: string;
+  deadline: Date;
+  title: string;
+  description: string;
+  tags: string[];
+  users: User[];
+  isCompleted: boolean;
+}
+export interface Task {
+  id: string;
+  projectID: string;
+  project: Project;
+  deadline: Date;
+  title: string;
+  description: string;
+  tags: string[];
+  users: User[];
+  isCompleted: boolean;
+  subTasks: SubTask[];
+}

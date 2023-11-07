@@ -18,6 +18,7 @@ import {
   PostBookmark,
   Project,
   ProjectBookmark,
+  Task,
   User,
 } from '.';
 
@@ -319,4 +320,17 @@ export const initialOpeningBookmark: OpeningBookmark = {
   userID: '',
   openingItems: [],
   createdAt: new Date(),
+};
+
+export const initialTask: Task = {
+  id: '',
+  title: '',
+  description: '',
+  tags: [],
+  users: [],
+  subTasks: [],
+  deadline: new Date(),
+  isCompleted: false,
+  projectID: '',
+  project: initialProject,
 };
