@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import { Project, Task, User } from '@/types';
@@ -12,6 +13,8 @@ import patchHandler from '@/handlers/patch_handler';
 import isArrEdited from '@/utils/check_array_edited';
 import deleteHandler from '@/handlers/delete_handler';
 import { Id } from 'react-toastify';
+// import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -221,7 +224,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
         <div className="text-3xl max-md:text-xl font-semibold">
           {status == 0 ? 'Task Info' : status == 1 ? 'Select Users' : 'Review Details'}
         </div>
-        <div className="w-full h-[420px] flex flex-col gap-4">
+        <div className="w-full h-[420px] overflow-y-auto flex flex-col gap-4">
           {status == 0 ? (
             <div className="w-full flex flex-col gap-4">
               <div className="w-full flex gap-4 px-4 py-2 dark:bg-dark_primary_comp_hover rounded-lg ">
@@ -237,7 +240,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
               <textarea
                 className="w-full min-h-[64px] max-h-36 px-4 py-2 bg-primary_comp dark:bg-dark_primary_comp rounded-lg focus:outline-none"
                 placeholder="Task Description"
-                maxLength={250}
+                maxLength={1000}
                 value={description}
                 onChange={el => setDescription(el.target.value)}
               ></textarea>
@@ -326,6 +329,12 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
                     value={description}
                     onChange={el => setDescription(el.target.value)}
                   ></textarea>
+                  {/* <ReactMarkdown
+                    className="markdown"
+                    children={description}
+                    remarkPlugins={[remarkGfm]}
+                    skipHtml={false}
+                  /> */}
                   <div className="w-full flex justify-between items-center px-4">
                     <div className="text-xl">Deadline: </div>
                     <input

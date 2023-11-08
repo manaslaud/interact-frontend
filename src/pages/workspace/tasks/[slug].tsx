@@ -107,7 +107,7 @@ const Tasks = ({ slug }: Props) => {
         ) : (
           <></>
         )}
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col">
           <div className="w-full flex justify-between p-base_padding">
             <div className="flex gap-3">
               {/* <ArrowArcLeft
@@ -115,13 +115,13 @@ const Tasks = ({ slug }: Props) => {
             className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
             size={40}
           /> */}
-              <div className="text-4xl font-semibold dark:text-white font-primary">Tasks</div>
+              <div className="text-6xl font-semibold dark:text-white font-primary">Tasks</div>
             </div>
             <div className="flex gap-8 items-center">
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                 <div
                   onClick={() => setClickedOnNewTask(true)}
-                  className="text-xl text-gradient font-medium hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
+                  className="text-xl text-gradient font-semibold hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
                 >
                   Create a New Task
                 </div>
@@ -147,6 +147,7 @@ const Tasks = ({ slug }: Props) => {
                             key={task.id}
                             task={task}
                             clickedTask={clickedTask}
+                            clickedOnTask={clickedOnTask}
                             setClickedOnTask={setClickedOnTask}
                             setClickedTask={setClickedTask}
                           />
