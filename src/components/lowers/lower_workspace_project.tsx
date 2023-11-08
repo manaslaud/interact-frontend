@@ -35,6 +35,7 @@ const LowerWorkspaceProject = ({ project }: Props) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(project.noLikes);
   const [numComments, setNumComments] = useState(project.noComments);
+  const [numShares, setNumShares] = useState(project.noShares);
   const [bookmarkStatus, setBookmarkStatus] = useState<bookMarkStatus>({
     isBookmarked: false,
     projectItemID: '',
@@ -163,11 +164,20 @@ const LowerWorkspaceProject = ({ project }: Props) => {
         <></>
       )}
       {clickedOnComment ? (
-        <CommentProject setShow={setClickedOnComment} project={project} setNoComments={setNumComments} />
+        <CommentProject
+          setShow={setClickedOnComment}
+          project={project}
+          numComments={numComments}
+          setNoComments={setNumComments}
+        />
       ) : (
         <></>
       )}
-      {clickedOnShare ? <ShareProject setShow={setClickedOnShare} project={project} /> : <></>}
+      {clickedOnShare ? (
+        <ShareProject setShow={setClickedOnShare} project={project} setNoShares={setNumShares} />
+      ) : (
+        <></>
+      )}
 
       <div className="flex flex-col gap-8 max-md:gap-3 max-md:p-0 max-md:flex-row">
         <Kanban
@@ -183,6 +193,32 @@ const LowerWorkspaceProject = ({ project }: Props) => {
           weight="regular"
         />
         <div className="h-[1px] w-full bg-black max-md:hidden"></div>
+        <div className="flex-center flex-col">
+          <HeartStraight
+            onClick={likeHandler}
+            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            size={32}
+            weight={liked ? 'fill' : 'regular'}
+          />
+          {/* <div className="text-xs">{numLikes}</div> */}
+        </div>
+        <div className="flex-center flex-col">
+          <Export
+            onClick={() => setClickedOnShare(true)}
+            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            size={32}
+            weight="regular"
+          />
+          {/* <div className="text-xs">{numShares}</div> */}
+        </div>
+        <div className="flex-center flex-col">
+          <ChatTeardrop
+            onClick={() => setClickedOnComment(true)}
+            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            size={32}
+          />
+          {/* <div className="text-xs">{numComments}</div> */}
+        </div>
         <BookmarkSimple
           className="cursor-pointer p-2 max-md:p-0 rounded-full max-md:w-6 max-md:h-6"
           onClick={() => {
@@ -192,19 +228,6 @@ const LowerWorkspaceProject = ({ project }: Props) => {
           size={48}
           weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
         />
-        <HeartStraight
-          onClick={likeHandler}
-          className="cursor-pointer p-2 max-md:p-0 rounded-full max-md:w-6 max-md:h-6"
-          size={48}
-          weight={liked ? 'fill' : 'regular'}
-        />
-        <Export
-          onClick={() => setClickedOnShare(true)}
-          className="cursor-pointer p-2 max-md:p-0 rounded-full max-md:w-6 max-md:h-6"
-          size={48}
-          weight="regular"
-        />
-        <ChatTeardrop className="cursor-pointer p-2 max-md:p-0 rounded-full max-md:w-6 max-md:h-6" size={48} />
       </div>
     </>
   );

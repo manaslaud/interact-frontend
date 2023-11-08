@@ -7,15 +7,16 @@ import Toaster from '@/utils/toaster';
 import { Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import NewPost from '@/sections/home/new_post';
 import ProfileCard from '@/sections/home/profile_card';
-import { navbarOpenSelector, setHomeTab } from '@/slices/feedSlice';
+import { navbarOpenSelector } from '@/slices/feedSlice';
 import RePostComponent from '@/components/home/repost';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import NoFeed from '@/components/empty_fillers/feed';
 import { SERVER_ERROR } from '@/config/errors';
+import PostsLoader from '@/components/loaders/posts';
 
 const Feed = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -27,8 +28,6 @@ const Feed = () => {
   let profilePic = useSelector(userSelector).profilePic;
 
   const open = useSelector(navbarOpenSelector);
-
-  const dispatch = useDispatch();
 
   const getFeed = () => {
     const URL = `/feed?page=${page}&limit=${5}`;
@@ -85,7 +84,7 @@ const Feed = () => {
         </div>
 
         {loading ? (
-          <Loader />
+          <PostsLoader />
         ) : (
           <>
             {feed.length === 0 ? (

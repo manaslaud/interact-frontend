@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import RePostComponent from '@/components/home/repost';
 import { EXPLORE_URL } from '@/config/routes';
 import { SERVER_ERROR } from '@/config/errors';
+import PostsLoader from '@/components/loaders/posts';
 
 const Discover = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -75,7 +76,7 @@ const Discover = () => {
       )} */}
       <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
         {loading ? (
-          <Loader />
+          <PostsLoader />
         ) : (
           <>
             {feed.length === 0 ? (

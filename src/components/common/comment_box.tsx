@@ -18,6 +18,7 @@ import Trash from '@phosphor-icons/react/dist/icons/Trash';
 import socketService from '@/config/ws';
 
 import { SERVER_ERROR } from '@/config/errors';
+import CommentsLoader from '../loaders/comments';
 
 interface Props {
   type: string;
@@ -121,11 +122,11 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
   const profilePic = loggedInUser.profilePic;
 
   return (
-    <div className="w-full h-full overflow-auto flex flex-col px-12 py-8 font-primary gap-8 max-md:px-4">
+    <div className="w-full h-full overflow-auto flex flex-col p-4 font-primary gap-4 max-md:px-4">
       <div className="w-full flex gap-2">
         <Image
           crossOrigin="anonymous"
-          className="w-12 max-md:w-8 h-12 max-md:h-8 rounded-full cursor-default"
+          className="w-8 h-8 rounded-full cursor-default mt-2"
           width={10000}
           height={10000}
           alt="user"
@@ -140,11 +141,11 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             onKeyDown={el => {
               if (el.key === 'Enter') submitHandler();
             }}
-            className="w-4/5 text-lg max-md:text-sm px-4 py-2 rounded-xl dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
+            className="w-5/6 max-md:text-sm border-[1px] border-dashed p-2 rounded-lg dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
             placeholder={`Comment on this ${type}`}
           />
           <div
-            className="h-fit max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-3  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
+            className="h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-3  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
             onClick={submitHandler}
           >
             Comment
@@ -152,12 +153,12 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
         </div>
       </div>
       {loading ? (
-        <Loader />
+        <CommentsLoader />
       ) : (
         <>
           {comments.length > 0 ? (
             // <InfiniteScroll dataLength={comments.length} next={getComments} hasMore={hasMore} loader={<Loader />}>
-            <div className="w-full flex flex-col gap-8">
+            <div className="w-full flex flex-col gap-4">
               {comments.map(comment => {
                 return (
                   <div key={comment.id} className="flex flex-col gap-2">
@@ -177,7 +178,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                             height={10000}
                             alt={'User Pic'}
                             src={`${USER_PROFILE_PIC_URL}/${comment.user.profilePic}`}
-                            className={'rounded-full w-12 max-md:w-8 h-12 max-md:h-8 cursor-pointer'}
+                            className={'rounded-full w-8 h-8 cursor-pointer'}
                           />
                         </Link>
                         <div className="flex flex-col">
@@ -187,21 +188,11 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                                 ? `/explore/user/${comment.user.username}`
                                 : '/profile'
                             }`}
-                            className="text-xl max-md:text-lg font-semibold"
+                            className="text-base font-medium"
                           >
-                            {comment.user.name}
+                            @{comment.user.username}
                           </Link>
                           <div className="flex gap-1 items-center">
-                            <Link
-                              href={`${
-                                comment.user.username != loggedInUser.username
-                                  ? `/explore/user/${comment.user.username}`
-                                  : '/profile'
-                              }`}
-                              className="text-sm max-md:text-xs"
-                            >
-                              @{comment.user.username}
-                            </Link>
                             <div className="text-xs max-md:text-xxs">•</div>
                             <div className="text-xs max-md:text-xxs">{moment(comment.createdAt).fromNow()}</div>
                           </div>
@@ -213,15 +204,15 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                             deleteComment(comment.id);
                           }}
                           className="cursor-pointer mr-1 max-md:w-4 max-md:h-4 transition-all ease-in-out duration-200 hover:scale-110"
-                          size={24}
+                          size={20}
                           weight="regular"
                         />
                       ) : (
                         <></>
                       )}
                     </div>
-                    <div className="pl-14 max-md:pl-10">
-                      <div className="w-fit dark:bg-dark_primary_comp_hover py-2 px-4 max-md:text-sm rounded-xl">
+                    <div className="pl-10">
+                      <div className="w-fit bg-primary_comp dark:bg-dark_primary_comp_hover py-2 px-4 text-sm rounded-xl">
                         {comment.content}
                       </div>
                       {/* <LowerComment comment={comment} type={type} /> */}
@@ -232,7 +223,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             </div>
           ) : (
             // </InfiniteScroll>
-            <div className="text-2xl">No Comments Yet:)</div>
+            <div className="w-fit mx-auto text-xl">No Comments Yet :)</div>
           )}
         </>
       )}

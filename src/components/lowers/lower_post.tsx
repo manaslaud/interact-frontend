@@ -147,7 +147,12 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
         <></>
       )}
       {clickedOnComment ? (
-        <CommentPost setShow={setClickedOnComment} post={post} setNoComments={setNumComments} />
+        <CommentPost
+          setShow={setClickedOnComment}
+          post={post}
+          numComments={numComments}
+          setNoComments={setNumComments}
+        />
       ) : (
         <></>
       )}

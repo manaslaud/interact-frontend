@@ -115,10 +115,12 @@ const SharePost = ({ post, setShow }: Props) => {
               <div className="w-full text-sm whitespace-pre-wrap mb-1 line-clamp-4">{post.content}</div>
             </div>
           </div>
+        </div>
+        <div className="w-full h-[400px] overflow-y-auto flex flex-col justify-between gap-2">
           {loading ? (
             <Loader />
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-2">
               {chats.length > 0 ? (
                 <>
                   {chats.map(chat => {
@@ -128,11 +130,11 @@ const SharePost = ({ post, setShow }: Props) => {
                         onClick={() => {
                           handleSelectChat(chat.id);
                         }}
-                        className={`w-full flex items-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-ease-200 ${
+                        className={`w-full flex gap-2 rounded-lg py-2 px-2 cursor-pointer ${
                           selectedChats.includes(chat.id)
                             ? 'bg-primary_comp_hover dark:bg-[#ffe1fc22]'
                             : 'hover:bg-primary_comp dark:hover:bg-[#ffe1fc10]'
-                        }`}
+                        } transition-all ease-in-out duration-200`}
                       >
                         <Image
                           crossOrigin="anonymous"
@@ -143,7 +145,7 @@ const SharePost = ({ post, setShow }: Props) => {
                           className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}
                         />
                         <div className="w-5/6 flex flex-col">
-                          <div className="font-bold">{getMessagingUser(chat).name}</div>
+                          <div className="text-lg font-semibold">{getMessagingUser(chat).name}</div>
                           <div className="text-xs">@{getMessagingUser(chat).username}</div>
                         </div>
                       </div>
@@ -153,21 +155,21 @@ const SharePost = ({ post, setShow }: Props) => {
               ) : (
                 <></>
               )}
-            </>
+            </div>
           )}
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          <textarea
-            className="bg-primary_comp dark:bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
-            placeholder="Add a message"
-            value={message}
-            onChange={el => setMessage(el.target.value)}
-          />
-          <div
-            onClick={handleSubmit}
-            className="w-full text-center py-2 rounded-lg border-[1px] border-gray-300 dark:border-dark_primary_btn hover:bg-primary_comp dark:hover:bg-dark_primary_comp active:bg-primary_comp_hover dark:active:bg-dark_primary_comp_hover cursor-pointer transition-ease-300"
-          >
-            Send Message
+          <div className="w-full flex flex-col gap-1">
+            <textarea
+              className="bg-primary_comp dark:bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
+              placeholder="Add a message"
+              value={message}
+              onChange={el => setMessage(el.target.value)}
+            />
+            <div
+              onClick={handleSubmit}
+              className="w-full text-center py-2 rounded-lg border-[1px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active border-[#ffe1fc10] dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+            >
+              Send Message
+            </div>
           </div>
         </div>
       </div>

@@ -145,7 +145,12 @@ const LowerProject = ({ project }: Props) => {
         <></>
       )}
       {clickedOnComment ? (
-        <CommentProject setShow={setClickedOnComment} project={project} setNoComments={setNumComments} />
+        <CommentProject
+          setShow={setClickedOnComment}
+          project={project}
+          numComments={numComments}
+          setNoComments={setNumComments}
+        />
       ) : (
         <></>
       )}

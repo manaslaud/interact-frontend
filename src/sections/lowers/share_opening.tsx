@@ -3,7 +3,6 @@ import { SERVER_ERROR } from '@/config/errors';
 import { MESSAGING_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
-
 import { Chat, Opening } from '@/types';
 import getMessagingUser from '@/utils/get_messaging_user';
 import Toaster from '@/utils/toaster';

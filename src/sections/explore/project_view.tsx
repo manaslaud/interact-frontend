@@ -14,8 +14,6 @@ import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
 import Openings from '@/components/explore/show_openings';
 import Link from 'next/link';
-import getIcon from '@/utils/get_icon';
-import getDomainName from '@/utils/get_domain_name';
 import Links from '@/components/explore/show_links';
 import { useSwipeable } from 'react-swipeable';
 

@@ -11,6 +11,7 @@ import Loader from '@/components/common/loader';
 import moment from 'moment';
 import { Share, Users } from '@phosphor-icons/react';
 import Link from 'next/link';
+import TasksLoader from '@/components/loaders/tasks';
 
 interface Props {
   project: Project;
@@ -60,18 +61,18 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed bg-white text-gray-800 z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col p-8 max-md:px-4 max-md:py-8 gap-6 border-[1px] border-gray-600 shadow-xl dark:border-dark_primary_btn rounded-xl animate-fade_third">
-        <div className="text-7xl max-md:text-5xl font-semibold flex gap-2 items-center">
-          <Gavel className="max-md:w-10 max-md:h-10" size={56} weight="duotone" />
+      <div className="w-1/3 max-md:w-5/6 max-h-[640px] overflow-y-auto fixed bg-white text-gray-800 z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col p-8 max-md:px-4 max-md:py-8 gap-6 border-[1px] border-gray-600 shadow-xl dark:border-dark_primary_btn rounded-xl animate-fade_third">
+        <div className="text-4xl max-md:text-5xl font-semibold flex gap-2 items-center">
+          <Gavel className="max-md:w-10 max-md:h-10" size={40} weight="duotone" />
           <div className="grow flex justify-between items-center">
-            Tasks
+            Recent Tasks
             <Link href={`/workspace/tasks/${project.slug}`}>
               <Share className="cursor-pointer" size={36} weight="duotone" />
             </Link>
           </div>
         </div>
         {loading ? (
-          <Loader />
+          <TasksLoader />
         ) : (
           <>
             {tasks.length == 0 ? (
@@ -101,7 +102,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
               </>
             ) : (
               <>
-                {tasks.map(task => {
+                {tasks.slice(0, 4).map(task => {
                   return (
                     <div key={task.id} className="relative">
                       {userInTask(user.id, task) ? (

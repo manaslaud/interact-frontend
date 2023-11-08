@@ -19,11 +19,12 @@ import renderContentWithLinks from '@/utils/render_content_with_links';
 interface Props {
   post: Post;
   showLowerPost?: boolean;
+  showImage?: boolean;
   isRepost?: boolean;
   setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) => {
+const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, setFeed }: Props) => {
   const loggedInUser = useSelector(userSelector);
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
@@ -184,7 +185,7 @@ const Post = ({ post, showLowerPost = true, isRepost = false, setFeed }: Props) 
             )}
           </div>
         </div>
-        {post.images && post.images.length > 0 ? (
+        {post.images && post.images.length > 0 && showImage ? (
           <CarouselProvider
             naturalSlideHeight={580}
             naturalSlideWidth={1000}

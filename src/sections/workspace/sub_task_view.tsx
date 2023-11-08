@@ -179,9 +179,10 @@ const SubTaskView = ({
                 }}
                 className="w-full text-base bg-gray-100 rounded-xl p-4 hover:scale-105 cursor-pointer transition-ease-300"
               >
-                <span className="text-xl max-md:text-lg text-gradient font-semibold">Your sub task is lonely! </span>{' '}
-                and looking for a buddy. Don&apos;t leave it hanging, assign it to a team member and let the magic
-                begin! 🚀
+                <span className="text-xl max-md:text-lg text-gradient font-semibold">
+                  Don&apos;t leave subtasks hanging!
+                </span>{' '}
+                Assign this subtask and keep the workflow smooth. 📢
               </div>
             ) : (
               <></>
