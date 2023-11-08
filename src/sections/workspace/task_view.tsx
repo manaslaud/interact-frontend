@@ -1,15 +1,19 @@
 import { Project, Task } from '@/types';
 import React, { useState } from 'react';
-import { APPLICATION_RESUME_URL, APPLICATION_URL, TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import Image from 'next/image';
-import getIcon from '@/utils/get_icon';
-import Link from 'next/link';
-import { ArrowArcLeft, CalendarX, CheckSquare, Gear, ListChecks, Trash } from '@phosphor-icons/react';
-import getHandler from '@/handlers/get_handler';
+import {
+  ArrowArcLeft,
+  CalendarX,
+  CheckCircle,
+  CheckSquare,
+  Circle,
+  Gear,
+  PlusCircle,
+  Trash,
+  XCircle,
+} from '@phosphor-icons/react';
 import Toaster from '@/utils/toaster';
-import router from 'next/router';
-import getDomainName from '@/utils/get_domain_name';
-import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
 import moment from 'moment';
 import EditTask from './edit_task';
@@ -18,6 +22,10 @@ import ConfirmDelete from '@/components/common/confirm_delete';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import patchHandler from '@/handlers/patch_handler';
+import NewSubTask from './new_sub_task';
+import { initialSubTask } from '@/types/initials';
+import SubTaskView from './sub_task_view';
+import EditSubTask from './edit_sub_task';
 
 interface Props {
   task: Task;
@@ -30,6 +38,11 @@ interface Props {
 const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props) => {
   const [clickedOnEditTask, setClickedOnEditTask] = useState(false);
   const [clickedOnDeleteTask, setClickedOnDeleteTask] = useState(false);
+  const [clickedOnNewSubTask, setClickedOnNewSubTask] = useState(false);
+  const [clickedOnViewSubTask, setClickedOnViewSubTask] = useState(false);
+  const [clickedOnEditSubTask, setClickedOnEditSubTask] = useState(false);
+  const [clickedSubTask, setClickedSubTask] = useState(initialSubTask);
+  const [clickedOnDeleteSubTask, setClickedOnDeleteSubTask] = useState(false);
 
   const getUserRole = (userID: string) => {
     var role = '';
@@ -55,6 +68,43 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
       if (setFilteredTasks) setFilteredTasks(prev => prev.filter(t => t.id != task.id));
       setShow(false);
       Toaster.stopLoad(toaster, 'Task Deleted', 1);
+    } else {
+      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
+  const handleDeleteSubTask = async () => {
+    const toaster = Toaster.startLoad('Deleting the sub task...');
+
+    const URL = `${TASK_URL}/sub/${clickedSubTask.id}`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      if (setTasks)
+        setTasks(prev =>
+          prev.map(t => {
+            if (t.id == task.id)
+              return {
+                ...t,
+                subTasks: t.subTasks.filter(s => s.id != clickedSubTask.id),
+              };
+            else return t;
+          })
+        );
+      if (setFilteredTasks)
+        setFilteredTasks(prev =>
+          prev.map(t => {
+            if (t.id == task.id)
+              return {
+                ...t,
+                subTasks: t.subTasks.filter(s => s.id != clickedSubTask.id),
+              };
+            else return t;
+          })
+        );
+      setShow(false);
+      Toaster.stopLoad(toaster, 'Sub Task Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
@@ -113,7 +163,46 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
       ) : (
         <></>
       )}
+      {clickedOnEditSubTask ? (
+        <EditSubTask
+          subTask={clickedSubTask}
+          task={task}
+          setShow={setClickedOnEditSubTask}
+          setTasks={setTasks}
+          setFilteredTasks={setFilteredTasks}
+        />
+      ) : (
+        <></>
+      )}
       {clickedOnDeleteTask ? <ConfirmDelete setShow={setClickedOnDeleteTask} handleDelete={handleDelete} /> : <></>}
+      {clickedOnDeleteSubTask ? (
+        <ConfirmDelete setShow={setClickedOnDeleteSubTask} handleDelete={handleDeleteSubTask} />
+      ) : (
+        <></>
+      )}
+      {clickedOnNewSubTask ? (
+        <NewSubTask
+          setShow={setClickedOnNewSubTask}
+          task={task}
+          setTasks={setTasks}
+          setFilteredTasks={setFilteredTasks}
+        />
+      ) : (
+        <></>
+      )}
+      {clickedOnViewSubTask ? (
+        <SubTaskView
+          setShow={setClickedOnViewSubTask}
+          subTask={clickedSubTask}
+          task={task}
+          setClickedOnEditSubTask={setClickedOnEditSubTask}
+          setClickedOnDeleteSubTask={setClickedOnDeleteSubTask}
+          setTasks={setTasks}
+          setFilteredTasks={setFilteredTasks}
+        />
+      ) : (
+        <></>
+      )}
       {task.isCompleted ? (
         <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#bffbbe] max-md:fixed top-[168px] max-md:top-navbar right-14 max-md:right-0 z-[11]">
           Task Completed
@@ -128,7 +217,7 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
         <></>
       )}
 
-      <div className="sticky bg-white max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[640px] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-8 p-8 pt-4 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+      <div className="sticky bg-white max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[640px] max-md:w-full max-h-[75vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-8 p-8 pt-4 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
         <div className="w-full flex flex-col gap-2 max-md:gap-8">
           <ArrowArcLeft
             className="cursor-pointer"
@@ -210,15 +299,52 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
         )}
 
         {task.subTasks.length > 0 ? (
-          <div>
-            <div className="text-xl font-medium">Subtasks</div>
-            <div></div>
+          <div className="w-full flex flex-col gap-2">
+            <div className="flex gap-2 items-center">
+              <div className="text-xl font-medium">Subtasks</div>
+              {isAssignedUser(user.id) && !task.isCompleted ? (
+                <PlusCircle
+                  onClick={() => setClickedOnNewSubTask(true)}
+                  className="bg-gray-50 rounded-full cursor-pointer"
+                  size={24}
+                  weight="bold"
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="w-full flex flex-col gap-1">
+              {task.subTasks.map(subtask => {
+                return (
+                  <div
+                    key={subtask.id}
+                    onClick={() => {
+                      setClickedSubTask(subtask);
+                      setClickedOnViewSubTask(true);
+                    }}
+                    className="w-full flex flex-col gap-1 p-2 rounded-xl border-dashed border-[1px] border-gray-600 cursor-pointer"
+                  >
+                    <div className="w-full flex justify-between items-center">
+                      <div className="font-semibold text-xl">{subtask.title}</div>
+                      {subtask.isCompleted ? (
+                        <CheckCircle className="bg-[#bffbbe] rounded-full" size={24} weight="bold" />
+                      ) : moment(subtask.deadline).isAfter(moment()) ? (
+                        <Circle className="bg-[#f4f8af] rounded-full" size={24} weight="bold" />
+                      ) : (
+                        <XCircle className="bg-[#fbbebe] rounded-full" size={24} weight="bold" />
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-600">{subtask.description}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ) : (
           <>
             {isAssignedUser(user.id) && !task.isCompleted ? (
               <div
-                onClick={() => setClickedOnEditTask(true)}
+                onClick={() => setClickedOnNewSubTask(true)}
                 className="w-full text-base bg-gray-100 rounded-xl p-4 hover:scale-105 cursor-pointer transition-ease-300"
               >
                 <span className="text-xl max-md:text-lg text-gradient font-semibold">Divide and conquer! </span> Big

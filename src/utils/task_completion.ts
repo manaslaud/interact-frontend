@@ -4,7 +4,14 @@ const getCompletionPercentage = (task: Task) => {
   var percentage = 0;
   if (task.isCompleted) percentage = 100;
   else {
-    percentage = 0;
+    if (task.subTasks.length == 0) percentage = 0;
+    else {
+      var completedSubtasks = 0;
+      task.subTasks.forEach(subtask => {
+        if (subtask.isCompleted) completedSubtasks++;
+      });
+      percentage = (completedSubtasks / task.subTasks.length) * 100;
+    }
   }
   return percentage;
 };

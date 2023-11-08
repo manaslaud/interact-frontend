@@ -18,6 +18,7 @@ import {
   PostBookmark,
   Project,
   ProjectBookmark,
+  SubTask,
   Task,
   User,
 } from '.';
@@ -333,4 +334,15 @@ export const initialTask: Task = {
   isCompleted: false,
   projectID: '',
   project: initialProject,
+};
+
+export const initialSubTask: SubTask = {
+  id: '',
+  title: '',
+  description: '',
+  tags: [],
+  users: [],
+  deadline: new Date(),
+  isCompleted: false,
+  taskID: '',
 };

@@ -36,10 +36,10 @@ const AddChatMembers = ({ setShow, chat, project, setChats }: Props) => {
   const fetchUsers = async (key: string) => {
     const matchedUsers: User[] = [];
     if (project.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    else if (project.user.title.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
+    else if (project.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
     project.memberships.forEach(membership => {
       if (membership.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
-      else if (membership.user.title.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
+      else if (membership.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
     });
     setUsers(matchedUsers.filter(u => !memberUserIDs.includes(u.id)));
   };

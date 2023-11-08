@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { Project, Task, User } from '@/types';
+import { Project, SubTask, Task, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -18,17 +18,17 @@ import { Id } from 'react-toastify';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  project: Project;
+  subTask: SubTask;
   task: Task;
   setTasks?: React.Dispatch<React.SetStateAction<Task[]>>;
   setFilteredTasks?: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props) => {
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const [tags, setTags] = useState<string[]>(task.tags || []);
-  const [deadline, setDeadline] = useState(moment(task.deadline).format('DD-MM-YYYY'));
+const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Props) => {
+  const [title, setTitle] = useState(subTask.title);
+  const [description, setDescription] = useState(subTask.description);
+  const [tags, setTags] = useState<string[]>(subTask.tags || []);
+  const [deadline, setDeadline] = useState(moment(subTask.deadline).format('DD-MM-YYYY'));
 
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
@@ -36,7 +36,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
   const [status, setStatus] = useState(0);
   const [mutex, setMutex] = useState(false);
 
-  const [selectedUsers, setSelectedUsers] = useState<User[]>(task.users || []);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>(subTask.users || []);
 
   const handleChange = (el: React.ChangeEvent<HTMLInputElement>) => {
     fetchUsers(el.target.value);
@@ -45,11 +45,9 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
 
   const fetchUsers = async (key: string) => {
     const matchedUsers: User[] = [];
-    if (project.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    else if (project.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    project.memberships.forEach(membership => {
-      if (membership.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
-      else if (membership.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
+    task.users.forEach(user => {
+      if (user.username.match(new RegExp(key, 'i'))) matchedUsers.push(user);
+      else if (user.name.match(new RegExp(key, 'i'))) matchedUsers.push(user);
     });
     setUsers(matchedUsers);
   };
@@ -87,38 +85,35 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
     if (mutex) return;
     setMutex(true);
 
-    const toaster = Toaster.startLoad('Updating the task');
+    const toaster = Toaster.startLoad('Updating the sub task');
 
-    const URL = `${TASK_URL}/${task.id}`;
+    const URL = `${TASK_URL}/sub/${subTask.id}`;
 
     const userIDs = selectedUsers.map(user => user.id);
 
     const formData = new FormData();
 
-    if (title != task.title) formData.append('title', title);
-    if (description != task.description) formData.append('description', description);
-    if (!moment(deadline).isSame(moment(task.deadline), 'day')) {
+    if (title != subTask.title) formData.append('title', title);
+    if (description != subTask.description) formData.append('description', description);
+    if (!moment(deadline).isSame(moment(subTask.deadline), 'day')) {
       formData.append('deadline', moment(deadline).toISOString());
     } //TODO Not working
-    if (isArrEdited(tags, task.tags)) tags.forEach(tag => formData.append('tags', tag));
+    if (isArrEdited(tags, subTask.tags)) tags.forEach(tag => formData.append('tags', tag));
 
     const res = await patchHandler(URL, formData);
     if (res.statusCode === 200) {
       if (
         isArrEdited(
           userIDs,
-          task.users.map(user => user.id)
+          subTask.users.map(user => user.id)
         )
       ) {
-        const oldUserIDs = task.users.map(user => user.id);
+        const oldUserIDs = subTask.users.map(user => user.id);
         let addUsersSuccess = true;
         let removeUsersSuccess = true;
 
         const usersToAdd = userIDs.filter(userID => !oldUserIDs.includes(userID));
         const usersToRemove = oldUserIDs.filter(userID => !userIDs.includes(userID));
-
-        console.log(usersToAdd);
-        console.log(usersToRemove);
 
         for (const userID of usersToAdd) {
           const result = await addUser(userID, toaster);
@@ -143,7 +138,14 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
             setTasks(prev =>
               prev.map(t => {
                 if (t.id == task.id)
-                  return { ...t, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                  return {
+                    ...t,
+                    subTasks: t.subTasks.map(s => {
+                      if (s.id == subTask.id) {
+                        return { ...s, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                      } else return s;
+                    }),
+                  };
                 else return t;
               })
             );
@@ -151,12 +153,19 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
             setFilteredTasks(prev =>
               prev.map(t => {
                 if (t.id == task.id)
-                  return { ...t, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                  return {
+                    ...t,
+                    subTasks: t.subTasks.map(s => {
+                      if (s.id == subTask.id) {
+                        return { ...s, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                      } else return s;
+                    }),
+                  };
                 else return t;
               })
             );
           setShow(false);
-          Toaster.stopLoad(toaster, 'Task Edited!', 1);
+          Toaster.stopLoad(toaster, 'Sub Task Edited!', 1);
         } else {
           Toaster.stopLoad(toaster, 'Error While Editing User List', 0);
           setMutex(false);
@@ -165,19 +174,35 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
         if (setTasks)
           setTasks(prev =>
             prev.map(t => {
-              if (t.id == task.id) return { ...t, title, description, tags, deadline: new Date(deadline) };
+              if (t.id == task.id)
+                return {
+                  ...t,
+                  subTasks: t.subTasks.map(s => {
+                    if (s.id == subTask.id) {
+                      return { ...s, title, description, tags, deadline: new Date(deadline) };
+                    } else return s;
+                  }),
+                };
               else return t;
             })
           );
         if (setFilteredTasks)
           setFilteredTasks(prev =>
             prev.map(t => {
-              if (t.id == task.id) return { ...t, title, description, tags, deadline: new Date(deadline) };
+              if (t.id == task.id)
+                return {
+                  ...t,
+                  subTasks: t.subTasks.map(s => {
+                    if (s.id == subTask.id) {
+                      return { ...s, title, description, tags, deadline: new Date(deadline) };
+                    } else return s;
+                  }),
+                };
               else return t;
             })
           );
         setShow(false);
-        Toaster.stopLoad(toaster, 'Task Edited!', 1);
+        Toaster.stopLoad(toaster, 'Sub Task Edited!', 1);
       }
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -189,7 +214,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
   };
 
   const addUser = async (userID: string, toaster: Id) => {
-    const URL = `${TASK_URL}/users/${task.id}`;
+    const URL = `${TASK_URL}/sub/users/${subTask.id}`;
     const res = await patchHandler(URL, { userID });
     if (res.statusCode === 200) {
       return 1;
@@ -204,7 +229,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
   };
 
   const removeUser = async (userID: string, toaster: Id) => {
-    const URL = `${TASK_URL}/users/${task.id}/${userID}`;
+    const URL = `${TASK_URL}/sub/users/${subTask.id}/${userID}`;
     const res = await deleteHandler(URL);
     if (res.statusCode === 200) {
       return 1;
@@ -222,7 +247,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
     <>
       <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
         <div className="text-3xl max-md:text-xl font-semibold">
-          {status == 0 ? 'Task Info' : status == 1 ? 'Select Users' : 'Review Details'}
+          {status == 0 ? 'Sub Task Info' : status == 1 ? 'Select Users' : 'Review Sub Task Details'}
         </div>
         <div className="w-full h-[420px] overflow-y-auto flex flex-col gap-4">
           {status == 0 ? (
@@ -231,7 +256,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
                 <input
                   type="text"
                   className="grow bg-transparent focus:outline-none text-xl"
-                  placeholder="Task Title"
+                  placeholder="Sub Task Title"
                   maxLength={25}
                   value={title}
                   onChange={el => setTitle(el.target.value)}
@@ -239,7 +264,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
               </div>
               <textarea
                 className="w-full min-h-[64px] max-h-36 px-4 py-2 bg-primary_comp dark:bg-dark_primary_comp rounded-lg focus:outline-none"
-                placeholder="Task Description"
+                placeholder="Sub Task Description"
                 maxLength={250}
                 value={description}
                 onChange={el => setDescription(el.target.value)}
@@ -256,7 +281,9 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
                     var selectedDate = moment(el.target.value);
                     var currentDate = moment();
                     if (selectedDate.isBefore(currentDate)) {
-                      alert('Select a valid date');
+                      Toaster.error('Select a valid date');
+                    } else if (selectedDate.isAfter(task.deadline)) {
+                      Toaster.error('Date cannot be after the task deadline');
                     } else setDeadline(el.target.value);
                   }}
                 />
@@ -345,7 +372,9 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
                         var selectedDate = moment(el.target.value);
                         var currentDate = moment();
                         if (selectedDate.isBefore(currentDate)) {
-                          alert('Select a valid date');
+                          Toaster.error('Select a valid date');
+                        } else if (selectedDate.isAfter(task.deadline)) {
+                          Toaster.error('Date cannot be after the task deadline');
                         } else setDeadline(el.target.value);
                       }}
                     />
@@ -435,4 +464,4 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
   );
 };
 
-export default EditTask;
+export default EditSubTask;
