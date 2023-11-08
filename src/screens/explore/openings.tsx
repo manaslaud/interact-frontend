@@ -23,8 +23,8 @@ const Openings = () => {
   const fetchOpenings = async (search: string | null) => {
     let URL =
       search && search != ''
-        ? `${EXPLORE_URL}/openings/trending?${'search=' + search}`
-        : `${EXPLORE_URL}/openings/recommended?page=${page}&limit=${10}`;
+        ? `${EXPLORE_URL}/openings/trending?${'search=' + search}&page=${page}&limit=${10}`
+        : `${EXPLORE_URL}/openings/trending?page=${page}&limit=${10}`;
 
     const projectSlug = new URLSearchParams(window.location.search).get('project');
     if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
@@ -74,6 +74,7 @@ const Openings = () => {
   };
 
   useEffect(() => {
+    setPage(1);
     const oid = new URLSearchParams(window.location.search).get('oid');
     if (oid && oid != '') fetchOpening(oid);
     else fetchOpenings(new URLSearchParams(window.location.search).get('search'));

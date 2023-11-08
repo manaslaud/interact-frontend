@@ -2,14 +2,14 @@ import React from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import { Bookmark, BookmarkSimple, Circle, CircleDashed, HeartStraight } from '@phosphor-icons/react';
+import { CircleDashed, HeartStraight } from '@phosphor-icons/react';
 
 interface Props {
   index: number;
   project: Project;
   size?: number | string;
-  setClickedOnProject: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedProjectIndex: React.Dispatch<React.SetStateAction<number>>;
+  setClickedOnProject?: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedProjectIndex?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClickedProjectIndex }: Props) => {
@@ -32,8 +32,8 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
   return (
     <div
       onClick={() => {
-        setClickedOnProject(true);
-        setClickedProjectIndex(index);
+        if (setClickedOnProject) setClickedOnProject(true);
+        if (setClickedProjectIndex) setClickedProjectIndex(index);
       }}
       className={`w-${size} h-${size} max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
     >
@@ -50,9 +50,9 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
         height={10000}
       />
       <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
-        <div className="text-xl">{project.title}</div>
+        <div className={`${Number(size) <= 64 ? 'text-base' : 'text-xl'}`}>{project.title}</div>
         <div className="w-full flex items-center justify-between">
-          <div className="text-sm">{project.user.name}</div>
+          <div className={`${Number(size) <= 64 ? 'text-xs' : 'text-sm'}`}>{project.user.name}</div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">
               <HeartStraight size={16} />

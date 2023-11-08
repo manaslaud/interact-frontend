@@ -9,6 +9,9 @@ import RePostComponent from '@/components/home/repost';
 import { EXPLORE_URL } from '@/config/routes';
 import { SERVER_ERROR } from '@/config/errors';
 import PostsLoader from '@/components/loaders/posts';
+import { navbarOpenSelector } from '@/slices/feedSlice';
+import { useSelector } from 'react-redux';
+import TrendingCard from '@/sections/home/trending_card';
 
 const Discover = () => {
   const [feed, setFeed] = useState<Post[]>([]);
@@ -19,6 +22,8 @@ const Discover = () => {
   const [option, setOption] = useState(1);
 
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
+
+  const open = useSelector(navbarOpenSelector);
 
   const getFeed = () => {
     const URL = `${EXPLORE_URL}/posts/trending?page=${page}&limit=${5}`;
@@ -49,7 +54,7 @@ const Discover = () => {
   }, [option]);
 
   return (
-    <div className="w-full">
+    <div className={`w-full flex ${open ? 'gap-2' : 'gap-12'} transition-ease-out-500`}>
       {/* <div
         onClick={() => setClickedOnOptions(prev => !prev)}
         className="h-12 rotate-90 text-primary_text dark:text-white fixed flex-center top-[90px] right-[25vw] cursor-pointer"
@@ -74,7 +79,7 @@ const Discover = () => {
       ) : (
         <></>
       )} */}
-      <div className="w-[50vw] max-md:w-screen flex flex-col gap-2">
+      <div className="w-[50vw] max-md:w-screen flex flex-col px-6 gap-2">
         {loading ? (
           <PostsLoader />
         ) : (
@@ -84,7 +89,7 @@ const Discover = () => {
               <></>
             ) : (
               <InfiniteScroll
-                className="px-12 max-md:px-4 flex flex-col gap-4 dark:gap-0"
+                className="flex flex-col gap-4 dark:gap-0"
                 dataLength={feed.length}
                 next={getFeed}
                 hasMore={hasMore}
@@ -99,6 +104,7 @@ const Discover = () => {
           </>
         )}
       </div>
+      <TrendingCard />
     </div>
   );
 };

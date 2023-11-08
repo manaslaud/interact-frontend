@@ -1,4 +1,3 @@
-import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
@@ -16,6 +15,7 @@ import Openings from '@/components/explore/show_openings';
 import Link from 'next/link';
 import Links from '@/components/explore/show_links';
 import { useSwipeable } from 'react-swipeable';
+import SimilarProjects from '@/components/explore/similar_projects';
 
 interface Props {
   projectSlugs: string[];
@@ -204,14 +204,14 @@ const ProjectView = ({
             <div className="w-full h-[calc(100vh-56px)] shadow-xl max-md:overflow-y-auto flex max-md:flex-col">
               <Image
                 crossOrigin="anonymous"
-                className="w-3/4 max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none object-cover"
+                className="w-[calc(100vh-56px)] max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none object-cover"
                 src={`${PROJECT_PIC_URL}/${project.coverPic}`}
                 alt="Project Cover"
                 width={10000}
                 height={10000}
               />
 
-              <div className="w-1/4 max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
+              <div className="w-[calc(100vw-128px-(100vh-56px))] max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
                 <div className="flex justify-between items-center">
                   <div className="font-bold text-3xl text-gradient">{project.title}</div>
                   <div className="md:hidden w-fit">
@@ -258,8 +258,9 @@ const ProjectView = ({
                     })}
                 </div>
                 <Collaborators memberships={project.memberships} />
-                <Openings openings={project.openings} slug={project.slug} />
                 <Links links={project.links} />
+                <Openings openings={project.openings} slug={project.slug} />
+                <SimilarProjects slug={project.slug} />
               </div>
             </div>
           </div>

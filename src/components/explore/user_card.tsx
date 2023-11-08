@@ -9,13 +9,20 @@ import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   user: User;
+  forTrending?: boolean;
 }
 
-const UserCard = ({ user }: Props) => {
+const UserCard = ({ user, forTrending = false }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   const loggedInUser = useSelector(userSelector);
   return (
-    <div className="w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gray-100 dark:bg-transparent hover:bg-white dark:hover:bg-transparent rounded-lg flex flex-col gap-4 px-5 py-4 transition-ease-300">
+    <div
+      className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn dark:bg-transparent dark:hover:bg-transparent rounded-lg flex flex-col ${
+        !forTrending
+          ? 'px-5 py-4 bg-gray-100 hover:bg-white border-primary_btn gap-4'
+          : 'px-2 py-3 hover:bg-primary_comp gap-2'
+      } transition-ease-300`}
+    >
       <div className="flex items-center justify-between w-full">
         <Link
           className="flex items-center gap-2 w-fit"
@@ -27,25 +34,33 @@ const UserCard = ({ user }: Props) => {
             height={10000}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-            className={'rounded-full w-14 h-14 cursor-pointer border-[1px] border-black'}
+            className={`rounded-full ${!forTrending ? 'w-14 h-14' : 'w-10 h-10'}`}
           />
           <div className="flex flex-col font-light">
-            <div className="text-lg font-semibold">{user.name}</div>
-            <div className="flex gap-4 text-sm">
+            <div className={`text-lg ${!forTrending ? 'text-lg font-semibold' : 'text-base font-medium'}`}>
+              {user.name}
+            </div>
+            <div className={`flex gap-4 ${!forTrending ? 'text-sm' : 'text-xs'}`}>
               <div>@{user.username}</div>
-              <div className="max-md:hidden">•</div>
-              <div className="max-md:hidden">
-                {noFollowers} Follower{noFollowers > 1 ? 's' : ''}
-              </div>
+              {!forTrending ? (
+                <>
+                  <div className="max-md:hidden">•</div>
+                  <div className="max-md:hidden">
+                    {noFollowers} Follower{noFollowers > 1 ? 's' : ''}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </Link>
-        <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} />
+        <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} smaller={forTrending} />
       </div>
       {user.tagline && user.tagline != '' ? (
         <Link
           href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
-          className="w-full text-sm pl-16"
+          className={`w-full ${!forTrending ? 'text-sm pl-16' : 'text-xs pl-12'}`}
         >
           {user.tagline}
         </Link>

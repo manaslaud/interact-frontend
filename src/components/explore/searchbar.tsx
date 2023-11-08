@@ -2,7 +2,7 @@ import { EXPLORE_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchSuggestions from './search_suggestions';
 
 interface Props {
@@ -35,6 +35,12 @@ const SearchBar = ({ initialValue = '' }: Props) => {
       router.push(`/explore?search=${search}`);
     }
   };
+
+  useEffect(() => {
+    if (search == '' && new URLSearchParams(window.location.search).get('pid') != null)
+      setSearch(new URLSearchParams(window.location.search).get('pid') || '');
+  }, [window.location.search]);
+
   return (
     <div className="relative w-taskbar max-md:w-taskbar_md mx-auto">
       <form

@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CaretLeft, CaretRight, Link, X } from '@phosphor-icons/react';
 import LowerWorkspaceProject from '@/components/lowers/lower_workspace_project';
-import ProjectViewLoader from '@/components/loaders/explore_project_view';
+import ProjectViewLoader from '@/components/loaders/workspace_project_view';
 import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
 import { useSelector } from 'react-redux';

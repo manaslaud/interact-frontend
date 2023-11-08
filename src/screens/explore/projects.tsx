@@ -30,8 +30,8 @@ const Projects = () => {
   const fetchProjects = async (search: string | null) => {
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/projects/trending?${'search=' + search}`
-        : `${EXPLORE_URL}/projects/recommended?page=${page}&limit=${10}`;
+        ? `${EXPLORE_URL}/projects/trending?${'search=' + search}&page=${page}&limit=${10}`
+        : `${EXPLORE_URL}/projects/trending?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       if (search && search != '') {
@@ -71,6 +71,7 @@ const Projects = () => {
   };
 
   useEffect(() => {
+    setPage(1);
     const pid = new URLSearchParams(window.location.search).get('pid');
     if (pid && pid != '') fetchProject(pid);
     else fetchProjects(new URLSearchParams(window.location.search).get('search'));

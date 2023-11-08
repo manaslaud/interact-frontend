@@ -95,7 +95,7 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
           };
         });
       }
-      Toaster.stopLoad(toaster, 'Project Added', 1);
+      Toaster.stopLoad(toaster, 'Project Edited', 1);
       setTagline('');
       setDescription('');
       setTags([]);

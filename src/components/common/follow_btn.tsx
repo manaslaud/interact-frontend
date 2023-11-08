@@ -11,9 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 interface Props {
   setFollowerCount?: React.Dispatch<React.SetStateAction<number>>;
   toFollowID: string;
+  smaller?: boolean;
 }
 
-const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
+const FollowBtn = ({ toFollowID, setFollowerCount, smaller = false }: Props) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   const following = useSelector(userSelector).following;
@@ -74,7 +75,9 @@ const FollowBtn = ({ toFollowID, setFollowerCount }: Props) => {
             isFollowing
               ? 'w-20 border-2 border-primary_btn dark:border-dark_primary_btn'
               : 'w-16 bg-zinc-800 dark:bg-purple-950 text-white'
-          } h-8 rounded-3xl flex justify-center items-center cursor-pointer text-sm transition-ease-150`}
+          } h-8 rounded-3xl flex justify-center items-center cursor-pointer ${
+            smaller ? 'text-xs' : 'text-sm'
+          } transition-ease-150`}
         >
           {isFollowing ? 'following' : 'follow'}
         </div>
