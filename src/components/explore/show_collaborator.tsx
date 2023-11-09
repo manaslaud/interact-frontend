@@ -15,7 +15,7 @@ const Collaborators = ({ memberships, workspace = false }: Props) => {
     <>
       {memberships && memberships.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
-          <div className="text-lg font-medium">Collaborators</div>
+          <div className="text-lg font-semibold">Collaborators</div>
           <div className="flex flex-wrap gap-4 relative">
             {memberships.map((membership, index) => {
               return (

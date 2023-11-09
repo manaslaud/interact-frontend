@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Tags from '@/components/utils/edit_tags';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
-import { ArrowArcLeft, Check, Pen } from '@phosphor-icons/react';
+import { Check, Pen, PencilSimple, X } from '@phosphor-icons/react';
 import { useDispatch } from 'react-redux';
 import patchHandler from '@/handlers/patch_handler';
 import {
@@ -20,7 +20,6 @@ import Links from '@/components/utils/edit_links';
 import getDomainName from '@/utils/get_domain_name';
 import getIcon from '@/utils/get_icon';
 import Link from 'next/link';
-import { setExploreTab } from '@/slices/feedSlice';
 import isArrEdited from '@/utils/check_array_edited';
 import Connections from '../explore/connections_view';
 import { SERVER_ERROR } from '@/config/errors';
@@ -34,7 +33,7 @@ interface Props {
   coverPic?: File;
 }
 
-const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, coverPic }: Props) => {
+const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
   const [name, setName] = useState(user.name);
   const [bio, setBio] = useState(user.bio);
   const [tags, setTags] = useState(user.tags || []);
@@ -47,9 +46,15 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
   const [clickedOnFollowers, setClickedOnFollowers] = useState(false);
   const [clickedOnFollowing, setClickedOnFollowing] = useState(false);
 
+  const [clickedOnBio, setClickedOnBio] = useState(false);
+  const [clickedOnName, setClickedOnName] = useState(false);
+  const [clickedOnTags, setClickedOnTags] = useState(false);
+  const [clickedOnLinks, setClickedOnLinks] = useState(false);
+  const [clickedOnProfilePic, setClickedOnProfilePic] = useState(false);
+
   const dispatch = useDispatch();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (field: string) => {
     if (name.trim() == '') {
       Toaster.error('Name Cannot be empty', 'validation_toaster');
       return;
@@ -60,15 +65,14 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
 
     const toaster = Toaster.startLoad('Updating your Profile...');
     const formData = new FormData();
-    if (coverPic) formData.append('coverPic', coverPic);
-    if (userPic) formData.append('profilePic', userPic);
-    if (name != user.name) formData.append('name', name);
-    if (bio != user.bio) formData.append('bio', bio);
-    if (tagline != user.tagline) formData.append('tagline', tagline);
-    // if (isArrEdited(tags, user.tags))
-    tags.forEach(tag => formData.append('tags', tag));
-    // if (isArrEdited(links, user.links))
-    links.forEach(link => formData.append('links', link));
+
+    if (field == 'coverPic' && coverPic) formData.append('coverPic', coverPic);
+    else if (field == 'userPic' && userPic) formData.append('profilePic', userPic);
+    else if (field == 'name') formData.append('name', name);
+    else if (field == 'bio') formData.append('bio', bio);
+    else if (field == 'tagline') formData.append('tagline', tagline);
+    else if (field == 'tags') tags.forEach(tag => formData.append('tags', tag));
+    else if (field == 'links') links.forEach(link => formData.append('links', link));
 
     const URL = `${USER_URL}/me`;
 
@@ -77,19 +81,33 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
     if (res.statusCode === 200) {
       const profilePic = res.data.user.profilePic;
       const coverPic = res.data.user.coverPic;
-      setUser(prev => ({ ...prev, name, bio, tags, links, tagline, profilePic, coverPic }));
       dispatch(setProfilePic(profilePic));
-      if (name != user.name) dispatch(setReduxName(name));
-      if (bio != user.bio) dispatch(setReduxBio(bio));
-      if (tagline != user.tagline) dispatch(setReduxTagline(tagline));
-      if (isArrEdited(links, user.links)) {
+      if (field == 'name') dispatch(setReduxName(name));
+      else if (field == 'bio') dispatch(setReduxBio(bio));
+      else if (field == 'tagline') dispatch(setReduxTagline(tagline));
+      else if (field == 'links') {
         if (links.length > 0) dispatch(setReduxLinks(links));
-        else dispatch(resetReduxLinks()); //! not working
+        else dispatch(resetReduxLinks()); //TODO not working
       }
+      setUser(prev => ({
+        ...prev,
+        name: field == 'name' ? name : prev.name,
+        bio: field == 'bio' ? bio : prev.bio,
+        tags: field == 'tags' ? tags : prev.tags,
+        links: field == 'links' ? links : prev.links,
+        tagline: field == 'tagline' ? tagline : prev.tagline,
+        profilePic,
+        coverPic,
+      }));
       Toaster.stopLoad(toaster, 'Profile Updated', 1);
-      setClickedOnEdit(false);
+
+      if (field == 'name') setClickedOnName(false);
+      else if (field == 'userPic') setClickedOnProfilePic(false);
+      else if (field == 'bio') setClickedOnBio(false);
+      else if (field == 'tags') setClickedOnTags(false);
+      else if (field == 'links') setClickedOnLinks(false);
     } else if (res.statusCode == 413) {
-      Toaster.stopLoad(toaster, 'Image/s too large', 0);
+      Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
@@ -98,167 +116,272 @@ const ProfileCard = ({ user, setUser, clickedOnEdit, setClickedOnEdit, tagline, 
     }
     setMutex(false);
   };
+
+  interface SaveBtnProps {
+    setter: React.Dispatch<React.SetStateAction<boolean>>;
+    field: string;
+  }
+
+  const SaveBtn = ({ setter, field }: SaveBtnProps) => {
+    const checker = () => {
+      if (field == 'name') return name == user.name;
+      else if (field == 'bio') return bio == user.bio;
+      else if (field == 'tags') return !isArrEdited(tags, user.tags);
+      else if (field == 'links') return !isArrEdited(links, user.links);
+      return true;
+    };
+    return (
+      <div className="w-full flex text-sm justify-end gap-2 mt-2">
+        <div
+          onClick={() => setter(false)}
+          className="border-[1px] border-primary_black flex-center rounded-full w-20 p-1 cursor-pointer"
+        >
+          Cancel
+        </div>
+        {checker() ? (
+          <div className="bg-primary_black bg-opacity-50 text-white flex-center rounded-full w-16 p-1 cursor-default">
+            Save
+          </div>
+        ) : (
+          <div
+            onClick={() => handleSubmit(field)}
+            className="bg-primary_black text-white flex-center rounded-full w-16 p-1 cursor-pointer"
+          >
+            Save
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
-      <div className="w-[360px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10">
-        {clickedOnEdit ? (
-          <>
-            <input
-              type="file"
-              className="hidden"
-              id="userPic"
-              multiple={false}
-              onChange={async ({ target }) => {
-                if (target.files && target.files[0]) {
-                  const file = target.files[0];
-                  if (file.type.split('/')[0] == 'image') {
-                    const resizedPic = await resizeImage(file, 500, 500);
-                    setUserPicView(URL.createObjectURL(resizedPic));
-                    setUserPic(resizedPic);
-                  } else Toaster.error('Only Image Files can be selected');
-                }
+      {/* <div className="w-[400px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-white dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10"> */}
+      <div className="w-[400px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-white dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn max-md:bg-transparent rounded-md z-10">
+        <input
+          type="file"
+          className="hidden"
+          id="userPic"
+          multiple={false}
+          onChange={async ({ target }) => {
+            if (target.files && target.files[0]) {
+              const file = target.files[0];
+              if (file.type.split('/')[0] == 'image') {
+                const resizedPic = await resizeImage(file, 500, 500);
+                setUserPicView(URL.createObjectURL(resizedPic));
+                setUserPic(resizedPic);
+                setClickedOnProfilePic(true);
+              } else Toaster.error('Only Image Files can be selected');
+            }
+          }}
+        />
+        {clickedOnProfilePic ? (
+          <div className="relative">
+            <div className="w-56 h-56 border-2 border-dashed border-primary_black max-md:w-40 max-md:h-40 absolute -top-4 -right-4 animate-spin rounded-full"></div>
+            <div
+              onClick={() => handleSubmit('userPic')}
+              className="w-48 h-24 max-md:w-32 max-md:h-32 absolute border-b-2 border-black top-0 right-0 rounded-tl-full rounded-tr-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50"
+            >
+              <Check color="black" size={32} />
+            </div>
+            <div
+              onClick={() => {
+                setClickedOnProfilePic(false);
+                setUserPicView(`${USER_PROFILE_PIC_URL}/${user.profilePic}`);
+                setUserPic(undefined);
               }}
+              className="w-48 h-24 max-md:w-32 max-md:h-32 absolute border-b-2 border-black bottom-0 right-0 rotate-180 rounded-tl-full rounded-tr-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50"
+            >
+              <X color="black" size={32} />
+            </div>
+            <Image
+              crossOrigin="anonymous"
+              className="w-48 h-48 rounded-full object-cover transition-ease-200 cursor-pointer max-md:w-32 max-md:h-32"
+              width={10000}
+              height={10000}
+              alt="/"
+              src={userPicView}
             />
-            <label className="relative" htmlFor="userPic">
-              <div className="w-44 h-44 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50">
-                <Pen color="black" size={32} />
-              </div>
-              <Image
-                crossOrigin="anonymous"
-                className="w-44 h-44 rounded-full object-cover transition-ease-200 cursor-pointer max-md:w-32 max-md:h-32"
-                width={10000}
-                height={10000}
-                alt="/"
-                src={userPicView}
-              />
-            </label>
-          </>
+          </div>
         ) : (
-          <Image
-            crossOrigin="anonymous"
-            width={10000}
-            height={10000}
-            alt={'User Pic'}
-            src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-            className={'rounded-full max-md:mx-auto w-44 h-44 cursor-default'}
-          />
+          <label className="relative" htmlFor="userPic">
+            <div className="w-48 h-48 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50">
+              <Pen color="black" size={32} />
+            </div>
+            <Image
+              crossOrigin="anonymous"
+              className="w-48 h-48 rounded-full object-cover transition-ease-200 cursor-pointer max-md:w-32 max-md:h-32"
+              width={10000}
+              height={10000}
+              alt="/"
+              src={userPicView}
+            />
+          </label>
         )}
-        {clickedOnEdit ? (
-          <div>
-            <div className="text-sm ml-1 font-medium">Name</div>
+
+        {clickedOnName ? (
+          <div className="w-full">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Name ({name.trim().length}/25)</div>
             <input
               maxLength={25}
               value={name}
               onChange={el => setName(el.target.value)}
               placeholder="Interact User"
-              className="w-full focus:outline-none border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg  text-3xl p-2 max-md:text-2xl text-center font-bold bg-transparent"
+              className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg text-2xl p-2 font-semibold bg-transparent"
             />
+            <SaveBtn setter={setClickedOnName} field="name" />
           </div>
         ) : (
-          <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
+          <div
+            onClick={() => setClickedOnName(true)}
+            className="w-full relative group rounded-lg flex-center p-2 hover:bg-primary_comp cursor-pointer transition-ease-300"
+          >
+            <PencilSimple className="absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300" />
+            <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
+          </div>
         )}
-        {clickedOnEdit ? (
+
+        <div className="w-full flex justify-center text-lg gap-6">
+          <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
+            <div className="font-bold">{user.noFollowers}</div>
+            <div>Follower{user.noFollowers != 1 ? 's' : ''}</div>
+          </div>
+          <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
+            <div className="font-bold">{user.noFollowing}</div>
+            <div>Following</div>
+          </div>
+        </div>
+
+        <div className="w-full h-[1px] border-[1px] border-gray-500 border-dashed"></div>
+
+        {clickedOnBio ? (
           <div className="w-full">
-            <div className="text-sm ml-1 font-medium">Bio</div>
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Bio ({bio.trim().length}/1000)</div>
             <textarea
               value={bio}
               onChange={el => setBio(el.target.value)}
               placeholder="add a professional bio"
-              maxLength={300}
-              className="w-full min-h-[72px] max-h-[200px] focus:outline-none border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-2 text-sm bg-transparent"
+              maxLength={1000}
+              className="w-full min-h-[160px] max-h-[200px] focus:outline-none text-primary_black border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-2 text-sm bg-transparent"
             />
+            <SaveBtn setter={setClickedOnBio} field="bio" />
           </div>
         ) : (
           <div
-            onClick={() => {
-              if (user.bio == '') setClickedOnEdit(true);
-            }}
-            className={`text-sm text-center ${user.bio == '' ? 'cursor-pointer' : 'cursor-default'}`}
+            onClick={() => setClickedOnBio(true)}
+            className={`w-full relative group rounded-lg flex-center p-4 ${
+              user.bio.trim() == '' ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+            } cursor-pointer transition-ease-300`}
           >
-            {user.bio || 'Add a professional bio'}
+            <PencilSimple
+              className={`absolute opacity-0 ${
+                user.bio.trim() == '' ? 'opacity-100' : 'group-hover:opacity-100'
+              } top-2 right-2 transition-ease-300`}
+            />
+            {user.bio.trim() == '' ? (
+              <div className="text-gray-400">Click here to add a bio!</div>
+            ) : (
+              <div className={`text-center max-md:text-sm cursor-pointer`}>{user.bio}</div>
+            )}
           </div>
         )}
-        {clickedOnEdit ? (
-          <></>
-        ) : (
-          <div className="w-full flex justify-center gap-6">
-            <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
-              <div className="font-bold">{user.noFollowers}</div>
-              <div>Follower{user.noFollowers != 1 ? 's' : ''}</div>
-            </div>
-            <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
-              <div className="font-bold">{user.noFollowing}</div>
-              <div>Following</div>
-            </div>
-          </div>
-        )}
-        <div className="w-full flex flex-col gap-8 mt-12">
-          {clickedOnEdit ? (
-            <div className="w-full flex flex-col gap-2 ml-1">
-              <div className="text-sm font-medium cursor-default">Tags ({tags.length || 0}/5)</div>
-              <Tags tags={tags} setTags={setTags} />
-            </div>
-          ) : (
-            <div className="w-full flex flex-wrap items-center justify-center gap-2">
-              {user.tags &&
-                user.tags.map(tag => {
-                  return (
-                    <Link
-                      href={`/explore?search=` + tag}
-                      target="_blank"
-                      onClick={() => dispatch(setExploreTab(2))}
-                      className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md cursor-pointer"
-                      key={tag}
-                    >
-                      {tag}
-                    </Link>
-                  );
-                })}
-            </div>
-          )}
-          {clickedOnEdit ? (
-            <Links links={links} setLinks={setLinks} maxLinks={3} />
-          ) : (
-            <div className="w-full h-fit flex flex-wrap items-center justify-center gap-4">
-              {user.links &&
-                user.links.map((link, index) => {
-                  return (
-                    <Link
-                      href={link}
-                      target="_blank"
-                      key={index}
-                      className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
-                    >
-                      {getIcon(getDomainName(link), 24)}
-                      <div className="capitalize">{getDomainName(link)}</div>
-                    </Link>
-                  );
-                })}
-            </div>
-          )}
-        </div>
 
-        {clickedOnEdit ? (
-          <div
-            onClick={() => {
-              setClickedOnEdit(false);
-            }}
-            className="dark:text-white absolute top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end transition-ease-300 rounded-full cursor-pointer"
-          >
-            <ArrowArcLeft size={24} />
-          </div>
-        ) : (
-          <></>
-        )}
-        <div
-          onClick={() => {
-            clickedOnEdit ? handleSubmit() : setClickedOnEdit(true);
-          }}
-          className="dark:text-white hover:text-white absolute max-md:static top-4 right-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer"
-        >
-          {clickedOnEdit ? <Check size={24} /> : <Pen size={24} />}
+        <div className="w-full flex flex-col gap-8 mt-2">
+          {clickedOnTags ? (
+            <div className="w-full flex flex-col gap-2">
+              <div className="text-xs ml-1 font-medium uppercase text-gray-500">Skills ({tags.length || 0}/10)</div>
+              <Tags tags={tags} setTags={setTags} maxTags={10} />
+              <SaveBtn setter={setClickedOnTags} field="tags" />
+            </div>
+          ) : (
+            <div>
+              <div className="text-xs ml-1 font-medium uppercase text-gray-500">Skills</div>
+
+              <div
+                onClick={() => setClickedOnTags(true)}
+                className={`w-full relative group rounded-lg flex-center p-4 ${
+                  !user.tags || user.tags?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+                } cursor-pointer transition-ease-300`}
+              >
+                <PencilSimple
+                  className={`absolute opacity-0 ${
+                    !user.tags || user.tags?.length == 0 ? 'opacity-100' : 'group-hover:opacity-100'
+                  } top-2 right-2 transition-ease-300`}
+                />
+                {!user.tags || user.tags?.length == 0 ? (
+                  <div className="text-gray-400">Click here to add Skills!</div>
+                ) : (
+                  <div
+                    className={`w-full flex flex-wrap items-center ${
+                      user.tags?.length == 1 ? 'justify-start' : 'justify-center'
+                    } gap-2`}
+                  >
+                    {user.tags &&
+                      user.tags.map(tag => {
+                        return (
+                          <div
+                            className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-full cursor-pointer"
+                            key={tag}
+                          >
+                            {tag}
+                          </div>
+                        );
+                      })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {clickedOnLinks ? (
+            <div className="w-full flex flex-col gap-2">
+              <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links ({links.length || 0}/5)</div>
+              <Links links={links} setLinks={setLinks} maxLinks={5} />
+              <SaveBtn setter={setClickedOnLinks} field="links" />
+            </div>
+          ) : (
+            <div>
+              <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links</div>
+
+              <div
+                onClick={() => setClickedOnLinks(true)}
+                className={`w-full relative group rounded-lg flex-center p-4 ${
+                  !user.links || user.links?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+                } cursor-pointer transition-ease-300`}
+              >
+                <PencilSimple
+                  className={`absolute opacity-0 ${
+                    !user.links || user.links?.length == 0 ? 'opacity-100' : 'group-hover:opacity-100'
+                  } top-2 right-2 transition-ease-300`}
+                />
+                {!user.links || user.links?.length == 0 ? (
+                  <div className="text-gray-400">Click here to add Links!</div>
+                ) : (
+                  <div
+                    className={`w-full h-fit flex flex-wrap items-center ${
+                      user.tags?.length == 1 ? 'justify-start' : 'justify-center'
+                    } gap-4`}
+                  >
+                    {user.links &&
+                      user.links.map((link, index) => {
+                        return (
+                          <Link
+                            href={link}
+                            target="_blank"
+                            key={index}
+                            className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                          >
+                            {getIcon(getDomainName(link), 24)}
+                            <div className="capitalize">{getDomainName(link)}</div>
+                          </Link>
+                        );
+                      })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

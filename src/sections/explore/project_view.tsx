@@ -213,7 +213,7 @@ const ProjectView = ({
 
               <div className="w-[calc(100vw-128px-(100vh-56px))] max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                  <div className="font-bold text-3xl text-gradient">{project.title}</div>
+                  <div className="font-bold text-4xl text-gradient">{project.title}</div>
                   <div className="md:hidden w-fit">
                     <LowerProject project={project} />
                   </div>
@@ -259,7 +259,7 @@ const ProjectView = ({
                 </div>
                 <Collaborators memberships={project.memberships} />
                 <Links links={project.links} />
-                <Openings openings={project.openings} slug={project.slug} />
+                <Openings openings={project.openings} slug={project.slug} projectCoverPic={project.coverPic} />
                 <SimilarProjects slug={project.slug} />
               </div>
             </div>

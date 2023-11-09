@@ -8,17 +8,19 @@ import { USER_COVER_PIC_URL, USER_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
 import { Membership, Project } from '@/types';
 import ProfileCard from '@/sections/profile/profile_card';
-import { Pen } from '@phosphor-icons/react';
+import { Check, Pen, PencilSimple, X } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
+import patchHandler from '@/handlers/patch_handler';
+import { setReduxTagline } from '@/slices/userSlice';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -30,8 +32,11 @@ const Profile = () => {
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [tagline, setTagline] = useState('');
   const [coverPic, setCoverPic] = useState<File>();
-  const [coverPicView, setCoverPicView] = useState('');
+  const [coverPicView, setCoverPicView] = useState(`${USER_COVER_PIC_URL}/${user.coverPic}`);
   const open = useSelector(navbarOpenSelector);
+
+  const [clickedOnTagline, setClickedOnTagline] = useState(false);
+  const [clickedOnCoverPic, setClickedOnCoverPic] = useState(false);
 
   const getUser = () => {
     const URL = `${USER_URL}/me`;
@@ -60,39 +65,141 @@ const Profile = () => {
       });
   };
 
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (field: string) => {
+    const toaster = Toaster.startLoad('Updating your Profile...');
+    const formData = new FormData();
+
+    if (field == 'coverPic' && coverPic) formData.append('coverPic', coverPic);
+    else if (field == 'tagline') formData.append('tagline', tagline);
+
+    const URL = `${USER_URL}/me`;
+
+    const res = await patchHandler(URL, formData, 'multipart/form-data');
+
+    if (res.statusCode === 200) {
+      const coverPic = res.data.user.coverPic;
+
+      if (field == 'tagline') dispatch(setReduxTagline(tagline));
+      setUser(prev => ({
+        ...prev,
+        tagline: field == 'tagline' ? tagline : prev.tagline,
+        coverPic,
+      }));
+      Toaster.stopLoad(toaster, 'Profile Updated', 1);
+
+      if (field == 'coverPic') setClickedOnCoverPic(false);
+      else if (field == 'tagline') setClickedOnTagline(false);
+    } else if (res.statusCode == 413) {
+      Toaster.stopLoad(toaster, 'Image too large', 0);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      }
+    }
+  };
+
   useEffect(() => {
     getUser();
     const action = new URLSearchParams(window.location.search).get('action');
     if (action && action == 'edit') setClickedOnEdit(true);
   }, []);
 
+  interface SaveBtnProps {
+    setter: React.Dispatch<React.SetStateAction<boolean>>;
+    field: string;
+  }
+
+  const SaveBtn = ({ setter, field }: SaveBtnProps) => {
+    const checker = () => {
+      if (field == 'tagline') return tagline == user.tagline;
+      return true;
+    };
+    return (
+      <div className="w-full flex text-sm justify-end gap-2 mt-2">
+        <div
+          onClick={() => setter(false)}
+          className="border-[1px] border-primary_black flex-center rounded-full w-20 p-1 cursor-pointer"
+        >
+          Cancel
+        </div>
+        {checker() ? (
+          <div className="bg-primary_black bg-opacity-50 text-white flex-center rounded-full w-16 p-1 cursor-default">
+            Save
+          </div>
+        ) : (
+          <div
+            onClick={() => handleSubmit(field)}
+            className="bg-primary_black text-white flex-center rounded-full w-16 p-1 cursor-pointer"
+          >
+            Save
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <BaseWrapper title="Profile">
       <Sidebar index={7} />
       <MainWrapper>
         <div className="w-full max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">
-          {clickedOnEdit ? (
-            <>
-              <input
-                type="file"
-                className="hidden"
-                id="coverPic"
-                multiple={false}
-                onChange={async ({ target }) => {
-                  if (target.files && target.files[0]) {
-                    const file = target.files[0];
-                    if (file.type.split('/')[0] == 'image') {
-                      const resizedPic = await resizeImage(file, 900, 500);
-                      setCoverPicView(URL.createObjectURL(resizedPic));
-                      setCoverPic(resizedPic);
-                    } else Toaster.error('Only Image Files can be selected');
-                  }
+          <input
+            type="file"
+            className="hidden"
+            id="coverPic"
+            multiple={false}
+            onChange={async ({ target }) => {
+              if (target.files && target.files[0]) {
+                const file = target.files[0];
+                if (file.type.split('/')[0] == 'image') {
+                  const resizedPic = await resizeImage(file, 900, 500);
+                  setCoverPicView(URL.createObjectURL(resizedPic));
+                  setCoverPic(resizedPic);
+                  setClickedOnCoverPic(true);
+                } else Toaster.error('Only Image Files can be selected');
+              }
+            }}
+          />
+
+          {clickedOnCoverPic ? (
+            <div>
+              <div
+                onClick={() => handleSubmit('coverPic')}
+                className="w-10 h-10 absolute top-1 right-12 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
+              >
+                <Check color="black" size={24} />
+              </div>
+              <div
+                onClick={() => {
+                  setCoverPicView(`${USER_COVER_PIC_URL}/${user.coverPic}`);
+                  setCoverPic(undefined);
+                  setClickedOnCoverPic(false);
                 }}
+                className="w-10 h-10 absolute top-1 right-1 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
+              >
+                <X color="black" size={24} />
+              </div>
+              <Image
+                crossOrigin="anonymous"
+                className={`${
+                  open ? 'w-no_side_base_open' : 'w-no_side_base_close'
+                } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+                width={10000}
+                height={10000}
+                alt="/"
+                src={coverPicView}
               />
-              <label htmlFor="coverPic">
-                <div className="w-12 h-12 absolute top-1 right-1 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75">
-                  <Pen color="black" size={24} />
-                </div>
+            </div>
+          ) : (
+            <div>
+              <label
+                htmlFor="coverPic"
+                className="w-12 h-12 absolute top-1 right-4 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
+              >
+                <PencilSimple color="black" size={24} />
               </label>
               <Image
                 crossOrigin="anonymous"
@@ -104,28 +211,11 @@ const Profile = () => {
                 alt="/"
                 src={coverPicView}
               />
-            </>
-          ) : (
-            <>
-              {user.coverPic != '' ? (
-                <Image
-                  crossOrigin="anonymous"
-                  width={10000}
-                  height={10000}
-                  alt={'User Pic'}
-                  src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
-                  className={`${
-                    open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-                  } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
-                />
-              ) : (
-                <></>
-              )}
-            </>
+            </div>
           )}
 
           {loading ? (
-            <ProfileCardLoader />
+            <ProfileCardLoader width="400px" />
           ) : (
             <ProfileCard
               clickedOnEdit={clickedOnEdit}
@@ -137,33 +227,46 @@ const Profile = () => {
             />
           )}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
-            {clickedOnEdit ? (
-              <input
-                value={tagline}
-                onChange={el => setTagline(el.target.value)}
-                placeholder="Add a Professional One Liner"
-                maxLength={25}
-                className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center dark:text-white bg-transparent z-10"
-              />
+            {clickedOnTagline ? (
+              <div className="w-[90%] mx-auto z-50">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                  Tagline ({tagline.trim().length}/25)
+                </div>
+                <input
+                  value={tagline}
+                  onChange={el => setTagline(el.target.value)}
+                  placeholder="Add a Professional One Liner"
+                  maxLength={25}
+                  className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center dark:text-white bg-transparent z-10"
+                />
+                <SaveBtn setter={setClickedOnTagline} field="tagline" />
+              </div>
             ) : (
               <>
                 {loading ? (
                   <></>
                 ) : (
-                  <>
-                    {user.tagline != '' ? (
-                      <div className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white">
-                        {user.tagline}
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => setClickedOnEdit(true)}
-                        className="w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white cursor-pointer z-10"
-                      >
-                        Add A Tagline
-                      </div>
-                    )}
-                  </>
+                  <div
+                    onClick={() => {
+                      if (!clickedOnCoverPic) setClickedOnTagline(true);
+                    }}
+                    className={`w-[90%] mx-auto relative group rounded-lg flex-center p-4 ${
+                      !clickedOnCoverPic ? 'hover:bg-[#ffffff81] cursor-pointer' : ''
+                    } transition-ease-300`}
+                  >
+                    <PencilSimple
+                      className={`absolute opacity-0 ${
+                        !clickedOnCoverPic ? 'group-hover:opacity-100' : ''
+                      } top-2 right-2 transition-ease-300`}
+                    />
+                    <div
+                      className={`w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white ${
+                        !clickedOnCoverPic ? 'cursor-pointer' : 'cursor-default'
+                      }`}
+                    >
+                      {user.tagline == '' ? 'Add a tagline!' : user.tagline}
+                    </div>
+                  </div>
                 )}
               </>
             )}

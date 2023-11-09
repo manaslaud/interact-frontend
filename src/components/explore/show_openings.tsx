@@ -1,39 +1,62 @@
 import React from 'react';
-import { Opening } from '@/types';
+import { Opening, Project } from '@/types';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { setExploreTab } from '@/slices/feedSlice';
+import Image from 'next/image';
+import { PROJECT_PIC_URL } from '@/config/routes';
+import OpeningBookmarkIcon from '../lowers/opening_bookmark';
 
 interface Props {
   openings: Opening[];
   slug: string;
+  projectCoverPic: string;
 }
 
-const Openings = ({ openings, slug }: Props) => {
-  const dispatch = useDispatch();
+const Openings = ({ openings, slug, projectCoverPic }: Props) => {
   return (
     <>
       {openings && openings.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
-          <div className="text-lg font-medium">Open Positions</div>
-          <div className="w-full flex flex-col gap-2">
+          <div className="text-lg font-semibold">Open Positions</div>
+          <div className={`w-full flex flex-wrap ${openings.length == 1 ? 'justify-start' : 'justify-evenly'} gap-2`}>
             {openings.map(opening => {
               return (
-                <div
+                <Link
                   key={opening.id}
-                  className="w-full flex-center dark:bg-dark_primary_comp_active py-4 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg"
+                  href={`/explore?project=${slug}&tab=openings`}
+                  target="_blank"
+                  className="w-64 relative border-[1px] border-gray-500 p-4 flex flex-col gap-2 rounded-md hover:shadow-2xl transition-ease-300"
                 >
-                  {opening.title}
-                </div>
+                  <div className="w-full flex flex-wrap justify-between items-center">
+                    <div className="w-4/5 text-2xl font-semibold line-clamp-2">{opening.title}</div>
+                    <div
+                      onClick={el => {
+                        el.preventDefault();
+                        el.stopPropagation();
+                      }}
+                      className="z-20"
+                    >
+                      <OpeningBookmarkIcon opening={opening} />
+                    </div>
+                  </div>
+                  <div className="w-full flex flex-wrap gap-2">
+                    {opening.tags.map((el, i) => (
+                      <div key={i} className="text-xs text-gray-900 border-[1px] rounded-md flex-center p-1">
+                        {el}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-full text-gray-700 text-sm line-clamp-3">{opening.description}</div>
+                  <Image
+                    crossOrigin="anonymous"
+                    className="w-full h-full object-cover absolute top-0 right-0 opacity-30 blur-[1px]"
+                    src={`${PROJECT_PIC_URL}/${projectCoverPic}`}
+                    alt="Project Cover"
+                    width={10000}
+                    height={10000}
+                  />
+                </Link>
               );
             })}
-            <Link
-              href={`/explore?project=${slug}`}
-              onClick={() => dispatch(setExploreTab(1))}
-              className="w-full p-4 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:from-dark_secondary_gradient_start dark:to-dark_secondary_gradient_end transition-ease-300 rounded-lg"
-            >
-              Apply
-            </Link>
           </div>
         </div>
       ) : (

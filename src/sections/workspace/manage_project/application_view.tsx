@@ -25,9 +25,8 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
   const handleAccept = async () => {
     if (mutex) return;
     setMutex(true);
-
     const toaster = Toaster.startLoad('Accepting the Application...');
-    const URL = `/${APPLICATION_URL}/accept/${application.id}`;
+    const URL = `${APPLICATION_URL}/accept/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
       if (setApplications) {
@@ -69,7 +68,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
     setMutex(true);
 
     const toaster = Toaster.startLoad('Rejecting the Application...');
-    const URL = `/${APPLICATION_URL}/reject/${application.id}`;
+    const URL = `${APPLICATION_URL}/reject/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
       if (setApplications) {
@@ -111,7 +110,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
     setMutex(true);
 
     const toaster = Toaster.startLoad('Adding/Removing from Shortlist...');
-    const URL = `/${APPLICATION_URL}/review/${application.id}`;
+    const URL = `${APPLICATION_URL}/review/${application.id}`;
     const res = await getHandler(URL);
     if (res.statusCode === 200) {
       if (setApplications) {

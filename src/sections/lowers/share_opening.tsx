@@ -91,8 +91,8 @@ const ShareOpening = ({ opening, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffe1fc22] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
-        <div className="text-xl text-center font-bold underline underline-offset-2">Share this Opening</div>
+      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-white bg-[#1201103c] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-6 gap-6 border-2  dark:border-dark_primary_btn rounded-xl animate-fade_third">
+        <div className="text-3xl text-center text-gray-900 font-bold">Share this Opening</div>
         <div className="w-full flex max-md:flex-col gap-4 items-center">
           <div className="w-1/2 max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
             <Image
@@ -150,11 +150,11 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
               <div> Copy Link</div>
             </div>
           </div>
-          <div className="w-1/2 max-md:w-full max-h-base_md overflow-auto flex flex-col gap-2">
+          <div className="w-1/2 max-md:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
             {loading ? (
               <Loader />
             ) : (
-              <>
+              <div className="w-full flex flex-col gap-2">
                 {chats.length > 0 ? (
                   <>
                     {chats.map(chat => {
@@ -189,18 +189,18 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
                 ) : (
                   <></>
                 )}
-              </>
+              </div>
             )}
             <div className="w-full flex flex-col gap-1">
               <textarea
-                className="bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
+                className="bg-primary_comp dark:bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
                 placeholder="Add a message"
                 value={message}
                 onChange={el => setMessage(el.target.value)}
               />
               <div
                 onClick={handleSubmit}
-                className="w-full text-center py-2 rounded-lg border-[1px] border-[#ffe1fc10] hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
+                className="w-full text-center py-2 rounded-lg border-[1px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active border-[#ffe1fc10] dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
               >
                 Send Message
               </div>

@@ -8,12 +8,13 @@ import getDomainName from '@/utils/get_domain_name';
 interface Props {
   links: string[];
   setLinks: React.Dispatch<React.SetStateAction<string[]>>;
+  showTitle?: boolean;
   maxLinks?: number;
   title?: string;
   blackBorder?: boolean;
 }
 
-const Links = ({ links, setLinks, maxLinks = 5, title = 'Links', blackBorder = false }: Props) => {
+const Links = ({ links, showTitle = false, setLinks, maxLinks = 5, title = 'Links', blackBorder = false }: Props) => {
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
@@ -34,9 +35,13 @@ const Links = ({ links, setLinks, maxLinks = 5, title = 'Links', blackBorder = f
   return (
     <>
       <div className="w-full flex flex-col gap-2">
-        <div className="w-full text-sm font-medium">
-          {title} ({links.length + '/' + maxLinks})
-        </div>
+        {showTitle ? (
+          <div className="w-full text-sm font-medium">
+            {title} ({links.length + '/' + maxLinks})
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="w-full flex flex-col gap-2">
           {links && links.length > 0 ? (
             <div className="flex flex-col gap-4">
@@ -85,10 +90,10 @@ const Links = ({ links, setLinks, maxLinks = 5, title = 'Links', blackBorder = f
                   blackBorder
                     ? 'border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
                     : 'bg-transparent dark:bg-[#10013b30] border-gray-400 dark:border-dark_primary_btn'
-                } focus:outline-none border-[1px] rounded-lg px-4 py-2`}
+                } focus:outline-none border-[1px] rounded-lg px-4 py-2 text-sm`}
                 value={newLink}
-                onChange={el => setNewLink(el.target.value)}
-                placeholder="Add a New Link"
+                onChange={el => setNewLink(el.target.value.toLowerCase())}
+                placeholder="New Link"
               />
             </form>
           ) : (

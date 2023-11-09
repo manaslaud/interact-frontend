@@ -13,7 +13,7 @@ const Links = ({ links, title = 'Links' }: Props) => {
     <div>
       {links && links.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
-          <div className="text-lg font-medium">{title}</div>
+          <div className="text-lg font-semibold">{title}</div>
           <div className="w-full flex gap-4 justify-start flex-wrap">
             {links.map(link => {
               return (

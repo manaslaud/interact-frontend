@@ -30,7 +30,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
           }}
         />
         <div className="flex max-md:flex-col justify-between items-center max-md:items-start max-md:gap-2">
-          <div className="font-bold text-3xl text-gradient">{opening.title}</div>
+          <div className="font-bold text-4xl text-gradient">{opening.title}</div>
           <LowerOpening opening={opening} />
         </div>
         <div className="flex gap-2 text-sm max-md:flex-wrap">
