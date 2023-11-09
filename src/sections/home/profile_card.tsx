@@ -2,12 +2,10 @@ import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { setExploreTab } from '@/slices/feedSlice';
 import { initialUser } from '@/types/initials';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
-import { ArrowDownLeft, Plus } from '@phosphor-icons/react';
+import { ArrowDownLeft, PencilSimple } from '@phosphor-icons/react';
 import Loader from '@/components/common/loader';
 import ProfileCardLoader from '@/components/loaders/feed_profile_card';
 import Connections from '../explore/connections_view';
@@ -19,8 +17,6 @@ const ProfileCard = () => {
   const [user, setUser] = useState(initialUser);
   const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(true);
-
-  const dispatch = useDispatch();
 
   const [clickedOnFollowers, setClickedOnFollowers] = useState(false);
   const [clickedOnFollowing, setClickedOnFollowing] = useState(false);
@@ -73,35 +69,41 @@ const ProfileCard = () => {
             <Loader />
           ) : (
             <>
-              <Image
-                crossOrigin="anonymous"
-                width={10000}
-                height={10000}
-                alt={'User Pic'}
-                src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-                className={`rounded-full max-md:mx-auto ${
-                  open ? 'w-44 h-44' : 'w-0 h-0'
-                } border-gray-500 border-[1px] dark:border-0 transition-ease-500 cursor-default`}
-              />
-              <div
-                className={`${
-                  open ? 'text-3xl max-md:text-2xl' : 'text-xxs'
-                } transition-ease-500 text-center font-bold text-gradient`}
-              >
-                {user.name}
-              </div>
-              {user.bio != '' ? (
-                <div className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 text-center line-clamp-6`}>
-                  {user.bio}
-                </div>
-              ) : (
+              <div className="relative">
                 <Link
-                  href={'/profile?action=edit'}
-                  className={`${open ? 'text-sm' : 'text-xxs'} transition-ease-500 opacity-50 text-center line-clamp-6`}
+                  href={'/profile?action=edit&id=profilePic'}
+                  className={`${
+                    open ? 'w-44 h-44' : 'w-0 h-0'
+                  } absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50`}
                 >
-                  Add a descriptive Bio!
+                  <PencilSimple color="black" size={32} />
                 </Link>
-              )}
+                <Image
+                  crossOrigin="anonymous"
+                  width={10000}
+                  height={10000}
+                  alt={'User Pic'}
+                  src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+                  className={`rounded-full max-md:mx-auto ${
+                    open ? 'w-44 h-44' : 'w-0 h-0'
+                  } border-gray-500 border-[1px] dark:border-0 transition-ease-500 cursor-default`}
+                />
+              </div>
+
+              <Link
+                href={'/profile?action=edit&id=name'}
+                className="w-full relative group rounded-lg flex-center p-2 hover:bg-primary_comp cursor-pointer transition-ease-300"
+              >
+                <PencilSimple className="absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300" />
+                <div
+                  className={`${
+                    open ? 'text-3xl max-md:text-2xl' : 'text-xxs'
+                  } transition-ease-500 text-center font-bold text-gradient`}
+                >
+                  {user.name}
+                </div>{' '}
+              </Link>
+
               <div
                 className={`w-full ${
                   open ? 'text-base gap-6' : 'text-xxs gap-0'
@@ -116,77 +118,114 @@ const ProfileCard = () => {
                   <div>Following</div>
                 </div>
               </div>
-              {user.tags && user.tags.length > 0 ? (
-                <div
-                  className={`w-full ${
-                    open ? 'gap-2 mt-2' : 'gap-0 mt-0'
-                  } transition-ease-500 flex flex-wrap items-center justify-center`}
-                >
-                  {user.tags.map(tag => {
-                    return (
-                      <Link
-                        href={`/explore?search=` + tag}
-                        onClick={() => dispatch(setExploreTab(2))}
-                        className={`flex-center ${
-                          open ? 'text-sm px-4 py-1' : 'text-xxs px-0 py-0'
-                        } transition-ease-500 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md`}
-                        key={tag}
-                      >
-                        {tag}
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : (
-                <Link
-                  href={'/profile?action=edit'}
-                  className={`flex-center gap-2 mt-2 ${
-                    open ? 'text-sm px-2 py-1' : 'text-xxs px-0 py-0'
-                  } transition-ease-500 border-[1px] border-dashed border-primary_btn  dark:border-dark_primary_btn rounded-md`}
-                >
-                  <Plus /> <div>Add Tags</div>
-                </Link>
-              )}
 
-              {user.links && user.links.length > 0 ? (
-                <div
-                  className={`w-full ${
-                    open ? 'gap-2 mt-2' : 'gap-0 mt-0'
-                  } transition-ease-500 flex flex-wrap items-center justify-center`}
-                >
-                  {user.links.map((link, index) => {
-                    return (
-                      <Link
-                        href={link}
-                        target="_blank"
-                        key={index}
-                        className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
-                      >
-                        {getIcon(getDomainName(link), 24)}
-                        <div className="capitalize">{getDomainName(link)}</div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : (
-                <Link
-                  href={'/profile?action=edit'}
-                  className={`flex-center gap-2 mt-2 ${
-                    open ? 'text-sm px-2 py-1' : 'text-xxs px-0 py-0'
-                  } transition-ease-500 border-[1px] border-dashed border-primary_btn  dark:border-dark_primary_btn rounded-md`}
-                >
-                  <Plus /> <div>Add Links</div>
-                </Link>
-              )}
+              <div className="w-full h-[1px] border-t-[1px] border-gray-500 border-dashed"></div>
 
               <Link
+                href={'/profile?action=edit&id=bio'}
+                className={`w-full relative group rounded-lg flex-center p-4 ${
+                  user.bio.trim() == '' ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+                } cursor-pointer transition-ease-300`}
+              >
+                <PencilSimple
+                  className={`absolute opacity-0 ${
+                    user.bio.trim() == '' ? 'opacity-100' : 'group-hover:opacity-100'
+                  } top-2 right-2 transition-ease-300`}
+                />
+                {user.bio.trim() == '' ? (
+                  <div className="text-gray-400">Click here to add a bio!</div>
+                ) : (
+                  <div className={`text-center max-md:text-sm cursor-pointer line-clamp-3`}>{user.bio}</div>
+                )}
+              </Link>
+
+              <div className="w-full">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Skills</div>
+
+                <Link
+                  href={'/profile?action=edit&id=tags'}
+                  className={`w-full relative group rounded-lg flex-center p-4 ${
+                    !user.tags || user.tags?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+                  } cursor-pointer transition-ease-300`}
+                >
+                  <PencilSimple
+                    className={`absolute opacity-0 ${
+                      !user.tags || user.tags?.length == 0 ? 'opacity-100' : 'group-hover:opacity-100'
+                    } top-2 right-2 transition-ease-300`}
+                  />
+                  {!user.tags || user.tags?.length == 0 ? (
+                    <div className="text-gray-400">Click here to add Skills!</div>
+                  ) : (
+                    <div
+                      className={`w-full flex flex-wrap items-center ${
+                        user.tags?.length == 1 ? 'justify-start' : 'justify-center'
+                      } gap-2`}
+                    >
+                      {user.tags &&
+                        user.tags.map(tag => {
+                          return (
+                            <div
+                              className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-full cursor-pointer"
+                              key={tag}
+                            >
+                              {tag}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  )}
+                </Link>
+              </div>
+
+              <div className="w-full">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links</div>
+
+                <Link
+                  href={'/profile?action=edit&id=links'}
+                  className={`w-full relative group rounded-lg flex-center p-4 ${
+                    !user.links || user.links?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
+                  } cursor-pointer transition-ease-300`}
+                >
+                  <PencilSimple
+                    className={`absolute opacity-0 ${
+                      !user.links || user.links?.length == 0 ? 'opacity-100' : 'group-hover:opacity-100'
+                    } top-2 right-2 transition-ease-300`}
+                  />
+                  {!user.links || user.links?.length == 0 ? (
+                    <div className="text-gray-400">Click here to add Links!</div>
+                  ) : (
+                    <div
+                      className={`w-full h-fit flex flex-wrap items-center ${
+                        user.links?.length == 1 ? 'justify-start' : 'justify-center'
+                      } gap-4`}
+                    >
+                      {user.links &&
+                        user.links.map((link, index) => {
+                          return (
+                            <Link
+                              href={link}
+                              target="_blank"
+                              key={index}
+                              className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                            >
+                              {getIcon(getDomainName(link), 24)}
+                              <div className="capitalize">{getDomainName(link)}</div>
+                            </Link>
+                          );
+                        })}
+                    </div>
+                  )}
+                </Link>
+              </div>
+
+              {/* <Link
                 href={'/profile?action=edit'}
                 className={`w-[120px] ${
                   open ? 'mt-4' : 'mt-0'
                 } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
               >
                 Edit
-              </Link>
+              </Link> */}
             </>
           )}
         </div>

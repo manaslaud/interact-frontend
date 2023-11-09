@@ -28,7 +28,7 @@ const PersonalChat = () => {
   const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const chatID = useSelector(currentChatIDSelector);
-  const unreadChatIDs = useSelector(unreadChatsSelector);
+  const unreadChatIDs = useSelector(unreadChatsSelector) || [];
   const userID = Cookies.get('id');
 
   const dispatch = useDispatch();

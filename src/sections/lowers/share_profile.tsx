@@ -60,8 +60,7 @@ const ShareProfile = ({ user, setShow }: Props) => {
     };
   }, []);
 
-  const handleSubmit = async (el: React.FormEvent<HTMLFormElement>) => {
-    el.preventDefault();
+  const handleSubmit = async () => {
     if (selectedChats.length == 0) {
       setShow(false);
       return;
@@ -130,11 +129,11 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
               <div> Copy Link</div>
             </div>
           </div>
-          <div className="w-1/2 max-md:w-full max-h-base_md overflow-auto flex flex-col gap-2">
+          <div className="w-1/2 max-md:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
             {loading ? (
               <Loader />
             ) : (
-              <>
+              <div className="w-full flex flex-col gap-2">
                 {chats.length > 0 ? (
                   <>
                     {chats.map(chat => {
@@ -169,22 +168,22 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
                 ) : (
                   <></>
                 )}
-              </>
+              </div>
             )}
-            <form onSubmit={el => handleSubmit(el)} className="w-full flex flex-col gap-1">
+            <div className="w-full flex flex-col gap-1">
               <textarea
-                className="bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
+                className="bg-primary_comp dark:bg-[#ffe1fc22] text-sm focus:outline-none p-2 rounded-xl min-h-[6rem] max-h-64"
                 placeholder="Add a message"
                 value={message}
                 onChange={el => setMessage(el.target.value)}
               />
-              <button
-                type="submit"
-                className="w-full text-center py-2 rounded-lg border-[1px] border-primary_btn dark:border-[#ffe1fc10] bg-primary_comp dark:bg-transparent hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-[#ffe1fc10] dark:active:bg-dark_primary_comp_active cursor-pointer transition-ease-200"
+              <div
+                onClick={handleSubmit}
+                className="w-full text-center py-2 rounded-lg border-[1px] bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active border-[#ffe1fc10] dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-200"
               >
                 Send Message
-              </button>
-            </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

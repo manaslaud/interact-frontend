@@ -60,7 +60,7 @@ const User = ({ username }: Props) => {
   }, [username]);
 
   return (
-    <BaseWrapper title={username}>
+    <BaseWrapper title={user.name}>
       <Sidebar index={2} />
       <MainWrapper>
         <div className="w-full max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">

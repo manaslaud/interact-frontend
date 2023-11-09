@@ -1,11 +1,11 @@
 import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
 import { User } from '@/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Tags from '@/components/utils/edit_tags';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
-import { Check, Pen, PencilSimple, X } from '@phosphor-icons/react';
+import { Check, PencilSimple, X } from '@phosphor-icons/react';
 import { useDispatch } from 'react-redux';
 import patchHandler from '@/handlers/patch_handler';
 import {
@@ -154,6 +154,31 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
     );
   };
 
+  useEffect(() => {
+    const action = new URLSearchParams(window.location.search).get('action');
+    const id = new URLSearchParams(window.location.search).get('id');
+
+    if (action && id && action == 'edit') {
+      switch (id) {
+        case 'name':
+          setClickedOnName(true);
+          break;
+        case 'profilePic':
+          setClickedOnProfilePic(true);
+          break;
+        case 'bio':
+          setClickedOnBio(true);
+          break;
+        case 'tags':
+          setClickedOnTags(true);
+          break;
+        case 'links':
+          setClickedOnLinks(true);
+          break;
+      }
+    }
+  }, [window.location.search]);
+
   return (
     <>
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
@@ -208,7 +233,7 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
         ) : (
           <label className="relative" htmlFor="userPic">
             <div className="w-48 h-48 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50">
-              <Pen color="black" size={32} />
+              <PencilSimple color="black" size={32} />
             </div>
             <Image
               crossOrigin="anonymous"
@@ -254,7 +279,7 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
           </div>
         </div>
 
-        <div className="w-full h-[1px] border-[1px] border-gray-500 border-dashed"></div>
+        <div className="w-full h-[1px] border-t-[1px] border-gray-500 border-dashed"></div>
 
         {clickedOnBio ? (
           <div className="w-full">
@@ -360,7 +385,7 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
                 ) : (
                   <div
                     className={`w-full h-fit flex flex-wrap items-center ${
-                      user.tags?.length == 1 ? 'justify-start' : 'justify-center'
+                      user.links?.length == 1 ? 'justify-start' : 'justify-center'
                     } gap-4`}
                   >
                     {user.links &&
