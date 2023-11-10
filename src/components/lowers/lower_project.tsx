@@ -12,10 +12,11 @@ import BookmarkProject from '../../sections/lowers/bookmark_project';
 import { BOOKMARK_URL, PROJECT_URL } from '@/config/routes';
 import Semaphore from '@/utils/semaphore';
 import { configSelector, setUpdateBookmark, setUpdatingLikes } from '@/slices/configSlice';
-import { HeartStraight } from '@phosphor-icons/react';
+import { HeartStraight, WarningCircle } from '@phosphor-icons/react';
 import ShareProject from '@/sections/lowers/share_project';
 import CommentProject from '@/sections/lowers/comment_project';
 import socketService from '@/config/ws';
+import Report from '../common/report';
 
 interface Props {
   project: Project;
@@ -39,6 +40,7 @@ const LowerProject = ({ project }: Props) => {
   const [clickedOnComment, setClickedOnComment] = useState(false);
   const [clickedOnShare, setClickedOnShare] = useState(false);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
@@ -155,6 +157,7 @@ const LowerProject = ({ project }: Props) => {
         <></>
       )}
       {clickedOnShare ? <ShareProject setShow={setClickedOnShare} project={project} /> : <></>}
+      {clickedOnReport ? <Report projectID={project.id} setShow={setClickedOnReport} /> : <></>}
 
       <div className="flex flex-col gap-12 max-md:gap-2 max-md:flex-row">
         <BookmarkSimple
@@ -180,6 +183,11 @@ const LowerProject = ({ project }: Props) => {
         />
         <ChatTeardrop
           onClick={() => setClickedOnComment(true)}
+          className="cursor-pointer max-md:w-6 max-md:h-6"
+          size={32}
+        />
+        <WarningCircle
+          onClick={() => setClickedOnReport(true)}
           className="cursor-pointer max-md:w-6 max-md:h-6"
           size={32}
         />

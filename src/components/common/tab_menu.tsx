@@ -8,14 +8,17 @@ interface Props {
   setReduxState?: ActionCreatorWithPayload<number>;
   setState?: React.Dispatch<React.SetStateAction<number>>;
   width?: string;
+  sticky?: boolean;
 }
 
-const TabMenu = ({ items, active, setReduxState, setState, width = '500px' }: Props) => {
+const TabMenu = ({ items, active, setReduxState, setState, width = '500px', sticky = false }: Props) => {
   const dispatch = useDispatch();
   const variants = ['w-[500px]', 'w-[640px]', 'w-[720px]', 'w-[100%]'];
   return (
     <div
-      className={`w-[${width}] max-md:w-[95%] h-[45px] p-1 rounded-lg bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end shadow-lg dark:shadow-outer mx-auto border-gray-300 border-[1px] dark:border-0 bg-white dark:bg-slate-100 flex justify-around gap-1 sticky top-[90px] z-10`}
+      className={`w-[${width}] max-md:w-[95%] h-[45px] p-1 rounded-lg bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end shadow-lg dark:shadow-outer mx-auto border-gray-300 border-[1px] dark:border-0 bg-white dark:bg-slate-100 flex justify-around gap-1 ${
+        sticky ? 'sticky' : 'fixed'
+      } top-[90px] z-10`}
     >
       {/* 64+24=88 */}
       {items.map((item, index) => (

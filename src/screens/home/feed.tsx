@@ -60,7 +60,7 @@ const Feed = () => {
     <div className={`w-full flex ${open ? 'gap-2' : 'gap-12'} transition-ease-out-500`}>
       {clickedOnNewPost ? <NewPost setFeed={setFeed} setShow={setClickedOnNewPost} /> : <></>}
       {/* Create a New Post */}
-      <div className="w-[50vw] px-6 max-md:px-4 max-md:w-screen flex flex-col gap-2">
+      <div className="w-[50vw] px-6 max-md:px-0 max-md:w-screen flex flex-col gap-2">
         <div
           onClick={() => setClickedOnNewPost(true)}
           className="w-full h-taskbar mx-auto shadow-md hover:shadow-lg transition-ease-300 text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"

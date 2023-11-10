@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import ApplyOpening from './apply_opening';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
+import Link from 'next/link';
 
 interface Props {
   opening: Opening;
@@ -18,11 +19,11 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   const [clickedOnApply, setClickedOnApply] = useState(false);
   const applications = useSelector(userSelector).applications;
   return (
-    <div className="sticky max-md:fixed top-[158px] bg-white dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+    <div className="sticky max-md:fixed top-[158px] bg-white dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-30">
       {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
       <div className="flex flex-col gap-2 max-md:gap-6">
         <ArrowArcLeft
-          className="cursor-pointer"
+          className="cursor-pointer md:hidden"
           size={24}
           onClick={() => {
             setShow(false);
@@ -33,8 +34,10 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
           <div className="font-bold text-4xl text-gradient">{opening.title}</div>
           <LowerOpening opening={opening} />
         </div>
-        <div className="flex gap-2 text-sm max-md:flex-wrap">
-          <div>{opening.project.title}</div>
+        <div className="flex items-center gap-2 text-sm max-md:flex-wrap">
+          <Link href={`/explore?pid=${opening.project.slug}`} target="_blank" className="font-semibold text-lg">
+            {opening.project.title}
+          </Link>
           <div>•</div>
           <div>{moment(opening.createdAt).fromNow()}</div>
           <div>•</div>

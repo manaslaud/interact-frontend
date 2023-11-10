@@ -32,7 +32,7 @@ const User = ({ username }: Props) => {
   const open = useSelector(navbarOpenSelector);
 
   const getUser = () => {
-    const URL = `${EXPLORE_URL}/users/${username}`;
+    const URL = `${EXPLORE_URL}/users/${username}`; //TODO make different handlers for projects n posts
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -93,6 +93,7 @@ const User = ({ username }: Props) => {
               active={active}
               setState={setActive}
               width={'640px'}
+              sticky={true}
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>

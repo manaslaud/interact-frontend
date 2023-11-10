@@ -73,7 +73,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount, smaller = false, profileDesig
         profileDesign ? (
           <button
             onClick={submitHandler}
-            className={`border hover:scale-90 duration-300 relative group cursor-pointer text-sky-50 bg-white overflow-hidden h-12 w-36 rounded-xl p-2 flex justify-center items-center`}
+            className={`border hover:scale-90 duration-300 relative group cursor-pointer text-white bg-white overflow-hidden h-12 w-36 rounded-xl p-2 flex justify-center items-center`}
           >
             <div className="absolute right-32 -top-4  group-hover:top-1 group-hover:right-2 z-10 w-36 h-36 rounded-full group-hover:scale-150  delay-75 duration-500 bg-[#6661c7]"></div>
             <div className="absolute right-2 -top-4  group-hover:top-1 group-hover:right-2 z-10 w-24 h-24 rounded-full group-hover:scale-150  delay-150 duration-500 bg-[#ada9ff]"></div>

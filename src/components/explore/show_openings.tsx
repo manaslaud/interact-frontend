@@ -22,7 +22,7 @@ const Openings = ({ openings, slug, projectCoverPic }: Props) => {
               return (
                 <Link
                   key={opening.id}
-                  href={`/explore?project=${slug}&tab=openings`}
+                  href={`/explore?pid=${slug}&tab=openings`}
                   target="_blank"
                   className="w-64 relative border-[1px] border-gray-500 p-4 flex flex-col gap-2 rounded-md hover:shadow-2xl transition-ease-300"
                 >

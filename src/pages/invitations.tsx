@@ -49,7 +49,9 @@ const Invitations = () => {
     <BaseWrapper title="Invitations">
       <Sidebar index={5} />
       <MainWrapper>
-        <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>
+        <div
+          className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
+        >
           <TabMenu items={['Projects', 'Group Chats']} active={active} setReduxState={setInvitationsTab} />
           {loading ? (
             <Loader />

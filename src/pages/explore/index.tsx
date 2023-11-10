@@ -18,13 +18,15 @@ const Explore = () => {
     <BaseWrapper title="Explore">
       <Sidebar index={2} />
       <MainWrapper>
-        <div className={`w-full max-lg:w-full flex flex-col gap-4 transition-ease-out-500 py-base_padding`}>
+        <div
+          className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
+        >
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
           </div>
-          <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 1 ? 'block' : 'hidden'}`}>
             <Openings />
           </div>
           <div className={`${active === 2 ? 'block' : 'hidden'} `}>
@@ -33,9 +35,6 @@ const Explore = () => {
         </div>
         <ProfileCompletion />
       </MainWrapper>
-      {/* <SideWrapper>
-        <div></div>
-      </SideWrapper> */}
     </BaseWrapper>
   );
 };

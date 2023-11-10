@@ -37,10 +37,14 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
       }}
       className={`w-${size} h-${size} max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
     >
-      <div className="w-full h-full absolute top-0 hidden group-hover:flex animate-fade_third justify-end z-[6] rounded-lg p-1">
+      <div className="w-full h-full  absolute top-0 hidden group-hover:flex animate-fade_third justify-end z-[6] rounded-lg p-1">
         {/* <BookmarkSimple size={24}  className="opacity-75" /> */}
       </div>
-      <div className="w-full h-full rounded-lg absolute top-0 left-0 bg-gradient-to-b from-[#00000084] z-[5] to-transparent opacity-0 group-hover:opacity-100 transition-ease-300"></div>
+      <div className="w-full h-full rounded-lg overflow-clip p-4 text-sm backdrop-blur-xl text-white absolute top-0 left-0 bg-gradient-to-b from-[#00000080] z-[5] to-transparent opacity-0 group-hover:opacity-100 transition-ease-300"></div>
+      <div className="w-full h-full rounded-lg overflow-clip p-4 text-sm fade-img backdrop-blur-sm text-white absolute top-0 left-0 z-[5] opacity-0 group-hover:opacity-100 transition-ease-300">
+        <div className="font-bold mb-2">{project.tagline}</div>
+        <div>{project.description}</div>
+      </div>
       <Image
         crossOrigin="anonymous"
         className="w-full h-full rounded-lg object-cover absolute top-0 left-0 "
@@ -54,7 +58,18 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
           {project.title}
         </div>
         <div className="w-full flex items-center justify-between">
-          <div className={`${Number(size) <= 64 ? 'text-xs' : 'text-sm'}`}>{project.user.name}</div>
+          <div className={`w-full line-clamp-1 ${Number(size) <= 64 ? 'text-xs' : 'text-sm'}`}>
+            {project.user.name}{' '}
+            <span className="text-xs">
+              {project.memberships?.length > 0 ? (
+                <>
+                  + {project.memberships.length} other{project.memberships.length == 1 ? '' : 's'}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">
               <HeartStraight size={16} />

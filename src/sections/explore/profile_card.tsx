@@ -15,6 +15,7 @@ import SendMessage from './send_message';
 import { setCurrentChatID } from '@/slices/messagingSlice';
 import { useRouter } from 'next/router';
 import Connections from './connections_view';
+import Report from '@/components/common/report';
 interface Props {
   user: User;
 }
@@ -27,6 +28,7 @@ const ProfileCard = ({ user }: Props) => {
 
   const [clickedOnFollowers, setClickedOnFollowers] = useState(false);
   const [clickedOnFollowing, setClickedOnFollowing] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
 
   const chatSlices = useSelector(userSelector).personalChatSlices;
 
@@ -51,6 +53,7 @@ const ProfileCard = ({ user }: Props) => {
     <>
       {clickedOnShare ? <ShareProfile user={user} setShow={setClickedOnShare} /> : <></>}
       {clickedOnChat ? <SendMessage user={user} setShow={setClickedOnChat} /> : <></>}
+      {clickedOnReport ? <Report userID={user.id} setShow={setClickedOnReport} /> : <></>}
 
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
@@ -151,11 +154,11 @@ const ProfileCard = ({ user }: Props) => {
             <Share size={18} />
           </div>
           <div className="hover:text-white md:hidden p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
-            <Warning size={18} />
+            <Warning onClick={() => setClickedOnReport(true)} size={18} />
           </div>
         </div>
         <div className="hover:text-white absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
-          <Warning size={18} />
+          <Warning onClick={() => setClickedOnReport(true)} size={18} />
         </div>
       </div>
     </>

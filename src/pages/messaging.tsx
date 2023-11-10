@@ -84,6 +84,7 @@ const Messaging = () => {
               active={active}
               setReduxState={setMessagingTab}
               width="100%"
+              sticky={true}
             />
             <div className="w-full">
               <div className={`${active === 0 ? 'block' : 'hidden'}`}>

@@ -15,6 +15,7 @@ import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
 import ConfirmDelete from '../common/confirm_delete';
 import renderContentWithLinks from '@/utils/render_content_with_links';
+import Report from '../common/report';
 
 interface Props {
   post: Post;
@@ -29,6 +30,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
 
   const [caption, setCaption] = useState(post.content);
 
@@ -86,6 +88,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
       }`}
     >
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+      {clickedOnReport ? <Report postID={post.id} setShow={setClickedOnReport} /> : <></>}
       {clickedOnOptions ? (
         <>
           {clickedOnEdit || (post.userID == loggedInUser.id && isRepost) ? (
@@ -120,6 +123,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
                 <div
                   onClick={el => {
                     el.stopPropagation();
+                    setClickedOnReport(true);
                   }}
                   className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >

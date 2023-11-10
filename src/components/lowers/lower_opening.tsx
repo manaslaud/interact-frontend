@@ -8,6 +8,8 @@ import Gear from '@phosphor-icons/react/dist/icons/Gear';
 import Export from '@phosphor-icons/react/dist/icons/Export';
 import ShareOpening from '@/sections/lowers/share_opening';
 import OpeningBookmarkIcon from './opening_bookmark';
+import Report from '../common/report';
+import { WarningCircle } from '@phosphor-icons/react';
 
 interface Props {
   opening: Opening;
@@ -15,6 +17,7 @@ interface Props {
 
 const LowerOpening = ({ opening }: Props) => {
   const [clickedOnShare, setClickedOnShare] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
 
   const user = useSelector(userSelector);
 
@@ -23,6 +26,8 @@ const LowerOpening = ({ opening }: Props) => {
   return (
     <>
       {clickedOnShare ? <ShareOpening setShow={setClickedOnShare} opening={opening} /> : <></>}
+      {clickedOnReport ? <Report openingID={opening.id} setShow={setClickedOnReport} /> : <></>}
+
       <div className="flex gap-4">
         {user.id == opening?.userID || user.editorProjects.includes(opening.projectID) ? (
           <Gear
@@ -43,6 +48,11 @@ const LowerOpening = ({ opening }: Props) => {
           weight="duotone"
         />
         <OpeningBookmarkIcon opening={opening} />
+        <WarningCircle
+          onClick={() => setClickedOnReport(true)}
+          className="cursor-pointer max-md:w-6 max-md:h-6"
+          size={32}
+        />
       </div>
     </>
   );

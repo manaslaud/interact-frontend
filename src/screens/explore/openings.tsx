@@ -26,7 +26,7 @@ const Openings = () => {
         ? `${EXPLORE_URL}/openings/trending?${'search=' + search}&page=${page}&limit=${10}`
         : `${EXPLORE_URL}/openings/trending?page=${page}&limit=${10}`;
 
-    const projectSlug = new URLSearchParams(window.location.search).get('project');
+    const projectSlug = new URLSearchParams(window.location.search).get('pid');
     if (projectSlug) URL = `${EXPLORE_URL}/openings/${projectSlug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
@@ -37,14 +37,19 @@ const Openings = () => {
         const addedOpenings = [...openings, ...(res.data.openings || [])];
         if (addedOpenings.length === openings.length) setHasMore(false);
         setOpenings(addedOpenings);
-        setPage(prev => prev + 1);
+
         if (clickedOnOpening) {
           if (addedOpenings.length > 0) setClickedOpening(addedOpenings[0]);
           else {
             setClickedOnOpening(false);
             setClickedOpening(initialOpening);
           }
+        } else if (page == 1 && addedOpenings.length > 0) {
+          setClickedOnOpening(true);
+          setClickedOpening(addedOpenings[0]);
         }
+
+        setPage(prev => prev + 1);
       }
       setLoading(false);
     } else {
@@ -87,7 +92,7 @@ const Openings = () => {
       ) : (
         <>
           {openings.length > 0 ? (
-            <div className="flex justify-evenly px-4">
+            <div className="w-full flex justify-evenly px-4">
               <InfiniteScroll
                 className={`${clickedOnOpening ? 'w-full' : 'w-[720px]'} max-md:w-full flex flex-col gap-4`}
                 dataLength={openings.length}

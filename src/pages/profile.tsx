@@ -276,6 +276,7 @@ const Profile = () => {
               active={active}
               setState={setActive}
               width={'640px'}
+              sticky={true}
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
