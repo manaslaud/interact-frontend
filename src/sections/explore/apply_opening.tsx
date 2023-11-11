@@ -85,7 +85,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
   return (
     <>
-      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] z-50 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] z-50 max-md:z-[100] translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Apply to Opening</div>
         <div className="w-full h-full flex max-md:flex-col gap-4 items-center">
           <div className="w-1/3 h-full max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
@@ -95,7 +95,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
               height={10000}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
-              className={'w-[180px] h-[180px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
+              className={'w-[180px] h-[180px] max-md:hidden max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
             />
 
             <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
@@ -115,7 +115,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                       return (
                         <div
                           key={tag}
-                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
+                          className="flex-center max-md:text-xxs p-2 max-md:p-1 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
                         >
                           {tag}
                         </div>
@@ -203,7 +203,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen max-md:h-base fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20 max-md:z-[90]"
       ></div>
     </>
   );

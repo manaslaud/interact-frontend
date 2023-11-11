@@ -83,7 +83,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
   return (
     <div
       onClick={() => setClickedOnOptions(false)}
-      className={`w-full relative bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn ${
+      className={`w-full relative overflow-clip bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn ${
         !isRepost ? 'dark:border-b-[1px] p-4' : 'dark:border-b-0 p-4 max-md:p-2'
       }`}
     >
@@ -98,7 +98,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
               {post.userID == loggedInUser.id ? (
                 <div
                   onClick={() => setClickedOnEdit(true)}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Edit
                 </div>
@@ -111,7 +111,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
                     el.stopPropagation();
                     setClickedOnDelete(true);
                   }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Delete
                 </div>
@@ -125,7 +125,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
                     el.stopPropagation();
                     setClickedOnReport(true);
                   }}
-                  className="w-full px-4 py-2 hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                  className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
                 >
                   Report
                 </div>
@@ -240,19 +240,25 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
               className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
             />
 
-            <div className="dark:text-white flex items-center gap-4 absolute -bottom-8 right-0">
+            <div className="dark:text-white flex items-center gap-4 max-md:gap-1 absolute -bottom-8 right-0">
               <div
                 onClick={() => setClickedOnEdit(false)}
-                className="text-sm hover-underline-animation after:bg-black dark:after:bg-white cursor-pointer"
+                className="border-[1px] border-primary_black flex-center rounded-full w-20 max-md:w-12 max-md:text-xxs p-1 cursor-pointer"
               >
                 cancel
               </div>
-              <div
-                onClick={handleEdit}
-                className="text-sm hover:text-primary_text dark:hover:text-dark_primary_btn cursor-pointer transition-ease-200"
-              >
-                save
-              </div>
+              {caption == post.content ? (
+                <div className="bg-primary_black bg-opacity-50 text-white flex-center rounded-full w-16 max-md:w-12 max-md:text-xxs p-1 cursor-default">
+                  Save
+                </div>
+              ) : (
+                <div
+                  onClick={handleEdit}
+                  className="bg-primary_black text-white flex-center rounded-full w-16 max-md:w-12 max-md:text-xxs p-1 cursor-pointer"
+                >
+                  save
+                </div>
+              )}
             </div>
           </div>
         ) : (

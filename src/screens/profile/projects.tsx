@@ -63,13 +63,13 @@ const Projects = ({ userID, displayOnProfile = false, contributing = false }: Pr
   }, [userID]);
 
   return (
-    <div className="w-full px-2 pb-8 max-md:px-0 max-md:pb-2">
+    <div className="w-full px-2 pb-8 max-md:px-0 max-md:pb-2 z-50">
       {displayOnProfile ? (
         <>
           {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
           <div
             onClick={() => setClickedOnNewProject(true)}
-            className={`mb-8 w-108 h-24 hover:w-108 hover:h-24 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}
+            className={`mb-8 w-108 max-md:w-5/6 h-24 max-md:hover:scale-105 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}
           >
             <div className="backdrop-blur-md opacity-0 group-hover:opacity-60 w-2/3 h-2/3 rounded-xl transition-ease-out-300"></div>
             <div className="font-extrabold text-xl group-hover:text-2xl text-gradient absolute translate-y-0 group-hover:-translate-y-2 transition-ease-out-300">

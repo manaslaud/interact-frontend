@@ -93,7 +93,7 @@ const Discover = () => {
                 dataLength={feed.length}
                 next={getFeed}
                 hasMore={hasMore}
-                loader={<Loader />}
+                loader={<PostsLoader />}
               >
                 {feed.map(post => {
                   if (post.rePost) return <RePostComponent key={post.id} post={post} />;

@@ -28,7 +28,7 @@ const BottomBar = ({ index }: Props) => {
         setActive={setActive}
       />
       <BottomBarItem
-        index={8}
+        index={6}
         title="Bookmarks"
         icon={<BookmarkSimple size={32} />}
         active={active}

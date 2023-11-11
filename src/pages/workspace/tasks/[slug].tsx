@@ -4,10 +4,9 @@ import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import project from '@/screens/messaging/project';
 import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';
-import { userIDSelector, userSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 import { Project, Task } from '@/types';
 import { initialProject, initialTask } from '@/types/initials';
 import Protect from '@/utils/protect';
@@ -123,14 +122,14 @@ const Tasks = ({ slug }: Props) => {
                   onClick={() => setClickedOnNewTask(true)}
                   className="text-xl text-gradient font-semibold hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
                 >
-                  Create a New Task
+                  <span className="max-md:hidden">Create a</span> New Task
                 </div>
               ) : (
                 <></>
               )}
-              <div onClick={() => filterAssigned(!filterStatus)} className="">
+              {/* <div onClick={() => filterAssigned(!filterStatus)} className="">
                 Show Assigned To Me
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="w-full flex flex-col gap-6 px-2 py-2">

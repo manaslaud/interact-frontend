@@ -11,7 +11,7 @@ interface Props {
 
 const Posts = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   return (
-    <div className="w-[50vw] m-auto flex flex-col gap-2 font-primary dark:text-white pt-8">
+    <div className="w-[50vw] max-md:w-[90vw] mx-auto flex flex-col gap-2 font-primary dark:text-white pt-8 max-md:pt-4">
       <div className="flex items-center gap-2">
         <ArrowArcLeft
           onClick={() => {
@@ -24,7 +24,7 @@ const Posts = ({ bookmark, setClick, fetchBookmarks }: Props) => {
         <div className="font-medium text-xl cursor-default">{bookmark.title}</div>
       </div>
       {bookmark.postItems.length === 0 ? (
-        <>No Items</>
+        <div className="mx-auto pt-4">No Items :)</div>
       ) : (
         <div className="w-full flex flex-col gap-2">
           {bookmark.postItems.map(postItem => {

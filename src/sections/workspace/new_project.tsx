@@ -103,7 +103,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         
         </div> */}
 
-      <div className="fixed top-14 max-md:top-20 w-5/6 max-md:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-14 max-md:top-20 w-5/6 max-md:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 max-md:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
         <div className="w-80 max-md:w-full md:sticky md:top-0">
           <Images setSelectedFile={setImage} />
         </div>
@@ -121,7 +121,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
               <select
                 onChange={el => setCategory(el.target.value)}
-                className="w-1/2 max-md:mx-auto h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
+                className="w-1/2 max-md:w-full h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
               >
                 {categories.map((c, i) => {
                   return (
@@ -252,7 +252,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+        className="bg-backdrop w-screen h-screen max-md:w-[105vw] max-md:h-[105vh] fixed top-0 left-0 animate-fade_third z-20"
       ></div>
     </>
   );

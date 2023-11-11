@@ -21,8 +21,8 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   const open = useSelector(navbarOpenSelector);
 
   return (
-    <div className="w-full m-auto flex flex-col gap-4 font-primary dark:text-white pt-8">
-      <div className="flex items-center gap-2 px-16">
+    <div className="w-full m-auto max-md:w-[90vw] flex flex-col gap-4 font-primary dark:text-white pt-8 max-md:pt-4">
+      <div className="flex items-center gap-2">
         <ArrowArcLeft
           onClick={() => {
             if (fetchBookmarks) fetchBookmarks();
@@ -37,7 +37,7 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
         <div
           className={`w-full grid ${
             open ? 'grid-cols-3' : 'grid-cols-4'
-          } gap-1 transition-ease-out-500 justify-items-center`}
+          } max-md:grid-cols-1 gap-1 transition-ease-out-500 justify-items-center`}
         >
           {clickedOnProject ? (
             <ProjectView
@@ -64,7 +64,7 @@ const Projects = ({ bookmark, setClick, fetchBookmarks }: Props) => {
           })}
         </div>
       ) : (
-        <div>No projects found</div>
+        <div className="mx-auto pt-4">No Items :)</div>
       )}
     </div>
   );

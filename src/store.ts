@@ -15,7 +15,19 @@ const persistConfig = {
 const configPersistConfig = {
   key: 'config',
   storage,
-  blacklist: ['updatingFollowing', 'updatingLikes', 'updateBookmark'],
+  whitelist: [
+    'lastFetchedFollowing',
+    'lastFetchedLikes',
+    'lastFetchedPostBookmarks',
+    'lastFetchedProjectBookmarks',
+    'lastFetchedOpeningBookmarks',
+    'lastFetchedChats',
+    'lastFetchedProjects',
+    'lastFetchedContributingProjects',
+    'lastFetchedApplications',
+    'lastFetchedUnreadNotifications',
+    'lastFetchedUnreadInvitations',
+  ],
 };
 
 const feedPersistConfig = {

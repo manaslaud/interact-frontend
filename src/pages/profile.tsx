@@ -13,7 +13,7 @@ import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
 import ProfileCard from '@/sections/profile/profile_card';
-import { Check, Pen, PencilSimple, X } from '@phosphor-icons/react';
+import { Check, ImageSquare, Pen, PencilSimple, X } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
@@ -188,8 +188,10 @@ const Profile = () => {
                 htmlFor="coverPic"
                 className="w-12 h-12 absolute top-1 right-4 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
               >
-                <PencilSimple color="black" size={24} />
+                <PencilSimple className="max-md:hidden" color="black" size={24} />
+                <ImageSquare className="md:hidden" color="black" size={24} />
               </label>
+
               <Image
                 crossOrigin="anonymous"
                 className={`${

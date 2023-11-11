@@ -127,7 +127,10 @@ const NewTask = ({ setShow, project, setShowTasks, setTasks, setFilteredTasks }:
                 value={description}
                 onChange={el => setDescription(el.target.value)}
               ></textarea>
-              <Tags tags={tags} setTags={setTags} maxTags={5} />
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length}/5)</div>
+                <Tags tags={tags} setTags={setTags} maxTags={5} />
+              </div>
               <div className="w-full flex justify-between items-center px-4">
                 <div className="text-xl">Deadline: </div>
                 <input

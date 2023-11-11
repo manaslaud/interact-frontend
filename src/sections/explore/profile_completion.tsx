@@ -37,7 +37,7 @@ const ProfileCompletion = () => {
       onClick={() => dispatch(setProfileCompletionOpen(!open))}
       className={`${
         hide ? 'hidden' : ''
-      } w-full py-4 p-8 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer transition-ease-500`}
+      } w-full py-4 p-8 max-md:p-4 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer transition-ease-500`}
     >
       <div className="flex flex-col gap-1">
         <div className="text-gradient text-5xl font-bold">Complete Profile</div>
@@ -55,8 +55,8 @@ const ProfileCompletion = () => {
             r="40"
             className="stroke-dark_primary_btn"
             fill="transparent"
-            stroke-width="5"
-            stroke-dasharray="251.3274"
+            strokeWidth="5"
+            strokeDasharray="251.3274"
           />
         </svg>
       </div>

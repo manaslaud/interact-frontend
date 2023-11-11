@@ -57,7 +57,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className={`w-full flex ${open ? 'gap-2' : 'gap-12'} transition-ease-out-500`}>
+    <div className={`w-full max-md:w-[95%] max-md:mx-auto flex ${open ? 'gap-2' : 'gap-12'} transition-ease-out-500`}>
       {clickedOnNewPost ? <NewPost setFeed={setFeed} setShow={setClickedOnNewPost} /> : <></>}
       {/* Create a New Post */}
       <div className="w-[50vw] px-6 max-md:px-0 max-md:w-screen flex flex-col gap-2">
@@ -95,7 +95,7 @@ const Feed = () => {
                 dataLength={feed.length}
                 next={getFeed}
                 hasMore={hasMore}
-                loader={<Loader />}
+                loader={<PostsLoader />}
               >
                 {feed.map(post => {
                   if (post.rePost) return <RePostComponent key={post.id} setFeed={setFeed} post={post} />;

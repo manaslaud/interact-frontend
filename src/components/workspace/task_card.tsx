@@ -35,8 +35,8 @@ const TaskCard = ({ task, clickedTask, clickedOnTask, setClickedOnTask, setClick
         <div className="text-4xl font-bold text-gradient">{getCompletionPercentage(task)}%</div>
       ) : (
         <div className="flex flex-col items-center gap-2">
-          <div className="text-5xl font-bold text-gradient">{getCompletionPercentage(task)}%</div>
-          <div className="w-40 h-2 border-dark_primary_btn border-2 rounded-lg">
+          <div className="text-5xl max-md:text-2xl font-bold text-gradient">{getCompletionPercentage(task)}%</div>
+          <div className="w-40 h-2 max-md:hidden border-dark_primary_btn border-2 rounded-lg">
             <div
               style={{ width: getCompletionPercentage(task) + '%' }}
               className="h-full bg-dark_primary_btn rounded-lg"

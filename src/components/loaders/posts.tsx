@@ -24,7 +24,7 @@ const PostsLoader = () => {
               <div className="w-full">
                 <div
                   // style={{ height: Math.floor(Math.random() * (540 - 320 + 1)) + 320 }}
-                  className="animate-pulse delay-200 w-full h-[320px] bg-gray-200 dark:bg-dark_primary_comp_hover rounded-lg"
+                  className="animate-pulse delay-200 w-full h-80 max-md:h-40 bg-gray-200 dark:bg-dark_primary_comp_hover rounded-lg"
                 />
               </div>
               <div className="w-full flex flex-col gap-1 text-sm whitespace-pre-wrap mb-2">

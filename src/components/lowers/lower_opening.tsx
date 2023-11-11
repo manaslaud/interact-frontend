@@ -28,7 +28,7 @@ const LowerOpening = ({ opening }: Props) => {
       {clickedOnShare ? <ShareOpening setShow={setClickedOnShare} opening={opening} /> : <></>}
       {clickedOnReport ? <Report openingID={opening.id} setShow={setClickedOnReport} /> : <></>}
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         {user.id == opening?.userID || user.editorProjects.includes(opening.projectID) ? (
           <Gear
             className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"

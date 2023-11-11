@@ -12,7 +12,6 @@ interface Props {
 
 const NewPostImages = ({ setSelectedFiles }: Props) => {
   const [selectedImageUrls, setSelectedImageUrls] = useState<string[]>([]);
-
   return (
     <>
       <input
@@ -26,6 +25,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
               Toaster.error('Can add at most 5 photos.');
               return;
             }
+
             const resizedImages = await Promise.all(
               Array.from(target.files).map(async file => {
                 if (file.type.split('/')[0] === 'image') {
@@ -42,7 +42,6 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                 }
               })
             );
-
             const filteredResizedImages = resizedImages.filter(img => img !== null);
 
             setSelectedImageUrls(prev => [

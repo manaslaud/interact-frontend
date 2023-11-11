@@ -91,8 +91,8 @@ const SubTaskView = ({
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
-        <div className="w-full flex flex-col gap-2 max-md:gap-8">
+      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 max-h-[36rem] overflow-y-auto backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50 max-md:z-[60]">
+        <div className="w-full flex flex-col gap-2">
           <ArrowArcLeft
             className="cursor-pointer"
             size={24}
@@ -146,10 +146,13 @@ const SubTaskView = ({
         {subTask.users.length > 0 ? (
           <div className="w-full flex flex-col gap-2">
             <div className="text-xl font-medium">Assigned To</div>
-            <div className="w-full flex flex-wrap justify-between gap-2">
+            <div className="w-full flex flex-wrap justify-around gap-2">
               {subTask.users.map(user => {
                 return (
-                  <div key={user.id} className="w-1/2 flex gap-4 border-[1px] border-gray-900 rounded-lg p-2">
+                  <div
+                    key={user.id}
+                    className="w-[45%] max-md:w-full flex gap-4 border-[1px] border-gray-900 rounded-lg p-2"
+                  >
                     <Image
                       crossOrigin="anonymous"
                       width={10000}
@@ -217,7 +220,7 @@ const SubTaskView = ({
       </div>
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20 max-md:z-[51]"
       ></div>
     </>
   );

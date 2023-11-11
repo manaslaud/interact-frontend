@@ -76,8 +76,8 @@ const ProfileCompletion = () => {
             r={`${open ? '40' : '75'}`}
             className="transition-ease-500 stroke-dark_primary_btn"
             fill="transparent"
-            stroke-width="5"
-            stroke-dasharray="251.3274"
+            strokeWidth="5"
+            strokeDasharray="251.3274"
           />
         </svg>
       </div>

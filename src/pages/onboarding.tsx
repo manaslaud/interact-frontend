@@ -43,11 +43,13 @@ const Onboarding = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const onboardingRedirect = sessionStorage.getItem('onboarding-redirect');
-    if (!onboardingRedirect || !onboardingRedirect.startsWith('signup')) router.replace('/home');
-    return () => {
-      if (onboardingRedirect) sessionStorage.removeItem('onboarding-redirect');
-    };
+    if (process.env.NODE_ENV != 'development') {
+      const onboardingRedirect = sessionStorage.getItem('onboarding-redirect');
+      if (!onboardingRedirect || !onboardingRedirect.startsWith('signup')) router.replace('/home');
+      return () => {
+        if (onboardingRedirect) sessionStorage.removeItem('onboarding-redirect');
+      };
+    }
   }, []);
 
   const handleSubmit = async () => {
@@ -201,18 +203,29 @@ const Onboarding = () => {
                   />
                   <div className="relative flex items-center gap-2 hover:bg-[#ffffff40] transition-ease-300 p-2 rounded-md">
                     {userPic ? (
-                      <>
-                        <X
-                          onClick={() => {
-                            setUserPic(null);
-                            setUserPicView(USER_PROFILE_PIC_URL + '/' + user.profilePic);
-                          }}
-                          className="cursor-pointer"
+                      <div className="w-full flex flex-col gap-4 p-4">
+                        <Image
+                          crossOrigin="anonymous"
+                          width={10000}
+                          height={10000}
+                          alt={'User Pic'}
+                          src={userPicView}
+                          className={`rounded-full max-md:mx-auto w-32 h-32 cursor-default`}
                         />
-                        <label className="grow cursor-pointer" htmlFor="userPic">
-                          {userPic.name}
-                        </label>
-                      </>
+                        <div className="w-full flex items-center gap-2">
+                          <label className="grow cursor-pointer" htmlFor="userPic">
+                            {userPic.name}
+                          </label>
+                          <X
+                            onClick={() => {
+                              setUserPic(null);
+                              setUserPicView(USER_PROFILE_PIC_URL + '/' + user.profilePic);
+                            }}
+                            className="cursor-pointer"
+                            size={20}
+                          />
+                        </div>
+                      </div>
                     ) : (
                       <label className="w-full flex items-center gap-2 cursor-pointer" htmlFor="userPic">
                         <Camera size={24} />

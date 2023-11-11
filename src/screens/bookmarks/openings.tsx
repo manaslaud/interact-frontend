@@ -122,9 +122,9 @@ const Openings = () => {
             <>
               {bookmarks.length > 0 ? (
                 <div
-                  className={`w-fit mx-auto justify-center px-4 pt-12 grid grid-cols-3 ${
+                  className={`w-fit mx-auto justify-center px-4 max-md:px-0 pt-12 max-md:pt-4 grid grid-cols-3 ${
                     open ? 'gap-x-4' : 'gap-x-12'
-                  } transition-ease-out-500`}
+                  } max-md:grid-cols-1 transition-ease-out-500`}
                 >
                   {bookmarks.map(bookmark => {
                     return (

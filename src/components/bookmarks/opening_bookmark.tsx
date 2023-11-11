@@ -27,7 +27,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
     if (status == 1) setClickedOnEdit(false);
   };
   return (
-    <div className="w-96 h-108 font-primary dark:text-white">
+    <div className="w-96 max-md:w-80 max-md:h-[28rem] h-108 font-primary dark:text-white">
       {clickedOnDelete ? (
         <ConfirmDelete
           setShow={setClickedOnDelete}
@@ -86,7 +86,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
           <>
             {bookmark.openingItems.length == 0 ? (
               <div className="p-2">
-                <div className="w-full h-[368px] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                <div className="w-full h-[368px] max-md:h-[304px] bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
               </div>
             ) : bookmark.openingItems.length == 1 ? (
               <>
@@ -94,7 +94,7 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                   <div className="p-2">
                     <Image
                       crossOrigin="anonymous"
-                      className="w-full h-[368px] rounded-md object-cover"
+                      className="w-full h-[368px] max-md:h-[304px] rounded-md object-cover"
                       width={10000}
                       height={10000}
                       alt=""
@@ -103,12 +103,12 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                   </div>
                 ) : (
                   <div className="p-2">
-                    <div className="w-full h-96 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
+                    <div className="w-full h-96 max-md:h-80 bg-gray-300 dark:bg-[#c578bf63] rounded-md"></div>
                   </div>
                 )}
               </>
             ) : (
-              <div className="w-full h-96 flex flex-wrap gap-2 p-2 items-center justify-center">
+              <div className="w-full h-96 max-md:h-80 flex flex-wrap gap-2 p-2 items-center justify-center">
                 {bookmark.openingItems.map(openingItem => {
                   if (count >= 4 || !openingItem.opening.project.coverPic) {
                     return <></>;

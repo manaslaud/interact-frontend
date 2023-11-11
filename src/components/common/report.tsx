@@ -88,7 +88,7 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
         <div className="w-full flex justify-end">
           <X className="cursor-pointer" onClick={() => setShow(false)} size={32} />
         </div>
-        <div className="w-full max-md:h-56 md:flex-1 flex flex-col justify-between">
+        <div className="w-full max-md:h-56 md:flex-1 flex flex-col justify-between gap-4">
           <div className="w-full flex flex-col gap-8">
             <div className="font-semibold text-6xl text-gray-800 dark:text-white capitalize">
               Report {getItemType()}

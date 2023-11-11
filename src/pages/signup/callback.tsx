@@ -81,7 +81,7 @@ const SignUpCallback = ({ token }: Props) => {
       })
       .catch(err => {
         if (err.response?.status == 403) {
-          Toaster.stopLoad(toaster, 'Sign In again', 0);
+          Toaster.stopLoad(toaster, 'Connection Timeout, Login again"', 0);
           router.replace('/signup');
         } else if (err.response?.data?.message) {
           Toaster.stopLoad(toaster, err.response.data.message, 0);

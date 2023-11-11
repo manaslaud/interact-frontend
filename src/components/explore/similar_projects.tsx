@@ -41,7 +41,11 @@ const SimilarProjects = ({ slug }: Props) => {
       {projects.length > 0 ? (
         <div className="w-full flex flex-col gap-2 border-t-[1px] border-black border-dashed mt-4 py-4">
           <div className="text-lg font-semibold">Similar Projects</div>
-          <div className={`w-full flex flex-wrap ${projects.length == 1 ? 'justify-start' : 'justify-evenly'} gap-3`}>
+          <div
+            className={`w-full flex flex-wrap ${
+              projects.length == 1 ? 'justify-start' : 'justify-evenly'
+            } max-md:justify-center gap-3`}
+          >
             {projects.map((project, index) => {
               return (
                 <Link key={project.id} href={`/explore?pid=${project.slug}`} target="_blank">

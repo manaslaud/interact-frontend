@@ -15,8 +15,8 @@ const Openings = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   const [clickedOnOpening, setClickedOnOpening] = useState(false);
   const [clickedOpening, setClickedOpening] = useState(initialOpening);
   return (
-    <div className="w-full m-auto flex flex-col gap-4 font-primary dark:text-white pt-8">
-      <div className="flex items-center gap-2 px-16">
+    <div className="w-full m-auto max-md:w-[90vw] flex flex-col gap-4 font-primary dark:text-white pt-8 max-md:pt-4">
+      <div className="flex items-center gap-2">
         <ArrowArcLeft
           onClick={() => {
             if (fetchBookmarks) fetchBookmarks();
@@ -49,7 +49,7 @@ const Openings = ({ bookmark, setClick, fetchBookmarks }: Props) => {
           )}
         </div>
       ) : (
-        <div>No openings found</div>
+        <div className="mx-auto pt-4">No Items :)</div>
       )}
     </div>
   );

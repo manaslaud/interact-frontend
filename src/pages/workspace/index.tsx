@@ -22,7 +22,7 @@ const Workspace = () => {
             active={active}
             setReduxState={setWorkspaceTab}
           />
-          <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <YourProjects />
           </div>
           <div className={`${active === 1 ? 'block' : 'hidden'}`}>

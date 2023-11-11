@@ -42,7 +42,7 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false }: Props) => {
         <div
           key={tag}
           className={`flex-center px-3 py-2 border-[1px] ${
-            blackBorder ? 'border-primary_btn bg-[#ffffff40]' : 'border-gray-400 dark:border-dark_primary_btn'
+            blackBorder ? 'border-black bg-[#ffffff40]' : 'border-gray-400 dark:border-dark_primary_btn'
           } text-sm rounded-full cursor-default`}
         >
           {tag}

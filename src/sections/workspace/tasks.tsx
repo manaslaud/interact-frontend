@@ -63,7 +63,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
     <>
       <div className="w-1/3 max-md:w-5/6 max-h-[640px] overflow-y-auto fixed bg-white text-gray-800 z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col p-8 max-md:px-4 max-md:py-8 gap-6 border-[1px] border-gray-600 shadow-xl dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-4xl max-md:text-5xl font-semibold flex gap-2 items-center">
-          <Gavel className="max-md:w-10 max-md:h-10" size={40} weight="duotone" />
+          <Gavel className="max-md:hidden" size={40} weight="duotone" />
           <div className="grow flex justify-between items-center">
             Recent Tasks
             <Link href={`/workspace/tasks/${project.slug}`}>
@@ -104,7 +104,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
               <>
                 {tasks.slice(0, 4).map(task => {
                   return (
-                    <div key={task.id} className="relative">
+                    <Link href={`/workspace/tasks/${project.slug}`} key={task.id} className="relative">
                       {userInTask(user.id, task) ? (
                         <div className="absolute right-2 top-0 -translate-y-1/2 text-xs bg-primary_comp_hover backdrop-blur-sm rounded-lg py-1 px-2">
                           assigned to you
@@ -127,7 +127,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
                           <div> {moment(task.deadline).format('DD-MMM-YY')}</div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </>
@@ -137,7 +137,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen max-md:h-base backdrop-blur-sm fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen backdrop-blur-sm fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );
