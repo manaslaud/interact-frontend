@@ -27,8 +27,6 @@ import { SERVER_ERROR } from '@/config/errors';
 interface Props {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
-  clickedOnEdit: boolean;
-  setClickedOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
   tagline: string;
   coverPic?: File;
 }

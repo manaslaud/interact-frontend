@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
-import { Membership, Project } from '@/types';
 import ProfileCard from '@/sections/profile/profile_card';
 import { Check, Pen, PencilSimple, X } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
@@ -21,15 +20,13 @@ import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
 import patchHandler from '@/handlers/patch_handler';
 import { setReduxTagline } from '@/slices/userSlice';
+import PostsLoader from '@/components/loaders/posts';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
   const [user, setUser] = useState(initialUser);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [collaboratingProjects, setCollaboratingProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [tagline, setTagline] = useState('');
   const [coverPic, setCoverPic] = useState<File>();
   const [coverPicView, setCoverPicView] = useState(`${USER_COVER_PIC_URL}/${user.coverPic}`);
@@ -44,12 +41,6 @@ const Profile = () => {
       .then(res => {
         if (res.statusCode === 200) {
           setUser(res.data.user);
-          const projects: Project[] = [];
-          res.data.user.memberships?.map((membership: Membership) => {
-            projects.push(membership.project);
-          });
-          setCollaboratingProjects(projects);
-          setProjects(res.data.user.projects || []);
           setTagline(res.data.user.tagline);
           setCoverPicView(`${USER_COVER_PIC_URL}/${res.data.user.coverPic}`);
           setLoading(false);
@@ -103,8 +94,6 @@ const Profile = () => {
 
   useEffect(() => {
     getUser();
-    const action = new URLSearchParams(window.location.search).get('action');
-    if (action && action == 'edit') setClickedOnEdit(true);
   }, []);
 
   interface SaveBtnProps {
@@ -217,14 +206,7 @@ const Profile = () => {
           {loading ? (
             <ProfileCardLoader width="400px" />
           ) : (
-            <ProfileCard
-              clickedOnEdit={clickedOnEdit}
-              setClickedOnEdit={setClickedOnEdit}
-              user={user}
-              setUser={setUser}
-              tagline={tagline}
-              coverPic={coverPic}
-            />
+            <ProfileCard user={user} setUser={setUser} tagline={tagline} coverPic={coverPic} />
           )}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
             {clickedOnTagline ? (
@@ -280,17 +262,19 @@ const Profile = () => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <Posts posts={user.posts || []} />}
-            </div>
-            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
               {loading ? (
-                <Loader />
+                <div className="w-[45vw] mx-auto max-md:w-screen max-md:px-4 pb-2">
+                  <PostsLoader />
+                </div>
               ) : (
-                <Projects projects={projects || []} setProjects={setProjects} displayOnProfile={true} />
+                <Posts userID={user.id} />
               )}
             </div>
+            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+              {loading ? <Loader /> : <Projects userID={user.id} displayOnProfile={true} />}
+            </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              {loading ? <Loader /> : <Projects projects={collaboratingProjects || []} />}
+              {loading ? <Loader /> : <Projects userID={user.id} contributing={true} />}
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>

@@ -75,10 +75,10 @@ const FollowBtn = ({ toFollowID, setFollowerCount, smaller = false, profileDesig
             onClick={submitHandler}
             className={`border hover:scale-90 duration-300 relative group cursor-pointer text-white bg-white overflow-hidden h-12 w-36 rounded-xl p-2 flex justify-center items-center`}
           >
-            <div className="absolute right-32 -top-4  group-hover:top-1 group-hover:right-2 z-10 w-36 h-36 rounded-full group-hover:scale-150  delay-75 duration-500 bg-[#6661c7]"></div>
-            <div className="absolute right-2 -top-4  group-hover:top-1 group-hover:right-2 z-10 w-24 h-24 rounded-full group-hover:scale-150  delay-150 duration-500 bg-[#ada9ff]"></div>
+            <div className="absolute right-32 -top-4 scale-125 group-hover:top-1 group-hover:right-2 z-10 w-36 h-36 rounded-full group-hover:scale-150  delay-75 duration-500 bg-[#6661c7]"></div>
+            <div className="absolute right-3 -top-4 scale-125 group-hover:top-1 group-hover:right-2 z-10 w-24 h-24 rounded-full group-hover:scale-150  delay-150 duration-500 bg-[#ada9ff]"></div>
             <div className="absolute -right-10 top-0 group-hover:top-1 group-hover:right-2 z-10 w-20 h-20 rounded-full group-hover:scale-150  delay-200 duration-500 bg-[#cea9ff]"></div>
-            <div className="absolute right-20 -top-4 group-hover:top-1 group-hover:right-2 z-10 w-16 h-16 rounded-full group-hover:scale-125  delay-300 duration-500 bg-[#df96ff]"></div>
+            <div className="absolute right-20 -top-8 scale-75 group-hover:top-1 group-hover:right-2 z-10 w-16 h-16 rounded-full group-hover:scale-125  delay-300 duration-500 bg-[#df96ff]"></div>
             <div
               className={`w-[96%] h-[90%] bg-gray-50 ${
                 isFollowing ? 'opacity-100' : 'opacity-0'

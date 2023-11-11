@@ -145,6 +145,24 @@
   visibility: hidden;
 }
 
+.pattern1 {
+  background-image: linear-gradient(
+      to bottom right,
+      rgb(255, 255, 255) 0%,
+      rgb(255, 255, 255) 25%,
+      hsla(0, 0%, 100%, 0) 25%,
+      hsla(0, 0%, 100%, 0) 75%
+  );
+  background-size: 24px 24px;
+  background-position: 0 0;
+  animation: slide 1s linear infinite;
+}
+@keyframes slide {
+  to {
+      background-position: 24px 24px;
+  }
+}
+
 /* html{
   --tw-scroll-snap-strictness: mandatory;
   scroll-snap-type: y var(--tw-scroll-snap-strictness);

@@ -103,82 +103,151 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         
         </div> */}
 
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div className="w-2/5 max-md:w-full md:sticky md:top-0">
+      <div className="fixed top-14 max-md:top-20 w-5/6 max-md:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+        <div className="w-80 max-md:w-full md:sticky md:top-0">
           <Images setSelectedFile={setImage} />
         </div>
-        <div className="w-3/5 max-md:w-full">
-          <div className="w-full max-md:w-full flex flex-col gap-4 pb-8 max-md:pb-4">
-            <input
-              value={title}
-              onChange={el => setTitle(el.target.value)}
-              maxLength={20}
-              type="text"
-              placeholder="Untitled Project"
-              className="w-full text-5xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
-            />
+        <div className="w-[calc(100%-320px)] max-md:w-full h-full flex flex-col justify-between gap-2">
+          <div className="w-full h-fit flex flex-col gap-6">
+            <div className="w-full max-md:w-full text-primary_black flex flex-col gap-4 pb-8 max-md:pb-4">
+              <input
+                value={title}
+                onChange={el => setTitle(el.target.value)}
+                maxLength={20}
+                type="text"
+                placeholder="Untitled Project"
+                className="w-full text-5xl max-md:text-center max-md:text-3xl font-bold bg-transparent focus:outline-none"
+              />
 
-            <select
-              onChange={el => setCategory(el.target.value)}
-              className="w-fit h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
-            >
-              {categories.map((c, i) => {
-                return (
-                  <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
-                    {c}
-                  </option>
-                );
-              })}
-            </select>
+              <select
+                onChange={el => setCategory(el.target.value)}
+                className="w-1/2 max-md:mx-auto h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
+              >
+                {categories.map((c, i) => {
+                  return (
+                    <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
+                      {c}
+                    </option>
+                  );
+                })}
+              </select>
 
-            <Tags tags={tags} setTags={setTags} />
-
-            <input
-              value={tagline}
-              onChange={el => setTagline(el.target.value)}
-              maxLength={40}
-              type="text"
-              placeholder="Write your Tagline here..."
-              className="w-full text-lg bg-transparent focus:outline-none"
-            />
-
-            <textarea
-              value={description}
-              onChange={el => setDescription(el.target.value)}
-              maxLength={500}
-              className="w-full max-h-80 bg-transparent focus:outline-none"
-              placeholder="Explain your project"
-            />
-            <Links links={links} setLinks={setLinks} />
-
-            <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
-              <div>Keep this Project Private</div>
-              <div className="relative">
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                  Project Tagline ({tagline.trim().length}/40)
+                </div>
                 <input
-                  type="checkbox"
-                  checked={isPrivate}
-                  onChange={() => setIsPrivate(prev => !prev)}
-                  className="sr-only"
+                  value={tagline}
+                  onChange={el => setTagline(el.target.value)}
+                  maxLength={40}
+                  type="text"
+                  className="w-full font-medium bg-transparent focus:outline-none border-[1px] border-gray-400 rounded-lg p-2"
+                  placeholder="Write your Tagline here..."
                 />
-                <div
-                  className={`box block h-6 w-10 rounded-full ${
-                    isPrivate ? 'bg-blue-300' : 'bg-black'
-                  } transition-ease-300`}
-                ></div>
-                <div
-                  className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
-                    isPrivate ? 'translate-x-full' : ''
-                  }`}
-                ></div>
               </div>
-            </label>
-            <div
-              onClick={handleSubmit}
-              className="w-36 h-12 font-semibold border-[1px] border-gray-300 dark:border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white bg-dark:dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
-            >
-              Build Project
+
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                  Project Description ({description.trim().length}/500)
+                </div>
+                <textarea
+                  value={description}
+                  onChange={el => setDescription(el.target.value)}
+                  maxLength={500}
+                  className="w-full min-h-[80px] max-h-80 bg-transparent focus:outline-none border-[1px] border-gray-400 rounded-lg p-2"
+                  placeholder="Explain your project"
+                />
+              </div>
+
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                  Project Tags ({tags.length || 0}/10)
+                </div>
+                <Tags tags={tags} setTags={setTags} maxTags={10} />
+              </div>
+
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                  Project Links ({links.length || 0}/5)
+                </div>
+                <Links links={links} setLinks={setLinks} maxLinks={5} />
+              </div>
+
+              <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
+                <div className="font-semibold">Keep this Project Private</div>
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={isPrivate}
+                    onChange={() => setIsPrivate(prev => !prev)}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`box block h-6 w-10 rounded-full ${
+                      isPrivate ? 'bg-blue-300' : 'bg-black'
+                    } transition-ease-300`}
+                  ></div>
+                  <div
+                    className={`absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white transition ${
+                      isPrivate ? 'translate-x-full' : ''
+                    }`}
+                  ></div>
+                </div>
+              </label>
             </div>
           </div>
+
+          <div className="w-full flex max-md:justify-center justify-end">
+            <button
+              onClick={handleSubmit}
+              className={`duration-300 relative group cursor-pointer text-white overflow-hidden h-16 max-md:h-12 ${
+                mutex ? 'w-72 max-md:w-64 scale-90' : 'w-48 max-md:w-40 hover:scale-90'
+              } rounded-xl p-2 flex-center`}
+            >
+              <div
+                className={`absolute right-32 -top-4 ${
+                  mutex
+                    ? 'top-0 right-2 scale-150'
+                    : 'scale-125 group-hover:top-1 group-hover:right-2 group-hover:scale-150'
+                } z-10 w-36 h-36 rounded-full duration-500 bg-[#6661c7]`}
+              ></div>
+              <div
+                className={`absolute right-2 -top-4 ${
+                  mutex
+                    ? 'top-1 right-2 scale-150'
+                    : 'scale-125 right-3 group-hover:top-1 group-hover:right-2 group-hover:scale-150'
+                } z-10 w-24 h-24 rounded-full duration-500 bg-[#ada9ff]`}
+              ></div>
+              <div
+                className={`absolute -right-10 top-0 ${
+                  mutex ? 'top-1 right-2 scale-150' : 'group-hover:top-1 group-hover:right-2 group-hover:scale-150'
+                } z-10 w-20 h-20 rounded-full duration-500 bg-[#cea9ff]`}
+              ></div>
+              <div
+                className={`absolute right-20 -top-4 ${
+                  mutex ? 'top-1 right-2 scale-125' : 'group-hover:top-1 group-hover:right-2 group-hover:scale-125'
+                } z-10 w-16 h-16 rounded-full duration-500 bg-[#df96ff]`}
+              ></div>
+              <div
+                className={`w-[96%] h-[90%] bg-gray-50 ${
+                  mutex ? 'opacity-100' : 'opacity-0'
+                } absolute rounded-xl z-10 transition-ease-500`}
+              ></div>
+              <p className={`z-10 font-bold text-xl max-md:text-lg transition-ease-500`}>
+                {mutex ? (
+                  <>
+                    <div className="w-fit text-gradient transition-ease-out-300 animate-fade_half">
+                      Building your project!
+                    </div>
+                  </>
+                ) : (
+                  <div className="">Build Project</div>
+                )}
+              </p>
+            </button>
+          </div>
+
+          {/* <div className="w-fit  text-3xl font-bold">Build Project</div> */}
         </div>
       </div>
       <div

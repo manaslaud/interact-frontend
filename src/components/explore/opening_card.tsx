@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
 import getDisplayTime from '@/utils/get_display_time';
+import moment from 'moment';
 
 interface Props {
   opening: Opening;
@@ -34,38 +35,41 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
       />
 
       <div className="grow flex flex-col gap-2">
-        <div className="flex items-start justify-between">
-          <div className="w-5/6 flex flex-col gap-1">
-            <div className="font-bold text-2xl max-md:text-lg text-gradient">{opening.title}</div>
-            <div className="font-medium text-lg max-md:text-sm">{opening.project.title}</div>
-          </div>
-          <div className="text-sm opacity-60 max-md:text-xs">{getDisplayTime(opening.createdAt, false)}</div>
+        <div className="w-5/6 flex flex-col gap-1">
+          <div className="font-bold text-2xl max-md:text-lg text-gradient">{opening.title}</div>
+          <div className="font-medium text-lg max-md:text-sm">{opening.project.title}</div>
         </div>
 
-        <div className="w-full flex flex-wrap gap-2">
-          {opening.tags &&
-            opening.tags // Splicing causes array mutation
-              .filter((tag, index) => {
-                return index >= 0 && index < 3;
-              })
-              .map(tag => {
-                return (
-                  <div
-                    key={tag}
-                    className="flex-center p-1 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg"
-                  >
-                    {tag}
-                  </div>
-                );
-              })}
-          {opening.tags && opening.tags.length - 3 > 0 ? (
-            <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl">
-              + {opening.tags.length - 3}
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
+        {opening.tags.length > 0 ? (
+          <div className="w-full flex flex-wrap gap-2">
+            {opening.tags &&
+              opening.tags // Splicing causes array mutation
+                .filter((tag, index) => {
+                  return index >= 0 && index < 3;
+                })
+                .map(tag => {
+                  return (
+                    <div
+                      key={tag}
+                      className="flex-center p-1 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg"
+                    >
+                      {tag}
+                    </div>
+                  );
+                })}
+            {opening.tags.length - 3 > 0 ? (
+              <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl">
+                + {opening.tags.length - 3}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <div className="text-xs opacity-60 max-md:text-xs">{moment(opening.createdAt).fromNow()}</div>
       </div>
     </div>
   );

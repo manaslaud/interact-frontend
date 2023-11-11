@@ -54,9 +54,9 @@ const ProfileCard = () => {
         <div
           className={`${
             open
-              ? 'w-[24vw] h-[75vh] pb-4 max-md:mb-12 gap-4 pt-8 max-md:pb-8 max-md:pt-4 px-4 top-[150px]'
-              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg'
-          } shadow-md dark:shadow-none transition-ease-500 max-md:h-fit sticky overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md`}
+              ? 'w-[24vw] h-[75vh] pb-4 max-md:mb-12 gap-4 pt-8 max-md:pb-8 max-md:pt-4 px-4 top-[150px] overflow-y-auto'
+              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg overflow-y-hidden'
+          } shadow-md dark:shadow-none transition-ease-500 max-md:h-fit sticky overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md`}
         >
           <ArrowDownLeft
             onClick={() => setOpen(prev => !prev)}
@@ -135,7 +135,7 @@ const ProfileCard = () => {
                 {user.bio.trim() == '' ? (
                   <div className="text-gray-400">Click here to add a bio!</div>
                 ) : (
-                  <div className={`text-center max-md:text-sm cursor-pointer line-clamp-3`}>{user.bio}</div>
+                  <div className={`text-center text-sm cursor-pointer line-clamp-3`}>{user.bio}</div>
                 )}
               </Link>
 
@@ -162,16 +162,27 @@ const ProfileCard = () => {
                       } gap-2`}
                     >
                       {user.tags &&
-                        user.tags.map(tag => {
-                          return (
-                            <div
-                              className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-full cursor-pointer"
-                              key={tag}
-                            >
-                              {tag}
-                            </div>
-                          );
-                        })}
+                        user.tags
+                          .filter((_, i) => {
+                            return i >= 0 && i < 5;
+                          })
+                          .map(tag => {
+                            return (
+                              <div
+                                className="flex-center text-sm px-4 py-1 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-full cursor-pointer"
+                                key={tag}
+                              >
+                                {tag}
+                              </div>
+                            );
+                          })}
+                      {user.tags && user.tags.length > 5 ? (
+                        <div className="flex-center text-sm p-2 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-full cursor-pointer">
+                          +{user.tags.length - 5}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   )}
                 </Link>
@@ -197,22 +208,33 @@ const ProfileCard = () => {
                     <div
                       className={`w-full h-fit flex flex-wrap items-center ${
                         user.links?.length == 1 ? 'justify-start' : 'justify-center'
-                      } gap-4`}
+                      } gap-2`}
                     >
                       {user.links &&
-                        user.links.map((link, index) => {
-                          return (
-                            <Link
-                              href={link}
-                              target="_blank"
-                              key={index}
-                              className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
-                            >
-                              {getIcon(getDomainName(link), 24)}
-                              <div className="capitalize">{getDomainName(link)}</div>
-                            </Link>
-                          );
-                        })}
+                        user.links
+                          .filter((_, i) => {
+                            return i >= 0 && i < 3;
+                          })
+                          .map((link, index) => {
+                            return (
+                              <Link
+                                href={link}
+                                target="_blank"
+                                key={index}
+                                className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                              >
+                                {getIcon(getDomainName(link), 24)}
+                                <div className="capitalize">{getDomainName(link)}</div>
+                              </Link>
+                            );
+                          })}
+                      {user.links && user.links.length > 3 ? (
+                        <div className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2">
+                          +{user.links.length - 3}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   )}
                 </Link>

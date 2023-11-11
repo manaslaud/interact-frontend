@@ -85,7 +85,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
 
   return (
     <>
-      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-2/3 h-[520px] max-md:h-base_md max-md:overflow-y-auto max-md:w-5/6 dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] z-50 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-xl text-center font-bold underline underline-offset-2">Apply to Opening</div>
         <div className="w-full h-full flex max-md:flex-col gap-4 items-center">
           <div className="w-1/3 h-full max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">

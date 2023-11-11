@@ -61,6 +61,10 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
           if (openingItem.openingID == opening.id) setBookmark(true, openingItem.id, bookmarksObj.id);
         });
     });
+
+    return () => {
+      setBookmark(false, '', '');
+    };
   }, [opening.id]);
 
   const removeBookmarkItemHandler = async () => {

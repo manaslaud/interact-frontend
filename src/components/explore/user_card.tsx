@@ -16,7 +16,8 @@ const UserCard = ({ user, forTrending = false }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   const loggedInUser = useSelector(userSelector);
   return (
-    <div
+    <Link
+      href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
       className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn dark:bg-transparent dark:hover:bg-transparent rounded-lg flex flex-col ${
         !forTrending
           ? 'px-5 py-4 bg-gray-100 hover:bg-white border-primary_btn gap-4'
@@ -24,10 +25,7 @@ const UserCard = ({ user, forTrending = false }: Props) => {
       } transition-ease-300`}
     >
       <div className="flex items-center justify-between w-full">
-        <Link
-          className="flex items-center gap-2 w-fit"
-          href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
-        >
+        <div className="flex items-center gap-2 w-fit">
           <Image
             crossOrigin="anonymous"
             width={10000}
@@ -54,20 +52,22 @@ const UserCard = ({ user, forTrending = false }: Props) => {
               )}
             </div>
           </div>
-        </Link>
-        <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} smaller={forTrending} />
+        </div>
+        <div
+          onClick={el => {
+            el.preventDefault();
+            el.stopPropagation();
+          }}
+        >
+          <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} smaller={forTrending} />
+        </div>
       </div>
       {user.tagline && user.tagline != '' ? (
-        <Link
-          href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
-          className={`w-full ${!forTrending ? 'text-sm pl-16' : 'text-xs pl-12'}`}
-        >
-          {user.tagline}
-        </Link>
+        <div className={`w-full ${!forTrending ? 'text-sm pl-16' : 'text-xs pl-12'}`}>{user.tagline}</div>
       ) : (
         <></>
       )}
-    </div>
+    </Link>
   );
 };
 

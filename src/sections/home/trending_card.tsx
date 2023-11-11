@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import { ArrowDownLeft, ChartLineUp } from '@phosphor-icons/react';
-import ProfileCardLoader from '@/components/loaders/feed_profile_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { User } from '@/types';
 import { userSelector } from '@/slices/userSlice';
 import UserCard from '@/components/explore/user_card';
+import TrendingCardLoader from '@/components/loaders/feed_trending_card';
 
 const TrendingCard = () => {
   const [searches, setSearches] = useState(['Something', 'Nothing', 'Interact', 'Pratham', 'Tech']);
@@ -60,14 +60,14 @@ const TrendingCard = () => {
   };
 
   useEffect(() => {
-    fetchSearches();
     fetchProfiles();
+    fetchSearches();
   }, []);
 
   return (
     <>
       {loading ? (
-        <ProfileCardLoader />
+        <TrendingCardLoader />
       ) : (
         <div
           className={`${
@@ -115,8 +115,8 @@ const TrendingCard = () => {
             <></>
           )}
           <div
-            className={`${
-              open ? 'text-2xl max-md:text-3xl pt-4 mt-2 opacity-100' : 'text-xxs pt-0 mt-0 opacity-0'
+            className={`${open ? 'text-2xl max-md:text-3xl pt-4 mt-2 opacity-100' : 'text-xxs pt-0 mt-0 opacity-0'} ${
+              profiles.length == 0 ? 'hidden' : ''
             } border-t-2 border-dashed transition-ease-500 font-medium`}
           >
             Profiles to Follow

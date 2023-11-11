@@ -1,19 +1,25 @@
 import ProjectCard from '@/components/explore/project_card';
 import { Project } from '@/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProjectView from '../../sections/explore/project_view';
 import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import NewProject from '@/sections/workspace/new_project';
 import NoUserItems from '@/components/empty_fillers/user_items';
+import { EXPLORE_URL } from '@/config/routes';
+import { SERVER_ERROR } from '@/config/errors';
+import getHandler from '@/handlers/get_handler';
+import Toaster from '@/utils/toaster';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from '@/components/common/loader';
 
 interface Props {
-  projects: Project[];
-  setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+  userID: string;
   displayOnProfile?: boolean;
+  contributing?: boolean;
 }
 
-const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) => {
+const Projects = ({ userID, displayOnProfile = false, contributing = false }: Props) => {
   const [clickedOnProject, setClickedOnProject] = useState(false);
   const [clickedProjectIndex, setClickedProjectIndex] = useState(-1);
   const [clickedOnNewProject, setClickedOnNewProject] = useState(false);
@@ -22,27 +28,70 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
 
   const navbarOpen = useSelector(navbarOpenSelector);
 
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const getProjects = () => {
+    setLoading(true);
+    const URL = `${EXPLORE_URL}/users/projects${
+      contributing ? '/contributing' : ''
+    }/${userID}?page=${page}&limit=${10}`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const addProjects = [...projects, ...(res.data.projects || [])];
+          if (addProjects.length === projects.length) setHasMore(false);
+          setProjects(addProjects);
+          setPage(prev => prev + 1);
+          setLoading(false);
+        } else {
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+          else {
+            Toaster.error(SERVER_ERROR, 'error_toaster');
+          }
+        }
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
+  useEffect(() => {
+    getProjects();
+  }, [userID]);
+
   return (
-    <div className="w-full flex flex-col gap-12 px-2 pb-8 max-md:px-0 max-md:pb-2">
-      <div
-        className={`${projects?.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'}  ${
-          navbarOpen ? 'grid-cols-2 gap-6' : 'grid-cols-3 gap-8'
+    <div className="w-full px-2 pb-8 max-md:px-0 max-md:pb-2">
+      {displayOnProfile ? (
+        <>
+          {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
+          <div
+            onClick={() => setClickedOnNewProject(true)}
+            className={`mb-8 w-108 h-24 hover:w-108 hover:h-24 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}
+          >
+            <div className="backdrop-blur-md opacity-0 group-hover:opacity-60 w-2/3 h-2/3 rounded-xl transition-ease-out-300"></div>
+            <div className="font-extrabold text-xl group-hover:text-2xl text-gradient absolute translate-y-0 group-hover:-translate-y-2 transition-ease-out-300">
+              Create a new Project!
+            </div>
+            <div className="text-xs font-semibold text-primary_black absolute translate-x-0 translate-y-16 group-hover:translate-y-4 transition-ease-out-300">
+              Woohooh! New Project! Who Dis?
+            </div>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
+      <InfiniteScroll
+        dataLength={projects.length}
+        next={getProjects}
+        hasMore={hasMore}
+        loader={<Loader />}
+        className={`${projects?.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'} ${
+          projects.length == 1 ? 'grid-cols-1' : navbarOpen ? 'grid-cols-2 gap-6' : 'grid-cols-3 gap-8'
         } max-md:grid-cols-1 mx-auto max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
       >
-        {displayOnProfile ? (
-          <>
-            {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
-            <div
-              onClick={() => setClickedOnNewProject(true)}
-              className={`w-64 h-64 backdrop-blur-lg dark:text-white bg-primary_comp hover:bg-primary_comp_hover dark:bg-[#ffe1fc22] border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg relative group cursor-pointer flex-center flex-col gap-2 dark:hover:bg-[#ffe1fc10] transition-ease-300`}
-            >
-              <div className="font-medium text-2xl"> Add Project</div>
-              <div className="text-xs">New Project, Who Dis?</div>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
         {projects?.length > 0 ? (
           <>
             {clickedOnProject ? (
@@ -73,7 +122,7 @@ const Projects = ({ projects, setProjects, displayOnProfile = false }: Props) =>
         ) : (
           <>{!displayOnProfile ? <NoUserItems /> : <></>}</>
         )}
-      </div>
+      </InfiniteScroll>
     </div>
   );
 };

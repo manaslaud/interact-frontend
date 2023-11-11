@@ -8,6 +8,7 @@ import OpeningView from '@/sections/explore/opening_view';
 import { Opening } from '@/types';
 import { initialOpening } from '@/types/initials';
 import Toaster from '@/utils/toaster';
+import { useWindowWidth } from '@react-hook/window-size';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -19,6 +20,8 @@ const Openings = () => {
 
   const [clickedOnOpening, setClickedOnOpening] = useState(false);
   const [clickedOpening, setClickedOpening] = useState(initialOpening);
+
+  const windowWidth = useWindowWidth();
 
   const fetchOpenings = async (search: string | null) => {
     let URL =
@@ -44,7 +47,7 @@ const Openings = () => {
             setClickedOnOpening(false);
             setClickedOpening(initialOpening);
           }
-        } else if (page == 1 && addedOpenings.length > 0) {
+        } else if (page == 1 && addedOpenings.length > 0 && windowWidth > 640) {
           setClickedOnOpening(true);
           setClickedOpening(addedOpenings[0]);
         }

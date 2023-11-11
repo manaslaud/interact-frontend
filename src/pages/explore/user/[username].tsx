@@ -12,12 +12,13 @@ import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
-import { Membership, Project } from '@/types';
+import { Membership, Post, Project } from '@/types';
 import { GetServerSidePropsContext } from 'next/types';
 import ProfileCard from '@/sections/explore/profile_card';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
+import PostsLoader from '@/components/loaders/posts';
 
 interface Props {
   username: string;
@@ -26,22 +27,16 @@ interface Props {
 const User = ({ username }: Props) => {
   const [active, setActive] = useState(0);
   const [user, setUser] = useState(initialUser);
-  const [collaboratingProjects, setCollaboratingProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
   const open = useSelector(navbarOpenSelector);
 
   const getUser = () => {
-    const URL = `${EXPLORE_URL}/users/${username}`; //TODO make different handlers for projects n posts
+    const URL = `${EXPLORE_URL}/users/${username}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
           setUser(res.data.user);
-          const projects: Project[] = [];
-          res.data.user.memberships?.map((membership: Membership) => {
-            projects.push(membership.project);
-          });
-          setCollaboratingProjects(projects);
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -78,7 +73,7 @@ const User = ({ username }: Props) => {
           ) : (
             <></>
           )}
-          {loading ? <ProfileCardLoader /> : <ProfileCard user={user} />}
+          {loading ? <ProfileCardLoader width="400px" /> : <ProfileCard user={user} />}
           <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
             {user.tagline && user.tagline != '' ? (
               <div className="w-full h-24 font-bold text-5xl max-md:text-3xl flex-center text-center dark:text-white">
@@ -97,13 +92,19 @@ const User = ({ username }: Props) => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <Posts posts={user.posts || []} />}
+              {loading ? (
+                <div className="w-[45vw] mx-auto max-md:w-screen max-md:px-4 pb-2">
+                  <PostsLoader />
+                </div>
+              ) : (
+                <Posts userID={user.id} />
+              )}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <Projects projects={user.projects || []} />}
+              {loading ? <Loader /> : <Projects userID={user.id} />}
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'} `}>
-              {loading ? <Loader /> : <Projects projects={collaboratingProjects || []} />}
+              {loading ? <Loader /> : <Projects userID={user.id} contributing={true} />}
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>

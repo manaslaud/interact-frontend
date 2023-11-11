@@ -186,11 +186,15 @@ const LowerProject = ({ project }: Props) => {
           className="cursor-pointer max-md:w-6 max-md:h-6"
           size={32}
         />
-        <WarningCircle
-          onClick={() => setClickedOnReport(true)}
-          className="cursor-pointer max-md:w-6 max-md:h-6"
-          size={32}
-        />
+        {project.userID != user.id ? (
+          <WarningCircle
+            onClick={() => setClickedOnReport(true)}
+            className="cursor-pointer max-md:w-6 max-md:h-6"
+            size={32}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

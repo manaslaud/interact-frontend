@@ -1,5 +1,6 @@
 import Loader from '@/components/common/loader';
 import UserCard from '@/components/explore/user_card';
+import UserCardLoader from '@/components/loaders/user_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { CONNECTION_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
@@ -29,7 +30,7 @@ const Connections = ({ type, user, setShow }: Props) => {
       const newUsers = res.data.users || [];
       const addedUsers = [...users, ...newUsers];
       if (addedUsers.length === users.length) setHasMore(false);
-      setUsers(res.data.users);
+      setUsers(addedUsers);
       setPage(prev => prev + 1);
 
       setLoading(false);
@@ -44,27 +45,41 @@ const Connections = ({ type, user, setShow }: Props) => {
   }, [user]);
   return (
     <>
-      <div className="w-2/5 max-md:w-5/6 h-108 fixed overflow-y-auto border-gray-400 border-[1px] dark:border-0 backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-4 gap-6 rounded-xl animate-fade_third">
-        <div className="w-full text-center text-gradient font-semibold text-2xl capitalize">
+      <div
+        className={`w-2/5 ${
+          users.length < 5 ? 'h-fit' : 'h-4/5'
+        } max-md:w-5/6  fixed overflow-y-auto border-gray-400 border-[1px] dark:border-0 backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-6 gap-6 rounded-xl animate-fade_third`}
+      >
+        <div className="w-full text-center text-gradient font-bold text-2xl capitalize">
           {type} of {user.name}
         </div>
-        <>
-          {!users || users.length === 0 ? (
-            <></>
-          ) : (
-            <InfiniteScroll
-              className="px-4 max-md:px-2 flex flex-col gap-2"
-              dataLength={users.length}
-              next={fetchUsers}
-              hasMore={hasMore}
-              loader={<Loader />}
-            >
-              {users.map(user => {
-                return <UserCard key={user.id} user={user} />;
-              })}
-            </InfiniteScroll>
-          )}
-        </>
+        {loading && page == 1 ? (
+          <div className="w-full flex flex-col gap-2">
+            {Array(3)
+              .fill(1)
+              .map((_, i) => (
+                <UserCardLoader key={i} />
+              ))}
+          </div>
+        ) : (
+          <>
+            {!users || users.length === 0 ? (
+              <div className="w-full text-center text-lg font-medium">Nothing Here :)</div>
+            ) : (
+              <InfiniteScroll
+                className="px-4 max-md:px-2 flex flex-col gap-2"
+                dataLength={users.length}
+                next={fetchUsers}
+                hasMore={hasMore}
+                loader={<Loader />}
+              >
+                {users.map(user => {
+                  return <UserCard key={user.id} user={user} />;
+                })}
+              </InfiniteScroll>
+            )}
+          </>
+        )}
       </div>
       <div
         onClick={() => setShow(false)}
