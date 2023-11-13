@@ -100,6 +100,7 @@ const config: Config = {
       },
     },
     screens: {
+      md: '768px',
       lg: '1080px',
     },
   },

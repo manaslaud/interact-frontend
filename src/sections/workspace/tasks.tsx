@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Project, Task } from '@/types';
 import { SERVER_ERROR } from '@/config/errors';
-import { PROJECT_URL, WORKSPACE_URL } from '@/config/routes';
+import { PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Gavel from '@phosphor-icons/react/dist/icons/Gavel';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
-import Loader from '@/components/common/loader';
 import moment from 'moment';
 import { Share, Users } from '@phosphor-icons/react';
 import Link from 'next/link';

@@ -371,3 +371,22 @@ export interface Task {
   isCompleted: boolean;
   subTasks: SubTask[];
 }
+
+export interface ProjectHistory {
+  id: string;
+  projectID: string;
+  senderID: string;
+  sender: User;
+  historyType: number;
+  userID: string;
+  user: User;
+  openingID: string;
+  opening: Opening;
+  applicationID: string;
+  application: Application;
+  invitationID: string;
+  invitation: Invitation;
+  taskID: string;
+  task: Task;
+  createdAt: Date;
+}

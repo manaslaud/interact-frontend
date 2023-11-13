@@ -20,6 +20,7 @@ import CommentProject from '@/sections/lowers/comment_project';
 import socketService from '@/config/ws';
 import Tasks from '@/sections/workspace/tasks';
 import NewTask from '@/sections/workspace/new_task';
+import History from '@/sections/workspace/history';
 
 interface Props {
   project: Project;
@@ -178,6 +179,7 @@ const LowerWorkspaceProject = ({ project }: Props) => {
       ) : (
         <></>
       )}
+      {clickedOnHistory ? <History setShow={setClickedOnHistory} projectID={project.id} /> : <></>}
 
       <div className="flex flex-col gap-8 max-lg:gap-3 max-lg:p-0 max-lg:flex-row">
         <Kanban
