@@ -102,7 +102,7 @@ const Projects = () => {
               : navbarOpen
               ? 'grid-cols-3 px-4 gap-12'
               : 'grid-cols-4 px-8 gap-8'
-          } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 items-center justify-items-center transition-ease-out-500`}
+          } max-lg:grid-cols-3 max-md:grid-cols-1 max-lg:gap-4 max-md:gap-6 max-md:px-4 items-center justify-items-center transition-ease-out-500`}
           // className={`${
           //   navbarOpen ? 'w-[calc(100vw-380px)]' : 'w-[calc(100vw-180px)]'
           // } mx-auto flex justify-center gap-8 flex-wrap max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}

@@ -31,13 +31,13 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
         height={10000}
         alt={'User Pic'}
         src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
-        className={'w-[140px] h-[140px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
+        className={'w-[140px] h-[140px] max-lg:w-[90px] max-lg:h-[90px] rounded-lg object-cover'}
       />
 
       <div className="grow flex flex-col gap-2">
         <div className="w-5/6 flex flex-col gap-1">
-          <div className="font-bold text-2xl max-md:text-lg text-gradient">{opening.title}</div>
-          <div className="font-medium text-lg max-md:text-sm">{opening.project.title}</div>
+          <div className="font-bold text-2xl max-lg:text-lg text-gradient">{opening.title}</div>
+          <div className="font-medium text-lg max-lg:text-sm">{opening.project.title}</div>
         </div>
 
         {opening.tags.length > 0 ? (
@@ -69,7 +69,7 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
           <></>
         )}
 
-        <div className="text-xs opacity-60 max-md:text-xs">{moment(opening.createdAt).fromNow()}</div>
+        <div className="text-xs opacity-60 max-lg:text-xs">{moment(opening.createdAt).fromNow()}</div>
       </div>
     </div>
   );

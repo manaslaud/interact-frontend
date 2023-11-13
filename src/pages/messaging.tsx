@@ -42,14 +42,14 @@ const Messaging = () => {
       <MainWrapper>
         <div
           onClick={() => setClickedOnNew(false)}
-          className={`w-fit h-[calc(100vh-65px)] max-md:h-fit mx-auto flex max-md:flex-col ${
+          className={`w-fit h-[calc(100vh-65px)] max-lg:h-fit mx-auto flex max-lg:flex-col ${
             open ? 'gap-2' : 'gap-16'
           } transition-ease-out-500 font-primary`}
         >
           {clickedOnNewGroup ? <NewGroup setShow={setClickedOnNewGroup} /> : <></>}
           {/* 100-(navbar+1) */}
-          <div className="w-[37.5vw] max-md:w-screen h-full flex flex-col pt-4 pl-4 max-md:pl-0 gap-4 ">
-            <div className="w-full flex items-center justify-between max-md:px-4 relative">
+          <div className="w-[37.5vw] max-lg:w-screen h-full flex flex-col pt-4 pl-4 max-lg:pl-0 gap-4 ">
+            <div className="w-full flex items-center justify-between max-lg:px-4 relative">
               <div className="text-3xl font-extrabold text-gradient">Messaging</div>
               <PencilSimpleLine
                 onClick={el => {
@@ -102,9 +102,9 @@ const Messaging = () => {
             </div>
           </div>
           <div
-            className={`w-[37.5vw] max-md:w-screen h-full max-md:h-base max-md:fixed max-md:top-navbar p-2 max-md:p-0 ${
+            className={`w-[37.5vw] max-lg:w-screen h-full max-lg:h-base max-lg:fixed max-lg:top-navbar p-2 max-lg:p-0 ${
               currentChatID == '' && currentGroupChatID == '' ? 'hidden' : ''
-            } max-md:z-30`}
+            } max-lg:z-30`}
           >
             {currentChatID == '' && currentGroupChatID == '' ? (
               <></>

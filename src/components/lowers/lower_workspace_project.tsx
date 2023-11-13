@@ -179,24 +179,24 @@ const LowerWorkspaceProject = ({ project }: Props) => {
         <></>
       )}
 
-      <div className="flex flex-col gap-8 max-md:gap-3 max-md:p-0 max-md:flex-row">
+      <div className="flex flex-col gap-8 max-lg:gap-3 max-lg:p-0 max-lg:flex-row">
         <Kanban
-          className="cursor-pointer hover:bg-[#ababab3e] max-md:hover:bg-transparent p-2 max-md:p-0 transition-ease-300 rounded-full max-md:w-6 max-md:h-6"
+          className="cursor-pointer hover:bg-[#ababab3e] max-lg:hover:bg-transparent p-2 max-lg:p-0 transition-ease-300 rounded-full max-lg:w-6 max-lg:h-6"
           onClick={() => setClickedOnTasks(true)}
           size={48}
           weight="regular"
         />
         <ClockCounterClockwise
-          className="cursor-pointer hover:bg-[#ababab3e] max-md:hover:bg-transparent p-2 max-md:p-0 transition-ease-300 rounded-full max-md:w-6 max-md:h-6"
+          className="cursor-pointer hover:bg-[#ababab3e] max-lg:hover:bg-transparent p-2 max-lg:p-0 transition-ease-300 rounded-full max-lg:w-6 max-lg:h-6"
           onClick={() => setClickedOnHistory(true)}
           size={48}
           weight="regular"
         />
-        <div className="h-[1px] w-full bg-black max-md:hidden"></div>
+        <div className="h-[1px] w-full bg-black max-lg:hidden"></div>
         <div className="flex-center flex-col">
           <HeartStraight
             onClick={likeHandler}
-            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            className="cursor-pointer rounded-full max-lg:w-6 max-lg:h-6"
             size={32}
             weight={liked ? 'fill' : 'regular'}
           />
@@ -205,7 +205,7 @@ const LowerWorkspaceProject = ({ project }: Props) => {
         <div className="flex-center flex-col">
           <Export
             onClick={() => setClickedOnShare(true)}
-            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            className="cursor-pointer rounded-full max-lg:w-6 max-lg:h-6"
             size={32}
             weight="regular"
           />
@@ -214,13 +214,13 @@ const LowerWorkspaceProject = ({ project }: Props) => {
         <div className="flex-center flex-col">
           <ChatTeardrop
             onClick={() => setClickedOnComment(true)}
-            className="cursor-pointer rounded-full max-md:w-6 max-md:h-6"
+            className="cursor-pointer rounded-full max-lg:w-6 max-lg:h-6"
             size={32}
           />
           {/* <div className="text-xs">{numComments}</div> */}
         </div>
         <BookmarkSimple
-          className="cursor-pointer p-2 max-md:p-0 rounded-full max-md:w-6 max-md:h-6"
+          className="cursor-pointer p-2 max-lg:p-0 rounded-full max-lg:w-6 max-lg:h-6"
           onClick={() => {
             if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
             else setClickedOnBookmark(prev => !prev);

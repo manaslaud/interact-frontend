@@ -43,12 +43,23 @@ const Connections = ({ type, user, setShow }: Props) => {
   useEffect(() => {
     fetchUsers();
   }, [user]);
+
+  useEffect(() => {
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
+
   return (
     <>
       <div
         className={`w-2/5 ${
           users.length < 5 ? 'h-fit' : 'h-4/5'
-        } max-md:w-5/6  fixed overflow-y-auto border-gray-400 border-[1px] dark:border-0 backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-6 gap-6 rounded-xl animate-fade_third`}
+        } max-lg:w-5/6  fixed overflow-y-auto border-gray-400 border-[1px] dark:border-0 backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-lg:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col font-primary p-6 gap-6 rounded-xl animate-fade_third`}
       >
         <div className="w-full text-center text-gradient font-bold text-2xl capitalize">
           {type} of {user.name}
@@ -67,7 +78,7 @@ const Connections = ({ type, user, setShow }: Props) => {
               <div className="w-full text-center text-lg font-medium">Nothing Here :)</div>
             ) : (
               <InfiniteScroll
-                className="px-4 max-md:px-2 flex flex-col gap-2"
+                className="px-4 max-lg:px-2 flex flex-col gap-2"
                 dataLength={users.length}
                 next={fetchUsers}
                 hasMore={hasMore}
@@ -83,7 +94,7 @@ const Connections = ({ type, user, setShow }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen max-md:h-base fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );

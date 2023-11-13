@@ -99,6 +99,9 @@ const config: Config = {
         10: '10',
       },
     },
+    screens: {
+      lg: '1080px',
+    },
   },
   plugins: [require('@tailwindcss/line-clamp')],
 };

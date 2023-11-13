@@ -72,9 +72,9 @@ const TrendingCard = () => {
         <div
           className={`${
             open
-              ? 'w-[24vw] h-[75vh] pb-4 max-md:mb-12 gap-4 pt-4 max-md:pb-8 max-md:pt-4 px-4 top-[150px] overflow-y-auto'
+              ? 'w-[24vw] h-[75vh] pb-4 gap-4 pt-4 px-4 top-[150px] overflow-y-auto'
               : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg'
-          } shadow-md dark:shadow-none transition-ease-500 max-md:h-fit sticky overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md`}
+          } shadow-md dark:shadow-none transition-ease-500 sticky overflow-y-hidden overflow-x-hidden font-primary flex flex-col dark:text-white bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:hidden rounded-md`}
         >
           <ArrowDownLeft
             onClick={() => setOpen(prev => !prev)}
@@ -85,7 +85,7 @@ const TrendingCard = () => {
           />
           <div
             className={`${
-              open ? 'text-4xl max-md:text-3xl opacity-100' : 'text-xxs opacity-0'
+              open ? 'text-4xl opacity-100' : 'text-xxs opacity-0'
             } transition-ease-500 font-bold text-gradient`}
           >
             Trending Now
@@ -115,7 +115,7 @@ const TrendingCard = () => {
             <></>
           )}
           <div
-            className={`${open ? 'text-2xl max-md:text-3xl pt-4 mt-2 opacity-100' : 'text-xxs pt-0 mt-0 opacity-0'} ${
+            className={`${open ? 'text-2xl pt-4 mt-2 opacity-100' : 'text-xxs pt-0 mt-0 opacity-0'} ${
               profiles.length == 0 ? 'hidden' : ''
             } border-t-2 border-dashed transition-ease-500 font-medium`}
           >

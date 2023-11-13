@@ -93,7 +93,7 @@ const Project = () => {
                             onClick={() => {
                               setDisplayChats(chats.filter(chat => chat.projectID == project.id));
                             }}
-                            className="w-full font-primary hover:bg-primary_comp dark:hover:bg-dark_primary_comp_hover dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex items-center gap-6 max-md:gap-4 transition-ease-300 cursor-pointer"
+                            className="w-full font-primary hover:bg-primary_comp dark:hover:bg-dark_primary_comp_hover dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex items-center gap-6 max-lg:gap-4 transition-ease-300 cursor-pointer"
                           >
                             <Image
                               crossOrigin="anonymous"
@@ -101,12 +101,12 @@ const Project = () => {
                               height={10000}
                               alt={'User Pic'}
                               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
-                              className={'w-[90px] h-[90px] max-md:w-[60px] max-md:h-[60px] rounded-lg object-cover'}
+                              className={'w-[90px] h-[90px] max-lg:w-[60px] max-lg:h-[60px] rounded-lg object-cover'}
                             />
 
                             <div className="grow flex flex-col gap-2">
-                              <div className="font-bold text-3xl max-md:text-lg text-gradient">{project.title}</div>
-                              <div className="max-md:text-sm">
+                              <div className="font-bold text-3xl max-lg:text-lg text-gradient">{project.title}</div>
+                              <div className="max-lg:text-sm">
                                 {chats.filter(chat => chat.projectID == project.id).length} Chat
                                 {chats.filter(chat => chat.projectID == project.id).length != 1 ? 's' : ''}
                               </div>

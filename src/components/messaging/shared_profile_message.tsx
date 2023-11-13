@@ -49,7 +49,7 @@ const SharedProfileMessage = ({ message }: Props) => {
           </div>
 
           {message.content != '' ? (
-            <div className="border-t-[1px] border-white pt-2 border-dashed">{message.content}</div>
+            <div className="border-t-[1px] border-white pt-2 border-dashed overflow-clip">{message.content}</div>
           ) : (
             <></>
           )}

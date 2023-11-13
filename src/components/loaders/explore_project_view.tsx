@@ -12,19 +12,19 @@ const ProjectViewLoader = ({ setClickedOnProject, fadeIn }: Props) => {
         fadeIn ? 'animate-fade_third' : ''
       }`}
     >
-      <div className="animate-pulse delay-0 w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
+      <div className="animate-pulse delay-0 w-16 h-screen flex flex-col items-center py-3 justify-between max-lg:fixed max-lg:top-0 max-lg:left-0">
         <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-dark_primary_comp_hover cursor-pointer" />
       </div>
 
-      <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen pt-3">
-        <div className="w-full h-14 max-md:pl-[68px] flex flex-col gap-1">
+      <div className="w-[calc(100vw-128px)] max-lg:w-screen h-screen pt-3">
+        <div className="w-full h-14 max-lg:pl-[68px] flex flex-col gap-1">
           <div className="animate-pulse delay-75 font-semibold bg-gray-200 dark:bg-dark_primary_comp_hover w-32 h-5 rounded-sm"></div>
           <div className="animate-pulse delay-100 text-xs bg-gray-200 dark:bg-dark_primary_comp_hover w-24 h-4 rounded-sm"></div>
         </div>
-        <div className="w-full h-[calc(100vh-56px)] max-md:overflow-y-auto flex max-md:flex-col">
-          <div className="animate-pulse delay-20 bg-gray-200 dark:bg-dark_primary_comp w-[calc(100vh-56px)] max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none"></div>
+        <div className="w-full h-[calc(100vh-56px)] max-lg:overflow-y-auto flex max-lg:flex-col">
+          <div className="animate-pulse delay-20 bg-gray-200 dark:bg-dark_primary_comp w-[calc(100vh-56px)] max-lg:w-full h-full max-lg:h-96 rounded-tl-md max-lg:rounded-none"></div>
 
-          <div className="w-[calc(100vw-128px-(100vh-56px))] max-md:w-full border-gray-400 border-t-[1px] border-r-[1px] dark:border-0 h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
+          <div className="w-[calc(100vw-128px-(100vh-56px))] max-lg:w-full border-gray-400 border-t-[1px] border-r-[1px] dark:border-0 h-full max-lg:h-fit max-lg:min-h-[calc(100vh-65px-384px)] overflow-y-auto p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4">
             <div className="flex justify-between items-center">
               <div className="animate-pulse delay-300 w-64 h-10 bg-gray-200 dark:bg-dark_primary_comp_active rounded-md"></div>
             </div>
@@ -46,7 +46,7 @@ const ProjectViewLoader = ({ setClickedOnProject, fadeIn }: Props) => {
         </div>
       </div>
 
-      <div className="w-16 h-screen flex flex-col items-center justify-between py-3 max-md:fixed max-md:top-0 max-md:right-0">
+      <div className="w-16 h-screen flex flex-col items-center justify-between py-3 max-lg:fixed max-lg:top-0 max-lg:right-0">
         <div
           onClick={() => setClickedOnProject(false)}
           className="w-10 h-10 rounded-full flex-center bg-gray-100 dark:bg-dark_primary_comp_hover cursor-pointer"

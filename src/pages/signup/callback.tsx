@@ -98,7 +98,7 @@ const SignUpCallback = ({ token }: Props) => {
         <title>SignUp | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-lg:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/onboarding_logo.svg" />
           </div>
@@ -128,13 +128,13 @@ const SignUpCallback = ({ token }: Props) => {
               </button>
             </div>
           </form>
-          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          <div className="w-3/4 max-lg:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s <span className="underline underline-offset-2 font-medium">Term & Conditions</span> and{' '}
             <span className="underline underline-offset-2 font-medium">Privacy Policy.</span>
           </div>
         </div>
-        <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
+        <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
       </div>
     </>
   );

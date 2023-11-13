@@ -99,29 +99,29 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
   return (
     <>
-      {/* <div className="w-screen h-screen max-md:overflow-auto flex max-md:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
+      {/* <div className="w-screen h-screen max-lg:overflow-auto flex max-lg:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
         
         </div> */}
 
-      <div className="fixed top-14 max-md:top-20 w-5/6 max-md:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg p-8 gap-8 max-md:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
-        <div className="w-80 max-md:w-full md:sticky md:top-0">
+      <div className="fixed top-14 max-lg:top-20 w-5/6 max-lg:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+        <div className="w-80 max-lg:w-full lg:sticky lg:top-0">
           <Images setSelectedFile={setImage} />
         </div>
-        <div className="w-[calc(100%-320px)] max-md:w-full h-full flex flex-col justify-between gap-2">
+        <div className="w-[calc(100%-320px)] max-lg:w-full h-full flex flex-col justify-between gap-2">
           <div className="w-full h-fit flex flex-col gap-6">
-            <div className="w-full max-md:w-full text-primary_black flex flex-col gap-4 pb-8 max-md:pb-4">
+            <div className="w-full max-lg:w-full text-primary_black flex flex-col gap-4 pb-8 max-lg:pb-4">
               <input
                 value={title}
                 onChange={el => setTitle(el.target.value)}
                 maxLength={20}
                 type="text"
                 placeholder="Untitled Project"
-                className="w-full text-5xl max-md:text-center max-md:text-3xl font-bold bg-transparent focus:outline-none"
+                className="w-full text-5xl max-lg:text-center max-lg:text-3xl font-bold bg-transparent focus:outline-none"
               />
 
               <select
                 onChange={el => setCategory(el.target.value)}
-                className="w-1/2 max-md:w-full h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
+                className="w-1/2 max-lg:w-full h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
               >
                 {categories.map((c, i) => {
                   return (
@@ -197,11 +197,11 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             </div>
           </div>
 
-          <div className="w-full flex max-md:justify-center justify-end">
+          <div className="w-full flex max-lg:justify-center justify-end">
             <button
               onClick={handleSubmit}
-              className={`duration-300 relative group cursor-pointer text-white overflow-hidden h-16 max-md:h-12 ${
-                mutex ? 'w-72 max-md:w-64 scale-90' : 'w-48 max-md:w-40 hover:scale-90'
+              className={`duration-300 relative group cursor-pointer text-white overflow-hidden h-16 max-lg:h-12 ${
+                mutex ? 'w-72 max-lg:w-64 scale-90' : 'w-48 max-lg:w-40 hover:scale-90'
               } rounded-xl p-2 flex-center`}
             >
               <div
@@ -233,7 +233,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
                   mutex ? 'opacity-100' : 'opacity-0'
                 } absolute rounded-xl z-10 transition-ease-500`}
               ></div>
-              <p className={`z-10 font-bold text-xl max-md:text-lg transition-ease-500`}>
+              <p className={`z-10 font-bold text-xl max-lg:text-lg transition-ease-500`}>
                 {mutex ? (
                   <>
                     <div className="w-fit text-gradient transition-ease-out-300 animate-fade_half">
@@ -252,7 +252,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen max-md:w-[105vw] max-md:h-[105vh] fixed top-0 left-0 animate-fade_third z-20"
+        className="bg-backdrop w-screen h-screen max-lg:w-[105vw] max-lg:h-[105vh] fixed top-0 left-0 animate-fade_third z-20"
       ></div>
     </>
   );

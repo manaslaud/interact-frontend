@@ -159,9 +159,9 @@ const LowerProject = ({ project }: Props) => {
       {clickedOnShare ? <ShareProject setShow={setClickedOnShare} project={project} /> : <></>}
       {clickedOnReport ? <Report projectID={project.id} setShow={setClickedOnReport} /> : <></>}
 
-      <div className="flex flex-col gap-12 max-md:gap-2 max-md:flex-row">
+      <div className="flex flex-col gap-12 max-lg:gap-2 max-lg:flex-row">
         <BookmarkSimple
-          className="cursor-pointer max-md:w-6 max-md:h-6"
+          className="cursor-pointer max-lg:w-6 max-lg:h-6"
           onClick={() => {
             if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
             else setClickedOnBookmark(prev => !prev);
@@ -171,25 +171,25 @@ const LowerProject = ({ project }: Props) => {
         />
         <HeartStraight
           onClick={likeHandler}
-          className="cursor-pointer max-md:w-6 max-md:h-6"
+          className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
           weight={liked ? 'fill' : 'regular'}
         />
         <Export
           onClick={() => setClickedOnShare(true)}
-          className="cursor-pointer max-md:w-6 max-md:h-6"
+          className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
           weight="regular"
         />
         <ChatTeardrop
           onClick={() => setClickedOnComment(true)}
-          className="cursor-pointer max-md:w-6 max-md:h-6"
+          className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
         />
         {project.userID != user.id ? (
           <WarningCircle
             onClick={() => setClickedOnReport(true)}
-            className="cursor-pointer max-md:w-6 max-md:h-6"
+            className="cursor-pointer max-lg:w-6 max-lg:h-6"
             size={32}
           />
         ) : (

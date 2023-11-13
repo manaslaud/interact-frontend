@@ -112,13 +112,13 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
 
   return (
     <>
-      <div className="fixed top-12 max-md:top-20 w-[953px] max-md:w-5/6 h-[680px] max-md:h-5/6 backdrop-blur-2xl bg-[#ffffffc1] dark:bg-[#ffe1fc22] flex max-md:flex-col justify-between rounded-lg max-md:rounded-md p-8 pb-2 gap-8 max-md:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
-        <div className="w-2/5 max-md:w-full md:sticky md:top-0">
+      <div className="fixed top-12 max-lg:top-20 w-[953px] max-lg:w-5/6 h-[680px] max-lg:h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg max-lg:rounded-md p-8 pb-2 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_black  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+        <div className="w-2/5 max-lg:w-full lg:sticky lg:top-0">
           <Images initialImage={projectToEdit.coverPic} setSelectedFile={setImage} />
         </div>
 
-        <div className="w-3/5 max-md:w-full h-fit flex flex-col max-md:items-center gap-4 max-md:gap-6 max-md:pb-4">
-          <div className="w-fit text-5xl max-md:text-3xl font-bold cursor-default">{projectToEdit.title}</div>
+        <div className="w-3/5 max-lg:w-full h-fit flex flex-col max-lg:items-center gap-4 max-lg:gap-6 max-lg:pb-4">
+          <div className="w-fit text-5xl max-lg:text-3xl font-bold cursor-default">{projectToEdit.title}</div>
 
           <select
             onChange={el => setCategory(el.target.value)}
@@ -134,27 +134,47 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
             })}
           </select>
 
-          <Tags tags={tags} setTags={setTags} />
+          <div className="w-full flex flex-col gap-2">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length || 0}/5)</div>
+            <Tags tags={tags} setTags={setTags} />
+          </div>
 
-          <input
-            value={tagline}
-            onChange={el => setTagline(el.target.value)}
-            type="text"
-            maxLength={40}
-            placeholder="Write your Tagline here..."
-            className="w-full text-lg bg-transparent focus:outline-none"
-          />
+          <div className="w-full flex flex-col gap-2">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tagline ({tagline.trim().length}/40)</div>
+            <input
+              value={tagline}
+              onChange={el => setTagline(el.target.value)}
+              type="text"
+              maxLength={40}
+              placeholder="Write your Tagline here..."
+              className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg text-lg p-2 font-medium bg-transparent"
+            />
+          </div>
 
-          <textarea
-            value={description}
-            onChange={el => setDescription(el.target.value)}
-            maxLength={500}
-            className="w-full min-h-[96px] max-h-80 p-2 bg-primary_comp dark:bg-transparent focus:outline-none"
-            placeholder="Explain your project"
-          />
-          <Links links={links} setLinks={setLinks} />
+          <div className="w-full">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+              Description ({description.trim().length}/1000)
+            </div>
+            <textarea
+              value={description}
+              onChange={el => setDescription(el.target.value)}
+              placeholder="add a professional bio"
+              maxLength={1000}
+              className="w-full min-h-[160px] max-h-[200px] focus:outline-none text-primary_black border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-2 text-sm bg-transparent"
+            />
+          </div>
 
-          <Links title="Private Links" links={privateLinks} setLinks={setPrivateLinks} />
+          <div className="w-full flex flex-col gap-2">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Public Links ({links.length || 0}/5)</div>
+            <Links links={links} setLinks={setLinks} maxLinks={5} />
+          </div>
+
+          <div className="w-full flex flex-col gap-2">
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+              Private Links ({privateLinks.length || 0}/5)
+            </div>
+            <Links title="Private Links" links={privateLinks} setLinks={setPrivateLinks} />
+          </div>
 
           <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
             <div>Keep this Project Private</div>
@@ -188,7 +208,7 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
 
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+        className="bg-backdrop w-screen h-screen max-lg:backdrop-blur-sm fixed top-0 left-0 animate-fade_third z-20"
       ></div>
     </>
   );

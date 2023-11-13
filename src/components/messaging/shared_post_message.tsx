@@ -25,7 +25,7 @@ const SharedPostMessage = ({ message }: Props) => {
       />
       <div className={`w-1/3 flex flex-wrap gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
         <div className="w-fit max-w-[27rem] flex flex-col text-sm cursor-default rounded-xl px-4 py-2 bg-primary_comp dark:bg-dark_primary_comp_hover gap-2">
-          <Link href={`/explore/post/${message.postID}`} className={`w-56 flex flex-col cursor-pointer gap-2`}>
+          <Link href={`/explore/post/${message.postID}`} className={`w-80 flex flex-col cursor-pointer gap-2`}>
             <div className="w-full font-primary flex gap-1 dark:text-white py-2 border-primary_btn dark:border-dark_primary_btn border-b-[1px] max-md:px-4 max-md:py-4">
               <div className="w-[15%] h-full">
                 <div className="rounded-full">
@@ -56,12 +56,12 @@ const SharedPostMessage = ({ message }: Props) => {
                 ) : (
                   <></>
                 )}
-                <div className="w-full text-sm whitespace-pre-wrap mb-2">{message.post.content}</div>
+                <div className="w-full text-sm whitespace-pre-wrap overflow-clip mb-2">{message.post.content}</div>
               </div>
             </div>
           </Link>
           {message.content != '' ? (
-            <div className="border-t-[1px] border-white pt-2 border-dashed">{message.content}</div>
+            <div className="border-t-[1px] border-white pt-2 border-dashed overflow-clip">{message.content}</div>
           ) : (
             <></>
           )}

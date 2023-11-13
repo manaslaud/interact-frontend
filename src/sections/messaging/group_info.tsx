@@ -175,7 +175,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
         <div
           className={`w-full rounded-md flex ${
-            clickedOnEdit ? 'items-start max-md:flex-col max-md:items-center' : 'items-center'
+            clickedOnEdit ? 'items-start max-lg:flex-col max-lg:items-center' : 'items-center'
           } gap-4 px-4`}
         >
           {clickedOnEdit ? (
@@ -197,15 +197,15 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                 }}
               />
               <label
-                className="relative w-14 h-14 max-md:w-32 max-md:h-32 rounded-full cursor-pointer"
+                className="relative w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full cursor-pointer"
                 htmlFor="groupPic"
               >
-                <div className="w-14 h-14 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
+                <div className="w-14 h-14 max-lg:w-32 max-lg:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
                   <Pen color="black" size={24} />
                 </div>
                 <Image
                   crossOrigin="anonymous"
-                  className="w-14 h-14 max-md:w-32 max-md:h-32 rounded-full object-cover"
+                  className="w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full object-cover"
                   width={10000}
                   height={10000}
                   alt="/"
@@ -216,13 +216,13 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                 <div className="w-full flex items-center justify-between pr-2">
                   <input
                     type="text"
-                    className="text-2xl max-md:text-center font-medium bg-transparent focus:outline-none"
+                    className="text-2xl max-lg:text-center font-medium bg-transparent focus:outline-none"
                     autoFocus={true}
                     maxLength={25}
                     value={title}
                     onChange={el => setTitle(el.target.value)}
                   />
-                  <div className="max-md:hidden flex gap-2">
+                  <div className="max-lg:hidden flex gap-2">
                     <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                     <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
                   </div>
@@ -258,7 +258,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                   </div>
                 </label>
 
-                <div className="md:hidden w-full flex justify-end">
+                <div className="lg:hidden w-full flex justify-end">
                   <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                   <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
                 </div>

@@ -119,7 +119,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[45%] max-md:w-full max-h-[80vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 bg-white dark:bg-transparent p-6 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-20">
+    <div className="sticky max-lg:fixed top-[158px] max-lg:top-0 max-lg:right-0 w-[45%] max-lg:w-full max-h-[80vh] max-lg:max-h-screen max-lg:h-screen max-lg:z-50 overflow-y-auto flex flex-col gap-6 max-lg:gap-8 bg-white dark:bg-transparent p-6 font-primary dark:text-white border-[1px] max-lg:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-lg:rounded-none max-lg:animate-fade_third z-20">
       {clickedOnEditMembership ? (
         <EditMembership
           membership={clickedEditUserMembership}
@@ -137,10 +137,10 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       <div
         className={`w-full rounded-md flex ${
-          clickedOnEdit ? 'items-start max-md:flex-col max-md:items-center' : 'items-center'
+          clickedOnEdit ? 'items-start max-lg:flex-col max-lg:items-center' : 'items-center'
         } gap-4`}
       >
-        <ArrowCircleLeft onClick={() => setShow(false)} className="md:hidden cursor-pointer" size={32} />
+        <ArrowCircleLeft onClick={() => setShow(false)} className="lg:hidden cursor-pointer" size={32} />
         {clickedOnEdit ? (
           <>
             <input
@@ -160,15 +160,15 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
               }}
             />
             <label
-              className="relative w-14 h-14 max-md:w-32 max-md:h-32 rounded-full cursor-pointer"
+              className="relative w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full cursor-pointer"
               htmlFor="groupPic"
             >
-              <div className="w-14 h-14 max-md:w-32 max-md:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
+              <div className="w-14 h-14 max-lg:w-32 max-lg:h-32 absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 opacity-0 hover:opacity-50">
                 <Pen color="black" size={24} />
               </div>
               <Image
                 crossOrigin="anonymous"
-                className="w-14 h-14 max-md:w-32 max-md:h-32 rounded-full object-cover"
+                className="w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full object-cover"
                 width={10000}
                 height={10000}
                 alt="/"
@@ -179,13 +179,13 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
               <div className="w-full flex items-center justify-between pr-2">
                 <input
                   type="text"
-                  className="text-2xl max-md:text-center font-medium bg-transparent focus:outline-none"
+                  className="text-2xl max-lg:text-center font-medium bg-transparent focus:outline-none"
                   autoFocus={true}
                   maxLength={25}
                   value={title}
                   onChange={el => setTitle(el.target.value)}
                 />
-                <div className="max-md:hidden flex gap-2">
+                <div className="max-lg:hidden flex gap-2">
                   <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                   <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
                 </div>
@@ -222,7 +222,7 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                 </div>
               </label>
 
-              <div className="md:hidden w-full flex justify-end">
+              <div className="lg:hidden w-full flex justify-end">
                 <X onClick={() => setClickedOnEdit(false)} className="cursor-pointer" size={24} />
                 <CaretRight onClick={handleEdit} className="cursor-pointer" size={24} />
               </div>

@@ -30,7 +30,7 @@ const Tasks = ({ slug }: Props) => {
   const [filterStatus, setFilterStatus] = useState(false);
 
   const [clickedOnTask, setClickedOnTask] = useState(false);
-  const [clickedTask, setClickedTask] = useState(initialTask);
+  const [clickedTaskID, setClickedTaskID] = useState(-1);
 
   const [clickedOnNewTask, setClickedOnNewTask] = useState(false);
 
@@ -47,9 +47,9 @@ const Tasks = ({ slug }: Props) => {
           setFilteredTasks(taskData);
           const tid = new URLSearchParams(window.location.search).get('tid');
           if (tid && tid != '') {
-            taskData.forEach((task: Task) => {
+            taskData.forEach((task: Task, i: number) => {
               if (tid == task.id) {
-                setClickedTask(task);
+                setClickedTaskID(i);
                 setClickedOnTask(true);
               }
             });
@@ -139,34 +139,37 @@ const Tasks = ({ slug }: Props) => {
               <>
                 {filteredTasks.length > 0 ? (
                   <div className="flex justify-evenly px-4">
-                    <div className={`${clickedOnTask ? 'w-[40%]' : 'w-[720px]'} max-md:w-[720px] flex flex-col gap-4`}>
-                      {filteredTasks.map(task => {
+                    <div className={`${clickedOnTask ? 'w-[40%]' : 'w-[720px]'} max-lg:w-[720px] flex flex-col gap-4`}>
+                      {filteredTasks.map((task, i) => {
                         return (
                           <TaskCard
                             key={task.id}
                             task={task}
-                            clickedTask={clickedTask}
+                            index={i}
+                            clickedTaskID={clickedTaskID}
                             clickedOnTask={clickedOnTask}
                             setClickedOnTask={setClickedOnTask}
-                            setClickedTask={setClickedTask}
+                            setClickedTaskID={setClickedTaskID}
                           />
                         );
                       })}
                     </div>
                     {clickedOnTask ? (
                       <TaskView
-                        task={clickedTask}
+                        taskID={clickedTaskID}
+                        tasks={filteredTasks}
                         project={project}
                         setShow={setClickedOnTask}
                         setTasks={setTasks}
                         setFilteredTasks={setFilteredTasks}
+                        setClickedTaskID={setClickedTaskID}
                       />
                     ) : (
                       <></>
                     )}
                   </div>
                 ) : (
-                  <div>No Tasks found</div>
+                  <div className="mx-auto font-medium text-xl mt-8">No Tasks found :)</div>
                 )}
               </>
             )}

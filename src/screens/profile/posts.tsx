@@ -48,12 +48,12 @@ const Posts = ({ userID }: Props) => {
   }, [userID]);
 
   return page == 1 && loading ? (
-    <div className="w-[45vw] mx-auto max-md:w-screen max-md:px-4 pb-2">
+    <div className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen max-lg:px-4 pb-2">
       <PostsLoader />
     </div>
   ) : (
     <InfiniteScroll
-      className="w-[45vw] mx-auto max-md:w-screen flex flex-col gap-2 max-md:px-4 pb-2"
+      className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen flex flex-col gap-2 max-lg:px-4 pb-2"
       dataLength={posts.length}
       next={getPosts}
       hasMore={hasMore}

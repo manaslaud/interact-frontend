@@ -3,14 +3,14 @@ import React from 'react';
 const ProfileCardLoader = () => {
   return (
     <div
-      className={`w-[24vw] h-[75vh] pb-4 max-md:mb-12 shadow-md dark:shadow-none gap-4 pt-12 max-md:pb-8 max-md:pt-4 px-4 transition-ease-500 max-md:h-fit sticky top-[150px] overflow-y-hidden overflow-x-hidden max-md:mx-auto font-primary flex flex-col dark:text-white items-center bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:hidden max-md:bg-transparent rounded-md`}
+      className={`w-[24vw] h-[75vh] pb-4 shadow-md dark:shadow-none gap-4 pt-12 px-4 transition-ease-500 sticky top-[150px] overflow-y-hidden overflow-x-hidden font-primary flex flex-col dark:text-white items-center bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:hidden rounded-md`}
     >
       <div
         className={
-          'animate-pulse delay-0 rounded-full max-md:mx-auto bg-white dark:bg-dark_primary_comp_hover w-44 h-44 cursor-default'
+          'animate-pulse delay-0 rounded-full bg-white dark:bg-dark_primary_comp_hover w-44 h-44 cursor-default'
         }
       />
-      <div className="animate-pulse delay-75 w-2/3 text-3xl h-10 rounded-lg bg-white dark:bg-dark_primary_comp_hover max-md:text-2xl text-center font-bold"></div>
+      <div className="animate-pulse delay-75 w-2/3 text-3xl h-10 rounded-lg bg-white dark:bg-dark_primary_comp_hover text-center font-bold"></div>
       <div className="animate-pulse delay-150 w-full flex justify-center gap-6">
         <div className="w-1/3 h-4 bg-white dark:bg-dark_primary_comp_hover rounded-sm"></div>
         <div className="w-1/3 h-4 bg-white dark:bg-dark_primary_comp_hover rounded-sm"></div>

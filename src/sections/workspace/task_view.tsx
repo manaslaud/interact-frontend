@@ -23,19 +23,21 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import patchHandler from '@/handlers/patch_handler';
 import NewSubTask from './new_sub_task';
-import { initialSubTask } from '@/types/initials';
+import { initialSubTask, initialTask } from '@/types/initials';
 import SubTaskView from './sub_task_view';
 import EditSubTask from './edit_sub_task';
 
 interface Props {
-  task: Task;
+  taskID: number;
+  tasks: Task[];
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setTasks?: React.Dispatch<React.SetStateAction<Task[]>>;
   setFilteredTasks?: React.Dispatch<React.SetStateAction<Task[]>>;
+  setClickedTaskID?: React.Dispatch<React.SetStateAction<number>>;
   project: Project;
 }
 
-const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props) => {
+const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, project, setClickedTaskID }: Props) => {
   const [clickedOnEditTask, setClickedOnEditTask] = useState(false);
   const [clickedOnDeleteTask, setClickedOnDeleteTask] = useState(false);
   const [clickedOnNewSubTask, setClickedOnNewSubTask] = useState(false);
@@ -43,6 +45,8 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
   const [clickedOnEditSubTask, setClickedOnEditSubTask] = useState(false);
   const [clickedSubTask, setClickedSubTask] = useState(initialSubTask);
   const [clickedOnDeleteSubTask, setClickedOnDeleteSubTask] = useState(false);
+
+  const task = tasks[taskID] || initialTask;
 
   const getUserRole = (userID: string) => {
     var role = '';
@@ -204,12 +208,12 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
         <></>
       )}
       {task.isCompleted ? (
-        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#bffbbe] max-md:fixed top-[168px] max-md:top-navbar right-14 max-md:right-0 z-[11]">
+        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#bffbbe] max-lg:fixed top-[168px] max-lg:top-navbar right-14 max-lg:right-0 z-[11]">
           Task Completed
           <CheckSquare weight="bold" size={16} />
         </div>
       ) : moment(task.deadline).isBefore(moment()) ? (
-        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#fbbebe] max-md:fixed top-[168px] max-md:top-navbar right-14 max-md:right-0 z-[11]">
+        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#fbbebe] max-lg:fixed top-[168px] max-lg:top-navbar right-14 max-lg:right-0 z-[11]">
           Deadline Passed
           <CalendarX weight="bold" size={16} />
         </div>
@@ -217,12 +221,13 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
         <></>
       )}
 
-      <div className="sticky bg-white max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[640px] max-md:w-full max-h-[75vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-8 p-8 pt-4 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
+      <div className="sticky bg-white max-lg:fixed top-[158px] max-lg:top-navbar max-lg:right-0 w-[640px] max-lg:w-full max-h-[75vh] max-lg:max-h-screen max-lg:h-base max-lg:z-50 max-lg:backdrop-blur-2xl max-lg:backdrop-brightness-90 overflow-y-auto flex flex-col gap-8 p-8 pt-4 font-primary dark:text-white border-[1px] max-lg:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-lg:rounded-none max-lg:animate-fade_third z-10">
         <div className="w-full flex flex-col gap-2">
           <ArrowArcLeft
             className="cursor-pointer"
             size={24}
             onClick={() => {
+              if (setClickedTaskID) setClickedTaskID(-1);
               setShow(false);
             }}
           />
@@ -263,7 +268,7 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
                 return (
                   <div
                     key={user.id}
-                    className="w-[45%] max-md:w-full flex gap-4 border-[1px] border-gray-900 rounded-lg p-2"
+                    className="w-[45%] max-lg:w-[48%] max-md:w-full flex gap-4 border-[1px] border-gray-900 rounded-lg p-2"
                   >
                     <Image
                       crossOrigin="anonymous"
@@ -292,7 +297,7 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
                 onClick={() => setClickedOnEditTask(true)}
                 className="w-full text-base bg-gray-100 rounded-xl p-4 hover:scale-105 cursor-pointer transition-ease-300"
               >
-                <span className="text-xl max-md:text-lg text-gradient font-semibold">Your task is lonely! </span> and
+                <span className="text-xl max-lg:text-lg text-gradient font-semibold">Your task is lonely! </span> and
                 looking for a buddy. Don&apos;t leave it hanging, assign it to a team member and let the magic begin! 🚀
               </div>
             ) : (
@@ -350,7 +355,7 @@ const TaskView = ({ task, setShow, setTasks, setFilteredTasks, project }: Props)
                 onClick={() => setClickedOnNewSubTask(true)}
                 className="w-full text-base bg-gray-100 rounded-xl p-4 hover:scale-105 cursor-pointer transition-ease-300"
               >
-                <span className="text-xl max-md:text-lg text-gradient font-semibold">Divide and conquer! </span> Big
+                <span className="text-xl max-lg:text-lg text-gradient font-semibold">Divide and conquer! </span> Big
                 tasks can be daunting! Break them down into bite-sized subtasks for smoother sailing. 📋
               </div>
             ) : (

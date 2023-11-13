@@ -1,5 +1,5 @@
 import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
-import { POST_PIC_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
@@ -8,8 +8,6 @@ import Image from 'next/image';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import { Post } from '@/types';
-import moment from 'moment';
-import { CarouselProvider, Slide, Slider, Dot } from 'pure-react-carousel';
 import getDisplayTime from '@/utils/get_display_time';
 
 interface Props {
@@ -77,7 +75,7 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 w-[953px] max-md:w-5/6 h-[470px] max-md:h-2/3 flex flex-col justify-between max-md:gap-4 p-8 max-md:px-4 dark:text-white font-primary overflow-y-auto backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 w-[953px] max-lg:w-5/6 h-[470px] max-lg:h-2/3 flex flex-col justify-between max-md:gap-4 p-8 max-md:px-4 dark:text-white font-primary overflow-y-auto backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] rounded-lg border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="flex gap-4 max-md:w-full">
           <Image
             crossOrigin="anonymous"
@@ -99,8 +97,8 @@ const RePost = ({ post, setShow, setFeed }: Props) => {
               </div>
             </div>
 
-            <div className="max-md:hidden w-1/2 max-md:w-full font-primary flex gap-1 border-primary_btn dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
-              <div className="w-[10%] max-md:w-[10%] h-full">
+            <div className="max-md:hidden w-1/2 max-lg:w-full font-primary flex gap-1 border-primary_btn dark:border-dark_primary_btn border-[1px] dark:text-white rounded-xl p-4 max-md:px-4 max-md:py-4">
+              <div className="w-[10%] max-lg:w-[8%] h-full">
                 <div className="rounded-full">
                   <Image
                     crossOrigin="anonymous"

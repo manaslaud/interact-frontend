@@ -6,21 +6,22 @@ import React from 'react';
 
 interface Props {
   task: Task;
-  clickedTask?: Task;
+  index: number;
+  clickedTaskID: number;
   clickedOnTask: boolean;
   setClickedOnTask?: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedTask?: React.Dispatch<React.SetStateAction<Task>>;
+  setClickedTaskID?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TaskCard = ({ task, clickedTask, clickedOnTask, setClickedOnTask, setClickedTask }: Props) => {
+const TaskCard = ({ task, index, clickedTaskID, clickedOnTask, setClickedOnTask, setClickedTaskID }: Props) => {
   return (
     <div
       onClick={() => {
-        if (setClickedTask) setClickedTask(task);
         if (setClickedOnTask) setClickedOnTask(true);
+        if (setClickedTaskID) setClickedTaskID(index);
       }}
       className={`w-full ${
-        task.id == clickedTask?.id ? 'bg-white' : 'hover:bg-gray-100'
+        index == clickedTaskID ? 'bg-white' : 'hover:bg-gray-100'
       } flex justify-between items-center gap-2 rounded-lg px-6 py-4 border-gray-800 border-dotted border-2 cursor-pointer transition-ease-300`}
     >
       <div className="grow flex flex-col gap-2">

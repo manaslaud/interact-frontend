@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Opening, Project } from '@/types';
-import { INVITATION_URL, OPENING_URL, PROJECT_PIC_URL } from '@/config/routes';
+import { OPENING_URL, PROJECT_PIC_URL } from '@/config/routes';
 import { Pen, TrashSimple } from '@phosphor-icons/react';
 import EditOpening from '@/sections/workspace/manage_project/edit_opening';
 import { userSelector } from '@/slices/userSlice';

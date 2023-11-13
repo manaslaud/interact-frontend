@@ -97,7 +97,7 @@ const Openings = () => {
           {openings.length > 0 ? (
             <div className="w-full flex justify-evenly px-4">
               <InfiniteScroll
-                className={`${clickedOnOpening ? 'w-full' : 'w-[720px]'} max-md:w-full flex flex-col gap-4`}
+                className={`${clickedOnOpening ? 'w-full' : 'w-[720px]'} max-lg:w-full flex flex-col gap-4`}
                 dataLength={openings.length}
                 next={() => fetchOpenings(new URLSearchParams(window.location.search).get('search'))}
                 hasMore={hasMore}

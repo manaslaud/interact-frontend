@@ -88,7 +88,9 @@ const Projects = ({ userID, displayOnProfile = false, contributing = false }: Pr
         next={getProjects}
         hasMore={hasMore}
         loader={<Loader />}
-        className={`${projects?.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-md:w-screen'} ${
+        className={`${
+          projects?.length > 0 || displayOnProfile ? 'w-fit grid' : 'w-[45vw] max-lg:w-[85%] max-md:w-screen'
+        } ${
           projects.length == 1 ? 'grid-cols-1' : navbarOpen ? 'grid-cols-2 gap-6' : 'grid-cols-3 gap-8'
         } max-md:grid-cols-1 mx-auto max-md:gap-6 max-md:px-4 max-md:justify-items-center transition-ease-out-500`}
       >

@@ -65,7 +65,7 @@ const YourProjects = () => {
     const action = new URLSearchParams(window.location.search).get('action');
     if (action && action == 'new_project') setClickedOnNewProject(true);
     getProjects();
-  }, [window.location.search]);
+  }, []);
   return (
     <div className="w-full px-2">
       {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
@@ -89,7 +89,7 @@ const YourProjects = () => {
             <div
               className={`w-full grid ${
                 navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
-              } max-md:grid-cols-1 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
+              } max-lg:grid-cols-3 max-md:grid-cols-1 max-lg:gap-4 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
             >
               {clickedOnProject ? (
                 <ProjectView

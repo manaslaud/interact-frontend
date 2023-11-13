@@ -80,7 +80,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                         setSelectedFiles(prev => prev.filter((file, i) => i != index));
                         setSelectedImageUrls(prev => prev.filter((img, i) => i != index));
                       }}
-                      className="w-6 h-6 absolute top-5 left-80 rounded-full flex-center p-2 translate-x-1/2 -translate-y-1/2 cursor-pointer bg-white dark:bg-black"
+                      className="w-6 h-6 absolute top-6 right-6 max-md:right-2 rounded-full flex-center p-2 translate-x-1/2 -translate-y-1/2 cursor-pointer bg-white dark:bg-black"
                     >
                       X
                     </div>
@@ -89,7 +89,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                       height={10000}
                       alt="post"
                       src={el}
-                      className="w-[90%] rounded-xl object-contain"
+                      className=" w-[98%] rounded-xl object-contain"
                     />
                   </div>
                 </Slide>

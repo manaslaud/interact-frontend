@@ -70,28 +70,31 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[953px] max-md:w-5/6 h-[540px] max-md:h-2/3 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col justify-between rounded-lg p-10 max-md:p-6 dark:text-white font-primary overflow-y-auto border-[1px] border-gray-400  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-lg:top-20 w-[953px] max-lg:w-5/6 h-[540px] max-lg:h-3/4 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col justify-between rounded-lg p-10 max-lg:p-6 dark:text-white font-primary overflow-y-auto border-[1px] border-gray-400  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
         <div className="w-full flex flex-col gap-12">
-          <div className="w-full flex max-md:flex-col gap-12 max-md:gap-6 items-center">
+          <div className="w-full flex max-lg:flex-col gap-12 max-lg:gap-6 items-start max-md:items-center">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
-              className={'w-[160px] h-[160px] max-md:w-[200px] max-md:h-[200px] rounded-lg object-cover'}
+              className={'w-[160px] h-[160px] max-lg:w-[200px] max-lg:h-[200px] rounded-lg object-cover'}
             />
-            <div className="grow flex flex-col gap-2">
+            <div className="max-lg:w-full grow flex flex-col gap-4">
               <input
                 value={title}
                 onChange={el => setTitle(el.target.value)}
                 maxLength={25}
                 type="text"
                 placeholder="Opening Title"
-                className="w-full text-4xl max-md:text-3xl font-bold bg-transparent focus:outline-none"
+                className="w-full text-4xl max-lg:text-3xl font-bold bg-transparent focus:outline-none"
               />
-              <div className="text-xl font-medium cursor-default">{project.title}</div>
-              <Tags tags={tags} setTags={setTags} />
+              <div className="text-lg font-medium cursor-default">@{project.title}</div>
+              <div className="w-full flex flex-col gap-2">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length || 0}/10)</div>
+                <Tags tags={tags} setTags={setTags} maxTags={10} />
+              </div>
             </div>
           </div>
           <textarea

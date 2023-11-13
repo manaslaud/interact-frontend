@@ -15,7 +15,7 @@ const Openings = ({ bookmark, setClick, fetchBookmarks }: Props) => {
   const [clickedOnOpening, setClickedOnOpening] = useState(false);
   const [clickedOpening, setClickedOpening] = useState(initialOpening);
   return (
-    <div className="w-full m-auto max-md:w-[90vw] flex flex-col gap-4 font-primary dark:text-white pt-8 max-md:pt-4">
+    <div className="w-full m-auto max-lg:w-[95vw] max-md:w-[90vw] flex flex-col gap-4 font-primary dark:text-white pt-8 max-lg:pt-4">
       <div className="flex items-center gap-2">
         <ArrowArcLeft
           onClick={() => {

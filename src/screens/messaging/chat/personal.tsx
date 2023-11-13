@@ -132,7 +132,7 @@ const PersonalChat = () => {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray-100 dark:bg-transparent border-2 max-md:border-0 border-primary_btn dark:border-dark_primary_btn rounded-lg max-md:rounded-none p-3 relative max-md:backdrop-blur-2xl max-md:z-50">
+    <div className="w-full h-full bg-gray-100 dark:bg-transparent border-2 max-lg:border-0 border-primary_btn dark:border-dark_primary_btn rounded-lg max-lg:rounded-none p-3 relative max-lg:backdrop-blur-2xl max-lg:z-50">
       {chatID == '' ? (
         <></>
       ) : (
@@ -160,7 +160,7 @@ const PersonalChat = () => {
                   )}
                 </ScrollableFeed>
               </div>
-              <div className="flex w-[calc(100%-16px)] max-md:w-[99%] items-end gap-2 absolute max-md:sticky bottom-2 right-1/2 translate-x-1/2 max-md:translate-x-0">
+              <div className="flex w-[calc(100%-16px)] max-lg:w-[99%] items-end gap-2 absolute max-lg:sticky bottom-2 right-1/2 translate-x-1/2 max-lg:translate-x-0">
                 {chat.accepted || chat.createdByID == userID ? (
                   <ChatTextarea chat={chat} />
                 ) : (

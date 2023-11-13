@@ -58,7 +58,7 @@ const User = ({ username }: Props) => {
     <BaseWrapper title={user.name}>
       <Sidebar index={2} />
       <MainWrapper>
-        <div className="w-full flex max-md:flex-col transition-ease-out-500 font-primary">
+        <div className="w-full flex max-lg:flex-col transition-ease-out-500 font-primary">
           {user.coverPic != '' ? (
             <Image
               crossOrigin="anonymous"
@@ -68,15 +68,15 @@ const User = ({ username }: Props) => {
               src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
               className={`${
                 open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-              } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+              } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
             />
           ) : (
             <></>
           )}
           {loading ? <ProfileCardLoader width="400px" /> : <ProfileCard user={user} />}
-          <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
+          <div className={`grow flex flex-col gap-12 pt-12 max-lg:pt-0`}>
             {user.tagline && user.tagline != '' ? (
-              <div className="w-full h-24 font-bold text-5xl max-md:text-3xl flex-center text-center dark:text-white">
+              <div className="w-full h-24 font-bold text-5xl max-lg:text-3xl flex-center text-center dark:text-white">
                 {user.tagline}
               </div>
             ) : (
@@ -93,7 +93,7 @@ const User = ({ username }: Props) => {
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
               {loading ? (
-                <div className="w-[45vw] mx-auto max-md:w-screen max-md:px-4 pb-2">
+                <div className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen max-lg:px-4 pb-2">
                   <PostsLoader />
                 </div>
               ) : (

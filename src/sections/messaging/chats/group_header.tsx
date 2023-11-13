@@ -16,7 +16,7 @@ const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
   return (
     <div className="w-full h-[72px] dark:text-white font-primary flex justify-between gap-2 items-center border-b-[1px] border-primary_btn  dark:border-dark_primary_btn pb-2">
       <div className="flex gap-2 items-center">
-        <ArrowArcLeft onClick={() => dispatch(setCurrentChatID(''))} className="md:hidden" size={24} />
+        <ArrowArcLeft onClick={() => dispatch(setCurrentChatID(''))} className="lg:hidden" size={24} />
         <Image
           crossOrigin="anonymous"
           className="w-12 h-12 rounded-full object-cover"

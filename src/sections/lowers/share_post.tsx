@@ -51,13 +51,15 @@ const SharePost = ({ post, setShow }: Props) => {
   }, [post]);
 
   useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
+    if ((document.documentElement.style.overflowY = 'auto')) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
 
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
   }, []);
 
   const handleSubmit = async () => {
@@ -91,11 +93,11 @@ const SharePost = ({ post, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/4 max-md:w-5/6 fixed backdrop-blur-lg bg-[#ffffff] dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col px-8 py-8 gap-2 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl">
+      <div className="w-1/4 max-lg:w-5/6 fixed backdrop-blur-lg bg-[#ffffff] dark:bg-[#ffe1fc22] z-30 translate-x-1/2 -translate-y-1/4 top-64 right-1/2 flex flex-col px-8 py-8 gap-2 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl">
         <div className="text-3xl text-center text-gray-900 font-bold">Share this Post</div>
         <div className="w-full max-h-base_md overflow-auto flex flex-col gap-2">
-          <div className="w-full font-primary flex gap-1 dark:text-white py-4 border-[#535353] border-b-[1px] max-md:px-4 max-md:py-4">
-            <div className="w-[10%] max-md:w-[20%] h-full">
+          <div className="w-full font-primary flex gap-1 dark:text-white py-4 border-[#535353] border-b-[1px] max-lg:px-4 max-lg:py-4">
+            <div className="w-[10%] max-lg:w-[6%] max-md:w-[20%] h-full">
               <div className="rounded-full">
                 <Image
                   crossOrigin="anonymous"
@@ -107,7 +109,7 @@ const SharePost = ({ post, setShow }: Props) => {
                 />
               </div>
             </div>
-            <div className="w-[90%] max-md:w-[80%] flex flex-col gap-1">
+            <div className="w-[90%] max-lg:w-[94%] max-md:w-[80%] flex flex-col gap-1">
               <div className="w-full h-fit flex justify-between">
                 <div className="font-medium">{post.user.username}</div>
                 <div className="text-xs">{getDisplayTime(post.postedAt, false)}</div>

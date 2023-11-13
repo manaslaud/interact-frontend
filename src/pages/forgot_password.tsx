@@ -52,11 +52,11 @@ const ForgotPassword = () => {
         <title>Forgot Password | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-lg:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/onboarding_logo.svg" />
           </div>
-          <div className="w-full flex flex-col gap-8 font-primary px-16 max-md:px-0 mb-24 max-md:mb-12">
+          <div className="w-full flex flex-col gap-8 font-primary px-16 max-md:px-0 mb-24 max-lg:mb-12">
             {!sentURL ? (
               <>
                 <div className="text-3xl font-semibold">Forgot Password</div>
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
                 </form>
               </>
             ) : (
-              <div className="flex flex-col items-center gap-2 px-16 max-md:px-8 py-24 max-md:py-16 font-Helvetica">
+              <div className="flex flex-col items-center gap-2 px-16 max-lg:px-8 py-24 max-lg:py-16 font-Helvetica">
                 <div className="text-xl text-center">
                   Reset Password Link has been sent to <b>{email}</b>. Please check your inbox.
                 </div>
@@ -102,14 +102,14 @@ const ForgotPassword = () => {
               </div>
             )}
           </div>
-          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          <div className="w-3/4 max-lg:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Privacy Policy.</span>
           </div>
         </div>
-        <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
+        <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
       </div>
     </>
   );

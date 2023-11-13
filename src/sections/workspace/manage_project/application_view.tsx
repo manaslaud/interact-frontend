@@ -144,16 +144,16 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
   };
 
   return (
-    <div className="sticky max-md:fixed top-[158px] max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-md:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col justify-between gap-8 p-8 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third z-10">
-      <div className="w-full flex flex-col gap-10 max-md:gap-8">
+    <div className="sticky max-lg:fixed top-[158px] bg-white max-lg:top-navbar max-lg:right-0 w-[55%] max-lg:w-full max-h-[70vh] max-lg:max-h-screen max-lg:h-base max-lg:z-50 max-lg:backdrop-blur-2xl max-lg:backdrop-brightness-90 overflow-y-auto flex flex-col justify-between gap-8 p-8 font-primary dark:text-white border-[1px] max-lg:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-lg:rounded-none z-10">
+      <div className="w-full flex flex-col gap-10 max-lg:gap-8">
         <ArrowArcLeft
-          className="cursor-pointer md:hidden"
+          className="cursor-pointer lg:hidden"
           size={24}
           onClick={() => {
             setShow(false);
           }}
         />
-        <div className="w-full flex max-md:flex-col items-center gap-8">
+        <div className="w-full flex max-lg:flex-col items-center gap-8">
           <Image
             crossOrigin="anonymous"
             width={10000}
@@ -162,8 +162,8 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
             src={`${USER_PROFILE_PIC_URL}/${application.user.profilePic}`}
             className={'rounded-full w-36 h-36'}
           />
-          <div className="grow flex flex-col gap-1">
-            <div className="w-full flex flex-wrap items-center justify-between">
+          <div className="grow max-lg:w-3/5 max-md:w-full flex flex-col max-lg:items-center max-lg:text-center gap-1">
+            <div className="w-full flex max-lg:flex-col flex-wrap items-center justify-between">
               <Link
                 target="_blank"
                 href={`/explore/user/${application.user.username}`}
@@ -182,7 +182,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
               </div>
             </div>
             <div className="font-medium">{application.user.tagline}</div>
-            <div className="w-full flex justify-start max-md:justify-center max-md:mt-2 gap-6">
+            <div className="w-full flex justify-start max-lg:justify-center max-lg:mt-2 gap-6">
               <div className="flex gap-1">
                 <div className="font-bold">{application.user.noFollowers}</div>
                 <div>Follower{application.user.noFollowers != 1 ? 's' : ''}</div>
@@ -192,7 +192,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
                 <div>Following</div>
               </div>
             </div>
-            <div className="w-full flex flex-wrap items-center justify-start gap-2 mt-2">
+            <div className="w-full flex flex-wrap items-center justify-start max-lg:justify-center gap-2 mt-2">
               {application.user.tags &&
                 application.user.tags.map(tag => {
                   return (
@@ -207,7 +207,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
             </div>
           </div>
         </div>
-        <div>{application.content}</div>
+        <div className="max-lg:w-3/5 max-md:w-full max-lg:text-center max-lg:mx-auto">{application.content}</div>
         {application.resume ? (
           <Link
             href={`${APPLICATION_RESUME_URL}/${application.resume}`}
@@ -222,7 +222,7 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
       </div>
 
       {application.status == 0 || application.status == 1 ? (
-        <div className="w-full flex justify-center gap-12 max-md:gap-4">
+        <div className="w-full flex justify-center gap-12 max-lg:gap-4">
           <div
             onClick={handleAccept}
             className="w-32 p-2 flex-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300 cursor-pointer rounded-lg font-medium text-lg"

@@ -79,11 +79,11 @@ const AccountRecovery = ({ userID, token }: Props) => {
         <title>Forgot Password | Interact</title>
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-lg:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/onboarding_logo.svg" />
           </div>
-          <div className="w-full flex flex-col gap-6 font-primary px-24 mb-12 max-md:px-8 py-16 max-md:py-8">
+          <div className="w-full flex flex-col gap-6 font-primary px-24 mb-12 max-md:px-8 py-16 max-lg:py-8">
             <div className="flex flex-col gap-1">
               <div className="text-3xl font-semibold text-center">Reset Password</div>
               <div className="text-center">try not to forget it this time :)</div>
@@ -156,7 +156,7 @@ const AccountRecovery = ({ userID, token }: Props) => {
             </button>
           </div>
 
-          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          <div className="w-3/4 max-lg:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
@@ -164,7 +164,7 @@ const AccountRecovery = ({ userID, token }: Props) => {
           </div>
         </div>
 
-        <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
+        <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
       </div>
     </>
   );

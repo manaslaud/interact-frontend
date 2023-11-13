@@ -79,7 +79,7 @@ const Discover = () => {
       ) : (
         <></>
       )} */}
-      <div className="w-[50vw] max-md:w-screen flex flex-col px-6 gap-2">
+      <div className="w-[50vw] max-lg:w-[80vw] max-md:w-screen flex flex-col px-6 gap-2">
         {loading ? (
           <PostsLoader />
         ) : (

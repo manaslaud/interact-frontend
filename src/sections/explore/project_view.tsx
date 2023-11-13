@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { EXPLORE_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -106,7 +106,7 @@ const ProjectView = ({
           {...swipeHandler}
           className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
         >
-          <div className="max-md:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-md:fixed max-md:top-0 max-md:left-0">
+          <div className="max-lg:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-lg:fixed max-lg:top-0 max-lg:left-0">
             <div className="w-10 h-10 relative">
               <Image
                 crossOrigin="anonymous"
@@ -132,16 +132,16 @@ const ProjectView = ({
             )}
           </div>
 
-          <div className="w-[calc(100vw-128px)] max-md:w-screen h-screen pt-3">
-            <div className="w-full h-14 flex justify-between max-md:px-3">
-              <div className="grow flex gap-2 max-md:gap-4">
+          <div className="w-[calc(100vw-128px)] max-lg:w-screen h-screen pt-3">
+            <div className="w-full h-14 flex justify-between max-lg:px-3">
+              <div className="grow flex gap-2 max-lg:gap-4">
                 <Image
                   crossOrigin="anonymous"
                   width={10000}
                   height={10000}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
-                  className={'md:hidden w-10 h-10 rounded-full cursor-default'}
+                  className={'lg:hidden w-10 h-10 rounded-full cursor-default'}
                 />
                 <div>
                   <div className="w-fit font-bold cursor-default">{project.title}</div>
@@ -195,26 +195,26 @@ const ProjectView = ({
               </div>
               <div
                 onClick={() => setClickedOnProject(false)}
-                className="md:hidden w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer"
+                className="lg:hidden w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer"
               >
                 <X size={24} weight="bold" />
               </div>
             </div>
 
-            <div className="w-full h-[calc(100vh-56px)] shadow-xl max-md:overflow-y-auto flex max-md:flex-col">
+            <div className="w-full h-[calc(100vh-56px)] shadow-xl max-lg:overflow-y-auto flex max-lg:flex-col">
               <Image
                 crossOrigin="anonymous"
-                className="w-[calc(100vh-56px)] max-md:w-full h-full max-md:h-96 rounded-tl-md max-md:rounded-none object-cover"
+                className="w-[calc(100vh-56px)] max-lg:w-full h-full max-lg:h-96 rounded-tl-md max-lg:rounded-none object-cover"
                 src={`${PROJECT_PIC_URL}/${project.coverPic}`}
                 alt="Project Cover"
                 width={10000}
                 height={10000}
               />
 
-              <div className="w-[calc(100vw-128px-(100vh-56px))] max-md:w-full h-full max-md:h-fit max-md:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4 z-10">
+              <div className="w-[calc(100vw-128px-(100vh-56px))] max-lg:w-full h-full max-lg:h-fit max-lg:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col gap-4 z-10">
                 <div className="flex justify-between items-center">
                   <div className="font-bold text-4xl text-gradient">{project.title}</div>
-                  <div className="md:hidden w-fit">
+                  <div className="lg:hidden w-fit">
                     <LowerProject project={project} />
                   </div>
                 </div>
@@ -265,7 +265,7 @@ const ProjectView = ({
             </div>
           </div>
 
-          <div className="max-md:hidden w-16 h-screen flex flex-col items-center justify-between py-3 max-md:fixed max-md:top-0 max-md:right-0">
+          <div className="max-lg:hidden w-16 h-screen flex flex-col items-center justify-between py-3 max-lg:fixed max-lg:top-0 max-lg:right-0">
             <div
               onClick={() => setClickedOnProject(false)}
               className="w-10 h-10 rounded-full flex-center dark:bg-dark_primary_comp_hover cursor-pointer"
@@ -273,7 +273,7 @@ const ProjectView = ({
               <X size={24} weight="bold" />
             </div>
 
-            <div className="max-md:hidden">
+            <div className="max-lg:hidden">
               <LowerProject project={project} />
             </div>
 
@@ -291,7 +291,7 @@ const ProjectView = ({
               <div className="w-10 h-10 rounded-full"></div>
             )}
           </div>
-          <div className="md:hidden fixed bottom-3 w-full flex justify-between px-3">
+          <div className="lg:hidden fixed bottom-3 w-full flex justify-between px-3">
             {clickedProjectIndex != 0 ? (
               <div
                 onClick={() => {

@@ -70,7 +70,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
   };
   return (
     <>
-      <div className="fixed top-32 w-1/3 max-md:w-5/6 h-max flex flex-col items-center gap-8 right-1/2 translate-x-1/2 rounded-lg p-8 dark:text-white font-primary bg-white dark:bg-dark_primary_comp backdrop-blur-lg border-2 border-primary_btn  dark:border-dark_primary_btn animate-fade_third z-30">
+      <div className="fixed top-32 w-1/3 max-lg:w-5/6 h-max flex flex-col items-center gap-8 right-1/2 translate-x-1/2 rounded-lg p-8 dark:text-white font-primary bg-white dark:bg-dark_primary_comp backdrop-blur-lg border-2 border-primary_btn  dark:border-dark_primary_btn animate-fade_third z-30">
         <div className="font-bold text-5xl text-gray-800 dark:text-white">Bookmarks</div>
         {bookmarks.length > 0 ? (
           <div className="w-full flex flex-wrap justify-center gap-2">

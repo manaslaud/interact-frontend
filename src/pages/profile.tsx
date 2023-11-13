@@ -134,7 +134,7 @@ const Profile = () => {
     <BaseWrapper title="Profile">
       <Sidebar index={7} />
       <MainWrapper>
-        <div className="w-full max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">
+        <div className="w-full max-lg:w-full flex max-lg:flex-col transition-ease-out-500 font-primary">
           <input
             type="file"
             className="hidden"
@@ -175,7 +175,7 @@ const Profile = () => {
                 crossOrigin="anonymous"
                 className={`${
                   open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-                } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+                } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
                 width={10000}
                 height={10000}
                 alt="/"
@@ -188,15 +188,15 @@ const Profile = () => {
                 htmlFor="coverPic"
                 className="w-12 h-12 absolute top-1 right-4 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
               >
-                <PencilSimple className="max-md:hidden" color="black" size={24} />
-                <ImageSquare className="md:hidden" color="black" size={24} />
+                <PencilSimple className="max-lg:hidden" color="black" size={24} />
+                <ImageSquare className="lg:hidden" color="black" size={24} />
               </label>
 
               <Image
                 crossOrigin="anonymous"
                 className={`${
                   open ? 'w-no_side_base_open' : 'w-no_side_base_close'
-                } max-md:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
+                } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
                 width={10000}
                 height={10000}
                 alt="/"
@@ -210,7 +210,8 @@ const Profile = () => {
           ) : (
             <ProfileCard user={user} setUser={setUser} tagline={tagline} coverPic={coverPic} />
           )}
-          <div className={`grow flex flex-col gap-12 pt-12 max-md:pt-0`}>
+
+          <div className={`grow flex flex-col gap-12 pt-12 max-lg:pt-0`}>
             {clickedOnTagline ? (
               <div className="w-[90%] mx-auto z-50">
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">
@@ -221,7 +222,7 @@ const Profile = () => {
                   onChange={el => setTagline(el.target.value)}
                   placeholder="Add a Professional One Liner"
                   maxLength={25}
-                  className="w-full h-fit focus:outline-none font-bold text-5xl max-md:text-3xl text-center dark:text-white bg-transparent z-10"
+                  className="w-full h-fit focus:outline-none font-bold text-5xl max-lg:text-3xl text-center dark:text-white bg-transparent z-10"
                 />
                 <SaveBtn setter={setClickedOnTagline} field="tagline" />
               </div>
@@ -244,7 +245,7 @@ const Profile = () => {
                       } top-2 right-2 transition-ease-300`}
                     />
                     <div
-                      className={`w-full h-fit font-bold text-5xl max-md:text-3xl text-center dark:text-white ${
+                      className={`w-full h-fit font-bold text-5xl max-lg:text-3xl text-center dark:text-white ${
                         !clickedOnCoverPic ? 'cursor-pointer' : 'cursor-default'
                       }`}
                     >
@@ -265,7 +266,7 @@ const Profile = () => {
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
               {loading ? (
-                <div className="w-[45vw] mx-auto max-md:w-screen max-md:px-4 pb-2">
+                <div className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen max-lg:px-4 pb-2">
                   <PostsLoader />
                 </div>
               ) : (

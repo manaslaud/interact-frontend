@@ -129,10 +129,13 @@ const SignUp = () => {
     <>
       <Head>
         <title>Sign up | Interact</title>
-        <meta name="description" content="Sign up for Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives." />
+        <meta
+          name="description"
+          content="Sign up for Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives."
+        />
       </Head>
       <div className="h-screen flex">
-        <div className="w-[45%] max-md:w-full h-screen font-primary gap-12 py-8 px-8 flex flex-col justify-between items-center">
+        <div className="w-[45%] max-lg:w-full h-screen font-primary gap-12 py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/onboarding_logo.svg" />
           </div>
@@ -152,7 +155,7 @@ const SignUp = () => {
             </div>
             <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
-              <div className="w-[50%] text-center text-sm max-md:text-xs text-gray-400">or continue with email</div>
+              <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with email</div>
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
             </div>
 
@@ -267,14 +270,14 @@ const SignUp = () => {
               </div>
             </div>
           </form>
-          <div className="w-3/4 max-md:w-full text-[12px] text-center text-gray-400">
+          <div className="w-3/4 max-lg:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Term & Conditions</span> and{' '}
             <span className="underline underline-offset-2 font-medium cursor-pointer">Privacy Policy.</span>
           </div>
         </div>
-        <div className="w-[55%] max-md:hidden h-full bg-onboarding bg-cover"></div>
+        <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
       </div>
     </>
   );

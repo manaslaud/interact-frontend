@@ -97,7 +97,7 @@ const ProjectCard = ({
           setClickedProjectIndex(index);
         }}
         onMouseLeave={() => setClickedOnSettings(false)}
-        className={`w-${size} h-${size} max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
+        className={`w-${size} h-${size} max-lg:w-56 max-lg:h-56 max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
       >
         <div className="w-full h-full absolute top-0 hidden group-hover:flex justify-between gap-4 text-white animate-fade_third z-[6] rounded-lg p-2">
           {project.userID == user.id || user.editorProjects.includes(project.id) ? (
@@ -176,12 +176,12 @@ const ProjectCard = ({
           height={10000}
         />
         <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
-          <div className="text-xl">{project.title}</div>
+          <div className="text-xl max-lg:text-base max-md:text-xl">{project.title}</div>
           <div className="w-full flex items-center justify-between">
             {project.userID != user.id ? (
-              <div className="text-sm">{project.user.name}</div>
+              <div className="text-sm max-lg:text-xs max-md:text-sm">{project.user.name}</div>
             ) : (
-              <div className="text-sm">{project.tagline}</div>
+              <div className="text-sm max-lg:hidden max-md:flex">{project.tagline}</div>
             )}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-xs">

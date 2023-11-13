@@ -19,13 +19,15 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
+    if ((document.documentElement.style.overflowY = 'auto')) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
 
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
   }, []);
 
   const handleSubmit = async () => {

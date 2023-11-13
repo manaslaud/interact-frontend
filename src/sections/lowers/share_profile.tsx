@@ -51,13 +51,15 @@ const ShareProfile = ({ user, setShow }: Props) => {
   }, [user]);
 
   useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
+    if ((document.documentElement.style.overflowY = 'auto')) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
 
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
   }, []);
 
   const handleSubmit = async () => {
@@ -91,19 +93,19 @@ const ShareProfile = ({ user, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-md:bg-[#2a192eea] dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-1/2 max-lg:w-5/6 fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark: dark:text-white z-30 translate-x-1/2 -translate-y-1/4 top-64 max-lg:top-56 right-1/2 flex flex-col px-8 py-8 gap-6 border-2 border-primary_btn  dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-3xl text-center text-gray-900 font-bold">Share this Profile</div>
-        <div className="w-full flex max-md:flex-col gap-4 items-center">
-          <div className="w-1/2 max-md:w-full font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
+        <div className="w-full flex max-lg:flex-col gap-4 items-center">
+          <div className="w-1/2 max-lg:w-full font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-lg:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
               alt={'User Pic'}
               src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-              className={'rounded-full max-md:mx-auto w-44 h-44 cursor-default'}
+              className={'rounded-full max-lg:mx-auto w-44 h-44 cursor-default'}
             />
-            <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
+            <div className="text-3xl max-lg:text-2xl text-center font-bold text-gradient">{user.name}</div>
             <div className="text-sm text-center">{user.tagline}</div>
             <div className="w-full flex justify-center gap-6">
               <div className="flex gap-1">
@@ -129,7 +131,7 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
               <div> Copy Link</div>
             </div>
           </div>
-          <div className="w-1/2 max-md:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
+          <div className="w-1/2 max-lg:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
             {loading ? (
               <Loader />
             ) : (
@@ -189,7 +191,7 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen max-md:h-base fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen max-lg:h-base fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );

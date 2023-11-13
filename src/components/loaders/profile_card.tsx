@@ -8,14 +8,14 @@ const ProfileCardLoader = ({ width = '360px' }: Props) => {
   const variants = ['w-[400px]', 'w-[360px]', 'w-[24vw]'];
   return (
     <div
-      className={`w-[${width}] max-md:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 shadow-md dark:shadow-none bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10`}
+      className={`w-[${width}] max-lg:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-base_md max-lg:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-lg:pb-8 max-lg:pt-4 px-4 shadow-md dark:shadow-none bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn sticky max-lg:static top-[90px] max-lg:bg-transparent rounded-md z-10`}
     >
       <div
         className={
-          'animate-pulse delay-0 rounded-full max-md:mx-auto bg-white dark:bg-dark_primary_comp_hover w-48 h-48 cursor-default'
+          'animate-pulse delay-0 rounded-full max-lg:mx-auto bg-white dark:bg-dark_primary_comp_hover w-48 h-48 cursor-default'
         }
       />
-      <div className="animate-pulse delay-75 w-2/3 text-3xl h-10 rounded-lg bg-white dark:bg-dark_primary_comp_hover max-md:text-2xl text-center font-bold"></div>
+      <div className="animate-pulse delay-75 w-2/3 text-3xl h-10 rounded-lg bg-white dark:bg-dark_primary_comp_hover max-lg:text-2xl text-center font-bold"></div>
       <div className="animate-pulse delay-150 w-full flex justify-center gap-6">
         <div className="w-1/3 h-4 bg-white dark:bg-dark_primary_comp_hover rounded-sm"></div>
         <div className="w-1/3 h-4 bg-white dark:bg-dark_primary_comp_hover rounded-sm"></div>

@@ -58,16 +58,16 @@ const ProfileCard = ({ user }: Props) => {
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
 
-      <div className="w-[400px] max-md:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300 dark:border-dark_primary_btn max-md:bg-transparent rounded-md z-10">
+      <div className="w-[400px] max-lg:w-2/3 max-md:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-lg:pb-8 max-lg:pt-4 px-4 max-lg:px-12 max-md:px-4 bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:bg-transparent rounded-md z-10">
         <Image
           crossOrigin="anonymous"
           width={10000}
           height={10000}
           alt={'User Pic'}
           src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-          className={'rounded-full max-md:mx-auto w-48 h-48 cursor-default'}
+          className={'rounded-full max-lg:mx-auto w-48 h-48 cursor-default'}
         />
-        <div className="text-3xl max-md:text-2xl text-center font-bold text-gradient">{user.name}</div>
+        <div className="text-3xl max-lg:text-2xl text-center font-bold text-gradient">{user.name}</div>
 
         <div className="w-full flex justify-center text-lg gap-6">
           <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
@@ -82,7 +82,7 @@ const ProfileCard = ({ user }: Props) => {
 
         <div className="w-full h-[1px] border-t-[1px] border-gray-400 border-dashed"></div>
 
-        <div className="max-md:text-sm text-center">{user.bio}</div>
+        <div className="max-lg:text-sm text-center">{user.bio}</div>
 
         <FollowBtn toFollowID={user.id} setFollowerCount={setNumFollowers} profileDesign={true} />
 
@@ -120,7 +120,7 @@ const ProfileCard = ({ user }: Props) => {
               <div className="text-sm ml-1 font-medium uppercase text-gray-500">Links</div>
               <div
                 className={`w-full h-fit flex flex-wrap items-center ${
-                  user.tags.length == 1 ? 'justify-start' : 'justify-center'
+                  user.links.length == 1 ? 'justify-start' : 'justify-center'
                 } gap-4`}
               >
                 {user.links &&
@@ -143,7 +143,7 @@ const ProfileCard = ({ user }: Props) => {
             <></>
           )}
         </div>
-        <div className="dark:text-white w-fit absolute max-md:static top-4 right-4 flex gap-2">
+        <div className="dark:text-white w-fit absolute max-lg:mt-8 max-lg:static top-4 right-4 flex gap-2">
           <div className="hover:text-white p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
             <Chat onClick={handleChat} size={18} />
           </div>
@@ -153,11 +153,11 @@ const ProfileCard = ({ user }: Props) => {
           >
             <Share size={18} />
           </div>
-          <div className="hover:text-white md:hidden p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
+          <div className="hover:text-white lg:hidden p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
             <Warning onClick={() => setClickedOnReport(true)} size={18} />
           </div>
         </div>
-        <div className="hover:text-white absolute max-md:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
+        <div className="hover:text-white absolute max-lg:hidden top-4 left-4 p-2 flex-center font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn bg-gradient-to-r hover:from-dark_secondary_gradient_start hover:to-dark_secondary_gradient_end rounded-full cursor-pointer">
           <Warning onClick={() => setClickedOnReport(true)} size={18} />
         </div>
       </div>

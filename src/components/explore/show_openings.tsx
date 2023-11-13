@@ -17,7 +17,11 @@ const Openings = ({ openings, slug, projectCoverPic }: Props) => {
       {openings && openings.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
           <div className="text-lg font-semibold">Open Positions</div>
-          <div className={`w-full flex flex-wrap ${openings.length == 1 ? 'justify-start' : 'justify-evenly'} gap-2`}>
+          <div
+            className={`w-full flex flex-wrap ${
+              openings.length == 1 ? 'justify-start' : 'justify-evenly'
+            } max-lg:grid max-lg:grid-cols-3 max-md:flex max-md:justify-center gap-2`}
+          >
             {openings
               .filter((opening, index) => {
                 return index >= 0 && index < 5;

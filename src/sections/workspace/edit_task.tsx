@@ -28,7 +28,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [tags, setTags] = useState<string[]>(task.tags || []);
-  const [deadline, setDeadline] = useState(moment(task.deadline).format('DD-MM-YYYY'));
+  const [deadline, setDeadline] = useState(moment(task.deadline).format('YYYY-MM-DD'));
 
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
@@ -220,8 +220,8 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-20 w-[640px] max-md:w-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50 max-md:z-[60]">
-        <div className="text-3xl max-md:text-xl font-semibold">
+      <div className="fixed top-24 max-lg:top-20 w-[640px] max-lg:w-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 max-lg:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50 max-lg:z-[60]">
+        <div className="text-3xl max-lg:text-xl font-semibold">
           {status == 0 ? 'Task Info' : status == 1 ? 'Select Users' : 'Review Details'}
         </div>
         <div className="w-full h-[420px] overflow-y-auto flex flex-col gap-4">
@@ -244,7 +244,10 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
                 value={description}
                 onChange={el => setDescription(el.target.value)}
               ></textarea>
-              <Tags tags={tags} setTags={setTags} maxTags={5} />
+              <div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length}/5)</div>
+                <Tags tags={tags} setTags={setTags} maxTags={5} />
+              </div>
               <div className="w-full flex justify-between items-center px-4">
                 <div className="text-xl">Deadline: </div>
                 <input
@@ -429,7 +432,7 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
 
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20 max-md:z-[51]"
+        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20 max-lg:z-[51]"
       ></div>
     </>
   );

@@ -6,9 +6,6 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
-import getHandler from '@/handlers/get_handler';
-import Loader from '@/components/common/loader';
-import Cookies from 'js-cookie';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;

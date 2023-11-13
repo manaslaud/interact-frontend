@@ -51,13 +51,15 @@ const ShareOpening = ({ opening, setShow }: Props) => {
   }, [opening]);
 
   useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
+    if ((document.documentElement.style.overflowY = 'auto')) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
 
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
   }, []);
 
   const handleSubmit = async () => {
@@ -91,20 +93,20 @@ const ShareOpening = ({ opening, setShow }: Props) => {
 
   return (
     <>
-      <div className="w-1/2 max-md:w-5/6 fixed backdrop-blur-lg bg-white bg-[#1201103c] max-md:bg-[#2a192eea] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-md:top-56 right-1/2 flex flex-col px-8 py-6 gap-6 border-2  dark:border-dark_primary_btn rounded-xl animate-fade_third">
+      <div className="w-1/2 max-lg:w-5/6 fixed backdrop-blur-lg bg-white bg-[#1201103c] z-30 translate-x-1/2 -translate-y-1/4 top-64 max-lg:top-1/4 max-md:top-56 right-1/2 flex flex-col px-8 py-6 gap-6 border-2  dark:border-dark_primary_btn rounded-xl animate-fade_third">
         <div className="text-3xl text-center text-gray-900 font-bold">Share this Opening</div>
-        <div className="w-full flex max-md:flex-col gap-4 items-center">
-          <div className="w-1/2 max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-md:gap-4 transition-ease-300 cursor-default">
+        <div className="w-full flex max-lg:flex-col gap-4 items-center">
+          <div className="w-1/2 max-md:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-lg:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
               width={10000}
               height={10000}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
-              className={'w-[180px] h-[180px] max-md:w-[120px] max-md:h-[120px] rounded-lg object-cover'}
+              className={'w-[180px] h-[180px] max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}
             />
 
-            <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
+            <div className="w-full flex flex-col gap-4 max-lg:gap-2 px-8">
               <div className="w-full flex flex-col items-center gap-1">
                 <div className="font-bold line-clamp-2 text-center text-2xl text-gradient">{opening.title}</div>
                 <div className="text-sm">@{opening.project.title}</div>
@@ -150,7 +152,7 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
               <div> Copy Link</div>
             </div>
           </div>
-          <div className="w-1/2 max-md:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
+          <div className="w-1/2 max-lg:w-full h-[400px] overflow-auto flex flex-col justify-between gap-2">
             {loading ? (
               <Loader />
             ) : (
@@ -210,7 +212,7 @@ hover:bg-primary_comp dark:hover:bg-[#ffe1fc10] cursor-pointer transition-ease-2
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen max-md:h-base fixed top-0 right-0 animate-fade_third z-20"
+        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20"
       ></div>
     </>
   );
