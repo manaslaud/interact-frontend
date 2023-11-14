@@ -47,11 +47,22 @@ const Openings = ({ openings, slug, projectCoverPic }: Props) => {
                       </div>
                     </div>
                     <div className="w-full flex flex-wrap gap-2">
-                      {opening.tags.map((el, i) => (
-                        <div key={i} className="text-xs text-gray-900 border-[1px] rounded-md flex-center p-1">
-                          {el}
+                      {opening.tags
+                        .filter((_, i) => {
+                          return i > 0 && i < 3;
+                        })
+                        .map((el, i) => (
+                          <div key={i} className="text-xs text-gray-900 border-[1px] rounded-md flex-center p-1">
+                            {el}
+                          </div>
+                        ))}
+                      {opening.tags.length > 3 ? (
+                        <div className="text-xs text-gray-900 border-[1px] rounded-md flex-center p-1">
+                          + {opening.tags.length - 3}
                         </div>
-                      ))}
+                      ) : (
+                        <></>
+                      )}
                     </div>
                     <div className="w-full text-gray-700 text-sm line-clamp-3">{opening.description}</div>
                     <Image

@@ -21,7 +21,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   return (
     <>
       {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
-      <div className="sticky max-md:fixed top-[158px] bg-white dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base max-lg:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 max-md:p-8 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third">
+      <div className="sticky max-md:fixed top-[158px] bg-white dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base z-30 max-lg:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 max-md:p-8 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third">
         <div className="flex flex-col gap-2 max-md:gap-6">
           <ArrowArcLeft
             className="cursor-pointer md:hidden"
@@ -35,15 +35,21 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
             <div className="font-bold text-4xl text-gradient">{opening.title}</div>
             <LowerOpening opening={opening} />
           </div>
-          <div className="flex items-center gap-2 text-sm max-md:flex-wrap">
+          <div className="w-full flex items-center justify-between flex-wrap gap-2 text-sm">
             <Link href={`/explore?pid=${opening.project.slug}`} target="_blank" className="font-semibold text-lg">
               {opening.project.title}
             </Link>
-            <div>•</div>
-            <div>{moment(opening.createdAt).fromNow()}</div>
-            <div>•</div>
-            <div>
-              {opening.noOfApplications} application{opening.noOfApplications == 1 ? '' : 's'}
+            <div className="w-fit flex gap-2">
+              <div className="flex gap-1">
+                <div>•</div>
+                <div>{moment(opening.createdAt).fromNow()}</div>
+              </div>
+              <div className="flex gap-1">
+                <div>•</div>
+                <div>
+                  {opening.noOfApplications} application{opening.noOfApplications == 1 ? '' : 's'}
+                </div>
+              </div>
             </div>
           </div>
         </div>

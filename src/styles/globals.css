@@ -170,6 +170,10 @@
 
 /* Carousel */
 
+html{
+  overflow-x: hidden;
+}
+
 .slideInner___2mfX9 {
   display: flex;
   justify-items: center;

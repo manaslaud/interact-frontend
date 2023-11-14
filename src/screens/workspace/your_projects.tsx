@@ -88,7 +88,7 @@ const YourProjects = () => {
           {projects.length > 0 ? (
             <div
               className={`w-full grid ${
-                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-12'
+                navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-8'
               } max-lg:grid-cols-3 max-md:grid-cols-1 max-lg:gap-4 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
             >
               {clickedOnProject ? (

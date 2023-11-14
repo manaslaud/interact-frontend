@@ -88,7 +88,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
       <div className="w-2/3 h-[520px] max-lg:h-base_md max-lg:overflow-y-auto max-md:w-screen max-md:h-screen dark:text-white fixed backdrop-blur-lg bg-white dark:bg-[#ffe1fc22] dark:max-lg:bg-[#2a192eea] z-50 max-lg:z-[100] translate-x-1/2 -translate-y-1/4 max-md:translate-y-0 top-64 max-lg:top-1/4 max-md:top-0 right-1/2 flex flex-col font-primary px-8 py-8 gap-6 border-2 border-primary_btn dark:border-dark_primary_btn rounded-xl max-md:rounded-none animate-fade_third">
         <div className="w-full text-3xl max-md:text-2xl text-primary_black flex justify-between items-center gap-2 font-bold">
           Apply to Opening
-          <X onClick={() => setShow(false)} />
+          <X onClick={() => setShow(false)} className="cursor-pointer" />
         </div>
         <div className="w-full h-full flex max-lg:flex-col gap-4 items-center">
           <div className="w-1/3 h-full max-lg:h-fit max-lg:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-lg:gap-4 transition-ease-300 cursor-default">
@@ -104,33 +104,8 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
             <div className="w-full flex flex-col gap-4 max-lg:gap-2 px-8">
               <div className="w-full flex flex-col items-center gap-1">
                 <div className="font-bold text-center line-clamp-2 text-2xl text-gradient">{opening.title}</div>
-                <div className="text-sm">@{opening.project.title}</div>
+                <div className="text-sm text-center">@{opening.project.title}</div>
                 <div className="text-xs font-thin">{moment(opening.createdAt).fromNow()}</div>
-              </div>
-
-              <div className="w-full flex justify-center flex-wrap gap-2">
-                {opening.tags &&
-                  opening.tags
-                    .filter((tag, index) => {
-                      return index >= 0 && index < 3;
-                    })
-                    .map(tag => {
-                      return (
-                        <div
-                          key={tag}
-                          className="flex-center max-lg:text-xxs p-2 max-lg:p-1 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
-                        >
-                          {tag}
-                        </div>
-                      );
-                    })}
-                {opening.tags && opening.tags.length - 3 > 0 ? (
-                  <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl">
-                    + {opening.tags.length - 3}
-                  </div>
-                ) : (
-                  <></>
-                )}
               </div>
             </div>
           </div>
@@ -209,7 +184,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
       </div>
       <div
         onClick={() => setShow(false)}
-        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-20 max-lg:z-[90]"
+        className=" bg-backdrop w-screen h-screen fixed top-0 right-0 animate-fade_third z-40 max-lg:z-[90]"
       ></div>
     </>
   );

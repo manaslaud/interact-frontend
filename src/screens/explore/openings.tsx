@@ -95,7 +95,7 @@ const Openings = () => {
       ) : (
         <>
           {openings.length > 0 ? (
-            <div className="w-full flex justify-evenly px-4">
+            <div className="w-full flex justify-evenly gap-4 px-4">
               <InfiniteScroll
                 className={`${clickedOnOpening ? 'w-full' : 'w-[720px]'} max-lg:w-full flex flex-col gap-4`}
                 dataLength={openings.length}
