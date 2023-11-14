@@ -36,35 +36,10 @@ const SharedProjectMessage = ({ message }: Props) => {
             />
 
             <div className="w-full flex flex-col gap-4 max-md:gap-2 px-8">
-              <div className="w-full flex flex-col items-center gap-1">
-                <div className="font-bold text-center text-2xl text-gradient">{message.project.title}</div>
-                <div className="text-sm">{message.project.tagline}</div>
-                <div className="text-xs font-thin">{moment(message.project.createdAt).fromNow()}</div>
-              </div>
-
-              <div className="w-full flex justify-center flex-wrap gap-2">
-                {message.project.tags &&
-                  message.project.tags // Splicing causes array mutation
-                    .filter((tag, index) => {
-                      return index >= 0 && index < 3;
-                    })
-                    .map(tag => {
-                      return (
-                        <div
-                          key={tag}
-                          className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl"
-                        >
-                          {tag}
-                        </div>
-                      );
-                    })}
-                {message.project.tags && message.project.tags.length - 3 > 0 ? (
-                  <div className="flex-center p-2 font-primary text-xs dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-xl">
-                    + {message.project.tags.length - 3}
-                  </div>
-                ) : (
-                  <></>
-                )}
+              <div className="w-full text-center flex flex-col items-center gap-1">
+                <div className="font-bold text-xl text-gradient">{message.project.title}</div>
+                <div className="text-xs">{message.project.tagline}</div>
+                <div className="text-xxs font-thin">{moment(message.project.createdAt).fromNow()}</div>
               </div>
             </div>
           </div>

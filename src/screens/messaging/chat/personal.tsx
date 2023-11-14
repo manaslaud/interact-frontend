@@ -167,7 +167,7 @@ const PersonalChat = () => {
                   <>
                     <div
                       onClick={handleAccept}
-                      className="w-full h-12 rounded-md dark:text-white font-primary flex-center text-xl font-medium dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active cursor-pointer transition-ease-300"
+                      className="w-full h-12 rounded-md dark:text-white font-primary flex-center text-xl font-medium bg-primary_comp dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active cursor-pointer transition-ease-300"
                     >
                       Accept Chat
                     </div>

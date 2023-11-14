@@ -13,6 +13,7 @@ export interface FeedState {
   workspaceTab: number;
   bookmarksTab: number;
   invitationsTab: number;
+  cookiesWarning: boolean;
 }
 
 const initialState: FeedState = {
@@ -26,6 +27,7 @@ const initialState: FeedState = {
   workspaceTab: 0,
   bookmarksTab: 0,
   invitationsTab: 0,
+  cookiesWarning: true,
 };
 
 export const feedSlice = createSlice({
@@ -68,6 +70,9 @@ export const feedSlice = createSlice({
     setUnreadChats: (state, action: PayloadAction<string[]>) => {
       state.unreadChats = action.payload;
     },
+    setCookiesWarning: (state, action: PayloadAction<boolean>) => {
+      state.cookiesWarning = action.payload;
+    },
   },
 });
 
@@ -84,6 +89,7 @@ export const {
   setUnreadInvitations,
   incrementUnreadInvitations,
   setUnreadChats,
+  setCookiesWarning,
 } = feedSlice.actions;
 
 export default feedSlice.reducer;
@@ -98,3 +104,4 @@ export const invitationsTabSelector = (state: RootState) => state.feed.invitatio
 export const unreadNotificationsSelector = (state: RootState) => state.feed.unreadNotifications;
 export const unreadInvitationsSelector = (state: RootState) => state.feed.unreadInvitations;
 export const unreadChatsSelector = (state: RootState) => state.feed.unreadChats;
+export const cookiesWarningSelector = (state: RootState) => state.feed.cookiesWarning;

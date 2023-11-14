@@ -76,7 +76,7 @@ const ShareProfile = ({ user, setShow }: Props) => {
     };
     const res = await postHandler(URL, formData);
     if (res.statusCode === 200) {
-      Toaster.stopLoad(toaster, 'Opening Profile!', 1);
+      Toaster.stopLoad(toaster, 'Profile Shared!', 1);
       setShow(false);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);

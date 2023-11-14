@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const renderContentWithLinks = (caption: string) => {
   const words = caption.split(/\s+/);
 
@@ -33,6 +35,20 @@ const renderContentWithLinks = (caption: string) => {
             {word}
           </a>
         </>
+      );
+    }
+
+    // Check if the word is a tag
+    if (word.startsWith('#')) {
+      return (
+        <Link
+          key={index}
+          href={`/explore?search=${word.replace('#', '')}`}
+          className="font-medium hover:text-primary_text transition-ease-200"
+          target="_blank"
+        >
+          {word} {/* Render the link */}
+        </Link>
       );
     }
 
