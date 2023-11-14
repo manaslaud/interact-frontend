@@ -1,4 +1,4 @@
-import { cookiesWarningSelector, setCookiesWarning } from '@/slices/feedSlice';
+import { cookiesDisabledSelector, setCookiesDisabled } from '@/slices/feedSlice';
 import { X } from '@phosphor-icons/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,10 +22,10 @@ const CookiesCheck = () => {
     }
   }, []);
 
-  const show = useSelector(cookiesWarningSelector);
+  const show = useSelector(cookiesDisabledSelector);
   const dispatch = useDispatch();
   const setShow = (val: boolean) => {
-    dispatch(setCookiesWarning(val));
+    dispatch(setCookiesDisabled(val));
   };
 
   if (!cookieEnabled && show)
@@ -52,6 +52,7 @@ const CookiesCheck = () => {
         ></div>
       </>
     );
+  dispatch(setCookiesDisabled(false));
   return <></>;
 };
 

@@ -207,8 +207,19 @@ const ApplicationView = ({ application, setShow, setApplications, setFilteredApp
             </div>
           </div>
         </div>
+        {application.email != '' ? (
+          <div className="max-lg:w-3/5 max-md:w-full max-lg:text-center max-lg:mx-auto">
+            Shared Email:{' '}
+            <Link href={`mailto:${application.email}`} className="font-medium">
+              {application.email}
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div className="max-lg:w-3/5 max-md:w-full max-lg:text-center max-lg:mx-auto">{application.content}</div>
-        {application.resume ? (
+        {application.resume && application.resume != '' ? (
           <Link
             href={`${APPLICATION_RESUME_URL}/${application.resume}`}
             target="_blank"

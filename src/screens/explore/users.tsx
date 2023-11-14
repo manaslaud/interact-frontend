@@ -20,7 +20,7 @@ const Users = () => {
   const fetchUsers = async (search: string | null) => {
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/users/trending?${'search=' + search}&page=${page}&limit=${10}`
+        ? `${EXPLORE_URL}/users/trending?${'search=' + search}`
         : `${EXPLORE_URL}/users/recommended?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {

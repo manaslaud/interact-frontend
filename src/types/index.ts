@@ -214,6 +214,7 @@ export interface Application {
   project: Project;
   userID: string;
   user: User;
+  email: string;
   status: number;
   content: string;
   resume: string;

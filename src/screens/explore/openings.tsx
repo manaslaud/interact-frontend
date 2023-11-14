@@ -26,7 +26,7 @@ const Openings = () => {
   const fetchOpenings = async (search: string | null) => {
     let URL =
       search && search != ''
-        ? `${EXPLORE_URL}/openings/trending?${'search=' + search}&page=${page}&limit=${10}`
+        ? `${EXPLORE_URL}/openings/trending?${'search=' + search}`
         : `${EXPLORE_URL}/openings/trending?page=${page}&limit=${10}`;
 
     const projectSlug = new URLSearchParams(window.location.search).get('pid');

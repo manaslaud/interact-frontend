@@ -181,6 +181,7 @@ export const initialApplication: Application = {
   opening: initialOpening,
   userID: '',
   user: initialUser,
+  email: '',
   projectID: '',
   project: initialProject,
   status: 0,

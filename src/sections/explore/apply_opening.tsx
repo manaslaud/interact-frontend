@@ -23,6 +23,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
   const [message, setMessage] = useState('');
   const [resume, setResume] = useState<File>();
   const [links, setLinks] = useState<string[]>([]);
+  const [shareEmail, setShareEmail] = useState(false);
 
   const user = useSelector(userSelector);
   let profilePic = user.profilePic;
@@ -60,6 +61,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
     formData.append('content', message);
     if (resume) formData.append('resume', resume);
     links.forEach(link => formData.append('links', link));
+    if (shareEmail) formData.append('email', user.email);
 
     const URL = `${APPLICATION_URL}/${opening.id}`;
     const res = await postHandler(URL, formData, 'multipart/form-data');
@@ -172,11 +174,27 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links ({links.length || 0}/5)</div>
                 <Links links={links} setLinks={setLinks} maxLinks={3} />
               </div>
-              <div
-                className="h-10 rounded-xl dark:bg-dark_primary_comp bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center text-lg cursor-pointer dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300"
-                onClick={handleSubmit}
-              >
-                Apply!
+
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex">
+                  <div className="w-8">
+                    <label className="checkBox w-5 h-5">
+                      <input onClick={() => setShareEmail(prev => !prev)} type="checkbox" />
+                      <div className="transition-ease-300 !bg-primary_black"></div>
+                    </label>
+                  </div>
+
+                  <div className="font-medium cursor-default">
+                    Share my Email! <span className="text-xs ml-1">(recommended)</span>
+                  </div>
+                </div>
+
+                <div
+                  className="h-10 rounded-xl dark:bg-dark_primary_comp bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center text-lg cursor-pointer dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300"
+                  onClick={handleSubmit}
+                >
+                  Apply!
+                </div>
               </div>
             </div>
           </div>

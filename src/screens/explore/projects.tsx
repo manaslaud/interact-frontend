@@ -30,7 +30,7 @@ const Projects = () => {
   const fetchProjects = async (search: string | null) => {
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/projects/trending?${'search=' + search}&page=${page}&limit=${10}`
+        ? `${EXPLORE_URL}/projects/trending?${'search=' + search}`
         : `${EXPLORE_URL}/projects/trending?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
