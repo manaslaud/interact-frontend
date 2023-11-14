@@ -103,7 +103,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
         
         </div> */}
 
-      <div className="fixed top-14 max-lg:top-20 w-5/6 max-lg:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-50">
+      <div className="fixed top-14 max-lg:top-20 w-5/6 max-lg:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 shadow-2xl animate-fade_third z-50">
         <div className="w-80 max-lg:w-full lg:sticky lg:top-0">
           <Images setSelectedFile={setImage} />
         </div>
@@ -148,12 +148,12 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
               <div>
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                  Project Description ({description.trim().length}/500)
+                  Project Description ({description.trim().length}/1000)
                 </div>
                 <textarea
                   value={description}
                   onChange={el => setDescription(el.target.value)}
-                  maxLength={500}
+                  maxLength={1000}
                   className="w-full min-h-[80px] max-h-80 bg-transparent focus:outline-none border-[1px] border-gray-400 rounded-lg p-2"
                   placeholder="Explain your project"
                 />

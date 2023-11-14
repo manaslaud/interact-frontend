@@ -25,10 +25,10 @@ const Workspace = () => {
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <YourProjects />
           </div>
-          <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 1 ? 'block' : 'hidden'}`}>
             <ContributingProjects />
           </div>
-          <div className={`${active === 2 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 2 ? 'block' : 'hidden'}`}>
             <Applications />
           </div>
         </div>

@@ -23,13 +23,13 @@ const Explore = () => {
         >
           <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
-          <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
           </div>
           <div className={`w-full ${active === 1 ? 'block' : 'hidden'}`}>
             <Openings />
           </div>
-          <div className={`${active === 2 ? 'block' : 'hidden'} `}>
+          <div className={`w-full ${active === 2 ? 'block' : 'hidden'} `}>
             <Users />
           </div>
         </div>

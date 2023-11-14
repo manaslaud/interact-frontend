@@ -11,17 +11,13 @@ const Edited = ({ history }: Props) => {
     case 2: //User edited project details
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> edited Project Details.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">edited Project Details.</div>
         </ProjectHistoryWrapper>
       );
     case 4: //User edited opening details
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> created an Opening Details.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">created an Opening Details.</div>
         </ProjectHistoryWrapper>
       );
     default:

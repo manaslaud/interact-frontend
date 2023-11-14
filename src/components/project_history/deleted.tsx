@@ -11,9 +11,7 @@ const Deleted = ({ history }: Props) => {
     case 5: //User deleted opening
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> deleted an Opening.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">deleted an Opening.</div>
         </ProjectHistoryWrapper>
       );
     default:

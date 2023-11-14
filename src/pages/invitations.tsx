@@ -57,7 +57,7 @@ const Invitations = () => {
             <Loader />
           ) : (
             <>
-              <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+              <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
                 <div className="w-full flex flex-col gap-6 p-2">
                   {projectInvitations.length > 0 ? (
                     <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-4">
@@ -77,7 +77,7 @@ const Invitations = () => {
                 </div>
               </div>
               {/* <div className={`${active === 1 ? 'block' : 'hidden'}`}></div> */}
-              <div className={`${active === 1 ? 'block' : 'hidden'} `}>
+              <div className={`w-full ${active === 1 ? 'block' : 'hidden'} `}>
                 <div className="w-full flex flex-col gap-6 p-2">
                   {groupChatInvitations.length > 0 ? (
                     <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-4">

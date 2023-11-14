@@ -11,33 +11,25 @@ const Created = ({ history }: Props) => {
     case -1: //User created this project
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> created this Project!🎉
-          </div>
+          <div className="w-fit text-center flex-center gap-4">created this Project! 🎉</div>
         </ProjectHistoryWrapper>
       );
     case 3: //User created an opening
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> created an Opening.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">created an Opening.</div>
         </ProjectHistoryWrapper>
       );
     case 8: //User created a new group chat
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> created a New Group Chat.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">created a New Group Chat.</div>
         </ProjectHistoryWrapper>
       );
     case 9: //User created a new task
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> added a New Task.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">added a New Task.</div>
         </ProjectHistoryWrapper>
       );
     default:

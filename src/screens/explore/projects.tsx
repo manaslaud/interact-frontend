@@ -93,7 +93,7 @@ const Projects = () => {
   return loading ? (
     <Loader />
   ) : (
-    <>
+    <div className="w-full py-2">
       {projects.length > 0 ? (
         <InfiniteScroll
           className={`w-full grid ${
@@ -140,7 +140,7 @@ const Projects = () => {
       ) : (
         <NoSearch />
       )}
-    </>
+    </div>
   );
 };
 

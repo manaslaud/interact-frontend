@@ -112,7 +112,7 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
 
   return (
     <>
-      <div className="fixed top-12 max-lg:top-20 w-[953px] max-lg:w-5/6 h-[680px] max-lg:h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg max-lg:rounded-md p-8 pb-2 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_black  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">
+      <div className="fixed top-12 max-lg:top-20 w-[953px] max-lg:w-5/6 h-[680px] max-lg:h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg max-lg:rounded-md p-8 pb-2 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_black  dark:border-dark_primary_btn right-1/2 translate-x-1/2 shadow-2xl animate-fade_third z-30">
         <div className="w-2/5 max-lg:w-full lg:sticky lg:top-0">
           <Images initialImage={projectToEdit.coverPic} setSelectedFile={setImage} />
         </div>
@@ -135,8 +135,8 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
           </select>
 
           <div className="w-full flex flex-col gap-2">
-            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length || 0}/5)</div>
-            <Tags tags={tags} setTags={setTags} />
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length || 0}/10)</div>
+            <Tags tags={tags} setTags={setTags} maxTags={10} />
           </div>
 
           <div className="w-full flex flex-col gap-2">

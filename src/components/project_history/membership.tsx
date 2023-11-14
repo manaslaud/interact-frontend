@@ -12,23 +12,21 @@ const Membership = ({ history }: Props) => {
       return (
         <ProjectHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> invited <b>{history.user.name}</b> to join this Project!
+            invited <b>{history.user.name}</b> to join this Project!
           </div>
         </ProjectHistoryWrapper>
       );
     case 1: //User joined this project
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> joined this Project!🎉
-          </div>
+          <div className="w-fit text-center flex-center gap-4">joined this Project!🎉</div>
         </ProjectHistoryWrapper>
       );
     case 6: //User accepted application of user
       return (
         <ProjectHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> accepted the application of <b>{history.user.name}</b>!
+            accepted the application of <b>{history.user.name}</b>!
           </div>
         </ProjectHistoryWrapper>
       );
@@ -36,23 +34,21 @@ const Membership = ({ history }: Props) => {
       return (
         <ProjectHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> rejected the application of <b>{history.user.name}</b>.
+            rejected the application of <b>{history.user.name}</b>.
           </div>
         </ProjectHistoryWrapper>
       );
     case 10: //User left the project
       return (
         <ProjectHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> left this Project.
-          </div>
+          <div className="w-fit text-center flex-center gap-4">left this Project.</div>
         </ProjectHistoryWrapper>
       );
     case 11: //User removed user from the project
       return (
         <ProjectHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">
-            <b>{history.sender.name}</b> removed <b>{history.user.name}</b> from this Project.
+            removed <b>{history.user.name}</b> from this Project.
           </div>
         </ProjectHistoryWrapper>
       );

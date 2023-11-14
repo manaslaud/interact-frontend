@@ -18,13 +18,13 @@ const Bookmarks = () => {
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-4 py-20">
           <TabMenu items={['Posts', 'Projects', 'Openings']} active={active} setReduxState={setBookmarksTab} />
-          <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Posts />
           </div>
-          <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 1 ? 'block' : 'hidden'}`}>
             <Projects />
           </div>
-          <div className={`${active === 2 ? 'block' : 'hidden'}`}>
+          <div className={`w-full ${active === 2 ? 'block' : 'hidden'}`}>
             <Openings />
           </div>
         </div>

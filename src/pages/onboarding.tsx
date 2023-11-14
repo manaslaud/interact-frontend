@@ -210,7 +210,7 @@ const Onboarding = () => {
                           height={10000}
                           alt={'User Pic'}
                           src={userPicView}
-                          className={`rounded-full max-md:mx-auto w-32 h-32 cursor-default`}
+                          className={`rounded-full md:hidden max-md:mx-auto w-32 h-32 cursor-default`}
                         />
                         <div className="w-full flex items-center gap-2">
                           <label className="grow cursor-pointer" htmlFor="userPic">

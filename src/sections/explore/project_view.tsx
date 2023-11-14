@@ -303,7 +303,7 @@ const ProjectView = ({
                 <CaretLeft size={24} weight="bold" />
               </div>
             ) : (
-              <div className="w-10 h-10 rounded-full"></div>
+              <></>
             )}
             {clickedProjectIndex != projectSlugs.length - 1 ? (
               <div
@@ -316,7 +316,7 @@ const ProjectView = ({
                 <CaretRight size={24} weight="bold" />
               </div>
             ) : (
-              <div className="w-10 h-10 rounded-full"></div>
+              <></>
             )}
           </div>
         </div>
