@@ -190,7 +190,7 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
                 </div>
 
                 <div
-                  className="h-10 rounded-xl dark:bg-dark_primary_comp bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center text-lg cursor-pointer dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300"
+                  className="h-10 rounded-xl max-lg:mt-6 dark:bg-dark_primary_comp bg-primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active flex-center text-lg cursor-pointer dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active transition-ease-300"
                   onClick={handleSubmit}
                 >
                   Apply!

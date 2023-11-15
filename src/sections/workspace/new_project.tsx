@@ -8,8 +8,10 @@ import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
+import { X } from '@phosphor-icons/react';
+import { useWindowWidth } from '@react-hook/window-size';
 import router from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface Props {
@@ -97,13 +99,29 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     setMutex(false);
   };
 
+  useEffect(() => {
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
+
   return (
     <>
       {/* <div className="w-screen h-screen max-lg:overflow-auto flex max-lg:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
         
         </div> */}
 
-      <div className="fixed top-14 max-lg:top-20 w-5/6 max-lg:w-5/6 h-5/6 backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 shadow-2xl animate-fade_third z-50">
+      <div className="fixed top-14 max-lg:top-0 w-5/6 max-lg:w-screen h-5/6 max-lg:h-screen backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 shadow-2xl animate-fade_third z-50">
+        <X
+          onClick={() => setShow(false)}
+          className="lg:hidden absolute top-2 right-2 cursor-pointer"
+          weight="bold"
+          size={32}
+        />
         <div className="w-80 max-lg:w-full lg:sticky lg:top-0">
           <Images setSelectedFile={setImage} />
         </div>
@@ -200,8 +218,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
           <div className="w-full flex max-lg:justify-center justify-end">
             <button
               onClick={handleSubmit}
-              className={`duration-300 relative group cursor-pointer text-white overflow-hidden h-16 max-lg:h-12 ${
-                mutex ? 'w-72 max-lg:w-64 scale-90' : 'w-48 max-lg:w-40 hover:scale-90'
+              className={`duration-300 relative group cursor-pointer text-white overflow-hidden h-14 max-lg:h-12 ${
+                mutex ? 'w-64 max-lg:w-56 scale-90' : 'w-44 max-lg:w-36 hover:scale-90'
               } rounded-xl p-2 flex-center`}
             >
               <div

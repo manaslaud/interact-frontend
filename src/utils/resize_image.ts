@@ -1,3 +1,6 @@
+import { MAX_IMAGE_SIZE } from '@/config/constants';
+import Toaster from './toaster';
+
 export const resizeImage = async (file: File, width: number, height: number): Promise<File> => {
   return new Promise((resolve, reject) => {
     try {
@@ -32,11 +35,19 @@ export const resizeImage = async (file: File, width: number, height: number): Pr
         ctx?.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
 
         canvas.toBlob(
-          croppedBlob => {
+          async croppedBlob => {
             if (croppedBlob) {
               // Create a File object with the cropped blob
               const fileName = file.name;
               const croppedFile = new File([croppedBlob], fileName, { type: 'image/jpeg' });
+
+              // Calculate the size of the resized image
+              const size = await calculateFileSize(canvas.toDataURL('image/jpeg'));
+              if (size > MAX_IMAGE_SIZE) {
+                Toaster.error('Image Too Large');
+                return;
+              }
+
               resolve(croppedFile);
             } else {
               reject(new Error('Failed to crop the image.'));
@@ -58,4 +69,12 @@ export const resizeImage = async (file: File, width: number, height: number): Pr
       reject(new Error('Error in Cropping: ' + err));
     }
   });
+};
+
+const calculateFileSize = async (dataURL: string): Promise<number> => {
+  // Convert the data URL to a Blob
+  const blob = await (await fetch(dataURL)).blob();
+
+  // Calculate the size of the Blob in MB
+  return blob.size / (1024 * 1024);
 };

@@ -11,7 +11,7 @@ import { setUser } from '@/slices/userSlice';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import { setConfig } from '@/slices/configSlice';
-import { setUnreadNotifications } from '@/slices/feedSlice';
+import { setOnboarding, setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import axios from 'axios';
@@ -72,6 +72,7 @@ const SignUpCallback = ({ token }: Props) => {
           dispatch(setUser(user));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1));
+          dispatch(setOnboarding(true));
           socketService.connect(user.id);
           Cookies.set('verified', 'true');
           sessionStorage.setItem('onboarding-redirect', 'signup-callback');
@@ -113,7 +114,7 @@ const SignUpCallback = ({ token }: Props) => {
               <input
                 maxLength={16}
                 value={username}
-                onChange={el => setUsername(el.target.value)}
+                onChange={el => setUsername(el.target.value.toLowerCase())}
                 type="text"
                 className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
               />

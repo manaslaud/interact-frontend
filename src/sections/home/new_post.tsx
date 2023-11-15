@@ -39,12 +39,8 @@ const NewPost = ({ setShow, setFeed }: Props) => {
   }, []);
 
   const handleSubmit = async () => {
-    if (content.trim() == '') {
+    if (content.trim() == '' || content.replace(/\n/g, '').length == 0) {
       Toaster.error('Caption cannot be empty!');
-      return;
-    }
-    if (content.length > 1000) {
-      Toaster.error('Caption can only be 1000 characters long!');
       return;
     }
 
@@ -54,7 +50,7 @@ const NewPost = ({ setShow, setFeed }: Props) => {
     images.forEach(file => {
       formData.append('images', file);
     });
-    formData.append('content', content);
+    formData.append('content', content.replace(/\n{3,}/g, '\n\n'));
 
     const res = await postHandler(POST_URL, formData, 'multipart/form-data');
 
@@ -83,7 +79,7 @@ const NewPost = ({ setShow, setFeed }: Props) => {
 
   return (
     <>
-      <div className="fixed top-24 max-md:top-[calc(50%-75px)] w-[953px] max-lg:w-5/6 h-[560px] max-md:h-2/3 shadow-xl dark:shadow-none backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] flex flex-col justify-between max-md:items-end p-8 max-md:p-6 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg right-1/2 translate-x-1/2 max-md:-translate-y-1/2 animate-fade_third z-30">
+      <div className="fixed top-24 max-md:top-[calc(50%-75px)] w-[953px] max-lg:w-5/6 h-[560px] max-md:h-2/3 shadow-2xl dark:shadow-none backdrop-blur-xl bg-[#ffffff] dark:bg-[#ffe1fc22] flex flex-col justify-between max-md:items-end p-8 max-md:p-6 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg right-1/2 translate-x-1/2 max-md:-translate-y-1/2 animate-fade_third z-30">
         <div className="w-full flex flex-col gap-6">
           <div className="flex gap-4 max-md:w-full">
             <Image

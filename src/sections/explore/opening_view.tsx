@@ -3,11 +3,12 @@ import { Opening } from '@/types';
 import { initialOpening } from '@/types/initials';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApplyOpening from './apply_opening';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
+import { useWindowWidth } from '@react-hook/window-size';
 
 interface Props {
   opening: Opening;
@@ -18,6 +19,21 @@ interface Props {
 const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   const [clickedOnApply, setClickedOnApply] = useState(false);
   const applications = useSelector(userSelector).applications;
+
+  const width = useWindowWidth();
+
+  useEffect(() => {
+    if (width < 760) {
+      document.documentElement.style.overflowY = 'hidden';
+      document.documentElement.style.height = '100vh';
+
+      return () => {
+        document.documentElement.style.overflowY = 'auto';
+        document.documentElement.style.height = 'auto';
+      };
+    }
+  }, []);
+
   return (
     <>
       {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}

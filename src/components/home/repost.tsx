@@ -46,13 +46,16 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
   };
 
   const handleEdit = async () => {
-    if (caption == post.content) return;
+    if (caption == post.content || caption.trim().length == 0 || caption.replace(/\n/g, '').length == 0) {
+      setClickedOnEdit(false);
+      return;
+    }
     const toaster = Toaster.startLoad('Editing Post...');
 
     const URL = `${POST_URL}/${post.id}`;
 
     const formData = {
-      content: caption,
+      content: caption.replace(/\n{3,}/g, '\n\n'),
     };
 
     const res = await patchHandler(URL, formData);
@@ -60,7 +63,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       if (setFeed)
         setFeed(prev =>
           prev.map(p => {
-            if (p.id == post.id) return { ...p, content: caption, edited: true };
+            if (p.id == post.id) return { ...p, content: caption.replace(/\n{3,}/g, '\n\n'), edited: true };
             else return p;
           })
         );

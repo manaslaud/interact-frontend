@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
-import { Link } from '@phosphor-icons/react';
+import { Images, Link } from '@phosphor-icons/react';
 
 interface Props {
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -53,7 +53,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
         }}
       />
       <label htmlFor="image" className="w-fit cursor-pointer">
-        <Link size={24} />
+        <Images className="cursor-pointer" size={24} />
       </label>
       {selectedImageUrls.length > 0 ? (
         <CarouselProvider
@@ -89,18 +89,22 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                       height={10000}
                       alt="post"
                       src={el}
-                      className=" w-[98%] rounded-xl object-contain"
+                      className="w-[98%] rounded-3xl object-contain"
                     />
                   </div>
                 </Slide>
               );
             })}
           </Slider>
-          <div className="absolute bottom-2">
-            {selectedImageUrls.map((_, i) => {
-              return <Dot key={i} slide={i} />;
-            })}
-          </div>
+          {selectedImageUrls.length > 2 ? (
+            <div className="absolute bottom-2">
+              {selectedImageUrls.map((_, i) => {
+                return <Dot key={i} slide={i} />;
+              })}
+            </div>
+          ) : (
+            <></>
+          )}
         </CarouselProvider>
       ) : (
         <></>

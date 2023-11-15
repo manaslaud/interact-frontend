@@ -14,6 +14,7 @@ export interface FeedState {
   bookmarksTab: number;
   invitationsTab: number;
   cookiesDisabled: boolean;
+  onboarding: boolean;
 }
 
 const initialState: FeedState = {
@@ -28,6 +29,7 @@ const initialState: FeedState = {
   bookmarksTab: 0,
   invitationsTab: 0,
   cookiesDisabled: true,
+  onboarding: false,
 };
 
 export const feedSlice = createSlice({
@@ -73,6 +75,9 @@ export const feedSlice = createSlice({
     setCookiesDisabled: (state, action: PayloadAction<boolean>) => {
       state.cookiesDisabled = action.payload;
     },
+    setOnboarding: (state, action: PayloadAction<boolean>) => {
+      state.onboarding = action.payload;
+    },
   },
 });
 
@@ -90,6 +95,7 @@ export const {
   incrementUnreadInvitations,
   setUnreadChats,
   setCookiesDisabled,
+  setOnboarding,
 } = feedSlice.actions;
 
 export default feedSlice.reducer;
@@ -105,3 +111,4 @@ export const unreadNotificationsSelector = (state: RootState) => state.feed.unre
 export const unreadInvitationsSelector = (state: RootState) => state.feed.unreadInvitations;
 export const unreadChatsSelector = (state: RootState) => state.feed.unreadChats;
 export const cookiesDisabledSelector = (state: RootState) => state.feed.cookiesDisabled;
+export const onboardingSelector = (state: RootState) => state.feed.onboarding;

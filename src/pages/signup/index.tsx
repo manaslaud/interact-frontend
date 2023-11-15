@@ -15,7 +15,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
 import { setConfig } from '@/slices/configSlice';
-import { setUnreadNotifications } from '@/slices/feedSlice';
+import { setOnboarding, setUnreadNotifications } from '@/slices/feedSlice';
 import { User } from '@/types';
 import socketService from '@/config/ws';
 import isEmail from 'validator/lib/isEmail';
@@ -23,6 +23,7 @@ import isStrongPassword from 'validator/lib/isStrongPassword';
 import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import generateRandomProfilePicture from '@/utils/generate_profile_picture';
+import StrongPassInfo from '@/components/common/strong_pass_info';
 
 const SignUp = () => {
   const router = useRouter();
@@ -35,6 +36,8 @@ const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [clickedOnStrongPassInfo, setClickedOnStrongPassInfo] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -65,6 +68,7 @@ const SignUp = () => {
       })
     ) {
       Toaster.error('Enter a strong Password');
+      setClickedOnStrongPassInfo(true);
       return;
     }
 
@@ -107,6 +111,7 @@ const SignUp = () => {
           dispatch(setUser({ ...user, isVerified: false }));
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
+          dispatch(setOnboarding(true));
           socketService.connect(user.id);
           sessionStorage.setItem('verification-redirect', 'signup-callback');
           router.push('/verification');
@@ -135,6 +140,11 @@ const SignUp = () => {
         />
       </Head>
       <div className="h-screen flex">
+        {clickedOnStrongPassInfo ? (
+          <StrongPassInfo password={password} confirmPassword={confirmPassword} setShow={setClickedOnStrongPassInfo} />
+        ) : (
+          <></>
+        )}
         <div className="w-[45%] max-lg:w-full h-screen font-primary gap-12 py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-start">
             <ReactSVG src="/onboarding_logo.svg" />
@@ -178,7 +188,7 @@ const SignUp = () => {
                     name="username"
                     maxLength={16}
                     value={username}
-                    onChange={el => setUsername(el.target.value)}
+                    onChange={el => setUsername(el.target.value.toLowerCase())}
                     type="text"
                     className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
                   />
@@ -200,7 +210,12 @@ const SignUp = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2 font-medium">
                     <div>Password</div>
-                    <Info className="cursor-pointer" size={18} weight="light" />
+                    <Info
+                      onClick={() => setClickedOnStrongPassInfo(true)}
+                      className="cursor-pointer"
+                      size={18}
+                      weight="light"
+                    />
                   </div>
                   <div className="w-full relative">
                     <input
