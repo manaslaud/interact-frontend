@@ -104,7 +104,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-[150] flex dark:bg-backdrop backdrop-blur-2xl"
         >
           <div className="max-lg:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-lg:fixed max-lg:top-0 max-lg:left-0">
             <div className="w-10 h-10 relative">

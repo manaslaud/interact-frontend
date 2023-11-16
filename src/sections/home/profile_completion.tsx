@@ -19,7 +19,7 @@ const ProfileCompletion = () => {
     if (user.bio != '') counter++;
     if ((user.links || []).length != 0) counter++;
     if (user.tagline != '') counter++;
-    if (user.email != '') counter++;
+    if (user.email != '' && user.isVerified) counter++;
     if ((user.ownerProjects || []).length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
@@ -89,7 +89,7 @@ const ProfileCompletion = () => {
       >
         <div className="text-gradient font-bold text-5xl">Complete Profile </div>
         <Link
-          href={'/profile?action=edit'}
+          href={'/profile'}
           className="w-fit flex items-center gap-1 hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
         >
           <div>to increase your Reach!</div>
@@ -121,7 +121,7 @@ const ProfileCompletion = () => {
             <div className="cursor-default">Add Links to your social media</div>
           ) : (
             <Link
-              href={'/profile?action=edit'}
+              href={'/profile?action=edit&tag=links'}
               onClick={() => dispatch(setProfileCompletionOpen(false))}
               className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
             >
@@ -135,7 +135,7 @@ const ProfileCompletion = () => {
             <div className="cursor-default">Add a Descriptive Bio</div>
           ) : (
             <Link
-              href={'/profile?action=edit'}
+              href={'/profile?action=edit&tag=bio'}
               onClick={() => dispatch(setProfileCompletionOpen(false))}
               className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
             >
@@ -149,7 +149,7 @@ const ProfileCompletion = () => {
             <div className="cursor-default">Add a Tagline</div>
           ) : (
             <Link
-              href={'/profile?action=edit'}
+              href={'/profile?action=edit&tag=tagline'}
               onClick={() => dispatch(setProfileCompletionOpen(false))}
               className="hover-underline-animation after:bg-black dark:after:bg-dark_primary_btn"
             >
@@ -158,7 +158,7 @@ const ProfileCompletion = () => {
           )}
         </div>
         <div className="flex items-center gap-4 px-2 py-4 border-b-[1px] border-gray-200 dark:border-dark_primary_btn">
-          {user.email != '' ? <CheckCircle size={32} /> : <Circle size={32} />}
+          {user.email && user.isVerified ? <CheckCircle size={32} /> : <Circle size={32} />}
           <div>Complete Sign Up</div>
         </div>
       </div>

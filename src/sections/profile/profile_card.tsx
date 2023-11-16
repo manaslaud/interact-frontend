@@ -154,10 +154,10 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
 
   useEffect(() => {
     const action = new URLSearchParams(window.location.search).get('action');
-    const id = new URLSearchParams(window.location.search).get('id');
+    const tag = new URLSearchParams(window.location.search).get('tag');
 
-    if (action && id && action == 'edit') {
-      switch (id) {
+    if (action && tag && action == 'edit') {
+      switch (tag) {
         case 'name':
           setClickedOnName(true);
           break;

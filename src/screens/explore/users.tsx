@@ -1,4 +1,3 @@
-import SearchBar from '@/components/explore/searchbar';
 import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';

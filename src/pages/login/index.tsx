@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import ArrowRight from '@phosphor-icons/react/dist/icons/ArrowRight';
 import Eye from '@phosphor-icons/react/dist/icons/Eye';
@@ -81,6 +81,13 @@ const Login = () => {
   const handleGoogleLogin = () => {
     router.push(`${BACKEND_URL}/auth/google`);
   };
+
+  useEffect(() => {
+    const msg = new URLSearchParams(window.location.search).get('msg');
+
+    if (msg && msg == 'nouser') Toaster.error('No account with this email id exists.');
+  }, [window.location.search]);
+
   return (
     <>
       <Head>
@@ -97,8 +104,8 @@ const Login = () => {
           </div>
           <form onSubmit={handleSubmit} className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             <div className="flex flex-col gap-2 text-center">
-              <div className="text-2xl font-semibold">Let&apos;s Get Started</div>
-              <div className="text-gray-400">Start setting up your account ✌️</div>
+              <div className="text-2xl font-semibold">Let&apos;s Get Back In</div>
+              <div className="text-gray-400">Time to pick up where you left ✌️</div>
             </div>
             <div
               onClick={handleGoogleLogin}
@@ -111,7 +118,7 @@ const Login = () => {
             </div>
             <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
-              <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with email</div>
+              <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with username</div>
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
             </div>
 

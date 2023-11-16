@@ -177,7 +177,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-[150] flex dark:bg-backdrop backdrop-blur-2xl"
         >
           {clickedOnEdit ? (
             <EditProject

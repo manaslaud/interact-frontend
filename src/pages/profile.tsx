@@ -96,6 +96,13 @@ const Profile = () => {
     getUser();
   }, []);
 
+  useEffect(() => {
+    const action = new URLSearchParams(window.location.search).get('action');
+    const tag = new URLSearchParams(window.location.search).get('tag');
+
+    if (action && tag && action == 'edit' && tag == 'tagline') setClickedOnTagline(true);
+  }, [window.location.search]);
+
   interface SaveBtnProps {
     setter: React.Dispatch<React.SetStateAction<boolean>>;
     field: string;

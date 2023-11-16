@@ -1,5 +1,6 @@
 import { profileCompletionOpenSelector, setProfileCompletionOpen } from '@/slices/feedSlice';
 import { userSelector } from '@/slices/userSlice';
+import { useWindowWidth } from '@react-hook/window-size';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +19,7 @@ const ProfileCompletion = () => {
     if (user.bio != '') counter++;
     if ((user.links || []).length != 0) counter++;
     if (user.tagline != '') counter++;
-    if (user.email != '') counter++;
+    if (user.email != '' && user.isVerified) counter++;
     if ((user.ownerProjects || []).length != 0) counter++;
     return Math.floor((counter / totalPoints) * 100);
   };
@@ -32,9 +33,18 @@ const ProfileCompletion = () => {
     const dashOffset = circleLength * ((100 - completionPercentage) / 100);
     circleBackground?.setAttribute('stroke-dashoffset', String(dashOffset));
   }, []);
+
+  const width = useWindowWidth();
+
   return (
-    <div
-      onClick={() => dispatch(setProfileCompletionOpen(!open))}
+    <Link
+      href={'/profile'}
+      onClick={el => {
+        if (width > 760) {
+          el.preventDefault();
+          dispatch(setProfileCompletionOpen(!open));
+        }
+      }}
       className={`${
         hide ? 'hidden' : ''
       } w-full py-4 p-8 max-md:p-4 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer transition-ease-500`}
@@ -60,7 +70,7 @@ const ProfileCompletion = () => {
           />
         </svg>
       </div>
-    </div>
+    </Link>
   );
 };
 
