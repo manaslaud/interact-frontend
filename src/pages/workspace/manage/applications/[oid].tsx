@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { initialApplication } from '@/types/initials';
 import ApplicationCard from '@/components/workspace/manage_project/application_card';
 import ApplicationView from '@/sections/workspace/manage_project/application_view';
+import WidthCheck from '@/utils/widthCheck';
 
 interface Props {
   oid: string;
@@ -137,7 +138,7 @@ const Applications = ({ oid }: Props) => {
   );
 };
 
-export default Protect(Applications);
+export default WidthCheck(Protect(Applications));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { oid } = context.query;

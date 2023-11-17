@@ -12,6 +12,7 @@ import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
 import Protect from '@/utils/protect';
 import { ALREADY_VERIFIED_ERROR, SERVER_ERROR } from '@/config/errors';
+import WidthCheck from '@/utils/widthCheck';
 
 const Verification = () => {
   const [sentOTP, setSentOTP] = useState(false);
@@ -164,4 +165,4 @@ const Verification = () => {
   );
 };
 
-export default Protect(Verification);
+export default WidthCheck(Protect(Verification));

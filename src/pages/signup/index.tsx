@@ -24,6 +24,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import generateRandomProfilePicture from '@/utils/generate_profile_picture';
 import StrongPassInfo from '@/components/common/strong_pass_info';
+import WidthCheck from '@/utils/widthCheck';
 
 const SignUp = () => {
   const router = useRouter();
@@ -344,4 +345,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-export default SignUp;
+export default WidthCheck(SignUp);

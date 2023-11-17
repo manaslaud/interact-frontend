@@ -18,6 +18,7 @@ import Loader from '@/components/common/loader';
 import Protect from '@/utils/protect';
 import Collaborators from '@/screens/workspace/manage_project/collaborators';
 import Chats from '@/screens/workspace/manage_project/chats';
+import WidthCheck from '@/utils/widthCheck';
 
 interface Props {
   slug: string;
@@ -84,7 +85,7 @@ const ManageProject = ({ slug }: Props) => {
   );
 };
 
-export default Protect(ManageProject);
+export default WidthCheck(Protect(ManageProject));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.query;

@@ -12,6 +12,7 @@ import { invitationsTabSelector, setInvitationsTab } from '@/slices/feedSlice';
 import { Invitation } from '@/types';
 import Protect from '@/utils/protect';
 import Toaster from '@/utils/toaster';
+import WidthCheck from '@/utils/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect, useState } from 'react';
@@ -104,4 +105,4 @@ const Invitations = () => {
   );
 };
 
-export default Protect(Invitations);
+export default WidthCheck(Protect(Invitations));

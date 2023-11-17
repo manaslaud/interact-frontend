@@ -10,6 +10,7 @@ import MainWrapper from '@/wrappers/main';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
+import WidthCheck from '@/utils/widthCheck';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
@@ -34,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Protect(Home);
+export default WidthCheck(Protect(Home));

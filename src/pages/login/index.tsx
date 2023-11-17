@@ -19,6 +19,7 @@ import { User } from '@/types';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
 import useUserStateFetcher from '@/hooks/user_fetcher';
+import WidthCheck from '@/utils/widthCheck';
 
 const Login = () => {
   const router = useRouter();
@@ -210,4 +211,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-export default Login;
+export default WidthCheck(Login);

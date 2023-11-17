@@ -6,6 +6,7 @@ import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
 import ProfileCompletion from '@/sections/home/profile_completion';
 import { exploreTabSelector, setExploreTab } from '@/slices/feedSlice';
+import WidthCheck from '@/utils/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React from 'react';
@@ -39,4 +40,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default WidthCheck(Explore);

@@ -9,6 +9,7 @@ import Posts from '@/screens/bookmarks/posts';
 import Projects from '@/screens/bookmarks/projects';
 import Protect from '@/utils/protect';
 import Openings from '@/screens/bookmarks/openings';
+import WidthCheck from '@/utils/widthCheck';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -33,4 +34,4 @@ const Bookmarks = () => {
   );
 };
 
-export default Protect(Bookmarks);
+export default WidthCheck(Protect(Bookmarks));

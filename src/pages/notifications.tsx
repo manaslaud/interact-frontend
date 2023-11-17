@@ -17,6 +17,7 @@ import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SERVER_ERROR } from '@/config/errors';
+import WidthCheck from '@/utils/widthCheck';
 
 const Home = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -109,4 +110,4 @@ const Home = () => {
   );
 };
 
-export default Protect(Home);
+export default WidthCheck(Protect(Home));

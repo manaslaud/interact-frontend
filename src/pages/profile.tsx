@@ -21,6 +21,8 @@ import Loader from '@/components/common/loader';
 import patchHandler from '@/handlers/patch_handler';
 import { setReduxTagline } from '@/slices/userSlice';
 import PostsLoader from '@/components/loaders/posts';
+import Protect from '@/utils/protect';
+import WidthCheck from '@/utils/widthCheck';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -294,4 +296,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default WidthCheck(Protect(Profile));

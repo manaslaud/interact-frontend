@@ -24,6 +24,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { resizeImage } from '@/utils/resize_image';
 import Protect from '@/utils/protect';
+import WidthCheck from '@/utils/widthCheck';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -340,4 +341,4 @@ const Onboarding = () => {
   );
 };
 
-export default Protect(Onboarding);
+export default WidthCheck(Protect(Onboarding));

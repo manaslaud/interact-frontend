@@ -1,23 +1,16 @@
-import TabMenu from '@/components/common/tab_menu';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
-import { initialPost, initialUser } from '@/types/initials';
-import { EXPLORE_URL, POST_URL, USER_COVER_PIC_URL } from '@/config/routes';
+import { initialPost } from '@/types/initials';
+import { POST_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
-import Image from 'next/image';
-import { useSelector } from 'react-redux';
-import { navbarOpenSelector } from '@/slices/feedSlice';
-import Posts from '@/screens/profile/posts';
-import Projects from '@/screens/profile/projects';
-import { Membership, Project } from '@/types';
 import { GetServerSidePropsContext } from 'next/types';
-import ProfileCard from '@/sections/explore/profile_card';
 import PostComponent from '@/components/home/post';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
+import WidthCheck from '@/utils/widthCheck';
 
 interface Props {
   id: string;
@@ -62,7 +55,7 @@ const Post = ({ id }: Props) => {
   );
 };
 
-export default Post;
+export default WidthCheck(Post);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;

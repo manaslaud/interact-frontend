@@ -10,6 +10,7 @@ import UpdatePhoneNumber from '@/sections/settings/update_phone_number';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
+import WidthCheck from '@/utils/widthCheck';
 
 const Settings = () => {
   const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
@@ -101,4 +102,4 @@ const Settings = () => {
   );
 };
 
-export default Protect(Settings);
+export default WidthCheck(Protect(Settings));

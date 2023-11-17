@@ -19,6 +19,7 @@ import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
 import PostsLoader from '@/components/loaders/posts';
+import WidthCheck from '@/utils/widthCheck';
 
 interface Props {
   username: string;
@@ -114,7 +115,7 @@ const User = ({ username }: Props) => {
   );
 };
 
-export default User;
+export default WidthCheck(User);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { username } = context.query;

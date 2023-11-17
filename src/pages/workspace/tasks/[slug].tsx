@@ -8,9 +8,10 @@ import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';
 import { userSelector } from '@/slices/userSlice';
 import { Project, Task } from '@/types';
-import { initialProject, initialTask } from '@/types/initials';
+import { initialProject } from '@/types/initials';
 import Protect from '@/utils/protect';
 import Toaster from '@/utils/toaster';
+import WidthCheck from '@/utils/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import { GetServerSidePropsContext } from 'next';
@@ -180,7 +181,7 @@ const Tasks = ({ slug }: Props) => {
   );
 };
 
-export default Protect(Tasks);
+export default WidthCheck(Protect(Tasks));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.query;

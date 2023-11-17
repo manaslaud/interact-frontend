@@ -15,6 +15,7 @@ import {
   messagingTabSelector,
   setMessagingTab,
 } from '@/slices/messagingSlice';
+import WidthCheck from '@/utils/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import { PencilSimpleLine } from '@phosphor-icons/react';
@@ -118,4 +119,4 @@ const Messaging = () => {
   );
 };
 
-export default Messaging;
+export default WidthCheck(Messaging);

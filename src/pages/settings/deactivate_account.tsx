@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
+import WidthCheck from '@/utils/widthCheck';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);
@@ -75,4 +76,4 @@ const Deactive = () => {
   );
 };
 
-export default Protect(Deactive);
+export default WidthCheck(Protect(Deactive));
