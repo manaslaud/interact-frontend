@@ -69,8 +69,8 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
     else if (field == 'name') formData.append('name', name);
     else if (field == 'bio') formData.append('bio', bio);
     else if (field == 'tagline') formData.append('tagline', tagline);
-    else if (field == 'tags') tags.forEach(tag => formData.append('tags', tag));
-    else if (field == 'links') links.forEach(link => formData.append('links', link));
+    else if (field == 'tags') tags.forEach(tag => formData.append('tags[]', tag));
+    else if (field == 'links') links.forEach(link => formData.append('links[]', link));
 
     const URL = `${USER_URL}/me`;
 
@@ -278,12 +278,12 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
 
         {clickedOnBio ? (
           <div className="w-full">
-            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Bio ({bio.trim().length}/1000)</div>
+            <div className="text-xs ml-1 font-medium uppercase text-gray-500">Bio ({bio.trim().length}/500)</div>
             <textarea
               value={bio}
               onChange={el => setBio(el.target.value)}
-              placeholder="add a professional bio"
-              maxLength={1000}
+              placeholder="add a short bio"
+              maxLength={500}
               className="w-full min-h-[160px] max-h-[200px] focus:outline-none text-primary_black border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-2 text-sm bg-transparent"
             />
             <SaveBtn setter={setClickedOnBio} field="bio" />
@@ -301,7 +301,7 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
               } top-2 right-2 transition-ease-300`}
             />
             {user.bio.trim() == '' ? (
-              <div className="text-gray-400">Click here to add a bio!</div>
+              <div className="text-gray-400">Click here to add a short bio!</div>
             ) : (
               <div className={`text-center max-md:text-sm cursor-pointer`}>{user.bio}</div>
             )}

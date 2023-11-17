@@ -61,6 +61,7 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false }: Props) => {
         <input
           type="text"
           className={`grow border-[1px] bg-transparent border-transparent rounded-md px-3 py-2 outline-none`}
+          maxLength={20}
           value={tagInput}
           onChange={handleTagInputChange}
           onKeyDown={handleTagInputKeyDown}

@@ -3,7 +3,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
-import { initialUser } from '@/types/initials';
+import { initialProfile, initialUser } from '@/types/initials';
 import { EXPLORE_URL, USER_COVER_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
-import { Membership, Post, Project } from '@/types';
 import { GetServerSidePropsContext } from 'next/types';
 import ProfileCard from '@/sections/explore/profile_card';
 import ProfileCardLoader from '@/components/loaders/profile_card';
@@ -20,6 +19,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
 import PostsLoader from '@/components/loaders/posts';
 import WidthCheck from '@/utils/widthCheck';
+import About from '@/screens/profile/about';
 
 interface Props {
   username: string;
@@ -85,7 +85,7 @@ const User = ({ username }: Props) => {
             )}
 
             <TabMenu
-              items={['Posts', 'Projects', 'Collaborating']}
+              items={['About', 'Posts', 'Projects', 'Collaborating']}
               active={active}
               setState={setActive}
               width={'640px'}
@@ -93,6 +93,9 @@ const User = ({ username }: Props) => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
+              {loading ? <Loader /> : <About profile={user.profile || initialProfile} />}
+            </div>
+            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
               {loading ? (
                 <div className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen max-lg:px-4 pb-2">
                   <PostsLoader />
@@ -101,13 +104,12 @@ const User = ({ username }: Props) => {
                 <Posts userID={user.id} />
               )}
             </div>
-            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+            <div className={`${active === 2 ? 'block' : 'hidden'}`}>
               {loading ? <Loader /> : <Projects userID={user.id} />}
             </div>
-            <div className={`${active === 2 ? 'block' : 'hidden'} `}>
+            <div className={`${active === 3 ? 'block' : 'hidden'} `}>
               {loading ? <Loader /> : <Projects userID={user.id} contributing={true} />}
             </div>
-            <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>
         </div>
       </MainWrapper>

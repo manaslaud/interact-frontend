@@ -87,6 +87,18 @@ export interface Opening {
   createdAt: Date;
 }
 
+export interface Profile {
+  id: string;
+  userID: string;
+  achievements: Achievement[];
+  school: string;
+  degree: string;
+  yearOfGraduation: number;
+  description: string;
+  areasOfCollaboration: string[];
+  hobbies: string[];
+}
+
 export interface User {
   id: string;
   tags: string[];
@@ -101,8 +113,7 @@ export interface User {
   bio: string;
   title: string;
   tagline: string;
-  education: Education[];
-  achievements: Achievement[];
+  profile: Profile;
   followers: User[];
   following: User[];
   memberships: Membership[];

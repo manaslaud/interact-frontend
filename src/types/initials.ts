@@ -16,6 +16,7 @@ import {
   OrganizationMembership,
   Post,
   PostBookmark,
+  Profile,
   Project,
   ProjectBookmark,
   SubTask,
@@ -35,6 +36,18 @@ export const initialAchievement: Achievement = {
   skills: [],
 };
 
+export const initialProfile: Profile = {
+  id: '',
+  userID: '',
+  achievements: [],
+  areasOfCollaboration: [],
+  degree: '',
+  description: '',
+  hobbies: [],
+  yearOfGraduation: 0,
+  school: '',
+};
+
 export const initialUser: User = {
   id: '',
   tags: [],
@@ -48,8 +61,7 @@ export const initialUser: User = {
   bio: '',
   title: '',
   tagline: '',
-  education: [],
-  achievements: [],
+  profile: initialProfile,
   followers: [],
   following: [],
   memberships: [],

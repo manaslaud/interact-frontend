@@ -3,7 +3,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
-import { initialUser } from '@/types/initials';
+import { initialProfile, initialUser } from '@/types/initials';
 import { USER_COVER_PIC_URL, USER_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
@@ -23,6 +23,7 @@ import { setReduxTagline } from '@/slices/userSlice';
 import PostsLoader from '@/components/loaders/posts';
 import Protect from '@/utils/protect';
 import WidthCheck from '@/utils/widthCheck';
+import About from '@/screens/profile/my_about';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -266,7 +267,7 @@ const Profile = () => {
             )}
 
             <TabMenu
-              items={['Posts', 'Projects', 'Collaborating']}
+              items={['About', 'Posts', 'Projects', 'Collaborating']}
               active={active}
               setState={setActive}
               width={'640px'}
@@ -275,6 +276,13 @@ const Profile = () => {
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
               {loading ? (
+                <Loader />
+              ) : (
+                <About profile={user.profile ? user.profile : initialProfile} setUser={setUser} />
+              )}
+            </div>
+            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
+              {loading ? (
                 <div className="w-[45vw] mx-auto max-lg:w-[85%] max-md:w-screen max-lg:px-4 pb-2">
                   <PostsLoader />
                 </div>
@@ -282,13 +290,12 @@ const Profile = () => {
                 <Posts userID={user.id} />
               )}
             </div>
-            <div className={`${active === 1 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <Projects userID={user.id} displayOnProfile={true} />}
+            <div className={`${active === 2 ? 'block' : 'hidden'}`}>
+              {loading ? <Loader /> : <Projects userID={user.id} />}
             </div>
-            <div className={`${active === 2 ? 'block' : 'hidden'} `}>
+            <div className={`${active === 3 ? 'block' : 'hidden'} `}>
               {loading ? <Loader /> : <Projects userID={user.id} contributing={true} />}
             </div>
-            <div className={`${active === 3 ? 'block' : 'hidden'} `}></div>
           </div>
         </div>
       </MainWrapper>
