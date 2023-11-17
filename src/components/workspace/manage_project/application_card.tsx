@@ -3,28 +3,34 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { Application } from '@/types';
 import getApplicationStatus from '@/utils/get_application_status';
+import { initialAchievement } from '@/types/initials';
 
 interface Props {
   application: Application;
-  clickedApplication?: Application;
+  index: number;
+  clickedApplicationID: number;
+  applications: Application[];
   setClickedOnApplication?: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedApplication?: React.Dispatch<React.SetStateAction<Application>>;
+  setClickedApplicationID?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ApplicationCard = ({
   application,
-  clickedApplication,
+  index,
+  applications,
+  clickedApplicationID,
   setClickedOnApplication,
-  setClickedApplication,
+  setClickedApplicationID,
 }: Props) => {
+  const clickedApplication = applications[clickedApplicationID] || initialAchievement;
   return (
     <div
       onClick={() => {
-        if (setClickedApplication) setClickedApplication(application);
+        if (setClickedApplicationID) setClickedApplicationID(index);
         if (setClickedOnApplication) setClickedOnApplication(true);
       }}
       className={`w-full ${
-        application.id == clickedApplication?.id ? 'bg-[#ffffff2b]' : ''
+        application.id == clickedApplication?.id ? 'bg-white' : 'hover:bg-gray-100'
       } font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex items-center justify-between p-6 transition-ease-300 cursor-pointer`}
     >
       <div className="flex items-center justify-between gap-6">

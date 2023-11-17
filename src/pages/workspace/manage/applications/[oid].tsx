@@ -28,7 +28,7 @@ const Applications = ({ oid }: Props) => {
   const [loading, setLoading] = useState(true);
 
   const [clickedOnApplication, setClickedOnApplication] = useState(false);
-  const [clickedApplication, setClickedApplication] = useState(initialApplication);
+  const [clickedApplicationID, setClickedApplicationID] = useState(-1);
 
   const router = useRouter();
 
@@ -41,9 +41,9 @@ const Applications = ({ oid }: Props) => {
       setFilteredApplications(applicationData);
       const aid = new URLSearchParams(window.location.search).get('aid');
       if (aid && aid != '') {
-        applicationData.forEach((application: Application) => {
+        applicationData.forEach((application: Application, id: number) => {
           if (aid == application.id) {
-            setClickedApplication(application);
+            setClickedApplicationID(id);
             setClickedOnApplication(true);
           }
         });
@@ -57,6 +57,7 @@ const Applications = ({ oid }: Props) => {
 
   const filterShortlisted = (status: boolean) => {
     setFilterStatus(status);
+    setClickedOnApplication(false);
     if (status) setFilteredApplications(applications.filter(application => application.status == 1));
     else setFilteredApplications(applications);
   };
@@ -65,13 +66,13 @@ const Applications = ({ oid }: Props) => {
     fetchApplications();
   }, [oid]);
 
-  useEffect(() => {
-    if (clickedApplication.id != '')
-      router.push({
-        pathname: router.pathname,
-        query: { ...router.query, aid: clickedApplication.id },
-      });
-  }, [clickedApplication]);
+  // useEffect(() => {
+  //   if (clickedApplicationID != -1)
+  //     router.push({
+  //       pathname: router.pathname,
+  //       query: { ...router.query, aid: filteredApplications[clickedApplicationID].id },
+  //     });
+  // }, [clickedApplicationID]);
 
   return (
     <BaseWrapper title="Applications">
@@ -87,7 +88,12 @@ const Applications = ({ oid }: Props) => {
               />
               <div className="text-4xl font-semibold dark:text-white font-primary">Applications</div>
             </div>
-            <div onClick={() => filterShortlisted(!filterStatus)} className="">
+            <div
+              onClick={() => filterShortlisted(!filterStatus)}
+              className={`h-fit ${
+                filterStatus ? 'underline underline-offset-4' : 'hover-underline-animation after:bg-black'
+              } text-xl font-medium cursor-pointer`}
+            >
               Only Shortlisted
             </div>
           </div>
@@ -103,21 +109,24 @@ const Applications = ({ oid }: Props) => {
                         clickedOnApplication ? 'w-[40%]' : 'w-[720px]'
                       } max-md:w-[720px] flex flex-col gap-4`}
                     >
-                      {filteredApplications.map(application => {
+                      {filteredApplications.map((application, i) => {
                         return (
                           <ApplicationCard
                             key={application.id}
+                            index={i}
                             application={application}
-                            clickedApplication={clickedApplication}
+                            applications={filteredApplications}
+                            clickedApplicationID={clickedApplicationID}
                             setClickedOnApplication={setClickedOnApplication}
-                            setClickedApplication={setClickedApplication}
+                            setClickedApplicationID={setClickedApplicationID}
                           />
                         );
                       })}
                     </div>
                     {clickedOnApplication ? (
                       <ApplicationView
-                        application={clickedApplication}
+                        applicationIndex={clickedApplicationID}
+                        applications={filteredApplications}
                         setShow={setClickedOnApplication}
                         setApplications={setApplications}
                         setFilteredApplications={setFilteredApplications}

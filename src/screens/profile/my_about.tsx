@@ -338,7 +338,7 @@ const About = ({ profile, setUser }: Props) => {
           </div>
 
           {!profile.hobbies || profile.hobbies.length == 0 ? (
-            <div className="text-center py-2 bg-gray-100 rounded-lg cursor-pointer">Click here to edit!</div>
+            <div className="text-center py-4 bg-gray-100 rounded-lg cursor-pointer">Click here to edit!</div>
           ) : (
             <div className="w-full flex flex-wrap">
               {profile.hobbies.map((el, i) => (

@@ -177,7 +177,7 @@ const ProjectView = ({
       ) : (
         <div
           {...swipeHandler}
-          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-[150] flex dark:bg-backdrop backdrop-blur-2xl"
+          className="w-screen h-screen dark:text-white font-primary fixed top-0 left-0 z-50 flex dark:bg-backdrop backdrop-blur-2xl"
         >
           {clickedOnEdit ? (
             <EditProject
@@ -190,11 +190,11 @@ const ProjectView = ({
             <></>
           )}
           {clickedOnLeave ? (
-            <ConfirmDelete setShow={setClickedOnLeave} handleDelete={handleDelete} title="Confirm Leave?" />
+            <ConfirmDelete setShow={setClickedOnLeave} handleDelete={handleLeaveProject} title="Confirm Leave?" />
           ) : (
             <></>
           )}
-          {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleLeaveProject} /> : <></>}
+          {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
           <div className="max-lg:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-lg:fixed max-lg:top-0 max-lg:left-0">
             <div className="w-10 h-10 relative">
               <Image

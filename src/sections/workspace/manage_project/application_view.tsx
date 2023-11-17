@@ -11,16 +11,26 @@ import router from 'next/router';
 import getDomainName from '@/utils/get_domain_name';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
+import { initialApplication } from '@/types/initials';
 
 interface Props {
-  application: Application;
+  applicationIndex: number;
+  applications: Application[];
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setApplications?: React.Dispatch<React.SetStateAction<Application[]>>;
   setFilteredApplications?: React.Dispatch<React.SetStateAction<Application[]>>;
 }
 
-const ApplicationView = ({ application, setShow, setApplications, setFilteredApplications }: Props) => {
+const ApplicationView = ({
+  applicationIndex,
+  applications,
+  setShow,
+  setApplications,
+  setFilteredApplications,
+}: Props) => {
   const [mutex, setMutex] = useState(false);
+
+  const application = applications[applicationIndex] || initialApplication;
 
   const handleAccept = async () => {
     if (mutex) return;

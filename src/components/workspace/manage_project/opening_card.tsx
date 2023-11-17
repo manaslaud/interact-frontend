@@ -11,6 +11,7 @@ import ConfirmDelete from '@/components/common/confirm_delete';
 import { SERVER_ERROR } from '@/config/errors';
 import deleteHandler from '@/handlers/delete_handler';
 import Toaster from '@/utils/toaster';
+import moment from 'moment';
 
 interface Props {
   opening: Opening;
@@ -77,8 +78,9 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
           <div className="flex items-start justify-between">
             <div className="w-5/6 flex flex-col gap-1">
               <div className="font-bold text-2xl max-md:text-lg text-gradient">{opening.title}</div>
-              <div className="text-lg max-md:text-sm">{project.title}</div>
-              <div className="max-md:text-sm">
+              {/* <div className="text-lg max-md:text-sm">{project.title}</div> */}
+              <div className="text-sm text-gray-500">{moment(opening.createdAt).fromNow()}</div>
+              <div className="text-sm mt-2">
                 {opening.noOfApplications} Application{opening.noOfApplications == 1 ? '' : 's'}
               </div>
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
@@ -88,7 +90,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
                       href={`/workspace/manage/applications/${opening.id}`}
                       className="w-fit text-[#15bffd] text-sm max-md:text-sm underline underline-offset-4"
                     >
-                      View applications
+                      View
                     </Link>
                   ) : (
                     <div className="w-fit dark:text-white text-sm max-md:text-sm underline underline-offset-4 cursor-default">
