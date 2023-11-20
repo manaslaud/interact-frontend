@@ -15,7 +15,6 @@ import socketService from '@/config/ws';
 import { Inter } from 'next/font/google';
 import ThemeCheck from '@/config/theme';
 import Head from 'next/head';
-import Script from 'next/script';
 
 NProgressConfig();
 

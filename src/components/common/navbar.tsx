@@ -1,6 +1,6 @@
 import Notifications from '@/sections/navbar/notifications';
 import { unreadChatsSelector, unreadNotificationsSelector } from '@/slices/feedSlice';
-import { Bell, ChatCircleDots, MagnifyingGlass } from '@phosphor-icons/react';
+import { Bell, ChatCircleDots, Handshake, MagnifyingGlass } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
@@ -9,16 +9,19 @@ import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { userSelector } from '@/slices/userSlice';
 import ProfileDropdown from '@/sections/navbar/profile_dropdown';
 import Link from 'next/link';
+import Feedback from './feedback';
 
 const Navbar = () => {
   const notifications = useSelector(unreadNotificationsSelector);
   const chats = (useSelector(unreadChatsSelector) || []).length;
   const [clickedOnNotifications, setClickedOnNotifications] = useState(false);
   const [clickedOnProfile, setClickedOnProfile] = useState(false);
+  const [clickedOnFeedback, setClickedOnFeedback] = useState(false);
   const user = useSelector(userSelector);
   return (
     <>
       {clickedOnNotifications ? <Notifications setShow={setClickedOnNotifications} /> : <></>}
+      {clickedOnFeedback ? <Feedback setShow={setClickedOnFeedback} /> : <></>}
       <div className={`${clickedOnProfile ? '' : 'hidden'}`}>
         <ProfileDropdown setShow={setClickedOnProfile} />
       </div>
@@ -31,6 +34,12 @@ const Navbar = () => {
         </Link>
         {user.isLoggedIn ? (
           <div className="flex items-center gap-2 z-0">
+            <div
+              onClick={() => setClickedOnFeedback(true)}
+              className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover cursor-pointer transition-ease-300"
+            >
+              <Handshake className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+            </div>
             <Link
               className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
               href={'/explore'}

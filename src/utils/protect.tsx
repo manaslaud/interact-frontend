@@ -9,7 +9,8 @@ const Protect = <Props extends Object>(Component: ComponentType<Props>) => {
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(0);
     useEffect(() => {
-      if (!Cookies.get('token')) {
+      const token = Cookies.get('token');
+      if (!token || token == '') {
         Toaster.error('You are not logged in.');
         setIsAuthenticated(0);
         router.push('/login');

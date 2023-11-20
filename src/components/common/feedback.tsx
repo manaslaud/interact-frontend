@@ -6,16 +6,14 @@ import { X } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
-  userID?: string;
-  postID?: string;
-  projectID?: string;
-  openingID?: string;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
-  const [reportType, setReportType] = useState(-1);
+const Feedback = ({ setShow }: Props) => {
+  const [type, setType] = useState(-1);
   const [content, setContent] = useState('');
+
+  const [feedbackAdded, setFeedbackAdded] = useState(false);
   const [mutex, setMutex] = useState(false);
 
   useEffect(() => {
@@ -31,23 +29,23 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
   }, []);
 
   const handleSubmit = async () => {
-    if (reportType == -1) {
-      Toaster.error('Select a Report type!');
+    if (type == -1) {
+      Toaster.error('Select a Feedback type!');
+      return;
+    }
+    if (content.trim() == '') {
+      Toaster.error('Message cannot be empty!');
       return;
     }
     if (mutex) return;
     setMutex(true);
-    const toaster = Toaster.startLoad('Reporting');
-    const res = await postHandler(`${USER_URL}/report`, {
+    const toaster = Toaster.startLoad('Submitting your Feedback');
+    const res = await postHandler(`${USER_URL}/feedback`, {
       content,
-      reportType: reportType,
-      userID: userID ? userID : '',
-      postID: postID ? postID : '',
-      projectID: projectID ? projectID : '',
-      openingID: openingID ? openingID : '',
+      type,
     });
     if (res.statusCode === 201) {
-      Toaster.stopLoad(toaster, 'Reported!', 1);
+      Toaster.stopLoad(toaster, 'Feedback Submitted!', 1);
       setShow(false);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -56,15 +54,15 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
     setMutex(false);
   };
 
-  const reportTypes = [
-    'Inappropriate Content',
-    'Spam or Misleading Content',
-    'Harassment or Bullying',
-    'Impersonation',
-    'Privacy Violation',
-    'Hate Speech',
-    'NSFW Content',
-    'Violent or Harmful Content',
+  const feedbackTypes = [
+    'Bug Report',
+    'Feature Request',
+    'Improvement Ideas',
+    'Performance Issue',
+    'Usability Feedback',
+    'Content Feedback',
+    'Accessibility Feedback',
+    'General Feedback',
   ];
 
   function uncheckCheckbox(id: string) {
@@ -73,19 +71,11 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
   }
 
   const handleChange = (id: number) => {
-    if (reportType == id) setReportType(-1);
+    if (type == id) setType(-1);
     else {
-      uncheckCheckbox(String(reportType));
-      setReportType(id);
+      uncheckCheckbox(String(type));
+      setType(id);
     }
-  };
-
-  const getItemType = () => {
-    if (userID) return 'profile';
-    if (postID) return 'post';
-    if (projectID) return 'project';
-    if (openingID) return 'opening';
-    return '';
   };
 
   return (
@@ -96,24 +86,22 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
         </div>
         <div className="w-full max-md:h-56 md:flex-1 flex flex-col justify-between gap-4">
           <div className="w-full flex flex-col gap-8">
-            <div className="font-semibold text-6xl text-gray-800 dark:text-white capitalize">
-              Report {getItemType()}
-            </div>
+            <div className="font-semibold text-6xl text-gray-800 dark:text-white capitalize">Help Us Improve!</div>
 
             <div className="w-full flex flex-col gap-4">
-              <div className="font-medium text-sm">What was wrong with this {getItemType()}?</div>
+              <div className="font-medium text-sm">Choose a feedback type and help us decode your thoughts 🕵️‍♂️</div>
 
               <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-4">
-                {reportTypes.map((report, i) => (
+                {feedbackTypes.map((feedback, i) => (
                   <div key={i} className="content flex items-center gap-1">
                     <div className="w-8">
-                      <label className="checkBox">
+                      <label className="checkBox !border-primary_black">
                         <input onClick={() => handleChange(i + 1)} id={String(i + 1)} type="checkbox" />
-                        <div className="transition-ease-300"></div>
+                        <div className="transition-ease-300 !bg-primary_black"></div>
                       </label>
                     </div>
 
-                    <div className="text-sm w-[calc(100%-32px)] cursor-default">{report}</div>
+                    <div className="text-sm w-[calc(100%-32px)] cursor-default">{feedback}</div>
                   </div>
                 ))}
               </div>
@@ -133,7 +121,7 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
           </div>
           <div
             onClick={handleSubmit}
-            className="w-1/3 max-md:w-1/2 mx-auto text-center bg-primary_comp border-2 border-[#1f1f1f] dark:border-dark_primary_btn hover:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] cursor-pointer transition-ease-200"
+            className="w-1/3 max-md:w-1/2 mx-auto text-center bg-primary_comp border-2 border-[#1f1f1f] dark:border-dark_primary_btn hover:text-white py-2 rounded-xl text-xl hover:bg-primary_black cursor-pointer transition-ease-200"
           >
             Confirm
           </div>
@@ -147,4 +135,4 @@ const Report = ({ userID, postID, projectID, openingID, setShow }: Props) => {
   );
 };
 
-export default Report;
+export default Feedback;
