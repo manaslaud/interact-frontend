@@ -70,7 +70,7 @@ const Applications = () => {
                     href={`/explore?oid=${application.openingID}`}
                     onClick={() => dispatch(setExploreTab(1))}
                     key={application.id}
-                    className={`w-full font-primary dark:text-white border-[1px] border-gray-400 bg-gray-100 dark:bg-transparent  dark:border-dark_primary_btn rounded-lg p-8 max-lg:p-4 flex items-center gap-12 max-lg:gap-4 dark:hover:bg-dark_primary_comp_hover transition-ease-300 cursor-pointer`}
+                    className={`w-full font-primary dark:text-white border-[1px] border-gray-400 bg-gray-100 dark:bg-transparent  dark:border-dark_primary_btn rounded-lg p-6 max-lg:p-4 flex items-center gap-6 max-lg:gap-4 dark:hover:bg-dark_primary_comp_hover transition-ease-300 cursor-pointer`}
                   >
                     <Image
                       crossOrigin="anonymous"
@@ -84,15 +84,15 @@ const Applications = () => {
                     <div className="grow flex flex-col gap-4 max-lg:gap-2">
                       <div className="flex items-center justify-between">
                         <div className="w-5/6 flex flex-col gap-1">
-                          <div className="font-bold text-2xl max-lg:text-lg text-gradient">
+                          <div className="w-fit font-bold text-xl max-lg:text-lg text-gradient">
                             {application.opening.title}
                           </div>
-                          <div className="text-lg font-medium max-lg:text-sm">{application.project.title}</div>
+                          <div className="line-clamp-1 font-medium max-lg:text-sm">@{application.project.title}</div>
                           <div className="text-sm opacity-60 max-lg:text-xs">
                             {moment(application.createdAt).fromNow()}
                           </div>
                         </div>
-                        <div className="max-lg:text-xs">{getApplicationStatus(application.status)}</div>
+                        <div className="text-sm max-lg:text-xs">{getApplicationStatus(application.status)}</div>
                       </div>
                     </div>
                   </Link>

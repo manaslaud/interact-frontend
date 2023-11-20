@@ -51,7 +51,7 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
       ) : (
         <>
           {searches.length > 0 ? (
-            <div className="w-full bg-white dark:bg-transparent backdrop-blur-lg shadow-xl dark:border-dark_primary_btn dark:border-[1px] dark:text-white absolute top-16 max-md:top-14 flex flex-col gap-6 z-10 rounded-md p-4">
+            <div className="w-full bg-white dark:bg-transparent backdrop-blur-lg shadow-xl dark:border-dark_primary_btn dark:border-[1px] dark:text-white absolute top-16 max-md:top-14 flex flex-col gap-6 z-[25] rounded-md p-4">
               <div className="w-full flex items-center justify-between">
                 <div className="text-4xl max-md:text-3xl font-bold ">
                   {search == '' ? 'Trending Searches' : 'Suggestions'}

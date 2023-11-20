@@ -89,7 +89,10 @@ const Feedback = ({ setShow }: Props) => {
             <div className="font-semibold text-6xl text-gray-800 dark:text-white capitalize">Help Us Improve!</div>
 
             <div className="w-full flex flex-col gap-4">
-              <div className="font-medium text-sm">Choose a feedback type and help us decode your thoughts 🕵️‍♂️</div>
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="font-medium text-sm">Choose a feedback type and help us decode your thoughts 🕵️‍♂️</div>
+                {/* <div className="font-light text-xs">( user info is not stored )</div> */}
+              </div>
 
               <div className="w-full grid grid-cols-4 max-md:grid-cols-1 gap-4">
                 {feedbackTypes.map((feedback, i) => (

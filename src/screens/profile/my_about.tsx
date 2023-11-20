@@ -344,7 +344,7 @@ const About = ({ profile, setUser }: Props) => {
               {profile.hobbies.map((el, i) => (
                 <div
                   key={i}
-                  className="text-sm hover:bg-white p-3 py-2 rounded-lg cursor-default hover:scale-105 transition-ease-500"
+                  className="text-sm hover:bg-white p-3 py-2 rounded-lg cursor-pointer hover:scale-105 transition-ease-500"
                 >
                   {el}
                 </div>

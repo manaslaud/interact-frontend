@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Collaborators = ({ memberships, workspace = false }: Props) => {
-  const [showIndex, setShowIndex] = useState(-1);
   return (
     <>
       {memberships && memberships.length > 0 ? (
