@@ -33,18 +33,18 @@ const Navbar = () => {
           <ReactSVG src="/onboarding_logo.svg" />
         </Link>
         {user.isLoggedIn ? (
-          <div className="flex items-center gap-2 z-0">
+          <div className="flex items-center gap-2 max-md:gap-0 z-0">
             <div
               onClick={() => setClickedOnFeedback(true)}
               className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover cursor-pointer transition-ease-300"
             >
-              <Handshake className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+              <Handshake className="max-md:w-6 max-md:h-6" size={24} weight="regular" />
             </div>
             <Link
               className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
               href={'/explore'}
             >
-              <MagnifyingGlass className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+              <MagnifyingGlass className="max-md:w-6 max-md:h-6" size={24} weight="regular" />
             </Link>
             <Link
               className="w-10 h-10 rounded-full flex-center relative hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
@@ -57,7 +57,7 @@ const Navbar = () => {
               ) : (
                 <></>
               )}
-              <ChatCircleDots className="max-md:w-8 max-md:h-8" size={24} weight="regular" />
+              <ChatCircleDots className="max-md:w-6 max-md:h-6" size={24} weight="regular" />
             </Link>
             <div
               onClick={() => {
@@ -74,11 +74,11 @@ const Navbar = () => {
               ) : (
                 <></>
               )}
-              <Bell className="cursor-pointer max-md:w-8 max-md:h-8" size={24} weight="regular" />
+              <Bell className="cursor-pointer max-md:w-6 max-md:h-6" size={24} weight="regular" />
             </div>
             <Image
               crossOrigin="anonymous"
-              className="w-9 h-9 max-md:w-8 max-md:h-8 rounded-full cursor-pointer"
+              className="w-9 h-9 max-md:w-6 max-md:h-6 max-md:ml-2 rounded-full cursor-pointer"
               onClick={() => {
                 setClickedOnNotifications(false);
                 setClickedOnProfile(prev => !prev);

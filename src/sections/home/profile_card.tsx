@@ -71,7 +71,7 @@ const ProfileCard = () => {
             <>
               <div className="relative">
                 <Link
-                  href={'/profile?action=edit&id=profilePic'}
+                  href={'/profile?action=edit&tag=profilePic'}
                   className={`${
                     open ? 'w-44 h-44' : 'w-0 h-0'
                   } absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50`}
@@ -91,7 +91,7 @@ const ProfileCard = () => {
               </div>
 
               <Link
-                href={'/profile?action=edit&id=name'}
+                href={'/profile?action=edit&tag=name'}
                 className="w-full relative group rounded-lg flex-center p-2 hover:bg-primary_comp cursor-pointer transition-ease-300"
               >
                 <PencilSimple className="absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300" />
@@ -122,7 +122,7 @@ const ProfileCard = () => {
               <div className="w-full h-[1px] border-t-[1px] border-gray-500 border-dashed"></div>
 
               <Link
-                href={'/profile?action=edit&id=bio'}
+                href={'/profile?action=edit&tag=bio'}
                 className={`w-full relative group rounded-lg flex-center p-4 ${
                   user.bio.trim() == '' ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                 } cursor-pointer transition-ease-300`}
@@ -143,7 +143,7 @@ const ProfileCard = () => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Skills</div>
 
                 <Link
-                  href={'/profile?action=edit&id=tags'}
+                  href={'/profile?action=edit&tag=tags'}
                   className={`w-full relative group rounded-lg flex-center p-4 ${
                     !user.tags || user.tags?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                   } cursor-pointer transition-ease-300`}
@@ -192,7 +192,7 @@ const ProfileCard = () => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links</div>
 
                 <Link
-                  href={'/profile?action=edit&id=links'}
+                  href={'/profile?action=edit&tag=links'}
                   className={`w-full relative group rounded-lg flex-center p-4 ${
                     !user.links || user.links?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                   } cursor-pointer transition-ease-300`}

@@ -76,4 +76,4 @@ const Deactive = () => {
   );
 };
 
-export default WidthCheck(Protect(Deactive));
+export default Protect(Deactive);

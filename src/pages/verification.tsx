@@ -165,4 +165,4 @@ const Verification = () => {
   );
 };
 
-export default WidthCheck(Protect(Verification));
+export default Protect(Verification);

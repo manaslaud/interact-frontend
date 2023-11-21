@@ -105,4 +105,4 @@ const Invitations = () => {
   );
 };
 
-export default WidthCheck(Protect(Invitations));
+export default Protect(Invitations);

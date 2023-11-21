@@ -34,4 +34,4 @@ const Bookmarks = () => {
   );
 };
 
-export default WidthCheck(Protect(Bookmarks));
+export default Protect(Bookmarks);

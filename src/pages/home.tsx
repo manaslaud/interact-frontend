@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default WidthCheck(Protect(Home));
+export default Protect(Home);

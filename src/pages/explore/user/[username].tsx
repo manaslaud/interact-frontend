@@ -117,7 +117,7 @@ const User = ({ username }: Props) => {
   );
 };
 
-export default WidthCheck(User);
+export default User;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { username } = context.query;

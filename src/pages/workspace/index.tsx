@@ -38,4 +38,4 @@ const Workspace = () => {
   );
 };
 
-export default WidthCheck(Protect(Workspace));
+export default Protect(Workspace);

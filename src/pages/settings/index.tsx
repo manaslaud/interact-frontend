@@ -102,4 +102,4 @@ const Settings = () => {
   );
 };
 
-export default WidthCheck(Protect(Settings));
+export default Protect(Settings);

@@ -55,7 +55,7 @@ const Post = ({ id }: Props) => {
   );
 };
 
-export default WidthCheck(Post);
+export default Post;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;

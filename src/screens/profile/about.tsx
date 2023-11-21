@@ -8,7 +8,7 @@ interface Props {
 
 const About = ({ profile }: Props) => {
   return (
-    <div className="w-[640px] text-primary_black mx-auto flex flex-col gap-4 pb-8">
+    <div className="w-[640px] max-md:w-screen text-primary_black mx-auto flex flex-col gap-4 max-md:px-6 pb-8">
       <div className="w-full flex flex-col gap-2">
         {profile.school != '' ? (
           <div className="w-full flex justify-between items-center flex-wrap gap-4">
@@ -31,7 +31,7 @@ const About = ({ profile }: Props) => {
         {profile.degree != '' ? (
           <div className="flex gap-2 items-center text-lg">
             <Certificate weight="bold" size={24} />
-            <div>Computer Science and Engineering</div>
+            <div>{profile.degree}</div>
           </div>
         ) : (
           <></>

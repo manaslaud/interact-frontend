@@ -303,4 +303,4 @@ const Profile = () => {
   );
 };
 
-export default WidthCheck(Protect(Profile));
+export default Protect(Profile);

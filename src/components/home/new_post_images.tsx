@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
-import { Images, Link } from '@phosphor-icons/react';
+import { Images } from '@phosphor-icons/react';
+import { MAX_IMAGE_SIZE } from '@/config/constants';
 
 interface Props {
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
@@ -30,7 +31,7 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
               Array.from(target.files).map(async file => {
                 if (file.type.split('/')[0] === 'image') {
                   try {
-                    const resizedPic = await resizeImage(file, 1280, 720);
+                    const resizedPic = await resizeImage(file, 1280, 720, MAX_IMAGE_SIZE / 5);
                     return resizedPic;
                   } catch (error) {
                     console.error('Error while resizing image:', error);

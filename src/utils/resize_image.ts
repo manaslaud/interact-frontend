@@ -1,8 +1,9 @@
 import { MAX_IMAGE_SIZE } from '@/config/constants';
 import Toaster from './toaster';
 
-export const resizeImage = async (file: File, width: number, height: number): Promise<File> => {
+export const resizeImage = async (file: File, width: number, height: number, maxSize?: number): Promise<File> => {
   return new Promise((resolve, reject) => {
+    const MAX_SIZE = maxSize ? maxSize : MAX_IMAGE_SIZE;
     try {
       const img = new Image();
 
@@ -43,7 +44,7 @@ export const resizeImage = async (file: File, width: number, height: number): Pr
 
               // Calculate the size of the resized image
               const size = await calculateFileSize(canvas.toDataURL('image/jpeg'));
-              if (size > MAX_IMAGE_SIZE) {
+              if (size > MAX_SIZE) {
                 Toaster.error('Image Too Large');
                 return;
               }

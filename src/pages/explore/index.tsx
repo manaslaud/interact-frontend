@@ -40,4 +40,4 @@ const Explore = () => {
   );
 };
 
-export default WidthCheck(Explore);
+export default Explore;

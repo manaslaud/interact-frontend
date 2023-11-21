@@ -69,8 +69,8 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
     else if (field == 'name') formData.append('name', name);
     else if (field == 'bio') formData.append('bio', bio);
     else if (field == 'tagline') formData.append('tagline', tagline);
-    else if (field == 'tags') tags.forEach(tag => formData.append('tags[]', tag));
-    else if (field == 'links') links.forEach(link => formData.append('links[]', link));
+    else if (field == 'tags') tags.forEach(tag => formData.append('tags', tag));
+    else if (field == 'links') links.forEach(link => formData.append('links', link));
 
     const URL = `${USER_URL}/me`;
 

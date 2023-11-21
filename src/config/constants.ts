@@ -6,4 +6,4 @@ export const PROJECT_OWNER = 'Owner';
 export const GROUP_MEMBER = 'Member';
 export const GROUP_ADMIN = 'Admin';
 
-export const MAX_IMAGE_SIZE = 1;
+export const MAX_IMAGE_SIZE = 5;

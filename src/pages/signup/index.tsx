@@ -143,8 +143,10 @@ const SignUp = () => {
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get('token');
+    const email = new URLSearchParams(window.location.search).get('email');
 
     if (token && token != '') setEarlyAccessToken(token);
+    if (email && email != '') setEmail(email);
   }, [window.location.search]);
 
   const handleGoogleLogin = () => {
@@ -351,4 +353,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-export default WidthCheck(SignUp);
+export default SignUp;
