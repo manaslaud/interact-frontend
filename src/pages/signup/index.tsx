@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import ArrowRight from '@phosphor-icons/react/dist/icons/ArrowRight';
 import Eye from '@phosphor-icons/react/dist/icons/Eye';
@@ -140,6 +140,12 @@ const SignUp = () => {
         setMutex(false);
       });
   };
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    if (token && token != '') setEarlyAccessToken(token);
+  }, [window.location.search]);
 
   const handleGoogleLogin = () => {
     router.push(`${BACKEND_URL}/auth/google`);

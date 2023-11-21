@@ -41,6 +41,10 @@ const EarlyAccess = () => {
     <>
       <Head>
         <title>Early Access | Interact</title>
+        <meta
+          name="description"
+          content="Sign up for Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives.  Get your exclusive token and be among the first to explore the wonders of our platform. Join us on this exclusive journey of collaboration and creativity! 🚀"
+        />
       </Head>
       <div className="h-screen flex">
         <div className="w-[45%] max-lg:w-full h-full font-primary p-8 max-md:p-4 flex flex-col justify-between items-center">

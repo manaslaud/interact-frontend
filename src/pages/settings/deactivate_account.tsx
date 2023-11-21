@@ -57,7 +57,7 @@ const Deactive = () => {
               className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
               size={40}
             />
-            <div className="text-4xl font-semibold dark:text-white">Settings</div>
+            <div className="text-4xl font-semibold dark:text-white">Deactive Account</div>
           </div>
           <div className="w-full text-center text-xl mb-16">
             <span className="font-bold">Note:</span> Your account will not be immediately deleted. If you log in within

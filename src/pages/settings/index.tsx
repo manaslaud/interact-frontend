@@ -38,7 +38,7 @@ const Settings = () => {
       <MainWrapper>
         <div className="w-3/4 max-md:w-full mx-auto dark:text-white flex flex-col gap-2 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
           <div className="text-4xl font-extrabold text-gradient mb-2">Settings</div>
-          <label className="w-full h-16 select-none text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300">
+          {/* <label className="w-full h-16 select-none text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300">
             <div className="capitalize">{theme} Mode</div>
             <div className="relative">
               <input type="checkbox" onChange={toggleTheme} className="sr-only" />
@@ -53,7 +53,7 @@ const Settings = () => {
                 } transition-ease-300`}
               ></div>
             </div>
-          </label>
+          </label> */}
           <div
             onClick={() => setClickedOnChangeEmail(true)}
             className="w-full h-16 text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300"
