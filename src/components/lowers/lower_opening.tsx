@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Opening } from '@/types';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { userSelector } from '@/slices/userSlice';
+import { userIDSelector, userSelector } from '@/slices/userSlice';
 // import clickedOnSharePost from './clickedOnShare_project';
 import Gear from '@phosphor-icons/react/dist/icons/Gear';
 import Export from '@phosphor-icons/react/dist/icons/Export';
@@ -10,6 +10,7 @@ import ShareOpening from '@/sections/lowers/share_opening';
 import OpeningBookmarkIcon from './opening_bookmark';
 import Report from '../common/report';
 import { WarningCircle } from '@phosphor-icons/react';
+import SignUp from '../common/signup_box';
 
 interface Props {
   opening: Opening;
@@ -18,13 +19,17 @@ interface Props {
 const LowerOpening = ({ opening }: Props) => {
   const [clickedOnShare, setClickedOnShare] = useState(false);
   const [clickedOnReport, setClickedOnReport] = useState(false);
+  const [noUserClick, setNoUserClick] = useState(false);
 
   const user = useSelector(userSelector);
 
   const router = useRouter();
 
+  const userID = useSelector(userIDSelector) || '';
+
   return (
     <>
+      {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnShare ? <ShareOpening setShow={setClickedOnShare} opening={opening} /> : <></>}
       {clickedOnReport ? <Report openingID={opening.id} setShow={setClickedOnReport} /> : <></>}
 
@@ -42,14 +47,20 @@ const LowerOpening = ({ opening }: Props) => {
           <></>
         )}
         <Export
-          onClick={() => setClickedOnShare(true)}
+          onClick={() => {
+            if (userID == '') setNoUserClick(true);
+            else setClickedOnShare(true);
+          }}
           className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
           size={32}
           weight="duotone"
         />
         <OpeningBookmarkIcon opening={opening} />
         <WarningCircle
-          onClick={() => setClickedOnReport(true)}
+          onClick={() => {
+            if (userID == '') setNoUserClick(true);
+            else setClickedOnReport(true);
+          }}
           className="cursor-pointer max-md:w-6 max-md:h-6"
           size={32}
         />

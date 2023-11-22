@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
+import { userIDSelector } from '@/slices/userSlice';
 
 interface Props {
   index: number;
@@ -26,10 +27,12 @@ const Sidebar = ({ index }: Props) => {
   const dispatch = useDispatch();
   const open = useSelector(navbarOpenSelector);
 
+  const userID = useSelector(userIDSelector);
+
   const userFetcher = useUserStateFetcher();
 
   useEffect(() => {
-    userFetcher();
+    if (userID != '') userFetcher();
   }, []);
 
   return (

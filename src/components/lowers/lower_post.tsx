@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import deleteHandler from '@/handlers/delete_handler';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLikes, setPostBookmarks, userSelector } from '@/slices/userSlice';
+import { setLikes, setPostBookmarks, userIDSelector, userSelector } from '@/slices/userSlice';
 import BookmarkSimple from '@phosphor-icons/react/dist/icons/BookmarkSimple';
 import Export from '@phosphor-icons/react/dist/icons/Export';
 import BookmarkPost from '../../sections/lowers/bookmark_post';
@@ -16,6 +16,7 @@ import RePost from '../../sections/home/repost';
 import SharePost from '@/sections/lowers/share_post';
 import CommentPost from '@/sections/lowers/comment_post';
 import socketService from '@/config/ws';
+import SignUp from '../common/signup_box';
 
 interface Props {
   post: Post;
@@ -44,6 +45,8 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
   const [clickedOnRePost, setClickedOnRePost] = useState(false);
   const [mutex, setMutex] = useState(false);
 
+  const [noUserClick, setNoUserClick] = useState(false);
+
   const user = useSelector(userSelector);
   const likes = user.likes;
   const bookmarks = user.postBookmarks;
@@ -53,6 +56,8 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
   const updatingLikes = useSelector(configSelector).updatingLikes;
 
   const semaphore = new Semaphore(updatingLikes, setUpdatingLikes);
+
+  const userID = useSelector(userIDSelector) || '';
 
   const setBookmark = (isBookmarked: boolean, postItemID: string, bookmarkID: string) => {
     setBookmarkStatus({
@@ -141,6 +146,7 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
 
   return (
     <>
+      {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnBookmark ? (
         <BookmarkPost setShow={setClickedOnBookmark} post={post} setBookmark={setBookmark} />
       ) : (
@@ -161,13 +167,19 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
       <div className="w-full flex justify-between">
         <div className="flex gap-3 max-md:gap-3">
           <HeartStraight
-            onClick={likeHandler}
+            onClick={() => {
+              if (userID == '') setNoUserClick(true);
+              else likeHandler();
+            }}
             className="cursor-pointer max-md:w-6 max-md:h-6"
             size={24}
             weight={liked ? 'fill' : 'regular'}
           />
           <ChatCircleText
-            onClick={() => setClickedOnComment(true)}
+            onClick={() => {
+              if (userID == '') setNoUserClick(true);
+              else setClickedOnComment(true);
+            }}
             className="cursor-pointer max-md:w-6 max-md:h-6"
             size={24}
             weight="regular"
@@ -177,7 +189,8 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
           {post.userID != user.id && !post.rePost ? (
             <Repeat
               onClick={() => {
-                setClickedOnRePost(true);
+                if (userID == '') setNoUserClick(true);
+                else setClickedOnRePost(true);
               }}
               className="cursor-pointer max-md:w-6 max-md:h-6"
               size={24}
@@ -187,7 +200,10 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
             <></>
           )}
           <Export
-            onClick={() => setClickedOnShare(true)}
+            onClick={() => {
+              if (userID == '') setNoUserClick(true);
+              else setClickedOnShare(true);
+            }}
             className="cursor-pointer max-md:w-6 max-md:h-6"
             size={24}
             weight="regular"
@@ -195,8 +211,11 @@ const LowerPost = ({ post, setPost, setFeed }: Props) => {
           <BookmarkSimple
             className="cursor-pointer max-md:w-6 max-md:h-6"
             onClick={() => {
-              if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-              else setClickedOnBookmark(prev => !prev);
+              if (userID == '') setNoUserClick(true);
+              else {
+                if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+                else setClickedOnBookmark(prev => !prev);
+              }
             }}
             size={24}
             weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}

@@ -19,11 +19,11 @@ const Onboarding = () => {
   const dispatch = useDispatch();
 
   const swipeHandler = useSwipeable({
-    onSwipedRight: () => {
+    onSwipedLeft: () => {
       if (index != 3) setIndex(prev => prev + 1);
       else dispatch(setOnboarding(false));
     },
-    onSwipedLeft: () => {
+    onSwipedRight: () => {
       if (index != 0) setIndex(prev => prev - 1);
     },
   });

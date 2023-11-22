@@ -13,7 +13,7 @@ const Protect = <Props extends Object>(Component: ComponentType<Props>) => {
       if (!token || token == '') {
         Toaster.error('You are not logged in.');
         setIsAuthenticated(0);
-        router.push('/login');
+        router.replace('/login');
       } else setIsAuthenticated(1);
     }, []);
 

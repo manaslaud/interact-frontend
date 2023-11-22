@@ -10,12 +10,13 @@ import { setExploreTab } from '@/slices/feedSlice';
 import FollowBtn from '@/components/common/follow_btn';
 import { Chat, Share, Warning } from '@phosphor-icons/react';
 import ShareProfile from '../lowers/share_profile';
-import { userSelector } from '@/slices/userSlice';
+import { userIDSelector, userSelector } from '@/slices/userSlice';
 import SendMessage from './send_message';
 import { setCurrentChatID } from '@/slices/messagingSlice';
 import { useRouter } from 'next/router';
 import Connections from './connections_view';
 import Report from '@/components/common/report';
+import SignUp from '@/components/common/signup_box';
 interface Props {
   user: User;
 }
@@ -49,11 +50,38 @@ const ProfileCard = ({ user }: Props) => {
       router.push('/messaging');
     } else setClickedOnChat(true);
   };
+
+  const userID = useSelector(userIDSelector) || '';
+
   return (
     <>
-      {clickedOnShare ? <ShareProfile user={user} setShow={setClickedOnShare} /> : <></>}
-      {clickedOnChat ? <SendMessage user={user} setShow={setClickedOnChat} /> : <></>}
-      {clickedOnReport ? <Report userID={user.id} setShow={setClickedOnReport} /> : <></>}
+      {clickedOnShare ? (
+        userID != '' ? (
+          <ShareProfile user={user} setShow={setClickedOnShare} />
+        ) : (
+          <SignUp setShow={setClickedOnShare} />
+        )
+      ) : (
+        <></>
+      )}
+      {clickedOnChat ? (
+        userID != '' ? (
+          <SendMessage user={user} setShow={setClickedOnChat} />
+        ) : (
+          <SignUp setShow={setClickedOnChat} />
+        )
+      ) : (
+        <></>
+      )}
+      {clickedOnReport ? (
+        userID != '' ? (
+          <Report userID={user.id} setShow={setClickedOnReport} />
+        ) : (
+          <SignUp setShow={setClickedOnReport} />
+        )
+      ) : (
+        <></>
+      )}
 
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
@@ -71,8 +99,8 @@ const ProfileCard = ({ user }: Props) => {
 
         <div className="w-full flex justify-center text-lg gap-6">
           <div onClick={() => setClickedOnFollowers(true)} className="flex gap-1 cursor-pointer">
-            <div className="font-bold">{user.noFollowers}</div>
-            <div>Follower{user.noFollowers != 1 ? 's' : ''}</div>
+            <div className="font-bold">{numFollowers}</div>
+            <div>Follower{numFollowers != 1 ? 's' : ''}</div>
           </div>
           <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
             <div className="font-bold">{user.noFollowing}</div>

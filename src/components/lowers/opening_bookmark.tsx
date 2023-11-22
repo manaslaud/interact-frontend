@@ -2,12 +2,13 @@ import { BOOKMARK_URL } from '@/config/routes';
 import deleteHandler from '@/handlers/delete_handler';
 import BookmarkOpening from '@/sections/lowers/bookmark_opening';
 import { setUpdateBookmark } from '@/slices/configSlice';
-import { userSelector, setOpeningBookmarks } from '@/slices/userSlice';
+import { userSelector, setOpeningBookmarks, userIDSelector } from '@/slices/userSlice';
 import { Opening } from '@/types';
 import { BookmarkSimple } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { OpeningBookmark } from '@/types';
+import SignUp from '../common/signup_box';
 
 interface Props {
   opening: Opening;
@@ -27,6 +28,10 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
   });
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
   const [mutex, setMutex] = useState(false);
+
+  const [noUserClick, setNoUserClick] = useState(false);
+
+  const userID = useSelector(userIDSelector) || '';
 
   const bookmarks = useSelector(userSelector).openingBookmarks;
   const dispatch = useDispatch();
@@ -91,6 +96,7 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
 
   return (
     <>
+      {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnBookmark ? (
         <BookmarkOpening setShow={setClickedOnBookmark} opening={opening} setBookmark={setBookmark} />
       ) : (
@@ -99,8 +105,11 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
       <BookmarkSimple
         className="cursor-pointer max-md:w-[32px] max-md:h-[32px]"
         onClick={() => {
-          if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-          else setClickedOnBookmark(prev => !prev);
+          if (userID == '') setNoUserClick(true);
+          else {
+            if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+            else setClickedOnBookmark(prev => !prev);
+          }
         }}
         size={32}
         weight={bookmarkStatus.isBookmarked ? 'duotone' : 'light'}

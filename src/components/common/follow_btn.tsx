@@ -61,7 +61,7 @@ const FollowBtn = ({ toFollowID, setFollowerCount, smaller = false, profileDesig
         }
       }
       setIsFollowing(prev => !prev);
-      Toaster.error(res.data.message, 'error_toaster');
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
     }
 
     semaphore.release();

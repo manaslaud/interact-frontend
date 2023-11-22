@@ -5,7 +5,7 @@ import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import LowerPost from '../lowers/lower_post';
-import { userSelector } from '@/slices/userSlice';
+import { userIDSelector, userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import PostComponent from './post';
 import deleteHandler from '@/handlers/delete_handler';
@@ -14,6 +14,8 @@ import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
 import ConfirmDelete from '../common/confirm_delete';
 import renderContentWithLinks from '@/utils/render_content_with_links';
+import Report from '../common/report';
+import SignUp from '../common/signup_box';
 
 interface Props {
   post: Post;
@@ -26,8 +28,13 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
+
+  const [noUserClick, setNoUserClick] = useState(false);
 
   const [caption, setCaption] = useState(post.content);
+
+  const userID = useSelector(userIDSelector) || '';
 
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your post...');
@@ -80,7 +87,9 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       onClick={() => setClickedOnOptions(false)}
       className="w-full relative overflow-clip bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white p-4 border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn dark:border-b-[1px] max-md:p-4"
     >
+      {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+      {clickedOnReport ? <Report postID={post.id} setShow={setClickedOnReport} /> : <></>}
       {!clickedOnEdit && clickedOnOptions ? (
         <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
           {post.userID == loggedInUser.id ? (
@@ -111,6 +120,8 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
             <div
               onClick={el => {
                 el.stopPropagation();
+                if (userID == '') setNoUserClick(true);
+                else setClickedOnReport(true);
               }}
               className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
             >

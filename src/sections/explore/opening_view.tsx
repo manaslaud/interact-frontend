@@ -6,9 +6,10 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import ApplyOpening from './apply_opening';
 import { useSelector } from 'react-redux';
-import { userSelector } from '@/slices/userSlice';
+import { userIDSelector, userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
 import { useWindowWidth } from '@react-hook/window-size';
+import SignUp from '@/components/common/signup_box';
 
 interface Props {
   opening: Opening;
@@ -34,9 +35,19 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
     }
   }, []);
 
+  const userID = useSelector(userIDSelector) || '';
+
   return (
     <>
-      {clickedOnApply ? <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} /> : <></>}
+      {clickedOnApply ? (
+        userID != '' ? (
+          <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} />
+        ) : (
+          <SignUp setShow={setClickedOnApply} />
+        )
+      ) : (
+        <></>
+      )}
       <div className="sticky max-md:fixed top-[158px] bg-white dark:bg-transparent max-md:top-navbar max-md:right-0 w-[55%] max-md:w-full max-h-[70vh] max-md:max-h-screen max-md:h-base z-20 max-lg:z-50 max-md:backdrop-blur-2xl max-md:backdrop-brightness-90 overflow-y-auto flex flex-col gap-6 max-md:gap-8 px-12 py-10 max-md:p-8 font-primary dark:text-white border-[1px] max-md:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-md:rounded-none max-md:animate-fade_third">
         <div className="flex flex-col gap-2 max-md:gap-6">
           <ArrowArcLeft

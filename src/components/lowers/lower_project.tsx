@@ -3,7 +3,7 @@ import { Project, ProjectBookmark } from '@/types';
 import deleteHandler from '@/handlers/delete_handler';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLikes, setProjectBookmarks, userSelector } from '@/slices/userSlice';
+import { setLikes, setProjectBookmarks, userIDSelector, userSelector } from '@/slices/userSlice';
 // import clickedOnSharePost from './clickedOnShare_project';
 import BookmarkSimple from '@phosphor-icons/react/dist/icons/BookmarkSimple';
 import Export from '@phosphor-icons/react/dist/icons/Export';
@@ -17,6 +17,8 @@ import ShareProject from '@/sections/lowers/share_project';
 import CommentProject from '@/sections/lowers/comment_project';
 import socketService from '@/config/ws';
 import Report from '../common/report';
+import Toaster from '@/utils/toaster';
+import SignUp from '../common/signup_box';
 
 interface Props {
   project: Project;
@@ -43,6 +45,8 @@ const LowerProject = ({ project }: Props) => {
   const [clickedOnReport, setClickedOnReport] = useState(false);
   const [mutex, setMutex] = useState(false);
 
+  const [noUserClick, setNoUserClick] = useState(false);
+
   const user = useSelector(userSelector);
   const likes = user.likes;
   const bookmarks = user.projectBookmarks;
@@ -52,6 +56,8 @@ const LowerProject = ({ project }: Props) => {
   const updatingLikes = useSelector(configSelector).updatingLikes;
 
   const semaphore = new Semaphore(updatingLikes, setUpdatingLikes);
+
+  const userID = useSelector(userIDSelector) || '';
 
   const setBookmark = (isBookmarked: boolean, projectItemID: string, bookmarkID: string) => {
     setBookmarkStatus({
@@ -112,6 +118,7 @@ const LowerProject = ({ project }: Props) => {
       if (liked) setNumLikes(prev => prev + 1);
       else setNumLikes(prev => prev - 1);
       setLiked(prev => !prev);
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
     }
 
     semaphore.release();
@@ -141,6 +148,7 @@ const LowerProject = ({ project }: Props) => {
 
   return (
     <>
+      {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnBookmark ? (
         <BookmarkProject setShow={setClickedOnBookmark} project={project} setBookmark={setBookmark} />
       ) : (
@@ -163,32 +171,47 @@ const LowerProject = ({ project }: Props) => {
         <BookmarkSimple
           className="cursor-pointer max-lg:w-6 max-lg:h-6"
           onClick={() => {
-            if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
-            else setClickedOnBookmark(prev => !prev);
+            if (userID == '') setNoUserClick(true);
+            else {
+              if (bookmarkStatus.isBookmarked) removeBookmarkItemHandler();
+              else setClickedOnBookmark(prev => !prev);
+            }
           }}
           size={32}
           weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
         />
         <HeartStraight
-          onClick={likeHandler}
+          onClick={() => {
+            if (userID == '') setNoUserClick(true);
+            else likeHandler();
+          }}
           className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
           weight={liked ? 'fill' : 'regular'}
         />
         <Export
-          onClick={() => setClickedOnShare(true)}
+          onClick={() => {
+            if (userID == '') setNoUserClick(true);
+            else setClickedOnShare(true);
+          }}
           className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
           weight="regular"
         />
         <ChatTeardrop
-          onClick={() => setClickedOnComment(true)}
+          onClick={() => {
+            if (userID == '') setNoUserClick(true);
+            else setClickedOnComment(true);
+          }}
           className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
         />
         {project.userID != user.id ? (
           <WarningCircle
-            onClick={() => setClickedOnReport(true)}
+            onClick={() => {
+              if (userID == '') setNoUserClick(true);
+              else setClickedOnReport(true);
+            }}
             className="cursor-pointer max-lg:w-6 max-lg:h-6"
             size={32}
           />

@@ -127,6 +127,14 @@ const EarlyAccess = () => {
             )}
           </div>
 
+          <Link
+            href={'/home'}
+            className="w-fit relative px-8 py-2 border-2 after:absolute after:-top-[3px] after:-left-[3px] after:-right-[3px] after:-bottom-[3.5px] after:-z-10 after:bg-[#395887] after:rounded-xl flex items-center cursor-pointer justify-center gap-2 bg-[#3D6DB3] hover:bg-[#345C98] active:bg-[#2D5185] border-[#d1d1d1a7] text-white rounded-xl font-semibold"
+          >
+            <div>Continue without Signing in</div>
+            <ArrowRight size={20} weight="regular" />
+          </Link>
+
           <div className="w-3/4 max-lg:w-full text-[12px] text-center text-gray-400">
             By clicking “Continue” above, you acknowledge that you have read and understood, and agree to
             Interact&apos;s <span className="underline underline-offset-2 font-medium">Term & Conditions</span> and{' '}
