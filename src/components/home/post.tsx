@@ -85,7 +85,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
       onClick={() => setClickedOnOptions(false)}
       className={`w-full relative overflow-clip bg-white dark:bg-transparent font-primary flex gap-1 rounded-lg dark:rounded-none dark:text-white border-gray-300 border-[1px] dark:border-x-0 dark:border-t-0 dark:border-dark_primary_btn ${
         !isRepost ? 'dark:border-b-[1px] p-4' : 'dark:border-b-0 p-4 max-md:p-2'
-      }`}
+      } max-md:z-50`}
     >
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
       {clickedOnReport ? <Report postID={post.id} setShow={setClickedOnReport} /> : <></>}

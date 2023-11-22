@@ -2,6 +2,7 @@ import { setOnboarding } from '@/slices/feedSlice';
 import { ArrowLeft, ArrowRight, SignIn, X } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSwipeable } from 'react-swipeable';
 
 const Onboarding = () => {
   const [index, setIndex] = useState(0);
@@ -16,9 +17,20 @@ const Onboarding = () => {
   }, []);
 
   const dispatch = useDispatch();
+
+  const swipeHandler = useSwipeable({
+    onSwipedRight: () => {
+      if (index != 3) setIndex(prev => prev + 1);
+      else dispatch(setOnboarding(false));
+    },
+    onSwipedLeft: () => {
+      if (index != 0) setIndex(prev => prev - 1);
+    },
+  });
   return (
     <>
       <div
+        {...swipeHandler}
         className={`fixed ${
           index == 0
             ? 'top-[40%]'
