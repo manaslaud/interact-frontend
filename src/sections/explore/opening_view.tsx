@@ -10,6 +10,7 @@ import { userIDSelector, userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
 import { useWindowWidth } from '@react-hook/window-size';
 import SignUp from '@/components/common/signup_box';
+import UpdateResume from '../settings/update_resume';
 
 interface Props {
   opening: Opening;
@@ -19,6 +20,8 @@ interface Props {
 
 const OpeningView = ({ opening, setShow, setOpening }: Props) => {
   const [clickedOnApply, setClickedOnApply] = useState(false);
+  const [clickedOnAddResume, setClickedOnAddResume] = useState(false);
+
   const applications = useSelector(userSelector).applications;
 
   const width = useWindowWidth();
@@ -39,9 +42,16 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
 
   return (
     <>
-      {clickedOnApply ? (
+      {clickedOnAddResume ? (
+        <UpdateResume setShow={setClickedOnAddResume} />
+      ) : clickedOnApply ? (
         userID != '' ? (
-          <ApplyOpening opening={opening} setShow={setClickedOnApply} setOpening={setOpening} />
+          <ApplyOpening
+            opening={opening}
+            setShow={setClickedOnApply}
+            setOpening={setOpening}
+            setAddResume={setClickedOnAddResume}
+          />
         ) : (
           <SignUp setShow={setClickedOnApply} />
         )

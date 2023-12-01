@@ -54,6 +54,7 @@ export const initialUser: User = {
   links: [],
   email: '',
   name: '',
+  resume: '',
   profilePic: '',
   coverPic: '',
   username: '',

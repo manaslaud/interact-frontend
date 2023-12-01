@@ -25,6 +25,7 @@ import { useRouter } from 'next/router';
 import { resizeImage } from '@/utils/resize_image';
 import Protect from '@/utils/protect';
 import WidthCheck from '@/utils/widthCheck';
+import { setOnboarding } from '@/slices/feedSlice';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -79,6 +80,7 @@ const Onboarding = () => {
       if (bio != user.bio) dispatch(setReduxBio(bio));
       if (tagline != user.tagline) dispatch(setReduxTagline(tagline));
       dispatch(setReduxLinks(links));
+      dispatch(setOnboarding(true));
       router.replace('/home');
       Toaster.stopLoad(toaster, 'Profile Ready!', 1);
     } else if (res.statusCode == 413) {

@@ -163,7 +163,9 @@ const Profile = () => {
             }}
           />
 
-          {clickedOnCoverPic ? (
+          {loading ? (
+            <></>
+          ) : clickedOnCoverPic ? (
             <div>
               <div
                 onClick={() => handleSubmit('coverPic')}
@@ -204,6 +206,7 @@ const Profile = () => {
 
               <Image
                 crossOrigin="anonymous"
+                priority={true}
                 className={`${
                   open ? 'w-no_side_base_open' : 'w-no_side_base_close'
                 } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}

@@ -63,6 +63,7 @@ const User = ({ username }: Props) => {
           {user.coverPic != '' ? (
             <Image
               crossOrigin="anonymous"
+              priority={true}
               width={10000}
               height={10000}
               alt={'User Pic'}

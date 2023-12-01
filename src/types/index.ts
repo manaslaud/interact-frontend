@@ -105,6 +105,7 @@ export interface User {
   links: string[];
   email: string;
   name: string;
+  resume: string;
   active: boolean;
   profilePic: string;
   coverPic: string;

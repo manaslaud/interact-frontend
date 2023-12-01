@@ -2,7 +2,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useState } from 'react';
 import Sidebar from '@/components/common/sidebar';
-import { At, Phone, Password, SmileyXEyes, IdentificationBadge } from '@phosphor-icons/react';
+import { At, Phone, Password, SmileyXEyes, IdentificationBadge, File, FilePdf } from '@phosphor-icons/react';
 import UpdateEmail from '@/sections/settings/update_email';
 import Protect from '@/utils/protect';
 import UpdatePassword from '@/sections/settings/update_password';
@@ -11,10 +11,12 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import WidthCheck from '@/utils/widthCheck';
+import UpdateResume from '@/sections/settings/update_resume';
 
 const Settings = () => {
   const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
 
+  const [clickedOnChangeResume, setClickedOnChangeResume] = useState(false);
   const [clickedOnChangeEmail, setClickedOnChangeEmail] = useState(false);
   const [clickedOnChangePhoneNo, setClickedOnChangePhoneNo] = useState(false);
   const [clickedOnChangePassword, setClickedOnChangePassword] = useState(false);
@@ -37,7 +39,7 @@ const Settings = () => {
       <Sidebar index={9} />
       <MainWrapper>
         <div className="w-3/4 max-md:w-full mx-auto dark:text-white flex flex-col gap-2 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
-          <div className="text-4xl font-extrabold text-gradient mb-2">Settings</div>
+          <div className="w-fit text-4xl font-extrabold text-gradient mb-2">Settings</div>
           {/* <label className="w-full h-16 select-none text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300">
             <div className="capitalize">{theme} Mode</div>
             <div className="relative">
@@ -54,6 +56,13 @@ const Settings = () => {
               ></div>
             </div>
           </label> */}
+          <div
+            onClick={() => setClickedOnChangeResume(true)}
+            className="w-full h-16 text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300"
+          >
+            <div>{user.resume == '' ? 'Upload Resume' : 'Change Resume'}</div>
+            <FilePdf size={40} weight="duotone" />
+          </div>
           <div
             onClick={() => setClickedOnChangeEmail(true)}
             className="w-full h-16 text-xl flex-center gap-4 dark:bg-dark_primary_comp hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-dark_primary_comp dark:active:bg-dark_primary_comp_hover px-6 rounded-md text-center cursor-pointer transition-ease-300"
@@ -93,6 +102,7 @@ const Settings = () => {
             <div>Deactive Account</div>
             <SmileyXEyes size={40} weight="duotone" />
           </Link>
+          {clickedOnChangeResume ? <UpdateResume setShow={setClickedOnChangeResume} /> : <></>}
           {clickedOnChangeEmail ? <UpdateEmail setShow={setClickedOnChangeEmail} /> : <></>}
           {clickedOnChangePhoneNo ? <UpdatePhoneNumber setShow={setClickedOnChangePhoneNo} /> : <></>}
           {clickedOnChangePassword ? <UpdatePassword setShow={setClickedOnChangePassword} /> : <></>}

@@ -6,9 +6,10 @@ import postHandler from '@/handlers/post_handler';
 import { setApplications, userSelector } from '@/slices/userSlice';
 import { Opening } from '@/types';
 import Toaster from '@/utils/toaster';
-import { FilePdf, FileText, X } from '@phosphor-icons/react';
+import { ArrowUpRight, FilePdf, FileText, X } from '@phosphor-icons/react';
 import moment from 'moment';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,13 +18,14 @@ interface Props {
   opening: Opening;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setOpening: React.Dispatch<React.SetStateAction<Opening>>;
+  setAddResume: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
-  const [message, setMessage] = useState('');
-  const [resume, setResume] = useState<File>();
+const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => {
+  const [content, setContent] = useState('');
   const [links, setLinks] = useState<string[]>([]);
-  const [shareEmail, setShareEmail] = useState(false);
+  const [includeEmail, setIncludeEmail] = useState(false);
+  const [includeResume, setIncludeResume] = useState(false);
 
   const user = useSelector(userSelector);
   let profilePic = user.profilePic;
@@ -51,17 +53,13 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
   }, []);
 
   const handleSubmit = async () => {
-    if (message.trim() == '') {
-      Toaster.error('Message Cannot be Empty', 'validation_error');
+    if (content.trim() == '') {
+      Toaster.error('Message cannot be Empty', 'validation_error');
       return;
     }
     const toaster = Toaster.startLoad('Applying to Opening...');
 
-    const formData = new FormData();
-    formData.append('content', message);
-    if (resume) formData.append('resume', resume);
-    links.forEach(link => formData.append('links', link));
-    if (shareEmail) formData.append('email', user.email);
+    const formData = { content, links, includeEmail, includeResume };
 
     const URL = `${APPLICATION_URL}/${opening.id}`;
     const res = await postHandler(URL, formData, 'multipart/form-data');
@@ -74,11 +72,11 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
       Toaster.stopLoad(toaster, 'Applied to the Opening!', 1);
       setShow(false);
     } else {
-      if (res.data.message) {
-        if (res.data.message == VERIFICATION_ERROR) {
+      if (res.data.content) {
+        if (res.data.content == VERIFICATION_ERROR) {
           Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
           router.push('/verification');
-        } else Toaster.stopLoad(toaster, res.data.message, 0);
+        } else Toaster.stopLoad(toaster, res.data.content, 0);
       } else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
@@ -114,72 +112,48 @@ const ApplyOpening = ({ opening, setShow, setOpening }: Props) => {
           <div className="w-2/3 h-full max-lg:w-full flex max-lg:flex-col gap-4">
             <div className="w-1/2 max-lg:w-full h-full flex flex-col gap-2 relative">
               <textarea
-                value={message}
+                value={content}
                 onChange={el => {
-                  setMessage(el.target.value);
+                  setContent(el.target.value);
                 }}
                 maxLength={500}
-                className="w-full px-4 py-2 rounded-lg text-black bg-primary_comp dark:bg-dark_primary_comp min-h-[20rem] max-h-60 focus:outline-none"
+                className="w-full px-4 py-2 rounded-lg text-black bg-primary_comp dark:bg-dark_primary_comp min-h-[24rem] max-h-96 focus:outline-none"
                 placeholder="Add a Message of maximum 500 characters"
               />
-              <div className="flex items-center">
-                <input
-                  type="file"
-                  id="resume"
-                  className="hidden"
-                  multiple={false}
-                  onChange={({ target }) => {
-                    if (target.files && target.files[0]) {
-                      const file = target.files[0];
-                      if (file.type.split('/')[1] == 'pdf') {
-                        setResume(file);
-                      } else Toaster.error('Only PDF Files can be selected');
-                    }
-                  }}
-                />
-
-                <label className="w-full" htmlFor="resume">
-                  <div
-                    className={`w-full rounded-lg py-2 relative flex-center flex-col cursor-pointer border-[1px] border-primary_btn  dark:border-dark_primary_btn transition-ease-300 ${
-                      !resume ? 'hover:scale-105' : 'hover:scale-100'
-                    }`}
-                  >
-                    {!resume ? (
-                      <>
-                        <FilePdf size={32} />
-                        <div className="">add resume</div>
-                        {/* <div className="absolute top-0 right-0 translate-y-[-50%] text-xs dark:bg-dark_primary_comp_hover rounded-lg dark:text-white py-1 px-2">
-                          optional
-                        </div> */}
-                      </>
-                    ) : (
-                      <>
-                        <FileText size={32} />
-                        <div className="w-full text-center text-sm text-ellipsis overflow-hidden">{resume.name}</div>
-                      </>
-                    )}
-                  </div>
-                </label>
-                {resume ? (
-                  <div onClick={() => setResume(undefined)} className="p-2 cursor-pointer">
-                    X
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </div>
             </div>
             <div className="w-1/2 max-lg:w-full h-full flex flex-col justify-between max-lg:gap-2 max-lg:pb-8">
               <div className="w-full flex flex-col gap-2">
-                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links ({links.length || 0}/5)</div>
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links ({links.length || 0}/3)</div>
                 <Links links={links} setLinks={setLinks} maxLinks={3} />
               </div>
 
-              <div className="w-full flex flex-col gap-2">
+              <div className="w-full flex flex-col gap-2 max-md:pt-8">
+                {user.resume == '' ? (
+                  <div onClick={() => setAddResume(true)} className="flex gap-2 items-center">
+                    <ArrowUpRight weight="bold" size={24} />{' '}
+                    <div className="font-medium cursor-pointer hover-underline-animation after:bg-black">
+                      Upload your resume
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex">
+                    <div className="w-8">
+                      <label className="checkBox w-5 h-5">
+                        <input onClick={() => setIncludeResume(prev => !prev)} type="checkbox" />
+                        <div className="transition-ease-300 !bg-primary_black"></div>
+                      </label>
+                    </div>
+
+                    <div className="font-medium cursor-default">
+                      Share my Resume! <span className="text-xs ml-1"></span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex">
                   <div className="w-8">
                     <label className="checkBox w-5 h-5">
-                      <input onClick={() => setShareEmail(prev => !prev)} type="checkbox" />
+                      <input onClick={() => setIncludeEmail(prev => !prev)} type="checkbox" />
                       <div className="transition-ease-300 !bg-primary_black"></div>
                     </label>
                   </div>

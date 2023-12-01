@@ -18,6 +18,7 @@ const UserCard = ({ user, forTrending = false }: Props) => {
   return (
     <Link
       href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
+      target="_blank"
       className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn dark:bg-transparent dark:hover:bg-transparent rounded-lg flex flex-col ${
         !forTrending
           ? 'px-5 py-4 bg-gray-100 hover:bg-white border-primary_btn gap-4'

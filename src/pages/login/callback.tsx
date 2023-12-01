@@ -34,6 +34,7 @@ const LoginCallback = ({ token }: Props) => {
           const user: User = res.data.user;
           user.email = res.data.email;
           user.phoneNo = res.data.phoneNo || '';
+          user.resume = res.data.resume || '';
           Cookies.set('token', res.data.token, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });

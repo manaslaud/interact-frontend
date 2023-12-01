@@ -15,6 +15,7 @@ interface UserState {
   tagline: string;
   email: string;
   phoneNo: string;
+  resume: string;
   following: string[];
   likes: string[];
   links: string[];
@@ -41,6 +42,7 @@ const initialState: UserState = {
   tagline: '',
   email: '',
   phoneNo: '',
+  resume: '',
   isLoggedIn: false,
   profilePic: '',
   following: [],
@@ -70,6 +72,7 @@ export const userSlice = createSlice({
       state.bio = action.payload.bio;
       state.tagline = action.payload.tagline;
       state.email = action.payload.email;
+      state.resume = action.payload.resume;
       state.profilePic = action.payload.profilePic;
       state.isLoggedIn = true;
       state.phoneNo = action.payload.phoneNo;
@@ -95,6 +98,7 @@ export const userSlice = createSlice({
       state.bio = '';
       state.tagline = '';
       state.email = '';
+      state.resume = '';
       state.profilePic = 'default.jpg';
       state.isLoggedIn = false;
       state.phoneNo = '';
@@ -176,6 +180,9 @@ export const userSlice = createSlice({
     setPhoneNumber: (state, action: PayloadAction<string>) => {
       state.phoneNo = action.payload;
     },
+    setResume: (state, action: PayloadAction<string>) => {
+      state.resume = action.payload;
+    },
     setVerificationStatus: (state, action: PayloadAction<boolean>) => {
       state.isVerified = action.payload;
     },
@@ -206,6 +213,7 @@ export const {
   setApplications,
   setEmail,
   setPhoneNumber,
+  setResume,
   setVerificationStatus,
 } = userSlice.actions;
 
