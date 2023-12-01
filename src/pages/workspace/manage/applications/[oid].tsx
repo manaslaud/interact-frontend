@@ -136,7 +136,7 @@ const Applications = ({ oid }: Props) => {
                     )}
                   </div>
                 ) : (
-                  <div>No Applications found</div>
+                  <div className="w-full text-center text-xl font-medium">No Applications found :)</div>
                 )}
               </>
             )}

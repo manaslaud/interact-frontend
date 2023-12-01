@@ -62,7 +62,7 @@ const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => 
     const formData = { content, links, includeEmail, includeResume };
 
     const URL = `${APPLICATION_URL}/${opening.id}`;
-    const res = await postHandler(URL, formData, 'multipart/form-data');
+    const res = await postHandler(URL, formData);
     if (res.statusCode === 201) {
       setOpening(prev => {
         return { ...prev, noOfApplications: prev.noOfApplications + 1 };

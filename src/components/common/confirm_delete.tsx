@@ -5,9 +5,15 @@ interface Props {
   handleDelete: ({}: any) => void;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
+  subtitle?: string;
 }
 
-const ConfirmDelete = ({ handleDelete, setShow, title = 'Confirm Delete?' }: Props) => {
+const ConfirmDelete = ({
+  handleDelete,
+  setShow,
+  title = 'Confirm Delete?',
+  subtitle = 'Cannot revert this action.',
+}: Props) => {
   useEffect(() => {
     document.documentElement.style.overflowY = 'hidden';
     document.documentElement.style.height = '100vh';
@@ -26,7 +32,7 @@ const ConfirmDelete = ({ handleDelete, setShow, title = 'Confirm Delete?' }: Pro
         <div className="w-full max-lg:h-56 lg:flex-1 flex flex-col justify-between">
           <div className="w-full flex flex-col gap-2">
             <div className="font-semibold text-4xl text-gray-800 dark:text-white">{title}</div>
-            <div className="font-medium text-sm">Cannot revert this action.</div>
+            <div className="font-medium text-sm">{subtitle}</div>
           </div>
 
           <div
