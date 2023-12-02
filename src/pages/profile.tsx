@@ -294,7 +294,7 @@ const Profile = () => {
               )}
             </div>
             <div className={`${active === 2 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <Projects userID={user.id} />}
+              {loading ? <Loader /> : <Projects userID={user.id} displayOnProfile={true} />}
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}>
               {loading ? <Loader /> : <Projects userID={user.id} contributing={true} />}

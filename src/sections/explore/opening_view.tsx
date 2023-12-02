@@ -73,7 +73,11 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
             <LowerOpening opening={opening} />
           </div>
           <div className="w-full flex items-center justify-between flex-wrap gap-2 text-sm">
-            <Link href={`/explore?pid=${opening.project.slug}`} target="_blank" className="font-semibold text-lg">
+            <Link
+              href={`/explore?pid=${opening.project.slug}`}
+              target="_blank"
+              className="hover-underline-animation after:bg-black font-semibold text-lg"
+            >
               {opening.project.title}
             </Link>
             <div className="w-fit flex gap-2">

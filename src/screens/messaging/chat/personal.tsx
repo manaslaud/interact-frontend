@@ -101,9 +101,14 @@ const PersonalChat = () => {
 
     return () => {
       updateLastRead();
-      dispatch(setCurrentChatID(''));
     };
   }, [chatID]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCurrentChatID(''));
+    };
+  }, []);
 
   const windowWidth = useWindowWidth();
 

@@ -22,10 +22,11 @@ const PersonalChatCard = ({ chat, setChats }: Props) => {
   const currentChatID = useSelector(currentChatIDSelector);
 
   const handleClick = () => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, chat: 'personal' },
-    });
+    if (!router.query.chat)
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, chat: 'personal' },
+      });
     dispatch(setCurrentGroupChatID(''));
     dispatch(setCurrentChatID(chat.id));
     // setChats(prev =>

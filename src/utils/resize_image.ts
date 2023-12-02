@@ -60,13 +60,11 @@ export const resizeImage = async (file: File, width: number, height: number, max
       };
 
       img.onerror = error => {
-        console.log(error);
         reject(new Error('Failed to load the image.'));
       };
 
       img.src = URL.createObjectURL(file);
     } catch (err) {
-      console.log(err);
       reject(new Error('Error in Cropping: ' + err));
     }
   });

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
-import { userIDSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   index: number;
@@ -27,12 +27,12 @@ const Sidebar = ({ index }: Props) => {
   const dispatch = useDispatch();
   const open = useSelector(navbarOpenSelector);
 
-  const userID = useSelector(userIDSelector);
+  const user = useSelector(userSelector);
 
   const userFetcher = useUserStateFetcher();
 
   useEffect(() => {
-    if (userID != '') userFetcher();
+    if (user.id != '') userFetcher();
   }, []);
 
   return (
@@ -93,32 +93,36 @@ const Sidebar = ({ index }: Props) => {
           /> */}
         </div>
 
-        <div className="w-fit py-8 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">
-          <SidebarItem
-            index={7}
-            title="Profile"
-            icon={<UserCircle size={24} />}
-            active={active}
-            setActive={setActive}
-            open={open}
-          />
-          <SidebarItem
-            index={8}
-            title="Notifications"
-            icon={<Bell size={24} />}
-            active={active}
-            setActive={setActive}
-            open={open}
-          />
-          <SidebarItem
-            index={9}
-            title="Settings"
-            icon={<Gear size={24} />}
-            active={active}
-            setActive={setActive}
-            open={open}
-          />
-        </div>
+        {user.id != '' ? (
+          <div className="w-fit py-8 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">
+            <SidebarItem
+              index={7}
+              title="Profile"
+              icon={<UserCircle size={24} />}
+              active={active}
+              setActive={setActive}
+              open={open}
+            />
+            <SidebarItem
+              index={8}
+              title="Notifications"
+              icon={<Bell size={24} />}
+              active={active}
+              setActive={setActive}
+              open={open}
+            />
+            <SidebarItem
+              index={9}
+              title="Settings"
+              icon={<Gear size={24} />}
+              active={active}
+              setActive={setActive}
+              open={open}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
         <ArrowLineLeft
           onClick={() => dispatch(setNavbarOpen(!open))}

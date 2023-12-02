@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Membership = ({ history }: Props) => {
-  console.log(history);
   switch (history.historyType) {
     case 0: //User sent invitation to user
       return (

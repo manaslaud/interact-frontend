@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { ArrowArcLeft, ArrowUpRight } from '@phosphor-icons/react';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
-import router from 'next/router';
 import getDomainName from '@/utils/get_domain_name';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';

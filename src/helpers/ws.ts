@@ -296,7 +296,6 @@ export function sendEvent(eventName: string, payloadEvent: any, conn: WebSocket)
   try {
     conn.send(JSON.stringify(event));
   } catch (err) {
-    console.log(err);
     alert('Socket connection error: ' + eventName);
   }
 }

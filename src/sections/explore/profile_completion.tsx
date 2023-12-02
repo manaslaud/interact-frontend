@@ -28,6 +28,7 @@ const ProfileCompletion = () => {
 
   useEffect(() => {
     if (completionPercentage != 100) setHide(false);
+    if (user.id == '') setHide(true);
     const circleBackground = document.getElementById('circleBackground');
     const circleLength = 2 * Math.PI * parseFloat(circleBackground?.getAttribute('r') as string);
     const dashOffset = circleLength * ((100 - completionPercentage) / 100);

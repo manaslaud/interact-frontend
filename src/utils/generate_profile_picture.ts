@@ -331,7 +331,6 @@ function generateRandomProfilePicture(width: number, height: number): Promise<Fi
         reject(new Error('Canvas context not supported.'));
       }
     } catch (err) {
-      console.log(err);
       reject(new Error('Canvas context not supported.'));
     }
   });

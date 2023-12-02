@@ -117,9 +117,6 @@ const EditTask = ({ setShow, project, task, setTasks, setFilteredTasks }: Props)
         const usersToAdd = userIDs.filter(userID => !oldUserIDs.includes(userID));
         const usersToRemove = oldUserIDs.filter(userID => !userIDs.includes(userID));
 
-        console.log(usersToAdd);
-        console.log(usersToRemove);
-
         for (const userID of usersToAdd) {
           const result = await addUser(userID, toaster);
           if (result !== 1) {

@@ -80,6 +80,7 @@ const ProfileCard = () => {
                 </Link>
                 <Image
                   crossOrigin="anonymous"
+                  priority={true}
                   width={10000}
                   height={10000}
                   alt={'User Pic'}
@@ -217,15 +218,13 @@ const ProfileCard = () => {
                           })
                           .map((link, index) => {
                             return (
-                              <Link
-                                href={link}
-                                target="_blank"
+                              <div
                                 key={index}
                                 className="w-fit h-8 border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                               >
                                 {getIcon(getDomainName(link), 24)}
                                 <div className="capitalize">{getDomainName(link)}</div>
-                              </Link>
+                              </div>
                             );
                           })}
                       {user.links && user.links.length > 3 ? (

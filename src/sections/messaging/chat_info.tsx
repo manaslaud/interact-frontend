@@ -116,13 +116,17 @@ const ChatInfo = ({ chat, setChat, setShow, setChats }: Props) => {
 
         <div className="text-center opacity-75 text-sm mt-4">
           Initiated By{' '}
-          <Link
-            href={`/explore/user/${chat.createdBy.username}`}
-            target="_blank"
-            className="font-semibold underline underline-offset-2"
-          >
-            {chat.createdBy.name}
-          </Link>{' '}
+          {chat.createdBy.id == userID ? (
+            <span className="font-semibold underline underline-offset-2">You</span>
+          ) : (
+            <Link
+              href={`/explore/user/${chat.createdBy.username}`}
+              target="_blank"
+              className="font-semibold underline underline-offset-2"
+            >
+              {chat.createdBy.name}
+            </Link>
+          )}{' '}
           on {moment(chat.createdAt).format('DD MMM YYYY')}
         </div>
 

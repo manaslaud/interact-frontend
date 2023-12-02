@@ -88,9 +88,7 @@ const Applications = () => {
                             {application.opening.title}
                           </div>
                           <div className="line-clamp-1 font-medium max-lg:text-sm">@{application.project.title}</div>
-                          <div className="text-sm opacity-60 max-lg:text-xs">
-                            {moment(application.createdAt).fromNow()}
-                          </div>
+                          <div className="text-gray-600 text-xs">{moment(application.createdAt).fromNow()}</div>
                         </div>
                         <div className="text-sm max-lg:text-xs">{getApplicationStatus(application.status)}</div>
                       </div>

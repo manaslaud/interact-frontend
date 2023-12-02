@@ -8,7 +8,7 @@ import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
-import { ArrowArcLeft } from '@phosphor-icons/react';
+import { ArrowArcLeft, SlidersHorizontal } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import React, { useEffect, useState } from 'react';
@@ -24,9 +24,10 @@ interface Props {
 const Applications = ({ oid }: Props) => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
-  const [filterStatus, setFilterStatus] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  const [clickedOnFilter, setClickedOnFilter] = useState(false);
   const [clickedOnApplication, setClickedOnApplication] = useState(false);
   const [clickedApplicationID, setClickedApplicationID] = useState(-1);
 
@@ -55,11 +56,11 @@ const Applications = ({ oid }: Props) => {
     }
   };
 
-  const filterShortlisted = (status: boolean) => {
+  const filterApplications = (status: number) => {
     setFilterStatus(status);
     setClickedOnApplication(false);
-    if (status) setFilteredApplications(applications.filter(application => application.status == 1));
-    else setFilteredApplications(applications);
+    if (status == 0) setFilteredApplications(applications);
+    else setFilteredApplications(applications.filter(application => application.status == status));
   };
 
   useEffect(() => {
@@ -88,14 +89,68 @@ const Applications = ({ oid }: Props) => {
               />
               <div className="text-4xl font-semibold dark:text-white font-primary">Applications</div>
             </div>
-            <div
+
+            <div className="relative">
+              <div
+                onClick={() => setClickedOnFilter(prev => !prev)}
+                className={`w-28 flex items-center justify-center gap-2 text-xl font-medium cursor-pointer p-2 rounded-xl ${
+                  clickedOnFilter ? 'bg-white' : 'hover:bg-white'
+                } transition-ease-300`}
+              >
+                Filters <SlidersHorizontal size={24} />
+              </div>
+              {clickedOnFilter ? (
+                <div
+                  className={`absolute top-12 right-0 ${
+                    clickedOnApplication ? 'bg-gray-50' : ''
+                  } rounded-md flex flex-col gap-1 animate-fade_third z-50`}
+                >
+                  <div
+                    onClick={() => filterApplications(0)}
+                    className={`w-28 p-2 rounded-lg ${
+                      filterStatus == 0 ? 'bg-white ' : 'hover:bg-gray-100'
+                    } text-center cursor-default transition-ease-300`}
+                  >
+                    All
+                  </div>
+                  <div
+                    onClick={() => filterApplications(2)}
+                    className={`w-28 p-2 rounded-lg ${
+                      filterStatus == 2 ? 'bg-white ' : 'hover:bg-gray-100'
+                    } text-center cursor-default transition-ease-300`}
+                  >
+                    Accepted
+                  </div>
+                  <div
+                    onClick={() => filterApplications(1)}
+                    className={`w-28 p-2 rounded-lg ${
+                      filterStatus == 1 ? 'bg-white ' : 'hover:bg-gray-100'
+                    } text-center cursor-default transition-ease-300`}
+                  >
+                    Shortlisted
+                  </div>
+                  <div
+                    onClick={() => filterApplications(-1)}
+                    className={`w-28 p-2 rounded-lg ${
+                      filterStatus == -1 ? 'bg-white ' : 'hover:bg-gray-100'
+                    } text-center cursor-default transition-ease-300`}
+                  >
+                    Rejected
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+
+            {/* <div
               onClick={() => filterShortlisted(!filterStatus)}
               className={`h-fit ${
                 filterStatus ? 'underline underline-offset-4' : 'hover-underline-animation after:bg-black'
               } text-xl font-medium cursor-pointer`}
             >
               Only Shortlisted
-            </div>
+            </div> */}
           </div>
           <div className="w-full flex flex-col gap-6 px-2 py-2">
             {loading ? (

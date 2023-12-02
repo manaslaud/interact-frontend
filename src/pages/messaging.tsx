@@ -20,7 +20,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import { PencilSimpleLine } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Messaging = () => {
   const active = useSelector(messagingTabSelector);
@@ -33,9 +33,30 @@ const Messaging = () => {
   const [clickedOnNew, setClickedOnNew] = useState(false);
   const [clickedOnNewGroup, setClickedOnNewGroup] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setChatType(String(new URLSearchParams(window.location.search).get('chat')));
   }, [window.location.search]);
+
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get('tab') || '';
+    switch (tab) {
+      case 'personal':
+        dispatch(setMessagingTab(0));
+        break;
+      case 'group':
+        dispatch(setMessagingTab(1));
+        break;
+      case 'project':
+        dispatch(setMessagingTab(2));
+        break;
+      case 'request':
+        dispatch(setMessagingTab(3));
+        break;
+      default:
+    }
+  }, []);
 
   return (
     <BaseWrapper title="Messaging">
