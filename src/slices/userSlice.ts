@@ -11,6 +11,7 @@ interface UserState {
   id: string;
   name: string;
   username: string;
+  isOrganization: boolean;
   bio: string;
   tagline: string;
   email: string;
@@ -38,6 +39,7 @@ const initialState: UserState = {
   id: '',
   name: '',
   username: '',
+  isOrganization: false,
   bio: '',
   tagline: '',
   email: '',
@@ -69,6 +71,7 @@ export const userSlice = createSlice({
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.username = action.payload.username;
+      state.isOrganization = action.payload.isOrganization;
       state.bio = action.payload.bio;
       state.tagline = action.payload.tagline;
       state.email = action.payload.email;
@@ -95,6 +98,7 @@ export const userSlice = createSlice({
       state.id = '';
       state.name = '';
       state.username = '';
+      state.isOrganization = false;
       state.bio = '';
       state.tagline = '';
       state.email = '';

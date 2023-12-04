@@ -5,11 +5,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import configReducer from './slices/configSlice';
+import organizationReducer from './slices/orgSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'config'],
+  whitelist: ['user', 'config', 'organization'],
 };
 
 const configPersistConfig = {
@@ -36,11 +37,18 @@ const feedPersistConfig = {
   whitelist: ['unreadNotifications', 'unreadInvitations', 'unreadChats'],
 };
 
+const orgPersistConfig = {
+  key: 'organization',
+  storage,
+  whitelist: ['currentOrgID'],
+};
+
 const rootReducer = combineReducers({
   feed: persistReducer(feedPersistConfig, feedReducer),
   user: userReducer,
   messaging: messagingReducer,
   config: persistReducer(configPersistConfig, configReducer),
+  organization: persistReducer(orgPersistConfig, organizationReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

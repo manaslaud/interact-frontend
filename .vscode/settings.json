@@ -18,6 +18,13 @@
     "**/Thumbs.db": true,
     "node_modules": true
   },
-  "cSpell.words": ["Imprima", "Inconsolata", "interactnow", "Swipeable", "Unfollowing"],
+  "cSpell.words": [
+    "Imprima",
+    "Inconsolata",
+    "interactnow",
+    "organisation",
+    "Swipeable",
+    "Unfollowing"
+  ],
   "editor.fontLigatures": false
 }

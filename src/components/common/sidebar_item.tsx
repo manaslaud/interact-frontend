@@ -8,12 +8,13 @@ interface Props {
   setActive: React.Dispatch<React.SetStateAction<number>>;
   index: number;
   open: boolean;
+  org?: boolean;
 }
 
-const SidebarItem = ({ title, icon, active, setActive, index, open }: Props) => {
+const SidebarItem = ({ title, icon, active, setActive, index, open, org = false }: Props) => {
   return (
     <Link
-      href={`/${title.toLowerCase()}`}
+      href={`/${org ? 'organisation/' : ''}${title.toLowerCase()}`}
       onClick={() => setActive(index)}
       className={`${open ? 'w-[220px]' : 'w-10 '} h-10 p-[8.5px] rounded-lg ${
         active == index
