@@ -55,7 +55,7 @@ const Posts = () => {
       <OrgSidebar index={2} />
       <MainWrapper>
         <div className="w-[50vw] max-md:w-full mx-auto flex flex-col items-center relative gap-4 px-9 max-md:px-2 p-base_padding">
-          {clickedOnNewPost ? <NewPost setFeed={setPosts} setShow={setClickedOnNewPost} /> : <></>}
+          {clickedOnNewPost ? <NewPost setFeed={setPosts} setShow={setClickedOnNewPost} org={true} /> : <></>}
           <div
             onClick={() => setClickedOnNewPost(true)}
             className="w-full h-taskbar mx-auto shadow-md hover:shadow-lg transition-ease-300 text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"

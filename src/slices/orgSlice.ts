@@ -4,10 +4,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface OrgState {
   currentOrgID: string;
+  currentOrgUserAccID: string;
 }
 
 const initialState: OrgState = {
   currentOrgID: '',
+  currentOrgUserAccID: '',
 };
 
 export const orgSlice = createSlice({
@@ -17,11 +19,15 @@ export const orgSlice = createSlice({
     setCurrentOrgID: (state, action: PayloadAction<string>) => {
       state.currentOrgID = action.payload;
     },
+    setCurrentOrgUserAccID: (state, action: PayloadAction<string>) => {
+      state.currentOrgUserAccID = action.payload;
+    },
   },
 });
 
-export const { setCurrentOrgID } = orgSlice.actions;
+export const { setCurrentOrgID, setCurrentOrgUserAccID } = orgSlice.actions;
 
 export default orgSlice.reducer;
 
 export const currentOrgIDSelector = (state: RootState) => state.organization.currentOrgID;
+export const currentOrgUserAccIDSelector = (state: RootState) => state.organization.currentOrgUserAccID;

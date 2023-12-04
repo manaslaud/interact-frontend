@@ -136,6 +136,7 @@ export interface OrganizationMembership {
   userID: string;
   user: User;
   role: string;
+  title: string;
   createdAt: Date;
 }
 
@@ -145,6 +146,7 @@ export interface Organization {
   user: User;
   title: string;
   memberships: OrganizationMembership[];
+  invitations: Invitation[];
   createdAt: Date;
 }
 

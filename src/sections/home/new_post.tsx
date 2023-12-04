@@ -1,5 +1,5 @@
 import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
-import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
@@ -10,13 +10,15 @@ import { useSelector } from 'react-redux';
 import NewPostImages from '@/components/home/new_post_images';
 import { Post } from '@/types';
 import { useWindowWidth } from '@react-hook/window-size';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  org?: boolean;
 }
 
-const NewPost = ({ setShow, setFeed }: Props) => {
+const NewPost = ({ setShow, setFeed, org = false }: Props) => {
   const [content, setContent] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
 
@@ -38,6 +40,8 @@ const NewPost = ({ setShow, setFeed }: Props) => {
     };
   }, []);
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleSubmit = async () => {
     if (content.trim() == '' || content.replace(/\n/g, '').length == 0) {
       Toaster.error('Caption cannot be empty!');
@@ -52,7 +56,9 @@ const NewPost = ({ setShow, setFeed }: Props) => {
     });
     formData.append('content', content.replace(/\n{3,}/g, '\n\n'));
 
-    const res = await postHandler(POST_URL, formData, 'multipart/form-data');
+    const URL = org ? `${ORG_URL}/${currentOrgID}/posts` : POST_URL;
+
+    const res = await postHandler(URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 201) {
       setContent('');

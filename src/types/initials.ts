@@ -161,6 +161,7 @@ export const initialOrganization: Organization = {
   user: initialUser,
   title: '',
   memberships: [],
+  invitations: [],
   createdAt: new Date(),
 };
 
@@ -171,6 +172,7 @@ export const initialOrganizationMembership: OrganizationMembership = {
   userID: '',
   user: initialUser,
   role: '',
+  title: '',
   createdAt: new Date(),
 };
 

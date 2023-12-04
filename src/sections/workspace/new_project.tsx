@@ -2,8 +2,9 @@ import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
 import Images from '@/components/workspace/new_project_images';
 import { VERIFICATION_ERROR } from '@/config/errors';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
@@ -17,9 +18,10 @@ import { useDispatch, useSelector } from 'react-redux';
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+  org?: boolean;
 }
 
-const NewProject = ({ setShow, setProjects }: Props) => {
+const NewProject = ({ setShow, setProjects, org = false }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tagline, setTagline] = useState('');
@@ -34,6 +36,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
+
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleSubmit = async () => {
     if (title.trim() == '') {
@@ -69,7 +73,9 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     formData.append('isPrivate', String(isPrivate));
     if (image) formData.append('coverPic', image);
 
-    const res = await postHandler(PROJECT_URL, formData, 'multipart/form-data');
+    const URL = org ? `${ORG_URL}/${currentOrgID}/projects` : PROJECT_URL;
+
+    const res = await postHandler(URL, formData, 'multipart/form-data');
 
     if (res.statusCode === 201) {
       const project = res.data.project;

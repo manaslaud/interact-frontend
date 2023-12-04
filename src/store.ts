@@ -40,7 +40,7 @@ const feedPersistConfig = {
 const orgPersistConfig = {
   key: 'organization',
   storage,
-  whitelist: ['currentOrgID'],
+  whitelist: ['currentOrgID', 'currentOrgUserAccID'],
 };
 
 const rootReducer = combineReducers({

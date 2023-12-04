@@ -2,13 +2,14 @@ import Loader from '@/components/common/loader';
 import OrgSidebar from '@/components/common/org_sidebar';
 import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import NewTask from '@/sections/workspace/new_task';
-import TaskView from '@/sections/workspace/task_view';
+import NewTask from '@/sections/organization/tasks/new_task';
+import TaskView from '@/sections/organization/tasks/task_view';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { userSelector } from '@/slices/userSlice';
-import { Project, Task } from '@/types';
-import { initialProject } from '@/types/initials';
+import { Task } from '@/types';
+import { initialOrganization, initialProject } from '@/types/initials';
 import Protect from '@/utils/protect';
 import Toaster from '@/utils/toaster';
 import WidthCheck from '@/utils/widthCheck';
@@ -19,8 +20,8 @@ import { useSelector } from 'react-redux';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [project, setProject] = useState<Project>(initialProject);
   const [loading, setLoading] = useState(true);
+  const [organization, setOrganization] = useState(initialOrganization);
 
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [filterStatus, setFilterStatus] = useState(false);
@@ -32,15 +33,15 @@ const Tasks = () => {
 
   const user = useSelector(userSelector);
 
-  const slug = '';
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const getTasks = () => {
-    const URL = `${PROJECT_URL}/tasks/populated/${slug}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          setProject(res.data.project);
           const taskData = res.data.tasks || [];
+          setOrganization(res.data.organization);
           setTasks(taskData);
           setFilteredTasks(taskData);
           const tid = new URLSearchParams(window.location.search).get('tid');
@@ -68,7 +69,7 @@ const Tasks = () => {
 
   useEffect(() => {
     getTasks();
-  }, [slug]);
+  }, []);
 
   const filterAssigned = (status: boolean) => {
     setFilterStatus(status);
@@ -97,7 +98,7 @@ const Tasks = () => {
         {clickedOnNewTask ? (
           <NewTask
             setShow={setClickedOnNewTask}
-            project={project}
+            organization={organization}
             setTasks={setTasks}
             setFilteredTasks={setFilteredTasks}
           />
@@ -115,19 +116,12 @@ const Tasks = () => {
               <div className="text-6xl font-semibold dark:text-white font-primary">Tasks</div>
             </div>
             <div className="flex gap-8 items-center">
-              {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                <div
-                  onClick={() => setClickedOnNewTask(true)}
-                  className="text-xl text-gradient font-semibold hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
-                >
-                  <span className="max-md:hidden">Create a</span> New Task
-                </div>
-              ) : (
-                <></>
-              )}
-              {/* <div onClick={() => filterAssigned(!filterStatus)} className="">
-                Show Assigned To Me
-              </div> */}
+              <div
+                onClick={() => setClickedOnNewTask(true)}
+                className="text-xl text-gradient font-semibold hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
+              >
+                <span className="max-md:hidden">Create a</span> New Task
+              </div>
             </div>
           </div>
           <div className="w-full flex flex-col gap-6 px-2 py-2">
@@ -156,7 +150,7 @@ const Tasks = () => {
                       <TaskView
                         taskID={clickedTaskID}
                         tasks={filteredTasks}
-                        project={project}
+                        organization={organization}
                         setShow={setClickedOnTask}
                         setTasks={setTasks}
                         setFilteredTasks={setFilteredTasks}

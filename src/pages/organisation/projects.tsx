@@ -75,7 +75,11 @@ const Posts = () => {
       <OrgSidebar index={3} />
       <MainWrapper>
         <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-4 px-9 max-md:px-2 p-base_padding">
-          {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
+          {clickedOnNewProject ? (
+            <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} org={true} />
+          ) : (
+            <></>
+          )}
           <div
             onClick={() => setClickedOnNewProject(true)}
             className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-ease-300 border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
