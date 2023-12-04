@@ -1,4 +1,4 @@
-import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL, TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import { Organization, Project, Task, User } from '@/types';
 import Toaster from '@/utils/toaster';
@@ -9,6 +9,8 @@ import { SERVER_ERROR } from '@/config/errors';
 import Tags from '@/components/utils/edit_tags';
 import moment from 'moment';
 import { initialOrganization } from '@/types/initials';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import { useSelector } from 'react-redux';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -61,6 +63,8 @@ const NewTask = ({ setShow, organization, setShowTasks, setTasks, setFilteredTas
     }
   };
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleSubmit = async () => {
     if (title.trim().length == 0) {
       Toaster.error('Title cannot be empty');
@@ -72,7 +76,7 @@ const NewTask = ({ setShow, organization, setShowTasks, setTasks, setFilteredTas
 
     const toaster = Toaster.startLoad('Creating a new task');
 
-    const URL = `${TASK_URL}/${organization.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks`;
 
     const userIDs = selectedUsers.map(user => user.id);
 

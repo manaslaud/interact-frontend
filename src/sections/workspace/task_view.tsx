@@ -306,7 +306,7 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, project,
           </>
         )}
 
-        {task.subTasks.length > 0 ? (
+        {task.subTasks?.length > 0 ? (
           <div className="w-full flex flex-col gap-2">
             <div className="flex gap-2 items-center">
               <div className="text-xl font-medium">Subtasks</div>

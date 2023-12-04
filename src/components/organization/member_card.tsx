@@ -19,10 +19,10 @@ import EditMember from '@/sections/organization/members/edit_member';
 interface Props {
   membership: OrganizationMembership;
   organization: Organization;
-  setProject?: React.Dispatch<React.SetStateAction<Project>>;
+  setOrganization?: React.Dispatch<React.SetStateAction<Project>>;
 }
 
-const MemberCard = ({ membership, organization, setProject }: Props) => {
+const MemberCard = ({ membership, organization, setOrganization }: Props) => {
   const user = useSelector(userSelector);
   const [clickedOnEditCollaborator, setClickedOnEditCollaborator] = useState(false);
   const [clickedOnRemoveCollaborator, setClickedOnRemoveCollaborator] = useState(false);
@@ -35,8 +35,8 @@ const MemberCard = ({ membership, organization, setProject }: Props) => {
     const res = await deleteHandler(URL);
 
     if (res.statusCode === 204) {
-      if (setProject)
-        setProject(prev => {
+      if (setOrganization)
+        setOrganization(prev => {
           return {
             ...prev,
             memberships: prev.memberships.filter(m => m.id != membership.id),

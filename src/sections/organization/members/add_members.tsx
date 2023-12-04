@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   organization: Organization;
-  setProject?: React.Dispatch<React.SetStateAction<Project>>;
+  setOrganization?: React.Dispatch<React.SetStateAction<Organization>>;
 }
 
 interface InvitationSlice {
@@ -23,7 +23,7 @@ interface InvitationSlice {
   title: string;
 }
 
-const AddMembers = ({ setShow, organization, setProject }: Props) => {
+const AddMembers = ({ setShow, organization, setOrganization }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ const AddMembers = ({ setShow, organization, setProject }: Props) => {
     if (invitationSlices.length == 0) return;
     let check = false;
     invitationSlices.forEach(el => {
-      if (el.title == '') {
+      if (el.title.trim() == '') {
         Toaster.error('Title cannot be empty');
         check = true;
         return;
@@ -108,8 +108,8 @@ const AddMembers = ({ setShow, organization, setProject }: Props) => {
       attemptedCount++;
       if (res.statusCode === 201) {
         const invitation: Invitation = res.data.invitation;
-        if (setProject)
-          setProject(prev => {
+        if (setOrganization)
+          setOrganization(prev => {
             return { ...prev, invitations: [...prev.invitations, invitation] };
           });
         completeCount++;

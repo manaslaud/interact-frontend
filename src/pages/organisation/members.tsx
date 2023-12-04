@@ -26,7 +26,7 @@ const Members = () => {
   const currentOrgID = useSelector(currentOrgIDSelector);
 
   const fetchData = async () => {
-    const URL = `${ORG_URL}/${currentOrgID}/tasks`;
+    const URL = `${ORG_URL}/${currentOrgID}/membership`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setOrganization(res.data.organization);
@@ -68,7 +68,11 @@ const Members = () => {
                 {clickedOnAddCollaborator ? (
                   <>
                     {organization.userID == user.id || user.managerProjects.includes(organization.id) ? (
-                      <AddMembers setShow={setClickedOnAddCollaborator} organization={organization} />
+                      <AddMembers
+                        setShow={setClickedOnAddCollaborator}
+                        organization={organization}
+                        setOrganization={setOrganization}
+                      />
                     ) : (
                       <></>
                     )}

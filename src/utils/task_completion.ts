@@ -3,7 +3,7 @@ import { Task } from '@/types';
 const getCompletionPercentage = (task: Task) => {
   var percentage = 0;
   if (task.isCompleted) percentage = 100;
-  else {
+  else if (task.subTasks) {
     if (task.subTasks.length == 0) percentage = 0;
     else {
       var completedSubtasks = 0;

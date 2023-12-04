@@ -4,6 +4,7 @@ import TabMenu from '@/components/common/tab_menu';
 import NoChatInvitations from '@/components/empty_fillers/chat_invitations';
 import NoProjectInvitations from '@/components/empty_fillers/project_invitations';
 import ChatInvitationCard from '@/components/invitations/chat_invitation_card';
+import OrgInvitationCard from '@/components/invitations/org_invitation_card';
 import ProjectInvitationCard from '@/components/invitations/project_invitation_card';
 import { SERVER_ERROR } from '@/config/errors';
 import { INVITATION_URL } from '@/config/routes';
@@ -22,6 +23,7 @@ const Invitations = () => {
   const active = useSelector(invitationsTabSelector);
   const [projectInvitations, setProjectInvitations] = useState<Invitation[]>([]);
   const [groupChatInvitations, setGroupChatInvitations] = useState<Invitation[]>([]);
+  const [orgInvitations, setOrgInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchInvitations = async () => {
@@ -35,6 +37,9 @@ const Invitations = () => {
       );
       setGroupChatInvitations(
         invitationData.filter((invitation: Invitation) => invitation.chatID && invitation.chatID != '')
+      );
+      setOrgInvitations(
+        invitationData.filter((invitation: Invitation) => invitation.organizationID && invitation.organizationID != '')
       );
       setLoading(false);
     } else {
@@ -53,7 +58,11 @@ const Invitations = () => {
         <div
           className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
         >
-          <TabMenu items={['Projects', 'Group Chats']} active={active} setReduxState={setInvitationsTab} />
+          <TabMenu
+            items={['Projects', 'Group Chats', 'Organizations']}
+            active={active}
+            setReduxState={setInvitationsTab}
+          />
           {loading ? (
             <Loader />
           ) : (
@@ -77,7 +86,6 @@ const Invitations = () => {
                   )}
                 </div>
               </div>
-              {/* <div className={`${active === 1 ? 'block' : 'hidden'}`}></div> */}
               <div className={`w-full ${active === 1 ? 'block' : 'hidden'} `}>
                 <div className="w-full flex flex-col gap-6 p-2">
                   {groupChatInvitations.length > 0 ? (
@@ -94,6 +102,25 @@ const Invitations = () => {
                     </div>
                   ) : (
                     <NoChatInvitations />
+                  )}
+                </div>
+              </div>
+              <div className={`w-full ${active === 2 ? 'block' : 'hidden'}`}>
+                <div className="w-full flex flex-col gap-6 p-2">
+                  {orgInvitations.length > 0 ? (
+                    <div className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-col gap-4">
+                      {orgInvitations.map(invitation => {
+                        return (
+                          <OrgInvitationCard
+                            key={invitation.id}
+                            invitation={invitation}
+                            setInvitations={setOrgInvitations}
+                          />
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <NoProjectInvitations />
                   )}
                 </div>
               </div>
