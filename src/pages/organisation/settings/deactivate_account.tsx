@@ -1,6 +1,5 @@
 import deleteHandler from '@/handlers/delete_handler';
 import { resetUser } from '@/slices/userSlice';
-import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -12,6 +11,7 @@ import OrgSidebar from '@/components/common/org_sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);
@@ -76,4 +76,4 @@ const Deactive = () => {
   );
 };
 
-export default Protect(Deactive);
+export default OrgOnlyAndProtect(Deactive);

@@ -16,6 +16,7 @@ import { userSelector } from '@/slices/userSlice';
 import InvitationCard from '@/components/organization/invitation_card';
 import AddMembers from '@/sections/organization/members/add_members';
 import MemberCard from '@/components/organization/member_card';
+import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 
 const Members = () => {
   const [organization, setOrganization] = useState(initialOrganization);
@@ -146,4 +147,4 @@ const Members = () => {
   );
 };
 
-export default Members;
+export default OrgMembersOnlyAndProtect(Members);

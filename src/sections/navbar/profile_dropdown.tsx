@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { ArrowRight } from '@phosphor-icons/react';
 import { resetConfig } from '@/slices/configSlice';
+import { resetCurrentOrg } from '@/slices/orgSlice';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +20,7 @@ const ProfileDropdown = ({ setShow }: Props) => {
   const handleLogout = () => {
     dispatch(resetUser());
     dispatch(resetConfig());
+    dispatch(resetCurrentOrg());
     Cookies.remove('id');
     Cookies.remove('token');
 

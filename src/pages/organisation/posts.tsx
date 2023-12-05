@@ -1,7 +1,6 @@
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect, useState } from 'react';
-import OrgProtect from '@/utils/wrappers/org_protect';
 import OrgSidebar from '@/components/common/org_sidebar';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
@@ -10,12 +9,13 @@ import Post from '@/components/home/post';
 import NewPost from '@/sections/home/new_post';
 import { Plus } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { POST_URL, USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
+import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import PostsLoader from '@/components/loaders/posts';
 import NoFeed from '@/components/empty_fillers/feed';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostComponent from '@/components/home/post';
 import RePostComponent from '@/components/home/repost';
+import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 
 const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -106,4 +106,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default OrgMembersOnlyAndProtect(Posts);

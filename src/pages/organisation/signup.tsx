@@ -16,7 +16,7 @@ import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
 import { setConfig } from '@/slices/configSlice';
 import { setOnboarding, setUnreadNotifications } from '@/slices/feedSlice';
-import { User } from '@/types';
+import { Organization, User } from '@/types';
 import socketService from '@/config/ws';
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
@@ -24,7 +24,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import StrongPassInfo from '@/components/common/strong_pass_info';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import { setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
+import { setCurrentOrg, setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
 
 const SignUp = () => {
   const router = useRouter();
@@ -98,7 +98,7 @@ const SignUp = () => {
         if (res.status === 201) {
           Toaster.stopLoad(toaster, 'Account created!', 1);
           const user: User = res.data.user;
-          const orgID = res.data.orgID;
+          const organization: Organization = res.data.organization;
           user.email = res.data.email;
           user.phoneNo = res.data.phoneNo || '';
           user.resume = res.data.resume || '';
@@ -113,7 +113,8 @@ const SignUp = () => {
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
           dispatch(setOnboarding(true));
-          dispatch(setCurrentOrgID(orgID));
+          dispatch(setCurrentOrgID(organization.id));
+          dispatch(setCurrentOrg(organization));
           dispatch(setCurrentOrgUserAccID(user.id));
           socketService.connect(user.id);
 

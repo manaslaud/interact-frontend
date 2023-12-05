@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { OpeningBookmark, PostBookmark, ProjectBookmark, User } from '@/types';
+import { OpeningBookmark, OrganizationMembership, PostBookmark, ProjectBookmark, User } from '@/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -33,6 +33,7 @@ interface UserState {
   profilePic: string;
   isLoggedIn: boolean;
   isVerified: boolean;
+  organizationMemberships: OrganizationMembership[];
 }
 
 const initialState: UserState = {
@@ -61,6 +62,7 @@ const initialState: UserState = {
   managerProjects: [],
   applications: [],
   isVerified: false,
+  organizationMemberships: [],
 };
 
 export const userSlice = createSlice({
@@ -93,6 +95,7 @@ export const userSlice = createSlice({
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];
+      state.organizationMemberships = [];
     },
     resetUser: state => {
       state.id = '';
@@ -120,6 +123,7 @@ export const userSlice = createSlice({
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];
+      state.organizationMemberships = [];
     },
     setReduxName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
@@ -190,6 +194,9 @@ export const userSlice = createSlice({
     setVerificationStatus: (state, action: PayloadAction<boolean>) => {
       state.isVerified = action.payload;
     },
+    setOrganizationMemberships: (state, action: PayloadAction<OrganizationMembership[]>) => {
+      state.organizationMemberships = action.payload;
+    },
   },
 });
 
@@ -219,6 +226,7 @@ export const {
   setPhoneNumber,
   setResume,
   setVerificationStatus,
+  setOrganizationMemberships,
 } = userSlice.actions;
 
 export default userSlice.reducer;

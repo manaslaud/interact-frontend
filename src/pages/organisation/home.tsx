@@ -9,7 +9,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
 import { userIDSelector } from '@/slices/userSlice';
-import OrgProtect from '@/utils/wrappers/org_protect';
+import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import OrgSidebar from '@/components/common/org_sidebar';
 
 const Home = () => {
@@ -41,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default OrgOnlyAndProtect(Home);

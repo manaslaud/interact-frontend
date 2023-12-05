@@ -23,9 +23,9 @@ import Toaster from '@/utils/toaster';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { resizeImage } from '@/utils/resize_image';
-import Protect from '@/utils/wrappers/protect';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setOnboarding } from '@/slices/feedSlice';
+import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -344,4 +344,4 @@ const Onboarding = () => {
   );
 };
 
-export default Protect(Onboarding);
+export default OrgOnlyAndProtect(Onboarding);

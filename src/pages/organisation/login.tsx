@@ -15,12 +15,12 @@ import { GetServerSidePropsContext } from 'next/types';
 import nookies from 'nookies';
 import configuredAxios from '@/config/axios';
 import { resetConfig } from '@/slices/configSlice';
-import { User } from '@/types';
+import { Organization, User } from '@/types';
 import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import { setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
+import { setCurrentOrg, setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
 
 const Login = () => {
   const router = useRouter();
@@ -52,7 +52,7 @@ const Login = () => {
         if (res.status === 200) {
           Toaster.stopLoad(toaster, 'Logged In!', 1);
           const user: User = res.data.user;
-          const orgID = res.data.orgID;
+          const organization: Organization = res.data.organization;
           user.email = res.data.email;
           user.phoneNo = res.data.phoneNo || '';
           Cookies.set('token', res.data.token, {
@@ -63,7 +63,8 @@ const Login = () => {
           });
           dispatch(setUser(user));
           dispatch(resetConfig());
-          dispatch(setCurrentOrgID(orgID));
+          dispatch(setCurrentOrgID(organization.id));
+          dispatch(setCurrentOrg(organization));
           dispatch(setCurrentOrgUserAccID(user.id));
           socketService.connect(user.id);
           userStateFetcher();

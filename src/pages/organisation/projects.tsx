@@ -16,8 +16,9 @@ import { SERVER_ERROR } from '@/config/errors';
 import OrgSidebar from '@/components/common/org_sidebar';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
+import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 
-const Posts = () => {
+const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -139,4 +140,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default OrgMembersOnlyAndProtect(Projects);

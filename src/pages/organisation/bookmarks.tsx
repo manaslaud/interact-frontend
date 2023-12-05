@@ -7,9 +7,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Posts from '@/screens/bookmarks/posts';
 import Projects from '@/screens/bookmarks/projects';
-import Protect from '@/utils/wrappers/protect';
 import Openings from '@/screens/bookmarks/openings';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -34,4 +34,4 @@ const Bookmarks = () => {
   );
 };
 
-export default Protect(Bookmarks);
+export default OrgOnlyAndProtect(Bookmarks);

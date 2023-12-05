@@ -4,6 +4,7 @@ import {
   ArrowLineLeft,
   Bell,
   BookmarkSimple,
+  Buildings,
   Envelope,
   Gear,
   HouseLine,
@@ -92,6 +93,21 @@ const Sidebar = ({ index }: Props) => {
             open={open}
           /> */}
         </div>
+
+        {user.id != '' && user.organizationMemberships && user.organizationMemberships.length > 0 ? (
+          <div className="w-fit flex flex-col gap-2">
+            <SidebarItem
+              index={10}
+              title="Organizations"
+              icon={<Buildings size={24} />}
+              active={active}
+              setActive={setActive}
+              open={open}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
         {user.id != '' ? (
           <div className="w-fit py-8 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">

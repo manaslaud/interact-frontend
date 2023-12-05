@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 
 const renderContentWithLinks = (caption: string) => {
   const lines = caption.split('\n');

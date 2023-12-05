@@ -11,6 +11,7 @@ import { userSelector } from '@/slices/userSlice';
 import { Task } from '@/types';
 import { initialOrganization } from '@/types/initials';
 import Toaster from '@/utils/toaster';
+import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -171,4 +172,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default OrgMembersOnlyAndProtect(Tasks);

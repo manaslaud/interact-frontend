@@ -22,6 +22,7 @@ import {
   setFetchedPostBookmarks,
   setFetchedProjectBookmarks,
   setFetchedProjects,
+  setLastFetchedOrganizationMemberships,
   setLastFetchedUnreadChats,
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadNotifications,
@@ -37,6 +38,7 @@ import {
   setManagerProjects,
   setMemberProjects,
   setOpeningBookmarks,
+  setOrganizationMemberships,
   setOwnerProjects,
   setPersonalChatSlices,
   setPostBookmarks,
@@ -48,6 +50,7 @@ import {
   GroupChat,
   Membership,
   OpeningBookmark,
+  OrganizationMembership,
   PostBookmark,
   Project,
   ProjectBookmark,
@@ -276,6 +279,22 @@ const useUserStateFetcher = () => {
       });
   };
 
+  const fetchOrganizationMemberships = () => {
+    if (moment().utc().diff(config.lastFetchedOrganizationMemberships, 'minute') < 30) return;
+    const URL = `${USER_URL}/me/organization/memberships`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const organizationMemberships: OrganizationMembership[] = res.data.memberships;
+          dispatch(setOrganizationMemberships(organizationMemberships));
+          dispatch(setLastFetchedOrganizationMemberships(new Date().toUTCString()));
+        } else Toaster.error(res.data.message, 'error_toaster');
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
   const fetchUserState = () => {
     fetchFollowing();
     fetchLikes();
@@ -287,6 +306,7 @@ const useUserStateFetcher = () => {
     fetchUnreadNotifications();
     fetchUnreadInvitations();
     fetchUnreadChats();
+    fetchOrganizationMemberships();
   };
 
   return fetchUserState;
