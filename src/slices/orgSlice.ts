@@ -19,15 +19,11 @@ interface OrganizationMembershipSlice {
 }
 
 interface OrgState {
-  currentOrgID: string;
-  currentOrgUserAccID: string;
   currentOrg: OrgSlice;
   currentOrgMembership: OrganizationMembershipSlice;
 }
 
 const initialState: OrgState = {
-  currentOrgID: '',
-  currentOrgUserAccID: '',
   currentOrg: {
     id: '',
     userID: '',
@@ -47,12 +43,6 @@ export const orgSlice = createSlice({
   name: 'organization',
   initialState,
   reducers: {
-    setCurrentOrgID: (state, action: PayloadAction<string>) => {
-      state.currentOrgID = action.payload;
-    },
-    setCurrentOrgUserAccID: (state, action: PayloadAction<string>) => {
-      state.currentOrgUserAccID = action.payload;
-    },
     setCurrentOrg: (state, action: PayloadAction<Organization>) => {
       state.currentOrg.id = action.payload.id;
       state.currentOrg.userID = action.payload.userID;
@@ -73,25 +63,21 @@ export const orgSlice = createSlice({
         title: '',
         coverPic: '',
       };
-      (state.currentOrgMembership = {
+      state.currentOrgMembership = {
         id: '',
         organizationID: '',
         userID: '',
         role: '',
         title: '',
-      }),
-        (state.currentOrgID = ''),
-        (state.currentOrgUserAccID = '');
+      };
     },
   },
 });
 
-export const { setCurrentOrgID, setCurrentOrgUserAccID, setCurrentOrg, setCurrentOrgMembership, resetCurrentOrg } =
-  orgSlice.actions;
+export const { setCurrentOrg, setCurrentOrgMembership, resetCurrentOrg } = orgSlice.actions;
 
 export default orgSlice.reducer;
 
-export const currentOrgIDSelector = (state: RootState) => state.organization.currentOrgID;
-export const currentOrgUserAccIDSelector = (state: RootState) => state.organization.currentOrgUserAccID;
+export const currentOrgIDSelector = (state: RootState) => state.organization.currentOrg.id;
 export const currentOrgSelector = (state: RootState) => state.organization.currentOrg;
 export const currentOrgMembershipSelector = (state: RootState) => state.organization.currentOrgMembership;

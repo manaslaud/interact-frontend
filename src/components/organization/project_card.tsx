@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL, PROJECT_URL } from '@/config/routes';
-import { CircleDashed, Eye, EyeSlash, HeartStraight } from '@phosphor-icons/react';
+import { CircleDashed, EyeSlash, HeartStraight } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setManagerProjects, setOwnerProjects, userSelector } from '@/slices/userSlice';
+import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import EditProject from '@/sections/workspace/edit_project';
 import Link from 'next/link';
 import patchHandler from '@/handlers/patch_handler';
@@ -12,6 +12,8 @@ import Toaster from '@/utils/toaster';
 import deleteHandler from '@/handlers/delete_handler';
 import ConfirmDelete from '../common/confirm_delete';
 import { SERVER_ERROR } from '@/config/errors';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER, ORG_SENIOR } from '@/config/constants';
 
 interface Props {
   index: number;
@@ -100,7 +102,7 @@ const ProjectCard = ({
         className={`w-${size} h-${size} max-lg:w-56 max-lg:h-56 max-md:w-72 max-md:h-72 rounded-lg relative group cursor-pointer transition-ease-out-500`}
       >
         <div className="w-full h-full absolute top-0 hidden group-hover:flex justify-between gap-4 text-white animate-fade_third z-[6] rounded-lg p-2">
-          {project.userID == user.id || user.editorProjects.includes(project.id) ? (
+          {checkOrgAccess(ORG_SENIOR) ? (
             <div
               onClick={el => {
                 el.stopPropagation();
@@ -119,7 +121,7 @@ const ProjectCard = ({
               onClick={el => el.stopPropagation()}
               className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism p-2"
             >
-              {project.userID == user.id || user.editorProjects.includes(project.id) ? (
+              {checkOrgAccess(ORG_SENIOR) ? (
                 <div
                   onClick={() => setClickedOnEdit(true)}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
@@ -129,7 +131,7 @@ const ProjectCard = ({
               ) : (
                 <></>
               )}
-              {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+              {checkOrgAccess(ORG_SENIOR) ? (
                 <Link
                   href={`/workspace/manage/${project.slug}`}
                   target="_blank"
@@ -140,7 +142,7 @@ const ProjectCard = ({
               ) : (
                 <></>
               )}
-              {project.userID == user.id ? (
+              {checkOrgAccess(ORG_MANAGER) ? (
                 <div
                   onClick={() => setClickedOnDelete(true)}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
@@ -150,7 +152,7 @@ const ProjectCard = ({
               ) : (
                 <></>
               )}
-              {project.userID == user.id || user.editorProjects.includes(project.id) ? (
+              {checkOrgAccess(ORG_SENIOR) ? (
                 <div
                   onClick={handleUnPublish}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
@@ -178,11 +180,7 @@ const ProjectCard = ({
         <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
           <div className="text-xl max-lg:text-base max-md:text-xl">{project.title}</div>
           <div className="w-full flex items-center justify-between">
-            {project.userID != user.id ? (
-              <div className="text-sm max-lg:text-xs max-md:text-sm">{project.user.name}</div>
-            ) : (
-              <div className="text-sm line-clamp-1 max-lg:hidden max-md:flex">{project.tagline}</div>
-            )}
+            <div className="text-sm line-clamp-1 max-lg:hidden max-md:flex">{project.tagline}</div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-xs">
                 <HeartStraight size={16} />

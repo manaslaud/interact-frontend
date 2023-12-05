@@ -6,6 +6,7 @@ import {
   BookmarkSimple,
   ChatTeardrop,
   ClockCounterClockwise,
+  DoorOpen,
   Gear,
   HouseLine,
   IdentificationCard,
@@ -19,6 +20,7 @@ import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
 import { userSelector } from '@/slices/userSlice';
+import { resetCurrentOrg } from '@/slices/orgSlice';
 
 interface Props {
   index: number;
@@ -157,7 +159,20 @@ const OrgSidebar = ({ index }: Props) => {
               />
             </>
           ) : (
-            <></>
+            <>
+              <SidebarItem
+                index={11}
+                onClick={() => {
+                  dispatch(resetCurrentOrg());
+                }}
+                title="Exit"
+                url="home"
+                icon={<DoorOpen size={24} />}
+                active={active}
+                setActive={setActive}
+                open={open}
+              />
+            </>
           )}
         </div>
 

@@ -8,6 +8,17 @@
   -webkit-backdrop-filter: blur(9.6px);
 }
 
+.my-masonry-grid {
+  display: flex;
+  margin-left: -16px; /* gutter size offset */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
+}
+
 .main_bg {
   background: rgb(22, 22, 22);
   /* background: radial-gradient(circle, rgba(50,0,49,1) 0%, rgb(124, 41, 122) 45%, rgb(44, 0, 39) 100%); */

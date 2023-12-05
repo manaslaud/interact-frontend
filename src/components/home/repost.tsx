@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Post } from '@/types';
-import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import LowerPost from '../lowers/lower_post';
@@ -16,14 +16,18 @@ import ConfirmDelete from '../common/confirm_delete';
 import renderContentWithLinks from '@/utils/funcs/render_content_with_links';
 import Report from '../common/report';
 import SignUp from '../common/signup_box';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_SENIOR } from '@/config/constants';
 
 interface Props {
   post: Post;
   showLowerPost?: boolean;
   setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  org?: boolean;
 }
 
-const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
+const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => {
   const loggedInUser = useSelector(userSelector);
   const [clickedOnOptions, setClickedOnOptions] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
@@ -39,7 +43,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your post...');
 
-    const URL = `${POST_URL}/${post.id}`;
+    const URL = org ? `${ORG_URL}/${currentOrgID}/posts/${post.id}` : `${POST_URL}/${post.id}`;
 
     const res = await deleteHandler(URL);
 
@@ -52,6 +56,8 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
     }
   };
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleEdit = async () => {
     if (caption == post.content || caption.trim().length == 0 || caption.replace(/\n/g, '').length == 0) {
       setClickedOnEdit(false);
@@ -59,7 +65,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
     }
     const toaster = Toaster.startLoad('Editing Post...');
 
-    const URL = `${POST_URL}/${post.id}`;
+    const URL = org ? `${ORG_URL}/${currentOrgID}/posts/${post.id}` : `${POST_URL}/${post.id}`;
 
     const formData = {
       content: caption.replace(/\n{3,}/g, '\n\n'),
@@ -92,7 +98,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
       {clickedOnReport ? <Report postID={post.id} setShow={setClickedOnReport} /> : <></>}
       {!clickedOnEdit && clickedOnOptions ? (
         <div className="w-1/4 h-fit flex flex-col bg-gray-100 bg-opacity-75 dark:bg-transparent absolute top-2 right-12 rounded-xl glassMorphism text-sm p-2 z-10 animate-fade_third">
-          {post.userID == loggedInUser.id ? (
+          {post.userID == loggedInUser.id || checkOrgAccess(ORG_SENIOR) ? (
             <div
               onClick={() => setClickedOnEdit(true)}
               className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg cursor-pointer"
@@ -102,7 +108,7 @@ const RePost = ({ post, showLowerPost = true, setFeed }: Props) => {
           ) : (
             <></>
           )}
-          {post.userID == loggedInUser.id ? (
+          {post.userID == loggedInUser.id || checkOrgAccess(ORG_SENIOR) ? (
             <div
               onClick={el => {
                 el.stopPropagation();

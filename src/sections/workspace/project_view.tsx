@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MEMBERSHIP_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -18,6 +18,7 @@ import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
 import { useSwipeable } from 'react-swipeable';
 import ConfirmDelete from '@/components/common/confirm_delete';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   projectSlugs: string[];
@@ -27,6 +28,7 @@ interface Props {
   fadeIn: boolean;
   setFadeIn: React.Dispatch<React.SetStateAction<boolean>>;
   setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+  org?: boolean;
 }
 
 const ProjectView = ({
@@ -37,6 +39,7 @@ const ProjectView = ({
   fadeIn,
   setFadeIn,
   setProjects,
+  org = false,
 }: Props) => {
   const [project, setProject] = useState<Project>(initialProject);
   const [loading, setLoading] = useState(true);
@@ -50,13 +53,15 @@ const ProjectView = ({
 
   const user = useSelector(userSelector);
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const fetchProject = async (abortController: AbortController) => {
     setLoading(true);
     let slug = '';
     try {
       slug = projectSlugs[clickedProjectIndex];
     } finally {
-      const URL = `${PROJECT_URL}/${slug}`;
+      const URL = org ? `${ORG_URL}/${currentOrgID}/projects/${slug}` : `${PROJECT_URL}/${slug}`;
       const res = await getHandler(URL, abortController.signal);
       if (res.statusCode == 200) {
         const projectData: Project = res.data.project;

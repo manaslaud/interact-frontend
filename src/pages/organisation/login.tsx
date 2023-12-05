@@ -20,7 +20,7 @@ import socketService from '@/config/ws';
 import { SERVER_ERROR } from '@/config/errors';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import { setCurrentOrg, setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
+import { setCurrentOrg } from '@/slices/orgSlice';
 
 const Login = () => {
   const router = useRouter();
@@ -63,9 +63,7 @@ const Login = () => {
           });
           dispatch(setUser(user));
           dispatch(resetConfig());
-          dispatch(setCurrentOrgID(organization.id));
           dispatch(setCurrentOrg(organization));
-          dispatch(setCurrentOrgUserAccID(user.id));
           socketService.connect(user.id);
           userStateFetcher();
           if (user.isVerified) {

@@ -1,6 +1,6 @@
 import Loader from '@/components/common/loader';
-import ProjectCard from '@/components/workspace/project_card';
-import { WORKSPACE_URL } from '@/config/routes';
+import ProjectCard from '@/components/organization/project_card';
+import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
@@ -17,6 +17,9 @@ import OrgSidebar from '@/components/common/org_sidebar';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
+import { currentOrgSelector } from '@/slices/orgSlice';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER } from '@/config/constants';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -32,9 +35,11 @@ const Projects = () => {
   const navbarOpen = useSelector(navbarOpenSelector);
   const user = useSelector(userSelector);
 
+  const currentOrg = useSelector(currentOrgSelector);
+
   const getProjects = () => {
     setLoading(true);
-    const URL = `${WORKSPACE_URL}/my`;
+    const URL = `${EXPLORE_URL}/users/projects/${currentOrg.userID}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -75,23 +80,30 @@ const Projects = () => {
     <BaseWrapper title="Posts">
       <OrgSidebar index={3} />
       <MainWrapper>
-        <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-4 px-9 max-md:px-2 p-base_padding">
+        <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-4 max-md:px-2 p-base_padding">
+          <div className="w-full text-6xl font-semibold dark:text-white font-primary">Projects</div>
+
           {clickedOnNewProject ? (
             <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} org={true} />
           ) : (
             <></>
           )}
-          <div
-            onClick={() => setClickedOnNewProject(true)}
-            className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-ease-300 border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
-          >
-            <div className="font-primary dark:text-gray-200 text-lg pl-2">Create a new project</div>
-            <Plus
-              size={36}
-              className="flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
-              weight="regular"
-            />
-          </div>
+          {checkOrgAccess(ORG_MANAGER) ? (
+            <div
+              onClick={() => setClickedOnNewProject(true)}
+              className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-ease-300 border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
+            >
+              <div className="font-primary dark:text-gray-200 text-lg pl-2">Create a new project</div>
+              <Plus
+                size={36}
+                className="flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
+                weight="regular"
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+
           {loading ? (
             <Loader />
           ) : (
@@ -111,6 +123,7 @@ const Projects = () => {
                       fadeIn={fadeIn}
                       setFadeIn={setFadeIn}
                       setProjects={setProjects}
+                      org={true}
                     />
                   ) : (
                     <></>

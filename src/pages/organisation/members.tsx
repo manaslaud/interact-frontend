@@ -17,6 +17,8 @@ import InvitationCard from '@/components/organization/invitation_card';
 import AddMembers from '@/sections/organization/members/add_members';
 import MemberCard from '@/components/organization/member_card';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER } from '@/config/constants';
 
 const Members = () => {
   const [organization, setOrganization] = useState(initialOrganization);
@@ -68,7 +70,7 @@ const Members = () => {
               <div className="w-[50vw] max-lg:w-screen mx-auto flex flex-col gap-8">
                 {clickedOnAddCollaborator ? (
                   <>
-                    {organization.userID == user.id || user.managerProjects.includes(organization.id) ? (
+                    {checkOrgAccess(ORG_MANAGER) ? (
                       <AddMembers
                         setShow={setClickedOnAddCollaborator}
                         organization={organization}

@@ -9,13 +9,18 @@ interface Props {
   index: number;
   open: boolean;
   org?: boolean;
+  url?: string;
+  onClick?: () => void;
 }
 
-const SidebarItem = ({ title, icon, active, setActive, index, open, org = false }: Props) => {
+const SidebarItem = ({ title, icon, active, setActive, index, open, org = false, url = '', onClick }: Props) => {
   return (
     <Link
-      href={`/${org ? 'organisation/' : ''}${title.toLowerCase()}`}
-      onClick={() => setActive(index)}
+      href={`/${org ? 'organisation/' : ''}${url != '' ? url : title.toLowerCase()}`}
+      onClick={() => {
+        setActive(index);
+        if (onClick) onClick();
+      }}
       className={`${open ? 'w-[220px]' : 'w-10 '} h-10 p-[8.5px] rounded-lg ${
         active == index
           ? 'bg-primary_comp_hover text-primary_text dark:text-white dark:bg-[#0e0c2a59]'

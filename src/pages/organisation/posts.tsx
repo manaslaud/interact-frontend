@@ -8,14 +8,18 @@ import Toaster from '@/utils/toaster';
 import Post from '@/components/home/post';
 import NewPost from '@/sections/home/new_post';
 import { Plus } from '@phosphor-icons/react';
-import Image from 'next/image';
-import { POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import PostsLoader from '@/components/loaders/posts';
+import { EXPLORE_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import NoFeed from '@/components/empty_fillers/feed';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostComponent from '@/components/home/post';
 import RePostComponent from '@/components/home/repost';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
+import { useSelector } from 'react-redux';
+import { currentOrgSelector } from '@/slices/orgSlice';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_SENIOR } from '@/config/constants';
+import Masonry from 'react-masonry-css';
+import Loader from '@/components/common/loader';
 
 const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -24,8 +28,10 @@ const Posts = () => {
   const [clickedOnNewPost, setClickedOnNewPost] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const currentOrg = useSelector(currentOrgSelector);
+
   const getFeed = () => {
-    const URL = `${POST_URL}/me?page=${page}&limit=${10}`;
+    const URL = `${EXPLORE_URL}/users/posts/${currentOrg.userID}?page=${page}&limit=${10}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -54,52 +60,59 @@ const Posts = () => {
     <BaseWrapper title="Posts">
       <OrgSidebar index={2} />
       <MainWrapper>
-        <div className="w-[50vw] max-md:w-full mx-auto flex flex-col items-center relative gap-4 px-9 max-md:px-2 p-base_padding">
-          {clickedOnNewPost ? <NewPost setFeed={setPosts} setShow={setClickedOnNewPost} org={true} /> : <></>}
-          <div
-            onClick={() => setClickedOnNewPost(true)}
-            className="w-full h-taskbar mx-auto shadow-md hover:shadow-lg transition-ease-300 text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
-          >
-            <div className="flex gap-2 items-center pl-2">
-              {/* <Image
-              crossOrigin="anonymous"
-              className="w-8 h-8 rounded-full"
-              width={10000}
-              height={10000}
-              alt="user"
-              src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
-            /> */}
-              <div className="font-primary">Create a post</div>
-            </div>
-            <Plus
-              size={36}
-              className="flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
-              weight="regular"
-            />
+        <div className="w-full flex flex-col items-center gap-2 max-md:px-2 p-base_padding">
+          <div className="w-full flex justify-between items-center">
+            <div className="w-fit text-6xl font-semibold dark:text-white font-primary">Posts</div>
+
+            {checkOrgAccess(ORG_SENIOR) ? (
+              <Plus
+                onClick={() => setClickedOnNewPost(true)}
+                size={42}
+                className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
+                weight="regular"
+              />
+            ) : (
+              <></>
+            )}
           </div>
 
-          {loading ? (
-            <PostsLoader />
-          ) : (
-            <div className="w-full">
-              {posts.length === 0 ? (
-                <NoFeed />
-              ) : (
-                <InfiniteScroll
-                  className="w-full flex flex-col gap-4 dark:gap-0"
-                  dataLength={posts.length}
-                  next={getFeed}
-                  hasMore={hasMore}
-                  loader={<PostsLoader />}
-                >
-                  {posts.map(post => {
-                    if (post.rePost) return <RePostComponent key={post.id} setFeed={setPosts} post={post} />;
-                    else return <PostComponent key={post.id} setFeed={setPosts} post={post} />;
-                  })}
-                </InfiniteScroll>
-              )}
-            </div>
-          )}
+          <div className="w-full max-md:w-full mx-auto flex flex-col items-center gap-4">
+            {clickedOnNewPost ? <NewPost setFeed={setPosts} setShow={setClickedOnNewPost} org={true} /> : <></>}
+
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="w-full">
+                {posts.length === 0 ? (
+                  <NoFeed />
+                ) : (
+                  <InfiniteScroll
+                    className="w-full"
+                    dataLength={posts.length}
+                    next={getFeed}
+                    hasMore={hasMore}
+                    loader={<Loader />}
+                  >
+                    <Masonry
+                      breakpointCols={{ default: 2, 768: 1 }}
+                      className="my-masonry-grid"
+                      columnClassName="my-masonry-grid_column"
+                    >
+                      {posts.map(post => (
+                        <div key={post.id} className="mt-4">
+                          {post.rePost ? (
+                            <RePostComponent key={post.id} setFeed={setPosts} post={post} org={true} />
+                          ) : (
+                            <PostComponent key={post.id} setFeed={setPosts} post={post} org={true} />
+                          )}
+                        </div>
+                      ))}
+                    </Masonry>
+                  </InfiniteScroll>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </MainWrapper>
     </BaseWrapper>

@@ -24,7 +24,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import StrongPassInfo from '@/components/common/strong_pass_info';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import { setCurrentOrg, setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
+import { setCurrentOrg } from '@/slices/orgSlice';
 
 const SignUp = () => {
   const router = useRouter();
@@ -113,9 +113,7 @@ const SignUp = () => {
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
           dispatch(setOnboarding(true));
-          dispatch(setCurrentOrgID(organization.id));
           dispatch(setCurrentOrg(organization));
-          dispatch(setCurrentOrgUserAccID(user.id));
           socketService.connect(user.id);
 
           sessionStorage.setItem('verification-redirect', 'signup-callback');

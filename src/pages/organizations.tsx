@@ -3,17 +3,16 @@ import Sidebar from '@/components/common/sidebar';
 import { SERVER_ERROR } from '@/config/errors';
 import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { Organization, OrganizationMembership } from '@/types';
+import { OrganizationMembership } from '@/types';
 import Toaster from '@/utils/toaster';
 import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { setCurrentOrg, setCurrentOrgID, setCurrentOrgMembership, setCurrentOrgUserAccID } from '@/slices/orgSlice';
+import { setCurrentOrg, setCurrentOrgMembership } from '@/slices/orgSlice';
 
 const Organizations = () => {
   const [memberships, setMemberships] = useState<OrganizationMembership[]>([]);
@@ -41,9 +40,7 @@ const Organizations = () => {
 
   const handleClick = (membership: OrganizationMembership) => {
     dispatch(setCurrentOrg(membership.organization));
-    dispatch(setCurrentOrgID(membership.organizationID));
     dispatch(setCurrentOrgMembership(membership));
-    dispatch(setCurrentOrgUserAccID(membership.userID));
 
     router.push('/organisation/posts');
   };
@@ -52,14 +49,15 @@ const Organizations = () => {
     <BaseWrapper title="Organizations">
       <Sidebar index={10} />
       <MainWrapper>
-        <div className="w-full flex flex-col gap-4 px-32">
-          <div>Memberships</div>
-          <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-8 px-32 py-10">
+          <div className="text-5xl font-semibold dark:text-white font-primary">Memberships</div>
+
+          <div className="w-full flex justify-between flex-wrap">
             {memberships.map(membership => (
               <div
                 key={membership.id}
                 onClick={() => handleClick(membership)}
-                className="w-full font-primary bg-white dark:bg-transparent dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-6 transition-ease-300 cursor-pointer"
+                className="w-[49%] hover:scale-105 hover:shadow-xl font-primary bg-white border-[1px] border-primary_btn rounded-md flex max-md:flex-col items-center justify-start gap-6 p-4 transition-ease-300 cursor-pointer"
               >
                 <div>
                   <Image
@@ -72,11 +70,11 @@ const Organizations = () => {
                   />
                 </div>
                 <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
-                  <div className="grow flex flex-col gap-2">
+                  <div className="w-full flex flex-col gap-2">
                     <div className="text-3xl font-bold text-gradient">{membership.organization.title}</div>
-                    <div className="font-semibold">{membership.title}</div>
-                    <div className="font-medium">{'Member'}</div>
-                    <div className="text-xs">Invited {moment(membership.createdAt).format('DD MMM YYYY')}</div>
+                    <div className="">{membership.title}</div>
+                    <div className="font-medium">{membership.role}</div>
+                    <div className="text-xs">Joined {moment(membership.createdAt).format('DD MMM YYYY')}</div>
                   </div>
                 </div>
               </div>
