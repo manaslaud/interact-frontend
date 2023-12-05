@@ -10,9 +10,9 @@ import Head from 'next/head';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 import OTPInput from 'react-otp-input';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import { ALREADY_VERIFIED_ERROR, SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Verification = () => {
   const [sentOTP, setSentOTP] = useState(false);

@@ -4,7 +4,7 @@ import Discover from '@/screens/home/discover';
 import Feed from '@/screens/home/feed';
 import ProfileCompletion from '@/sections/home/profile_completion';
 import { homeTabSelector, onboardingSelector, setHomeTab } from '@/slices/feedSlice';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React from 'react';

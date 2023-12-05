@@ -17,10 +17,10 @@ import {
   setReduxTagline,
 } from '@/slices/userSlice';
 import Links from '@/components/utils/edit_links';
-import getDomainName from '@/utils/get_domain_name';
-import getIcon from '@/utils/get_icon';
+import getDomainName from '@/utils/funcs/get_domain_name';
+import getIcon from '@/utils/funcs/get_icon';
 import Link from 'next/link';
-import isArrEdited from '@/utils/check_array_edited';
+import isArrEdited from '@/utils/funcs/check_array_edited';
 import Connections from '../explore/connections_view';
 import { SERVER_ERROR } from '@/config/errors';
 

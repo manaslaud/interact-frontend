@@ -4,7 +4,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import { USER_URL } from '@/config/routes';
 import patchHandler from '@/handlers/patch_handler';
 import { Profile, User } from '@/types';
-import isArrEdited from '@/utils/check_array_edited';
+import isArrEdited from '@/utils/funcs/check_array_edited';
 import Toaster from '@/utils/toaster';
 import { Buildings, CalendarBlank, Certificate, PencilSimple } from '@phosphor-icons/react';
 import moment from 'moment';

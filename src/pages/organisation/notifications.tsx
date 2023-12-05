@@ -8,7 +8,7 @@ import UserAppliedToOpening from '@/components/notifications/userAppliedToOpenin
 import Welcome from '@/components/notifications/welcome';
 import { NOTIFICATION_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -17,7 +17,7 @@ import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Home = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -54,7 +54,7 @@ const Home = () => {
   };
   return (
     <BaseWrapper title="Notifications">
-      <OrgSidebar index={8} />
+      <OrgSidebar index={9} />
       <MainWrapper>
         <div className="w-full max-lg:w-full mx-auto flex flex-col gap-4 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
           <div className="text-3xl font-extrabold text-gradient pl-2">Notifications</div>

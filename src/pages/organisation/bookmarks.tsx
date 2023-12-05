@@ -7,15 +7,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Posts from '@/screens/bookmarks/posts';
 import Projects from '@/screens/bookmarks/projects';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Openings from '@/screens/bookmarks/openings';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
   return (
     <BaseWrapper title="Bookmarks">
-      <OrgSidebar index={6} />
+      <OrgSidebar index={10} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-4 py-20">
           <TabMenu items={['Posts', 'Projects', 'Openings']} active={active} setReduxState={setBookmarksTab} />

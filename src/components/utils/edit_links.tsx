@@ -2,8 +2,8 @@ import Toaster from '@/utils/toaster';
 import React, { FormEvent, useState } from 'react';
 import isURL from 'validator/lib/isURL';
 import Link from 'next/link';
-import getIcon from '@/utils/get_icon';
-import getDomainName from '@/utils/get_domain_name';
+import getIcon from '@/utils/funcs/get_icon';
+import getDomainName from '@/utils/funcs/get_domain_name';
 
 interface Props {
   links: string[];

@@ -1,6 +1,6 @@
 import deleteHandler from '@/handlers/delete_handler';
 import { resetUser } from '@/slices/userSlice';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -8,10 +8,10 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Sidebar from '@/components/common/sidebar';
+import OrgSidebar from '@/components/common/org_sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);
@@ -47,7 +47,7 @@ const Deactive = () => {
 
   return (
     <BaseWrapper title="Settings">
-      <Sidebar index={9} />
+      <OrgSidebar index={11} />
       <MainWrapper>
         {/* {showDeactivate ? <ConfirmDeactiveAccount setShow={setShowDeactivate} handleSubmit={handleSubmit} /> : <></>} */}
         <div className="w-[50vw] max-md:w-full mx-auto dark:text-white flex flex-col gap-12 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">

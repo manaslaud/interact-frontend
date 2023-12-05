@@ -12,8 +12,8 @@ import Spline from '@splinetool/react-spline';
 import Link from 'next/link';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
-import getDomainName from '@/utils/get_domain_name';
-import getIcon from '@/utils/get_icon';
+import getDomainName from '@/utils/funcs/get_domain_name';
+import getIcon from '@/utils/funcs/get_icon';
 import { Camera, Plus, X } from '@phosphor-icons/react';
 import Tags from '@/components/utils/edit_tags';
 import Links from '@/components/utils/edit_links';
@@ -23,8 +23,8 @@ import Toaster from '@/utils/toaster';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { resizeImage } from '@/utils/resize_image';
-import Protect from '@/utils/protect';
-import WidthCheck from '@/utils/widthCheck';
+import Protect from '@/utils/wrappers/protect';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setOnboarding } from '@/slices/feedSlice';
 
 const Onboarding = () => {

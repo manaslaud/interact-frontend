@@ -11,7 +11,7 @@ import { userSelector } from '@/slices/userSlice';
 import { Task } from '@/types';
 import { initialOrganization } from '@/types/initials';
 import Toaster from '@/utils/toaster';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect, useState } from 'react';

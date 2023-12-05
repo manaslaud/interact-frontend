@@ -8,7 +8,7 @@ import UserAppliedToOpening from '@/components/notifications/userAppliedToOpenin
 import Welcome from '@/components/notifications/welcome';
 import { NOTIFICATION_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -17,7 +17,7 @@ import { Notification } from '@/types';
 import Comment from '@/components/notifications/comment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Home = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);

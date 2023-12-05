@@ -9,7 +9,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
 import { userIDSelector } from '@/slices/userSlice';
-import OrgProtect from '@/utils/org_protect';
+import OrgProtect from '@/utils/wrappers/org_protect';
 import OrgSidebar from '@/components/common/org_sidebar';
 
 const Home = () => {

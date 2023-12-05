@@ -10,8 +10,8 @@ import Loader from '@/components/common/loader';
 import ProfileCardLoader from '@/components/loaders/feed_profile_card';
 import Connections from '../explore/connections_view';
 import { SERVER_ERROR } from '@/config/errors';
-import getDomainName from '@/utils/get_domain_name';
-import getIcon from '@/utils/get_icon';
+import getDomainName from '@/utils/funcs/get_domain_name';
+import getIcon from '@/utils/funcs/get_icon';
 
 const ProfileCard = () => {
   const [user, setUser] = useState(initialUser);

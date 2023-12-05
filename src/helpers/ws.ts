@@ -2,7 +2,7 @@ import socketService from '@/config/ws';
 import { store } from '@/store';
 import { Chat, GroupChat, GroupChatMessage, Message, TypingStatus, User } from '@/types';
 import { initialUser } from '@/types/initials';
-import sortChats, { sortGroupChats } from '@/utils/sort_chats';
+import sortChats, { sortGroupChats } from '@/utils/funcs/sort_chats';
 import { toast } from 'react-toastify';
 import { messageToastSettings } from '../utils/toaster';
 

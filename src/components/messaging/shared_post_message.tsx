@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { POST_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import Cookies from 'js-cookie';
 import moment from 'moment';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 import Link from 'next/link';
 
 interface Props {

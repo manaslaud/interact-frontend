@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Sidebar from '@/components/common/sidebar';
 import { At, Phone, Password, SmileyXEyes, IdentificationBadge, File, FilePdf } from '@phosphor-icons/react';
 import UpdateEmail from '@/sections/settings/update_email';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import UpdatePassword from '@/sections/settings/update_password';
 import UpdatePhoneNumber from '@/sections/settings/update_phone_number';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import UpdateResume from '@/sections/settings/update_resume';
 
 const Settings = () => {

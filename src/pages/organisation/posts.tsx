@@ -1,7 +1,7 @@
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect, useState } from 'react';
-import OrgProtect from '@/utils/org_protect';
+import OrgProtect from '@/utils/wrappers/org_protect';
 import OrgSidebar from '@/components/common/org_sidebar';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';

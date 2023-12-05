@@ -7,7 +7,7 @@ import socketService from '@/config/ws';
 import getHandler from '@/handlers/get_handler';
 import { userSelector } from '@/slices/userSlice';
 import { GroupChat } from '@/types';
-import { sortGroupChats } from '@/utils/sort_chats';
+import { sortGroupChats } from '@/utils/funcs/sort_chats';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';

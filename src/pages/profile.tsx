@@ -21,8 +21,8 @@ import Loader from '@/components/common/loader';
 import patchHandler from '@/handlers/patch_handler';
 import { setReduxTagline } from '@/slices/userSlice';
 import PostsLoader from '@/components/loaders/posts';
-import Protect from '@/utils/protect';
-import WidthCheck from '@/utils/widthCheck';
+import Protect from '@/utils/wrappers/protect';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import About from '@/screens/profile/my_about';
 
 const Profile = () => {

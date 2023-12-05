@@ -6,7 +6,7 @@ import patchHandler from '@/handlers/patch_handler';
 import { userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
-import isArrEdited from '@/utils/check_array_edited';
+import isArrEdited from '@/utils/funcs/check_array_edited';
 import Toaster from '@/utils/toaster';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';

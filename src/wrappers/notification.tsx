@@ -1,5 +1,5 @@
 import { Notification } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 import { CircleDashed } from '@phosphor-icons/react';
 import React, { ReactNode } from 'react';
 

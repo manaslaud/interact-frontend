@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import OrgSidebar from '@/components/common/org_sidebar';
 import { At, Phone, Password, SmileyXEyes, IdentificationBadge, File, FilePdf } from '@phosphor-icons/react';
 import UpdateEmail from '@/sections/settings/update_email';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import UpdatePassword from '@/sections/settings/update_password';
 import UpdatePhoneNumber from '@/sections/settings/update_phone_number';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import UpdateResume from '@/sections/settings/update_resume';
 
 const Settings = () => {
@@ -36,7 +36,7 @@ const Settings = () => {
   };
   return (
     <BaseWrapper title="Settings">
-      <OrgSidebar index={9} />
+      <OrgSidebar index={11} />
       <MainWrapper>
         <div className="w-3/4 max-md:w-full mx-auto dark:text-white flex flex-col gap-2 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
           <div className="w-fit text-4xl font-extrabold text-gradient mb-2">Settings</div>

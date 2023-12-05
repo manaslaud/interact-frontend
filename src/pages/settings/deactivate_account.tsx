@@ -1,6 +1,6 @@
 import deleteHandler from '@/handlers/delete_handler';
 import { resetUser } from '@/slices/userSlice';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);

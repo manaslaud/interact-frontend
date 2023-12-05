@@ -10,7 +10,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Tags from '@/components/utils/edit_tags';
 import moment from 'moment';
 import patchHandler from '@/handlers/patch_handler';
-import isArrEdited from '@/utils/check_array_edited';
+import isArrEdited from '@/utils/funcs/check_array_edited';
 import deleteHandler from '@/handlers/delete_handler';
 import { Id } from 'react-toastify';
 // import ReactMarkdown from 'react-markdown';

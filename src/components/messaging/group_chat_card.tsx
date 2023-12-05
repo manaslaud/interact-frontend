@@ -2,7 +2,7 @@ import { GroupChat } from '@/types';
 import Cookies from 'js-cookie';
 import React from 'react';
 import Image from 'next/image';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   currentChatIDSelector,

@@ -13,7 +13,7 @@ import Toaster from '@/utils/toaster';
 import patchHandler from '@/handlers/patch_handler';
 import { SERVER_ERROR } from '@/config/errors';
 import ConfirmDelete from '../common/confirm_delete';
-import renderContentWithLinks from '@/utils/render_content_with_links';
+import renderContentWithLinks from '@/utils/funcs/render_content_with_links';
 import Report from '../common/report';
 import SignUp from '../common/signup_box';
 

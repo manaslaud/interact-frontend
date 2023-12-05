@@ -24,7 +24,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import generateRandomProfilePicture from '@/utils/generate_profile_picture';
 import StrongPassInfo from '@/components/common/strong_pass_info';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const SignUp = () => {
   const router = useRouter();

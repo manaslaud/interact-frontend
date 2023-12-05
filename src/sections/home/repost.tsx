@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import { Post } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 
 interface Props {
   post: Post;

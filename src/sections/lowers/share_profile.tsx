@@ -5,7 +5,7 @@ import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 
 import { Chat, User } from '@/types';
-import getMessagingUser from '@/utils/get_messaging_user';
+import getMessagingUser from '@/utils/funcs/get_messaging_user';
 import Toaster from '@/utils/toaster';
 import { ClipboardText } from '@phosphor-icons/react';
 import Cookies from 'js-cookie';

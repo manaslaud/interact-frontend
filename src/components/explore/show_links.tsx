@@ -1,7 +1,7 @@
-import getDomainName from '@/utils/get_domain_name';
+import getDomainName from '@/utils/funcs/get_domain_name';
 import Link from 'next/link';
 import React from 'react';
-import getIcon from '@/utils/get_icon';
+import getIcon from '@/utils/funcs/get_icon';
 
 interface Props {
   links: string[];

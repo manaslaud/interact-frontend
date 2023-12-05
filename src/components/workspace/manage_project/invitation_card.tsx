@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import { Pen } from '@phosphor-icons/react';
 import moment from 'moment';
-import getInvitationStatus from '@/utils/get_invitation_status';
+import getInvitationStatus from '@/utils/funcs/get_invitation_status';
 import { SERVER_ERROR } from '@/config/errors';
 import deleteHandler from '@/handlers/delete_handler';
 import Toaster from '@/utils/toaster';

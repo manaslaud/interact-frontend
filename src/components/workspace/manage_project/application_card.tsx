@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import { Application } from '@/types';
-import getApplicationStatus from '@/utils/get_application_status';
+import getApplicationStatus from '@/utils/funcs/get_application_status';
 import { initialAchievement } from '@/types/initials';
 import { Check, Plus, X } from '@phosphor-icons/react';
 import moment from 'moment';

@@ -8,7 +8,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import Toaster from '@/utils/toaster';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import getMessagingUser from '@/utils/get_messaging_user';
+import getMessagingUser from '@/utils/funcs/get_messaging_user';
 import Cookies from 'js-cookie';
 import postHandler from '@/handlers/post_handler';
 import { useDispatch } from 'react-redux';

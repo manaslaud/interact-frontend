@@ -23,7 +23,7 @@ import isStrongPassword from 'validator/lib/isStrongPassword';
 import { SERVER_ERROR } from '@/config/errors';
 import Info from '@phosphor-icons/react/dist/icons/Info';
 import StrongPassInfo from '@/components/common/strong_pass_info';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setCurrentOrgID, setCurrentOrgUserAccID } from '@/slices/orgSlice';
 
 const SignUp = () => {

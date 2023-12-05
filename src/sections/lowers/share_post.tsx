@@ -5,8 +5,8 @@ import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
 
 import { Chat, Post } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
-import getMessagingUser from '@/utils/get_messaging_user';
+import getDisplayTime from '@/utils/funcs/get_display_time';
+import getMessagingUser from '@/utils/funcs/get_messaging_user';
 import Toaster from '@/utils/toaster';
 import Cookies from 'js-cookie';
 import Image from 'next/image';

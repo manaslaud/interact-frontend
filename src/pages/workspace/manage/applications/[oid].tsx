@@ -3,7 +3,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import { OPENING_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Application } from '@/types';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -15,7 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { initialApplication } from '@/types/initials';
 import ApplicationCard from '@/components/workspace/manage_project/application_card';
 import ApplicationView from '@/sections/workspace/manage_project/application_view';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 interface Props {
   oid: string;

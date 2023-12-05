@@ -10,7 +10,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import PostComponent from '@/components/home/post';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 interface Props {
   id: string;

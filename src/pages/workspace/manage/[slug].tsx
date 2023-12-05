@@ -15,10 +15,10 @@ import { useRouter } from 'next/router';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import Openings from '@/screens/workspace/manage_project/openings';
 import Loader from '@/components/common/loader';
-import Protect from '@/utils/protect';
+import Protect from '@/utils/wrappers/protect';
 import Collaborators from '@/screens/workspace/manage_project/collaborators';
 import Chats from '@/screens/workspace/manage_project/chats';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 interface Props {
   slug: string;

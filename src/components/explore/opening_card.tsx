@@ -2,7 +2,7 @@ import { Opening } from '@/types';
 import React from 'react';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 import moment from 'moment';
 
 interface Props {

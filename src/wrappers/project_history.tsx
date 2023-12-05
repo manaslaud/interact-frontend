@@ -1,5 +1,5 @@
 import { ProjectHistory } from '@/types';
-import getDisplayTime from '@/utils/get_display_time';
+import getDisplayTime from '@/utils/funcs/get_display_time';
 import React, { ReactNode } from 'react';
 import Image from 'next/image';
 import { USER_PROFILE_PIC_URL } from '@/config/routes';

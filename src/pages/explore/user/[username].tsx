@@ -18,7 +18,7 @@ import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
 import Loader from '@/components/common/loader';
 import PostsLoader from '@/components/loaders/posts';
-import WidthCheck from '@/utils/widthCheck';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 import About from '@/screens/profile/about';
 
 interface Props {
