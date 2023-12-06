@@ -2,7 +2,7 @@ import React from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import { CircleDashed, HeartStraight } from '@phosphor-icons/react';
+import { Buildings, CircleDashed, HeartStraight } from '@phosphor-icons/react';
 
 interface Props {
   index: number;
@@ -58,17 +58,21 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
           {project.title}
         </div>
         <div className="w-full flex items-center justify-between">
-          <div className={`w-full line-clamp-1 ${Number(size) <= 64 ? 'text-xs' : 'text-sm'}`}>
+          <div className={`w-full flex items-center gap-1 line-clamp-1 ${Number(size) <= 64 ? 'text-xs' : 'text-sm'}`}>
             {project.user.name}{' '}
-            <span className="text-xs">
-              {project.memberships?.length > 0 ? (
-                <>
-                  + {project.memberships.length} other{project.memberships.length == 1 ? '' : 's'}
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
+            {project.user.isOrganization ? (
+              <Buildings />
+            ) : (
+              <div className="text-xs">
+                {project.memberships?.length > 0 ? (
+                  <>
+                    + {project.memberships.length} other{project.memberships.length == 1 ? '' : 's'}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">

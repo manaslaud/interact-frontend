@@ -11,6 +11,7 @@ import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMemberProjects, userSelector } from '@/slices/userSlice';
 import ConfirmDelete from '../common/confirm_delete';
+import { setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
 
 interface Props {
   invitation: Invitation;
@@ -22,6 +23,8 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [clickedOnReject, setClickedOnReject] = useState(false);
 
   const user = useSelector(userSelector);
+
+  const unreadInvitations = useSelector(unreadInvitationsSelector);
 
   const dispatch = useDispatch();
 
@@ -42,6 +45,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
           })
         );
       dispatch(setMemberProjects([...user.memberProjects, invitation.projectID]));
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
       if (res.data.message) {
@@ -73,6 +77,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       setClickedOnReject(false);
       Toaster.stopLoad(toaster, 'Invitation Rejected', 1);
     } else {

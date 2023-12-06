@@ -24,6 +24,7 @@ import PostsLoader from '@/components/loaders/posts';
 import Protect from '@/utils/wrappers/protect';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import About from '@/screens/profile/my_about';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -306,4 +307,4 @@ const Profile = () => {
   );
 };
 
-export default Protect(Profile);
+export default NonOrgOnlyAndProtect(Profile);

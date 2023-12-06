@@ -10,6 +10,7 @@ import ContributingProjects from '@/screens/workspace/contributing_projects';
 import Applications from '@/screens/workspace/applications';
 import Protect from '@/utils/wrappers/protect';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Workspace = () => {
   const active = useSelector(workspaceTabSelector);
@@ -38,4 +39,4 @@ const Workspace = () => {
   );
 };
 
-export default Protect(Workspace);
+export default NonOrgOnlyAndProtect(Workspace);

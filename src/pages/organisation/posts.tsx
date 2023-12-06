@@ -95,8 +95,8 @@ const Posts = () => {
                   >
                     <Masonry
                       breakpointCols={{ default: 2, 768: 1 }}
-                      className="my-masonry-grid"
-                      columnClassName="my-masonry-grid_column"
+                      className="masonry-grid"
+                      columnClassName="masonry-grid_column"
                     >
                       {posts.map(post => (
                         <div key={post.id} className="mt-4">

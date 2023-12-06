@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -7,18 +7,21 @@ import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
-import LowerWorkspaceProject from '@/components/lowers/lower_workspace_project';
+import LowerProject from '@/components/organization/lower_project';
 import ProjectViewLoader from '@/components/loaders/workspace_project_view';
 import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
-import EditProject from './edit_project';
+import EditProject from '@/sections/workspace/edit_project';
 import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
 import { useSwipeable } from 'react-swipeable';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER, ORG_SENIOR } from '@/config/constants';
+import Link from 'next/link';
 
 interface Props {
   projectSlugs: string[];
@@ -59,7 +62,7 @@ const ProjectView = ({
     try {
       slug = projectSlugs[clickedProjectIndex];
     } finally {
-      const URL = `${PROJECT_URL}/${slug}`;
+      const URL = `${ORG_URL}/${currentOrgID}/projects/${slug}`;
       const res = await getHandler(URL, abortController.signal);
       if (res.statusCode == 200) {
         const projectData: Project = res.data.project;
@@ -105,7 +108,7 @@ const ProjectView = ({
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your project...');
 
-    const URL = `${PROJECT_URL}/${project.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/projects/${project.id}`;
 
     const res = await deleteHandler(URL);
 
@@ -188,6 +191,7 @@ const ProjectView = ({
               setShow={setClickedOnEdit}
               setProjects={setProjects}
               setProjectToEdit={setProject}
+              org={checkOrgAccess(ORG_SENIOR)}
             />
           ) : (
             <></>
@@ -304,7 +308,7 @@ const ProjectView = ({
                   <div className="flex flex-wrap justify-between items-center gap-2">
                     <div className="font-bold text-3xl text-gradient">{project.title}</div>
                     <div className="lg:hidden w-fit">
-                      <LowerWorkspaceProject project={project} />
+                      <LowerProject project={project} />
                     </div>
                   </div>
                   <div className="font-semibold text-lg">{project.tagline}</div>
@@ -350,7 +354,7 @@ const ProjectView = ({
                 </div>
 
                 <div className="w-full mx-auto flex flex-col gap-2 pb-4">
-                  {project.userID == user.id || user.editorProjects.includes(project.id) ? (
+                  {checkOrgAccess(ORG_SENIOR) || user.editorProjects.includes(project.id) ? (
                     <div
                       onClick={() => setClickedOnEdit(true)}
                       className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active  dark:border-dark_primary_btn dark:active:bg-dark_primary_gradient_end py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
@@ -360,17 +364,18 @@ const ProjectView = ({
                   ) : (
                     <></>
                   )}
-                  {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                    <div
-                      onClick={() => router.push(`/workspace/manage/${projectSlugs[clickedProjectIndex]}`)}
+                  {user.managerProjects.includes(project.id) ? (
+                    <Link
+                      href={`/workspace/manage/${projectSlugs[clickedProjectIndex]}`}
+                      target="_blank"
                       className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:active:bg-dark_primary_gradient_end dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Manage Project
-                    </div>
+                    </Link>
                   ) : (
                     <></>
                   )}
-                  {project.userID == user.id ? (
+                  {checkOrgAccess(ORG_MANAGER) ? (
                     <div
                       onClick={() => setClickedOnDelete(true)}
                       className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:text-white hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
@@ -378,12 +383,17 @@ const ProjectView = ({
                       Delete Project
                     </div>
                   ) : (
+                    <></>
+                  )}
+                  {user.memberProjects.includes(project.id) ? (
                     <div
                       onClick={() => setClickedOnLeave(true)}
                       className="w-full text-lg font-medium py-2 flex-center border-[1px] border-primary_danger hover:text-white hover:bg-primary_danger rounded-lg cursor-pointer transition-ease-300"
                     >
                       Leave Project
                     </div>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
@@ -399,7 +409,7 @@ const ProjectView = ({
             </div>
 
             <div className="max-lg:hidden">
-              <LowerWorkspaceProject project={project} />
+              <LowerProject project={project} />
             </div>
 
             {clickedProjectIndex != projectSlugs.length - 1 ? (

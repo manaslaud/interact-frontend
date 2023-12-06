@@ -12,6 +12,7 @@ import Sidebar from '@/components/common/sidebar';
 import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Deactive = () => {
   const [lockBtn, setLockBtn] = useState(false);
@@ -76,4 +77,4 @@ const Deactive = () => {
   );
 };
 
-export default Protect(Deactive);
+export default NonOrgOnlyAndProtect(Deactive);

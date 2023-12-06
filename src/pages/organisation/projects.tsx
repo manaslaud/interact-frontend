@@ -5,7 +5,7 @@ import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import ProjectView from '@/sections/workspace/project_view';
+import ProjectView from '@/sections/organization/projects/project_view';
 import NewProject from '@/sections/workspace/new_project';
 import { Plus } from '@phosphor-icons/react';
 import { userSelector } from '@/slices/userSlice';
@@ -80,26 +80,23 @@ const Projects = () => {
     <BaseWrapper title="Posts">
       <OrgSidebar index={3} />
       <MainWrapper>
-        <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-4 max-md:px-2 p-base_padding">
-          <div className="w-full text-6xl font-semibold dark:text-white font-primary">Projects</div>
+        <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-6 max-md:px-2 p-base_padding">
+          <div className="w-full flex justify-between items-center">
+            <div className="w-fit text-6xl font-semibold dark:text-white font-primary">Projects</div>
 
-          {clickedOnNewProject ? (
-            <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} org={true} />
-          ) : (
-            <></>
-          )}
-          {checkOrgAccess(ORG_MANAGER) ? (
-            <div
-              onClick={() => setClickedOnNewProject(true)}
-              className="w-taskbar max-md:w-taskbar_md h-taskbar mx-auto text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-md:px-2 py-3 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-ease-300 border-gray-300 border-[1px] dark:border-0 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
-            >
-              <div className="font-primary dark:text-gray-200 text-lg pl-2">Create a new project</div>
+            {checkOrgAccess(ORG_MANAGER) ? (
               <Plus
-                size={36}
-                className="flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
+                onClick={() => setClickedOnNewProject(true)}
+                size={42}
+                className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
                 weight="regular"
               />
-            </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          {clickedOnNewProject ? (
+            <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} org={true} />
           ) : (
             <></>
           )}
@@ -111,8 +108,8 @@ const Projects = () => {
               {projects.length > 0 ? (
                 <div
                   className={`w-full grid ${
-                    navbarOpen ? 'grid-cols-3 px-12 gap-12' : 'grid-cols-4 px-12 gap-8'
-                  } max-lg:grid-cols-3 max-md:grid-cols-1 max-lg:gap-4 max-md:gap-6 max-md:px-4 max-md:justify-items-center py-8 transition-ease-out-500`}
+                    navbarOpen ? 'grid-cols-3 gap-12' : 'grid-cols-4 gap-8'
+                  } max-lg:grid-cols-3 max-md:grid-cols-1 max-lg:gap-4 max-md:gap-6 max-md:px-4 max-md:justify-items-center pb-8 transition-ease-out-500`}
                 >
                   {clickedOnProject ? (
                     <ProjectView
@@ -123,7 +120,6 @@ const Projects = () => {
                       fadeIn={fadeIn}
                       setFadeIn={setFadeIn}
                       setProjects={setProjects}
-                      org={true}
                     />
                   ) : (
                     <></>

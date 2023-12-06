@@ -20,6 +20,7 @@ import SignUp from '../common/signup_box';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_SENIOR } from '@/config/constants';
+import { Buildings } from '@phosphor-icons/react';
 
 interface Props {
   post: Post;
@@ -174,9 +175,10 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
         <div className="w-full h-fit flex justify-between">
           <Link
             href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
-            className="font-medium"
+            className="font-medium flex items-center gap-1"
           >
             {post.user.username}
+            {post.user.isOrganization ? <Buildings /> : <></>}
           </Link>
           <div className="flex gap-2 font-light text-xs">
             {post.edited ? <div>(edited)</div> : <></>}

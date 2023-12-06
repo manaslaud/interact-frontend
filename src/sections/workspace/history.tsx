@@ -4,27 +4,34 @@ import Deleted from '@/components/project_history/deleted';
 import Edited from '@/components/project_history/edited';
 import Membership from '@/components/project_history/membership';
 import { SERVER_ERROR } from '@/config/errors';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { ProjectHistory } from '@/types';
 import Toaster from '@/utils/toaster';
 import { X } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSelector } from 'react-redux';
 
 interface Props {
   projectID: string;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  org?: boolean;
 }
 
-const History = ({ projectID, setShow }: Props) => {
+const History = ({ projectID, setShow, org = false }: Props) => {
   const [history, setHistory] = useState<ProjectHistory[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const fetchHistory = async () => {
-    const URL = `${PROJECT_URL}/history/${projectID}?page=${page}&limit=${10}`;
+    const URL = org
+      ? `${ORG_URL}/${currentOrgID}/projects/history/${projectID}?page=${page}&limit=${10}`
+      : `${PROJECT_URL}/history/${projectID}?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       const addedHistory: ProjectHistory[] = [...history, ...(res.data.history || [])];

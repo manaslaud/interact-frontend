@@ -1,4 +1,4 @@
-import { Invitation } from '@/types';
+import { Invitation, OrganizationMembership } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { INVITATION_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
@@ -9,8 +9,10 @@ import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMemberProjects, userSelector } from '@/slices/userSlice';
+import { setMemberProjects, setOrganizationMemberships, userSelector } from '@/slices/userSlice';
 import ConfirmDelete from '../common/confirm_delete';
+import { setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
+import { ORG_MEMBER } from '@/config/constants';
 
 interface Props {
   invitation: Invitation;
@@ -22,6 +24,8 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [clickedOnReject, setClickedOnReject] = useState(false);
 
   const user = useSelector(userSelector);
+
+  const unreadInvitations = useSelector(unreadInvitationsSelector);
 
   const dispatch = useDispatch();
 
@@ -41,7 +45,18 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
-      // dispatch(setMemberProjects([...user.memberProjects, invitation.projectID]));
+      const membership: OrganizationMembership = {
+        id: '',
+        organizationID: invitation.organizationID,
+        organization: invitation.organization,
+        userID: invitation.userID,
+        user: invitation.user,
+        role: ORG_MEMBER,
+        title: invitation.title,
+        createdAt: new Date(),
+      };
+      dispatch(setOrganizationMemberships([...(user.organizationMemberships || []), membership]));
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
       if (res.data.message) {
@@ -74,6 +89,7 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       setClickedOnReject(false);
       Toaster.stopLoad(toaster, 'Invitation Rejected', 1);
     } else {

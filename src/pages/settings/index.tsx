@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import UpdateResume from '@/sections/settings/update_resume';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Settings = () => {
   const [theme, setTheme] = useState(String(localStorage.getItem('theme')) == 'dark' ? 'dark' : 'light');
@@ -112,4 +113,4 @@ const Settings = () => {
   );
 };
 
-export default Protect(Settings);
+export default NonOrgOnlyAndProtect(Settings);

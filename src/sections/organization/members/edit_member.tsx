@@ -1,13 +1,14 @@
-import { MEMBERSHIP_URL, OPENING_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import postHandler from '@/handlers/post_handler';
-import { Membership, Opening, Organization, OrganizationMembership, Project } from '@/types';
+import { MEMBERSHIP_URL, ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { Organization, OrganizationMembership } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Tags from '@/components/utils/edit_tags';
 import patchHandler from '@/handlers/patch_handler';
-import { PROJECT_EDITOR, PROJECT_MANAGER, PROJECT_MEMBER } from '@/config/constants';
-import Cookies from 'js-cookie';
+import { ORG_MANAGER, ORG_MEMBER, ORG_SENIOR } from '@/config/constants';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
+import { currentOrgMembershipSelector, currentOrgSelector } from '@/slices/orgSlice';
+import { initialOrganization, initialOrganizationMembership } from '@/types/initials';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +25,9 @@ const EditMember = ({ setShow, membership, setOrganization }: Props) => {
 
   const [mutex, setMutex] = useState(false);
 
-  const userID = Cookies.get('id');
+  const user = useSelector(userSelector);
+  const org = useSelector(currentOrgSelector) || initialOrganization;
+  const orgMemberShip = useSelector(currentOrgMembershipSelector) || initialOrganizationMembership;
 
   const handleSubmit = async () => {
     if (mutex) return;
@@ -37,7 +40,7 @@ const EditMember = ({ setShow, membership, setOrganization }: Props) => {
       role,
     };
 
-    const URL = `${MEMBERSHIP_URL}/${membership.id}`;
+    const URL = `${ORG_URL}/${org.id}/membership/${membership.id}`;
 
     const res = await patchHandler(URL, formData);
 
@@ -60,15 +63,19 @@ const EditMember = ({ setShow, membership, setOrganization }: Props) => {
       Toaster.stopLoad(toaster, 'Membership Edited', 1);
       setShow(false);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
     }
     setMutex(false);
   };
 
-  // const canEditRoles =
-  //   project.userID == userID ? [PROJECT_MEMBER, PROJECT_EDITOR, PROJECT_MANAGER] : [PROJECT_MEMBER, PROJECT_EDITOR];
+  const canEditRoles =
+    org.userID == user.id
+      ? [ORG_MANAGER, ORG_SENIOR, ORG_MEMBER]
+      : orgMemberShip.role == ORG_MANAGER
+      ? [ORG_SENIOR, ORG_MEMBER]
+      : [];
 
-  const canEditRoles: string[] = [];
   return (
     <>
       <div className="fixed top-56 w-[560px] max-md:w-5/6 h-fit backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-10 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-30">

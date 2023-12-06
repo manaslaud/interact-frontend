@@ -21,7 +21,7 @@ const NonOrgOnlyAndProtect = <Props extends Object>(Component: ComponentType<Pro
       } else if (user.isOrganization) {
         Toaster.error('Page only for non organization accounts.');
         setIsAuthenticated(0);
-        router.replace('/organization/home');
+        router.replace('/organisation/home');
       } else setIsAuthenticated(1);
     }, []);
 

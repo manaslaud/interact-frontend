@@ -8,13 +8,13 @@
   -webkit-backdrop-filter: blur(9.6px);
 }
 
-.my-masonry-grid {
+.masonry-grid {
   display: flex;
   margin-left: -16px; /* gutter size offset */
   width: auto;
 }
 
-.my-masonry-grid_column {
+.masonry-grid_column {
   padding-left: 16px; /* gutter size */
   background-clip: padding-box;
 }

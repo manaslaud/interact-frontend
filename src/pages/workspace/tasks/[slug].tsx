@@ -2,7 +2,7 @@ import Loader from '@/components/common/loader';
 import Sidebar from '@/components/common/sidebar';
 import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';
@@ -17,12 +17,15 @@ import MainWrapper from '@/wrappers/main';
 import { GetServerSidePropsContext } from 'next';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import OrgSidebar from '@/components/common/org_sidebar';
 
 interface Props {
   slug: string;
+  org: boolean;
 }
 
-const Tasks = ({ slug }: Props) => {
+const Tasks = ({ slug, org }: Props) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project>(initialProject);
   const [loading, setLoading] = useState(true);
@@ -37,8 +40,13 @@ const Tasks = ({ slug }: Props) => {
 
   const user = useSelector(userSelector);
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const getTasks = () => {
-    const URL = `${PROJECT_URL}/tasks/populated/${slug}`;
+    const URL =
+      org && currentOrgID != ''
+        ? `${ORG_URL}/${currentOrgID}/projects/tasks/populated/${slug}`
+        : `${PROJECT_URL}/tasks/populated/${slug}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -95,7 +103,8 @@ const Tasks = ({ slug }: Props) => {
 
   return (
     <BaseWrapper title="Tasks">
-      <Sidebar index={3} />
+      {org && currentOrgID != '' ? <OrgSidebar index={3} /> : <Sidebar index={3} />}
+
       <MainWrapper>
         {clickedOnNewTask ? (
           <NewTask
@@ -184,9 +193,9 @@ const Tasks = ({ slug }: Props) => {
 export default WidthCheck(Protect(Tasks));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { slug } = context.query;
+  const { slug, org } = context.query;
 
   return {
-    props: { slug },
+    props: { slug, org: org && org == 'true' ? true : false },
   };
 }

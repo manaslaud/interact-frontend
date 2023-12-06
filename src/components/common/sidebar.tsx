@@ -13,7 +13,7 @@ import {
   Wrench,
 } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
+import { navbarOpenSelector, setNavbarOpen, unreadInvitationsSelector } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
 import { userSelector } from '@/slices/userSlice';
@@ -31,6 +31,8 @@ const Sidebar = ({ index }: Props) => {
   const user = useSelector(userSelector);
 
   const userFetcher = useUserStateFetcher();
+
+  const unreadInvitations = useSelector(unreadInvitationsSelector);
 
   useEffect(() => {
     if (user.id != '') userFetcher();
@@ -71,7 +73,19 @@ const Sidebar = ({ index }: Props) => {
           <SidebarItem
             index={5}
             title="Invitations"
-            icon={<Envelope size={24} />}
+            icon={
+              <div className="w-fit relative">
+                {unreadInvitations > 0 ? (
+                  <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-3 h-3 flex-center text-xxs border-[1px] border-gray-500 rounded-full">
+                    {unreadInvitations}
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                <Envelope size={24} />
+              </div>
+            }
             active={active}
             setActive={setActive}
             open={open}

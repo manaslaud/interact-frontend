@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Project, Task } from '@/types';
 import { SERVER_ERROR } from '@/config/errors';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Gavel from '@phosphor-icons/react/dist/icons/Gavel';
@@ -11,19 +11,25 @@ import moment from 'moment';
 import { Share, Users } from '@phosphor-icons/react';
 import Link from 'next/link';
 import TasksLoader from '@/components/loaders/tasks';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   project: Project;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedOnNewTask: React.Dispatch<React.SetStateAction<boolean>>;
+  org?: boolean;
 }
 
-const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
+const Tasks = ({ project, setShow, setClickedOnNewTask, org = false }: Props) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const getTasks = () => {
-    const URL = `${PROJECT_URL}/tasks/${project.slug}`;
+    const URL = org
+      ? `${ORG_URL}/${currentOrgID}/projects/tasks/${project.slug}`
+      : `${PROJECT_URL}/tasks/${project.slug}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
@@ -65,7 +71,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask }: Props) => {
           <Gavel className="max-md:hidden" size={40} weight="duotone" />
           <div className="grow flex justify-between items-center">
             Recent Tasks
-            <Link href={`/workspace/tasks/${project.slug}`}>
+            <Link href={`/workspace/tasks/${project.slug}${org ? '?org=true' : ''}`} target="_blank">
               <Share className="cursor-pointer" size={36} weight="duotone" />
             </Link>
           </div>

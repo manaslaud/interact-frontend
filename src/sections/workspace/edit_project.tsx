@@ -1,8 +1,9 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
 import Images from '@/components/workspace/new_project_images';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import patchHandler from '@/handlers/patch_handler';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
@@ -16,9 +17,10 @@ interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setProjectToEdit?: React.Dispatch<React.SetStateAction<Project>>;
   setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+  org?: boolean;
 }
 
-const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: Props) => {
+const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects, org = false }: Props) => {
   const [description, setDescription] = useState(projectToEdit.description);
   const [tagline, setTagline] = useState(projectToEdit.tagline);
   const [isPrivate, setIsPrivate] = useState(projectToEdit.isPrivate);
@@ -31,6 +33,8 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
+
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleSubmit = async () => {
     if (description.trim() == '') {
@@ -65,7 +69,9 @@ const EditProject = ({ projectToEdit, setShow, setProjectToEdit, setProjects }: 
     formData.append('isPrivate', String(isPrivate));
     if (image) formData.append('coverPic', image);
 
-    const URL = `${PROJECT_URL}/${projectToEdit.slug}`;
+    const URL = org
+      ? `${ORG_URL}/${currentOrgID}/projects/${projectToEdit.slug}`
+      : `${PROJECT_URL}/${projectToEdit.slug}`;
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
 

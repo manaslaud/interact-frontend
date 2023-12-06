@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setChats, userSelector } from '@/slices/userSlice';
 import socketService from '@/config/ws';
 import ConfirmDelete from '../common/confirm_delete';
+import { setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
 
 interface Props {
   invitation: Invitation;
@@ -23,6 +24,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
   const [clickedOnReject, setClickedOnReject] = useState(false);
 
   const user = useSelector(userSelector);
+  const unreadInvitations = useSelector(unreadInvitationsSelector);
 
   const dispatch = useDispatch();
 
@@ -43,6 +45,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
           })
         );
       dispatch(setChats([...user.chats, invitation.chatID]));
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       socketService.setupChats([...user.chats, invitation.chatID]);
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
@@ -75,6 +78,7 @@ const ChatInvitationCard = ({ invitation, setInvitations }: Props) => {
             return i;
           })
         );
+      dispatch(setUnreadInvitations(unreadInvitations - 1));
       setClickedOnReject(false);
       Toaster.stopLoad(toaster, 'Invitation Rejected', 1);
     } else {

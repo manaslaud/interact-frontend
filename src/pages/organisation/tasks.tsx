@@ -1,20 +1,22 @@
 import Loader from '@/components/common/loader';
 import OrgSidebar from '@/components/common/org_sidebar';
 import TaskCard from '@/components/workspace/task_card';
+import { ORG_SENIOR } from '@/config/constants';
 import { SERVER_ERROR } from '@/config/errors';
 import { ORG_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import NewTask from '@/sections/organization/tasks/new_task';
 import TaskView from '@/sections/organization/tasks/task_view';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
-import { userSelector } from '@/slices/userSlice';
 import { Task } from '@/types';
 import { initialOrganization } from '@/types/initials';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
 import Toaster from '@/utils/toaster';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
+import { Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -30,8 +32,6 @@ const Tasks = () => {
   const [clickedTaskID, setClickedTaskID] = useState(-1);
 
   const [clickedOnNewTask, setClickedOnNewTask] = useState(false);
-
-  const user = useSelector(userSelector);
 
   const currentOrgID = useSelector(currentOrgIDSelector);
 
@@ -106,25 +106,21 @@ const Tasks = () => {
           <></>
         )}
         <div className="w-full flex flex-col">
-          <div className="w-full flex justify-between p-base_padding">
-            <div className="flex gap-3">
-              {/* <ArrowArcLeft
-            onClick={() => router.back()}
-            className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
-            size={40}
-          /> */}
-              <div className="text-6xl font-semibold dark:text-white font-primary">Tasks</div>
-            </div>
-            <div className="flex gap-8 items-center">
-              <div
+          <div className="w-full flex justify-between items-center p-base_padding">
+            <div className="text-6xl font-semibold dark:text-white font-primary">Tasks</div>
+
+            {checkOrgAccess(ORG_SENIOR) ? (
+              <Plus
                 onClick={() => setClickedOnNewTask(true)}
-                className="text-xl text-gradient font-semibold hover-underline-animation after:bg-dark_primary_btn cursor-pointer"
-              >
-                <span className="max-md:hidden">Create a</span> New Task
-              </div>
-            </div>
+                size={42}
+                className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
+                weight="regular"
+              />
+            ) : (
+              <></>
+            )}
           </div>
-          <div className="w-full flex flex-col gap-6 px-2 py-2">
+          <div className="w-full flex flex-col gap-6 px-2 pb-2">
             {loading ? (
               <Loader />
             ) : (

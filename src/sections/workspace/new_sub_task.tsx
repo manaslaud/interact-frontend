@@ -86,14 +86,14 @@ const NewSubTask = ({ setShow, task, setTasks, setFilteredTasks }: Props) => {
       if (setTasks)
         setTasks(prev =>
           prev.map(t => {
-            if (t.id == task.id) return { ...t, subTasks: [...t.subTasks, subtask] };
+            if (t.id == task.id) return { ...t, subTasks: [...(t.subTasks || []), subtask] };
             else return t;
           })
         );
       if (setFilteredTasks)
         setFilteredTasks(prev =>
           prev.map(t => {
-            if (t.id == task.id) return { ...t, subTasks: [...t.subTasks, subtask] };
+            if (t.id == task.id) return { ...t, subTasks: [...(t.subTasks || []), subtask] };
             else return t;
           })
         );

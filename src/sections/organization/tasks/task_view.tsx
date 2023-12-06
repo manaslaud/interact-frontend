@@ -1,6 +1,6 @@
 import { Organization, Project, Task } from '@/types';
 import React, { useState } from 'react';
-import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL, TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import Image from 'next/image';
 import {
   ArrowArcLeft,
@@ -26,6 +26,9 @@ import NewSubTask from '@/sections/workspace/new_sub_task';
 import { initialOrganization, initialSubTask, initialTask } from '@/types/initials';
 import SubTaskView from '@/sections/workspace/sub_task_view';
 import EditSubTask from '@/sections/workspace/edit_sub_task';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER } from '@/config/constants';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   taskID: number;
@@ -48,22 +51,14 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
 
   const task = tasks[taskID] || initialTask;
 
-  const getUserRole = (userID: string) => {
-    var role = '';
-    // if (project.userID == userID) role = 'Owner';
-    // else
-    //   project.memberships.forEach(m => {
-    //     if (m.userID == userID) role = m.role;
-    //   });
-    return role;
-  };
-
   const user = useSelector(userSelector);
+
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting the task...');
 
-    const URL = `${TASK_URL}/${task.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks/${task.id}`;
 
     const res = await deleteHandler(URL);
 
@@ -233,14 +228,14 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
           />
           <div className="w-full flex justify-between items-center">
             <div className="text-4xl font-semibold">{task.title}</div>
-            {/* {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+            {checkOrgAccess(ORG_MANAGER) ? (
               <div className="flex gap-2">
                 <Gear onClick={() => setClickedOnEditTask(true)} className="cursor-pointer" size={32} />
                 <Trash onClick={() => setClickedOnDeleteTask(true)} className="cursor-pointer" size={32} />
               </div>
             ) : (
               <></>
-            )} */}
+            )}
           </div>
         </div>
         <div className="w-full flex flex-col gap-4">
@@ -276,14 +271,11 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
                       height={10000}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-                      className={'rounded-full w-16 h-16'}
+                      className={'rounded-full w-12 h-12'}
                     />
                     <div className="grow">
                       <div className="text-xl font-medium">{user.name}</div>
-                      <div className="flex flex-col gap-1">
-                        <div className="text-xs text-gray-600">@{user.username}</div>
-                        <div className="text-sm font-medium">{getUserRole(user.id)}</div>
-                      </div>
+                      <div className="text-xs text-gray-600">@{user.username}</div>
                     </div>
                   </div>
                 );
@@ -292,7 +284,7 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
           </div>
         ) : (
           <>
-            {/* {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+            {checkOrgAccess(ORG_MANAGER) ? (
               <div
                 onClick={() => setClickedOnEditTask(true)}
                 className="w-full text-base bg-gray-100 rounded-xl p-4 hover:scale-105 cursor-pointer transition-ease-300"
@@ -302,7 +294,7 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
               </div>
             ) : (
               <></>
-            )} */}
+            )}
           </>
         )}
 

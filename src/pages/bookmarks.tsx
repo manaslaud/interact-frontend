@@ -10,6 +10,7 @@ import Projects from '@/screens/bookmarks/projects';
 import Protect from '@/utils/wrappers/protect';
 import Openings from '@/screens/bookmarks/openings';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -34,4 +35,4 @@ const Bookmarks = () => {
   );
 };
 
-export default Protect(Bookmarks);
+export default NonOrgOnlyAndProtect(Bookmarks);

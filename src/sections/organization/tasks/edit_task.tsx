@@ -1,7 +1,6 @@
 /* eslint-disable react/no-children-prop */
-import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import postHandler from '@/handlers/post_handler';
-import { Organization, Project, Task, User } from '@/types';
+import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { Organization, Task, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -13,7 +12,8 @@ import patchHandler from '@/handlers/patch_handler';
 import isArrEdited from '@/utils/funcs/check_array_edited';
 import deleteHandler from '@/handlers/delete_handler';
 import { Id } from 'react-toastify';
-import { initialOrganization } from '@/types/initials';
+import { useSelector } from 'react-redux';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 // import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
 
@@ -79,6 +79,8 @@ const EditTask = ({ setShow, organization, task, setTasks, setFilteredTasks }: P
     }
   };
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleSubmit = async () => {
     if (title.trim().length == 0) {
       Toaster.error('Title cannot be empty');
@@ -90,7 +92,7 @@ const EditTask = ({ setShow, organization, task, setTasks, setFilteredTasks }: P
 
     const toaster = Toaster.startLoad('Updating the task');
 
-    const URL = `${TASK_URL}/${task.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks/${task.id}`;
 
     const userIDs = selectedUsers.map(user => user.id);
 
@@ -187,7 +189,8 @@ const EditTask = ({ setShow, organization, task, setTasks, setFilteredTasks }: P
   };
 
   const addUser = async (userID: string, toaster: Id) => {
-    const URL = `${TASK_URL}/users/${task.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks/users/${task.id}`;
+
     const res = await patchHandler(URL, { userID });
     if (res.statusCode === 200) {
       return 1;
@@ -202,7 +205,7 @@ const EditTask = ({ setShow, organization, task, setTasks, setFilteredTasks }: P
   };
 
   const removeUser = async (userID: string, toaster: Id) => {
-    const URL = `${TASK_URL}/users/${task.id}/${userID}`;
+    const URL = `${ORG_URL}/${currentOrgID}/tasks/users/${task.id}/${userID}`;
     const res = await deleteHandler(URL);
     if (res.statusCode === 200) {
       return 1;

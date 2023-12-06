@@ -6,7 +6,7 @@ import { initialProject } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
+import { Buildings, CaretLeft, CaretRight, X } from '@phosphor-icons/react';
 import LowerProject from '@/components/lowers/lower_project';
 import ProjectViewLoader from '@/components/loaders/explore_project_view';
 import { useRouter } from 'next/router';
@@ -146,7 +146,7 @@ const ProjectView = ({
                 <div>
                   <div className="w-fit font-bold cursor-default">{project.title}</div>
                   <div // convert to link
-                    className="w-fit flex gap-1 text-xs font-medium"
+                    className="w-fit flex items-center gap-1 text-xs font-medium"
                   >
                     <div
                       onClick={() => router.push(`/explore/user/${project.user.username}`)}
@@ -154,7 +154,9 @@ const ProjectView = ({
                     >
                       {project.user.name}
                     </div>
-                    {project.memberships?.length > 0 ? (
+                    {project.user.isOrganization ? (
+                      <Buildings />
+                    ) : project.memberships?.length > 0 ? (
                       <div className="flex gap-1">
                         <div>+</div>
                         <div

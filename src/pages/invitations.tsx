@@ -18,6 +18,7 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
 const Invitations = () => {
   const active = useSelector(invitationsTabSelector);
@@ -132,4 +133,4 @@ const Invitations = () => {
   );
 };
 
-export default Protect(Invitations);
+export default NonOrgOnlyAndProtect(Invitations);
