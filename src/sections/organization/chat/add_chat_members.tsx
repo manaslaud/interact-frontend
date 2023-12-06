@@ -1,6 +1,6 @@
 import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { GroupChat, Project, User } from '@/types';
+import { GroupChat, Organization, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -10,11 +10,11 @@ import { SERVER_ERROR } from '@/config/errors';
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   chat: GroupChat;
-  project: Project;
+  organization: Organization;
   setChats: React.Dispatch<React.SetStateAction<GroupChat[]>>;
 }
 
-const AddChatMembers = ({ setShow, chat, project, setChats }: Props) => {
+const AddChatMembers = ({ setShow, chat, organization, setChats }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -32,9 +32,7 @@ const AddChatMembers = ({ setShow, chat, project, setChats }: Props) => {
 
   const fetchUsers = async (key: string) => {
     const matchedUsers: User[] = [];
-    if (project.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    else if (project.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    project.memberships.forEach(membership => {
+    organization.memberships.forEach(membership => {
       if (membership.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
       else if (membership.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
     });

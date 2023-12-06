@@ -1,20 +1,23 @@
-import { GROUP_CHAT_PIC_URL, MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { GROUP_CHAT_PIC_URL, MESSAGING_URL, ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { GroupChat, Project, User } from '@/types';
+import { GroupChat, Organization, Project, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { MagnifyingGlass, Pen } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
 import { resizeImage } from '@/utils/resize_image';
+import project from '@/screens/messaging/project';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import { useSelector } from 'react-redux';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  project: Project;
+  organization: Organization;
   setChats: React.Dispatch<React.SetStateAction<GroupChat[]>>;
 }
 
-const NewChat = ({ setShow, project, setChats }: Props) => {
+const NewChat = ({ setShow, organization, setChats }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [users, setUsers] = useState<User[]>([]);
@@ -35,9 +38,7 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
 
   const fetchUsers = async (key: string) => {
     const matchedUsers: User[] = [];
-    if (project.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    else if (project.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(project.user);
-    project.memberships.forEach(membership => {
+    organization.memberships.forEach(membership => {
       if (membership.user.username.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
       else if (membership.user.name.match(new RegExp(key, 'i'))) matchedUsers.push(membership.user);
     });
@@ -57,6 +58,8 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
     }
   };
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleSubmit = async () => {
     if (title.trim().length == 0) {
       Toaster.error('Title cannot be empty');
@@ -68,7 +71,7 @@ const NewChat = ({ setShow, project, setChats }: Props) => {
 
     const toaster = Toaster.startLoad('Creating a new group');
 
-    const URL = `${MESSAGING_URL}/project/${project.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/chats`;
 
     const userIDs = selectedUsers.map(user => user.id);
 

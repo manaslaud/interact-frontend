@@ -81,7 +81,7 @@ const MemberCard = ({ membership, organization, setOrganization }: Props) => {
         <div className="grow flex flex-col gap-2 pt-1">
           <div className="w-full flex items-center justify-between">
             <div className="text-2xl font-semibold">{membership.user.name}</div>
-            {checkOrgAccess(ORG_MANAGER) ? (
+            {checkOrgAccess(ORG_MANAGER) && userID != membership.userID ? (
               <Pen onClick={() => setClickedOnEditCollaborator(true)} className="cursor-pointer" size={24} />
             ) : (
               <></>

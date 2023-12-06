@@ -4,14 +4,13 @@ import Image from 'next/image';
 import { GROUP_CHAT_PIC_URL } from '@/config/routes';
 
 interface Props {
-  project: Project;
   chat: GroupChat;
   setClickedOnEditChat: React.Dispatch<React.SetStateAction<boolean>>;
   clickedEditChat: GroupChat;
   setClickedEditChat: React.Dispatch<React.SetStateAction<GroupChat>>;
 }
 
-const ChatCard = ({ project, chat, setClickedOnEditChat, clickedEditChat, setClickedEditChat }: Props) => {
+const ChatCard = ({ chat, setClickedOnEditChat, clickedEditChat, setClickedEditChat }: Props) => {
   const handleClick = () => {
     setClickedEditChat(chat);
     setClickedOnEditChat(true);

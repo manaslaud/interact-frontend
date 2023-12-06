@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowCircleLeft, CaretRight, Pen, Plus, X } from '@phosphor-icons/react';
-import { GROUP_ADMIN } from '@/config/constants';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
 import { GROUP_CHAT_PIC_URL, MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import { GroupChat, GroupChatMembership, Project } from '@/types';
+import { GroupChat, Organization, Project } from '@/types';
 import { initialGroupChatMembership } from '@/types/initials';
 import EditMembership from './edit_chat_membership';
 import AddChatMembers from './add_chat_members';
@@ -20,12 +19,12 @@ import { resizeImage } from '@/utils/resize_image';
 
 interface Props {
   chat: GroupChat;
-  project: Project;
+  organization: Organization;
   setStateChats: React.Dispatch<React.SetStateAction<GroupChat[]>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
+const EditChat = ({ chat, organization, setStateChats, setShow }: Props) => {
   const [clickedOnEditMembership, setClickedOnEditMembership] = useState(false);
   const [clickedEditUserMembership, setClickedEditUserMembership] = useState(initialGroupChatMembership);
   const [clickedOnAddMembers, setClickedOnAddMembers] = useState(false);
@@ -130,7 +129,12 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
         <></>
       )}
       {clickedOnAddMembers ? (
-        <AddChatMembers setShow={setClickedOnAddMembers} chat={chat} project={project} setChats={setStateChats} />
+        <AddChatMembers
+          setShow={setClickedOnAddMembers}
+          chat={chat}
+          organization={organization}
+          setChats={setStateChats}
+        />
       ) : (
         <></>
       )}

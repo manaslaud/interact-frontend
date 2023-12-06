@@ -8,7 +8,6 @@ import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Loader from '@/components/common/loader';
-import GroupInfo from '@/sections/messaging/group_info';
 import { initialGroupChat } from '@/types/initials';
 import EditChat from '@/sections/workspace/manage_project/edit_chat';
 
@@ -73,7 +72,6 @@ const Chats = ({ project }: Props) => {
                   return (
                     <ChatCard
                       key={chat.id}
-                      project={project}
                       chat={chat}
                       setClickedOnEditChat={setClickedOnEditChat}
                       clickedEditChat={clickedEditChat}

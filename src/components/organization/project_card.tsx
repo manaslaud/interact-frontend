@@ -131,7 +131,7 @@ const ProjectCard = ({
               ) : (
                 <></>
               )}
-              {checkOrgAccess(ORG_SENIOR) ? (
+              {user.managerProjects.includes(project.id) ? (
                 <Link
                   href={`/workspace/manage/${project.slug}`}
                   target="_blank"
@@ -148,16 +148,6 @@ const ProjectCard = ({
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
                 >
                   Delete
-                </div>
-              ) : (
-                <></>
-              )}
-              {checkOrgAccess(ORG_SENIOR) ? (
-                <div
-                  onClick={handleUnPublish}
-                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
-                >
-                  {project.isPrivate ? 'Publish' : 'UnPublish'}
                 </div>
               ) : (
                 <></>
