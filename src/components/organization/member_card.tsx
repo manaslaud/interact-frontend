@@ -12,7 +12,7 @@ import ConfirmDelete from '@/components/common/confirm_delete';
 import { SERVER_ERROR } from '@/config/errors';
 import EditMember from '@/sections/organization/members/edit_member';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
-import { currentOrgIDSelector } from '@/slices/orgSlice';
+import { currentOrgIDSelector, currentOrgSelector } from '@/slices/orgSlice';
 import { userIDSelector } from '@/slices/userSlice';
 
 interface Props {
@@ -25,14 +25,14 @@ const MemberCard = ({ membership, organization, setOrganization }: Props) => {
   const [clickedOnEditCollaborator, setClickedOnEditCollaborator] = useState(false);
   const [clickedOnRemoveCollaborator, setClickedOnRemoveCollaborator] = useState(false);
 
-  const currentOrgID = useSelector(currentOrgIDSelector);
+  const currentOrg = useSelector(currentOrgSelector);
 
   const userID = useSelector(userIDSelector);
 
   const handleRemove = async () => {
     const toaster = Toaster.startLoad('Removing Collaborator...');
 
-    const URL = `${ORG_URL}/${currentOrgID}/membership/${membership.id}`;
+    const URL = `${ORG_URL}/${currentOrg.id}/membership/${membership.id}`;
 
     const res = await deleteHandler(URL);
 
@@ -82,6 +82,7 @@ const MemberCard = ({ membership, organization, setOrganization }: Props) => {
           <div className="w-full flex items-center justify-between">
             <div className="text-2xl font-semibold">{membership.user.name}</div>
             {checkOrgAccess(ORG_MANAGER) && userID != membership.userID ? (
+              // Managers should not have edit access to other managers
               <Pen onClick={() => setClickedOnEditCollaborator(true)} className="cursor-pointer" size={24} />
             ) : (
               <></>

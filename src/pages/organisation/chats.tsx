@@ -80,7 +80,7 @@ const Chats = () => {
                     <div
                       className={`${
                         clickedOnEditChat ? 'w-[50%]' : 'w-[720px] mx-auto'
-                      } max-md:w-full flex flex-col gap-4`}
+                      } max-md:w-full flex flex-col gap-2`}
                     >
                       {chats.map(chat => {
                         return (

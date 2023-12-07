@@ -49,6 +49,9 @@ const EditChat = ({ chat, organization, setStateChats, setShow }: Props) => {
   useEffect(() => {
     setGroupPicView(`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`);
     setShowCoverPic(chat.coverPic);
+    setTitle(chat.title);
+    setDescription(chat.description);
+    setIsAdminOnly(chat.adminOnly);
   }, [chat]);
 
   const handleEdit = async () => {

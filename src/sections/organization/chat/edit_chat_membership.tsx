@@ -106,7 +106,7 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
       ) : (
         <></>
       )}
-      <div className="absolute bottom-0 w-full backdrop-blur-xl dark:backdrop-blur-2xl dark:bg-[#ffe1fc22] flex flex-col gap-6 rounded-b-md p-10 max-md:p-5 dark:text-white font-primary border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-20">
+      <div className="absolute bottom-0 w-full bg-white flex flex-col gap-6 rounded-b-md p-10 max-md:p-5 dark:text-white font-primary border-t-2 border-primary_black  dark:border-dark_primary_btn right-1/2 translate-x-1/2 animate-fade_third z-20">
         <div className="w-full flex items-center gap-4">
           <Image
             crossOrigin="anonymous"
