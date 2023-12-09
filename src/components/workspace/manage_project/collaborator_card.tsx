@@ -44,7 +44,8 @@ const CollaboratorCard = ({ membership, project, setProject }: Props) => {
       setClickedOnRemoveCollaborator(false);
       Toaster.stopLoad(toaster, 'Collaborator Removed', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
   return (

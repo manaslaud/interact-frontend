@@ -1,6 +1,6 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
-import Images from '@/components/workspace/new_project_images';
+import Images from '@/components/utils/new_cover';
 import { VERIFICATION_ERROR } from '@/config/errors';
 import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';

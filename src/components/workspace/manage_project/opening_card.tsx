@@ -52,7 +52,8 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Opening Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 

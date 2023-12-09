@@ -62,7 +62,8 @@ const ProjectCard = ({
         );
       Toaster.stopLoad(toaster, 'Project Added', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
@@ -79,7 +80,8 @@ const ProjectCard = ({
       setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 

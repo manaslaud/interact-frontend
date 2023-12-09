@@ -1,0 +1,78 @@
+import { SERVER_ERROR } from '@/config/errors';
+import { EXPLORE_URL } from '@/config/routes';
+import getHandler from '@/handlers/get_handler';
+import { Event } from '@/types';
+import Toaster from '@/utils/toaster';
+import React, { useEffect, useState } from 'react';
+import Loader from '@/components/common/loader';
+import EventCard from '@/components/explore/event_card';
+import NoSearch from '@/components/empty_fillers/search';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSelector } from 'react-redux';
+import { userIDSelector } from '@/slices/userSlice';
+
+const Events = () => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const userID = useSelector(userIDSelector) || '';
+
+  const fetchEvents = async (search: string | null) => {
+    const URL =
+      search && search != ''
+        ? `${EXPLORE_URL}/events/trending?${'search=' + search}`
+        : userID != ''
+        ? `${EXPLORE_URL}/events/recommended?page=${page}&limit=${10}`
+        : `${EXPLORE_URL}/events/trending?page=${page}&limit=${10}`;
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      if (search && search != '') {
+        setEvents(res.data.events || []);
+        setHasMore(false);
+      } else {
+        const addedEvents = [...events, ...(res.data.events || [])];
+        if (addedEvents.length === events.length) setHasMore(false);
+        setEvents(addedEvents);
+        setPage(prev => prev + 1);
+      }
+      setLoading(false);
+    } else {
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
+    }
+  };
+
+  useEffect(() => {
+    setPage(1);
+    fetchEvents(new URLSearchParams(window.location.search).get('search'));
+  }, [window.location.search]);
+  return (
+    <div className="w-full flex flex-col gap-6 py-2">
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {events.length > 0 ? (
+            <InfiniteScroll
+              className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-wrap gap-6"
+              dataLength={events.length}
+              next={() => fetchEvents(new URLSearchParams(window.location.search).get('search'))}
+              hasMore={hasMore}
+              loader={<Loader />}
+            >
+              {events.map(event => {
+                return <EventCard key={event.id} event={event} />;
+              })}
+            </InfiniteScroll>
+          ) : (
+            <NoSearch />
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Events;

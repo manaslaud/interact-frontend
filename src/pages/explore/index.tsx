@@ -1,6 +1,7 @@
 import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/explore/searchbar';
+import Events from '@/screens/explore/events';
 import Openings from '@/screens/explore/openings';
 import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
@@ -22,7 +23,7 @@ const Explore = () => {
         <div
           className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
         >
-          <TabMenu items={['Projects', 'Openings', 'Users']} active={active} setReduxState={setExploreTab} />
+          <TabMenu items={['Projects', 'Openings', 'Users', 'Events']} active={active} setReduxState={setExploreTab} />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
@@ -32,6 +33,9 @@ const Explore = () => {
           </div>
           <div className={`w-full ${active === 2 ? 'block' : 'hidden'} `}>
             <Users />
+          </div>
+          <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
+            <Events />
           </div>
         </div>
         <ProfileCompletion />

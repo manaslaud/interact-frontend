@@ -12,6 +12,7 @@ import {
   IdentificationCard,
   NoteBlank,
   RocketLaunch,
+  Ticket,
   UserCircle,
   Wrench,
 } from '@phosphor-icons/react';
@@ -76,6 +77,15 @@ const OrgSidebar = ({ index }: Props) => {
             org={true}
             title="Projects"
             icon={<RocketLaunch size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
+          <SidebarItem
+            index={12}
+            org={true}
+            title="Events"
+            icon={<Ticket size={24} />}
             active={active}
             setActive={setActive}
             open={open}

@@ -68,7 +68,8 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
       setShow(false);
       Toaster.stopLoad(toaster, 'Task Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
@@ -105,7 +106,8 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
       setShow(false);
       Toaster.stopLoad(toaster, 'Sub Task Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
@@ -145,7 +147,8 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
       setShow(false);
       Toaster.stopLoad(toaster, task.isCompleted ? 'Task Marked Incomplete' : 'Task Completed', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 

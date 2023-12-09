@@ -156,7 +156,7 @@ export interface Project {
   userID: string;
   title: string;
   tagline: string;
-  coverPic: '';
+  coverPic: string;
   description: string;
   page: string;
   user: User;
@@ -403,5 +403,26 @@ export interface ProjectHistory {
   invitation: Invitation;
   taskID: string;
   task: Task;
+  createdAt: Date;
+}
+
+export interface Event {
+  id: string;
+  organizationID: string;
+  organization: Organization;
+  title: string;
+  tagline: string;
+  description: string;
+  tags: string[];
+  links: string[];
+  startTime: Date;
+  endTime: Date;
+  location: string;
+  category: string;
+  coverPic: string;
+  noLikes: number;
+  noShares: number;
+  noComments: number;
+  noViews: number;
   createdAt: Date;
 }

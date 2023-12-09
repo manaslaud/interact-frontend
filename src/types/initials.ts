@@ -4,6 +4,7 @@ import {
   Chat,
   Comment,
   Education,
+  Event,
   GroupChat,
   GroupChatMembership,
   GroupChatMessage,
@@ -361,4 +362,24 @@ export const initialSubTask: SubTask = {
   deadline: new Date(),
   isCompleted: false,
   taskID: '',
+};
+
+export const initialEvent: Event = {
+  id: '',
+  title: '',
+  tagline: '',
+  coverPic: '',
+  description: '',
+  noLikes: 0,
+  noShares: 0,
+  noComments: 0,
+  noViews: 0,
+  tags: [],
+  category: '',
+  links: [],
+  organizationID: '',
+  organization: initialOrganization,
+  eventDate: new Date(),
+  location: '',
+  createdAt: new Date(),
 };

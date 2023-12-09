@@ -83,7 +83,8 @@ const SubTaskView = ({
       setShow(false);
       Toaster.stopLoad(toaster, subTask.isCompleted ? 'Task Marked Incomplete' : 'Task Completed', 1);
     } else {
-      Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
