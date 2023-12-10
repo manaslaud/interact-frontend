@@ -45,7 +45,6 @@ const SignUpCallback = ({ token }: Props) => {
     setMutex(true);
 
     const randomProfilePic = await generateRandomProfilePicture(1080, 1080);
-
     const formData = new FormData();
     formData.append('username', username.trim().toLowerCase());
     if (randomProfilePic) formData.append('profilePic', randomProfilePic);

@@ -33,7 +33,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [earlyAccessToken, setEarlyAccessToken] = useState('');
+  // const [earlyAccessToken, setEarlyAccessToken] = useState('');
   const [mutex, setMutex] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -79,10 +79,10 @@ const SignUp = () => {
       return;
     }
 
-    if (earlyAccessToken == '') {
-      Toaster.error('Enter your Early Access Token');
-      return;
-    }
+    // if (earlyAccessToken == '') {
+    //   Toaster.error('Enter your Early Access Token');
+    //   return;
+    // }
 
     if (mutex) return;
     setMutex(true);
@@ -100,7 +100,7 @@ const SignUp = () => {
     const toaster = Toaster.startLoad('Creating your Account...');
 
     await configuredAxios
-      .post(`${BACKEND_URL}/signup?token=${earlyAccessToken}`, formData, {
+      .post(`${BACKEND_URL}/signup`, formData, {
         withCredentials: true,
       })
       .then(res => {
@@ -116,20 +116,20 @@ const SignUp = () => {
           Cookies.set('id', user.id, {
             expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
           });
-          // dispatch(setUser({ ...user, isVerified: false }));
+          dispatch(setUser({ ...user, isVerified: false }));
 
-          dispatch(setUser({ ...user, isVerified: true }));
+          //Early Access - dispatch(setUser({ ...user, isVerified: true }));
 
           dispatch(setConfig());
           dispatch(setUnreadNotifications(1)); //welcome notification
           dispatch(setOnboarding(true));
           socketService.connect(user.id);
 
-          // sessionStorage.setItem('verification-redirect', 'signup-callback');
-          // router.push('/verification');
+          sessionStorage.setItem('verification-redirect', 'signup-callback');
+          router.push('/verification');
 
-          sessionStorage.setItem('onboarding-redirect', 'signup');
-          router.replace('/onboarding');
+          //Early Access -  sessionStorage.setItem('onboarding-redirect', 'signup');
+          //Early Access -  router.replace('/onboarding');
         }
         setMutex(false);
       })
@@ -146,7 +146,7 @@ const SignUp = () => {
     const token = new URLSearchParams(window.location.search).get('token');
     const email = new URLSearchParams(window.location.search).get('email');
 
-    if (token && token != '') setEarlyAccessToken(token);
+    // if (token && token != '') setEarlyAccessToken(token);
     if (email && email != '') setEmail(email);
   }, [window.location.search]);
 
@@ -177,7 +177,7 @@ const SignUp = () => {
               <div className="text-2xl font-semibold">Let&apos;s Get Started</div>
               <div className="text-gray-400">Start setting up your account ✌️</div>
             </div>
-            {/* <div
+            <div
               onClick={handleGoogleLogin}
               className="w-full flex gap-4 justify-center cursor-pointer shadow-md  border-[#D4D9E1] hover:bg-[#F2F2F2] active:bg-[#EDEDED] border-2 rounded-xl px-4 py-2"
             >
@@ -185,12 +185,12 @@ const SignUp = () => {
                 <ReactSVG src="/assets/google.svg" />
               </div>
               <div className="font-medium">Sign up with Google</div>
-            </div> */}
-            {/* <div className="w-full flex items-center justify-between">
+            </div>
+            <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
               <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with email</div>
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
-            </div> */}
+            </div>
 
             <div className="w-full flex flex-col gap-4">
               <div className="w-full flex justify-between gap-4">
@@ -295,7 +295,7 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
+              {/* <div className="flex flex-col gap-2">
                 <div className="font-medium">Early Access Token</div>
                 <input
                   name="token"
@@ -304,7 +304,7 @@ const SignUp = () => {
                   type="password"
                   className="w-full bg-white focus:outline-none border-2 p-2 rounded-xl text-gray-400"
                 />
-              </div>
+              </div> */}
             </div>
             <div className="w-full p-1 flex flex-col gap-2 items-center">
               <button
@@ -315,10 +315,10 @@ const SignUp = () => {
                 <ArrowRight size={20} weight="regular" />
               </button>
 
-              <div onClick={() => router.push('/early_access')} className="text-gray-400 text-sm cursor-pointer">
+              {/* <div onClick={() => router.push('/early_access')} className="text-gray-400 text-sm cursor-pointer">
                 Don&apos;t have your token yet?{' '}
                 <span className="font-medium underline underline-offset-2">Get It Now</span>
-              </div>
+              </div> */}
 
               <div onClick={() => router.push('/login')} className="text-gray-400 text-sm cursor-pointer">
                 <span className="font-medium hover:underline underline-offset-2">Already have an Account?</span>

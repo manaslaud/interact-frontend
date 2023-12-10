@@ -8,6 +8,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import { ArrowRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 import isEmail from 'validator/lib/isEmail';
+import { GetServerSidePropsContext } from 'next/types';
 
 const EarlyAccess = () => {
   const [tokenSent, setTokenSent] = useState(false);
@@ -148,3 +149,13 @@ const EarlyAccess = () => {
 };
 
 export default EarlyAccess;
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  return {
+    redirect: {
+      permanent: true,
+      destination: '/signup',
+    },
+    props: {},
+  };
+};

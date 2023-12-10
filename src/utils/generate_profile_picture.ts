@@ -311,7 +311,7 @@ function generateRandomProfilePicture(width: number, height: number): Promise<Fi
         }
 
         // Convert canvas to data URL
-        const dataURL = tempCanvas.toDataURL('image/png');
+        const dataURL = tempCanvas.toDataURL('image/jpeg');
 
         // Convert data URL to Blob
         fetch(dataURL)
