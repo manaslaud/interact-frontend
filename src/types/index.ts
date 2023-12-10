@@ -147,6 +147,9 @@ export interface Organization {
   title: string;
   memberships: OrganizationMembership[];
   invitations: Invitation[];
+  noMembers: number;
+  noEvents: number;
+  noProjects: number;
   createdAt: Date;
 }
 
@@ -175,6 +178,7 @@ export interface Project {
   isPrivate: boolean;
   views: number;
   totalNoViews: number;
+  noMembers: number;
   privateLinks: string[];
   links: string[];
   createdAt: Date;

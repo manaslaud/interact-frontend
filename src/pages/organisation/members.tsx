@@ -18,6 +18,7 @@ import MemberCard from '@/components/organization/member_card';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER } from '@/config/constants';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Members = () => {
   const [organization, setOrganization] = useState(initialOrganization);
@@ -133,4 +134,4 @@ const Members = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(Members);
+export default WidthCheck(OrgMembersOnlyAndProtect(Members));

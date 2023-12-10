@@ -319,4 +319,4 @@ const Profile = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(Profile);
+export default WidthCheck(OrgMembersOnlyAndProtect(Profile));

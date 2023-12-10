@@ -20,6 +20,7 @@ import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import { currentOrgSelector } from '@/slices/orgSlice';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER } from '@/config/constants';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -149,4 +150,4 @@ const Projects = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(Projects);
+export default WidthCheck(OrgMembersOnlyAndProtect(Projects));

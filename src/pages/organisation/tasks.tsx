@@ -168,4 +168,4 @@ const Tasks = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(Tasks);
+export default WidthCheck(OrgMembersOnlyAndProtect(Tasks));

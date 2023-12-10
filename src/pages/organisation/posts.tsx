@@ -20,6 +20,7 @@ import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_SENIOR } from '@/config/constants';
 import Masonry from 'react-masonry-css';
 import Loader from '@/components/common/loader';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -119,4 +120,4 @@ const Posts = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(Posts);
+export default WidthCheck(OrgMembersOnlyAndProtect(Posts));

@@ -16,6 +16,7 @@ import Deleted from '@/components/project_history/deleted';
 import Edited from '@/components/project_history/edited';
 import Membership from '@/components/project_history/membership';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const History = () => {
   //TODO Org history components
@@ -93,4 +94,4 @@ const History = () => {
   );
 };
 
-export default OrgMembersOnlyAndProtect(History);
+export default WidthCheck(OrgMembersOnlyAndProtect(History));

@@ -344,4 +344,4 @@ const Onboarding = () => {
   );
 };
 
-export default OrgOnlyAndProtect(Onboarding);
+export default WidthCheck(OrgOnlyAndProtect(Onboarding));

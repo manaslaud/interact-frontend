@@ -107,6 +107,7 @@ export const initialProject: Project = {
   totalNoViews: 0,
   privateLinks: [],
   links: [],
+  noMembers: 1,
 };
 
 export const initialOpening: Opening = {
@@ -163,6 +164,9 @@ export const initialOrganization: Organization = {
   title: '',
   memberships: [],
   invitations: [],
+  noEvents: 0,
+  noMembers: 0,
+  noProjects: 0,
   createdAt: new Date(),
 };
 
@@ -379,7 +383,8 @@ export const initialEvent: Event = {
   links: [],
   organizationID: '',
   organization: initialOrganization,
-  eventDate: new Date(),
+  startTime: new Date(),
+  endTime: new Date(),
   location: '',
   createdAt: new Date(),
 };

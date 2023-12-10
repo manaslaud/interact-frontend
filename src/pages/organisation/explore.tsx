@@ -49,4 +49,4 @@ const Explore = () => {
   );
 };
 
-export default OrgOnlyAndProtect(Explore);
+export default WidthCheck(OrgOnlyAndProtect(Explore));

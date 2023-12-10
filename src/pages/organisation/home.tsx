@@ -11,6 +11,7 @@ import Onboarding from '@/components/common/onboarding';
 import { userIDSelector } from '@/slices/userSlice';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import OrgSidebar from '@/components/common/org_sidebar';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
@@ -41,4 +42,4 @@ const Home = () => {
   );
 };
 
-export default OrgOnlyAndProtect(Home);
+export default WidthCheck(OrgOnlyAndProtect(Home));

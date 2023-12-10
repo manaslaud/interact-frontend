@@ -103,9 +103,9 @@ const Login = () => {
           content="Log into Interact! Interact is a groundbreaking web platform designed for college-going students, freelancers, professionals, and creatives."
         />
       </Head>
-      <div className="h-screen flex">
-        <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
-        <div className="w-[45%] max-lg:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
+      <div className="h-full flex">
+        <div className="w-[55%] max-lg:hidden min-h-screen bg-onboarding bg-cover"></div>
+        <div className="w-[45%] max-lg:w-full h-full min-h-screen font-primary py-8 px-8 flex flex-col justify-between items-center">
           <div className="w-full flex justify-between items-center">
             <ReactSVG src="/onboarding_logo.svg" />
             <Link

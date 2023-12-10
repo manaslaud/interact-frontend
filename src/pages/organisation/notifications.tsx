@@ -110,4 +110,4 @@ const Notifications = () => {
   );
 };
 
-export default OrgOnlyAndProtect(Notifications);
+export default WidthCheck(OrgOnlyAndProtect(Notifications));

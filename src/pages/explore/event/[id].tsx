@@ -11,7 +11,17 @@ import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import Image from 'next/image';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import { ArrowUpRight, Buildings, CalendarBlank, CursorClick, Eye, MapPin, Ticket, Users } from '@phosphor-icons/react';
+import {
+  ArrowUpRight,
+  Buildings,
+  CalendarBlank,
+  CursorClick,
+  Eye,
+  MapPin,
+  Rocket,
+  Ticket,
+  Users,
+} from '@phosphor-icons/react';
 import EventCard from '@/components/explore/event_card';
 import { Event } from '@/types';
 import Link from 'next/link';
@@ -97,7 +107,10 @@ const Event = ({ id }: Props) => {
                   <div className="w-full flex flex-col gap-6">
                     <div className="flex flex-col gap-4">
                       <div className="text-6xl max-md:text-2xl font-semibold">{event.title}</div>
-                      <Link href={`/explore`} className="text-2xl font-medium pl-1">
+                      <Link
+                        href={`/explore/organisation/${event.organization.user.username}`}
+                        className="text-2xl font-medium pl-1"
+                      >
                         {event.organization.title}
                       </Link>
                     </div>
@@ -193,11 +206,14 @@ const Event = ({ id }: Props) => {
                         <Image
                           width={10000}
                           height={10000}
-                          src={`${USER_PROFILE_PIC_URL}/${event.organization.user.coverPic}`}
+                          src={`${USER_PROFILE_PIC_URL}/${event.organization.user.profilePic}`}
                           alt=""
                           className="w-14 h-14 rounded-full"
                         />
-                        <Link href={`/explore`} className="w-[calc(100%-56px)] flex justify-between gap-2 flex-wrap">
+                        <Link
+                          href={`/explore/organisation/${event.organization.user.username}`}
+                          className="w-[calc(100%-56px)] flex justify-between gap-2 flex-wrap"
+                        >
                           <div className="">
                             <div className="font-semibold text-2xl">{event.organization.title}</div>
                             <div className="text-sm text-gray-500">@{event.organization.user.username}</div>
@@ -210,23 +226,23 @@ const Event = ({ id }: Props) => {
                     <div className="text-sm">{event.organization.user.bio}</div>
                     <div className="w-full flex gap-4 items-center justify-center flex-wrap p-6">
                       <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                        <CursorClick size={24} />
+                        <Rocket size={24} />
                         <div className="flex flex-col text-center items-center">
-                          <div>157,353</div>
-                          <div className="text-xs text-gray-500">Views</div>
+                          <div>{event.organization.noProjects}</div>
+                          <div className="text-xs text-gray-500">Projects</div>
                         </div>
                       </div>
                       <div className="flex flex-col items-center gap-2 p-4 cursor-default">
                         <Ticket size={24} />
                         <div className="flex flex-col text-center items-center">
-                          <div>242</div>
+                          <div>{event.organization.noEvents}</div>
                           <div className="text-xs text-gray-500">Total Events</div>
                         </div>
                       </div>
                       <div className="flex flex-col items-center gap-2 p-4 cursor-default">
                         <Users size={24} />
                         <div className="flex flex-col text-center items-center">
-                          <div>242</div>
+                          <div>{event.organization.noProjects}</div>
                           <div className="text-xs text-gray-500">Members</div>
                         </div>
                       </div>

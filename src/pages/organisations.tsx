@@ -17,6 +17,7 @@ import { Trash } from '@phosphor-icons/react';
 import { initialOrganizationMembership } from '@/types/initials';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import deleteHandler from '@/handlers/delete_handler';
+import WidthCheck from '@/utils/wrappers/widthCheck';
 
 const Organizations = () => {
   const [memberships, setMemberships] = useState<OrganizationMembership[]>([]);
@@ -126,4 +127,4 @@ const Organizations = () => {
   );
 };
 
-export default NonOrgOnlyAndProtect(Organizations);
+export default WidthCheck(NonOrgOnlyAndProtect(Organizations));
