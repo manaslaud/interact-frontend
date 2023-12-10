@@ -25,6 +25,8 @@ import Info from '@phosphor-icons/react/dist/icons/Info';
 import StrongPassInfo from '@/components/common/strong_pass_info';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setCurrentOrg } from '@/slices/orgSlice';
+import Link from 'next/link';
+import { ArrowLeft, Users } from '@phosphor-icons/react';
 
 const SignUp = () => {
   const router = useRouter();
@@ -150,8 +152,20 @@ const SignUp = () => {
         )}
         <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
         <div className="w-[45%] max-lg:w-full h-screen font-primary gap-12 py-8 px-8 flex flex-col justify-between items-center">
-          <div className="w-full flex justify-start">
+          <div className="w-full flex justify-between items-center">
             <ReactSVG src="/onboarding_logo.svg" />
+            <Link
+              href={`/signup`}
+              className="w-12 hover:w-36 h-12 group overflow-clip relative rounded-full border-[1px] border-primary_black hover:shadow-xl transition-ease-300"
+            >
+              <div className="w-full text-center absolute top-32 group-hover:top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 font-medium transition-ease-300">
+                User Signup
+              </div>
+              <Users
+                className="absolute top-1/2 group-hover:-top-8 right-1/2 translate-x-1/2 -translate-y-1/2 transition-ease-300"
+                size={24}
+              />
+            </Link>
           </div>
           <form onSubmit={handleSubmit} className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             <div className="flex flex-col gap-2 text-center">
@@ -269,12 +283,7 @@ const SignUp = () => {
                 <ArrowRight size={20} weight="regular" />
               </button>
 
-              <div onClick={() => router.push('/early_access')} className="text-gray-400 text-sm cursor-pointer">
-                Don&apos;t have your token yet?{' '}
-                <span className="font-medium underline underline-offset-2">Get It Now</span>
-              </div>
-
-              <div onClick={() => router.push('/login')} className="text-gray-400 text-sm cursor-pointer">
+              <div onClick={() => router.push('/organisation/login')} className="text-gray-400 text-sm cursor-pointer">
                 <span className="font-medium hover:underline underline-offset-2">Already have an Account?</span>
               </div>
             </div>
@@ -297,7 +306,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return {
       redirect: {
         permanent: true,
-        destination: '/home',
+        destination: '/home', //TODO check for /org/home and /home everywhere
       },
       props: { token },
     };

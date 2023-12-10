@@ -4,28 +4,35 @@ import Discover from '@/screens/home/discover';
 import Feed from '@/screens/home/feed';
 import ProfileCompletion from '@/sections/home/profile_completion';
 import { homeTabSelector, onboardingSelector, setHomeTab } from '@/slices/feedSlice';
-import Protect from '@/utils/wrappers/protect';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
-import { userIDSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
   const onboarding = useSelector(onboardingSelector);
-  const userID = useSelector(userIDSelector) || '';
+  const user = useSelector(userSelector);
+
+  const router = useRouter(); //TODO use window.location instead of router
+
+  useEffect(() => {
+    if (user.isOrganization) router.replace('/organisation/home');
+  }, []);
+
   return (
     <BaseWrapper title="Home">
       <Sidebar index={1} />
       <MainWrapper>
-        {onboarding && userID != '' ? <Onboarding /> : <></>}
+        {onboarding && user.id != '' ? <Onboarding /> : <></>}
         <div className="w-full flex flex-col items-center relative gap-4 px-9 max-md:px-2 pt-20 pb-base_padding">
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-            {userID != '' ? (
+            {user.id != '' ? (
               <Feed />
             ) : (
               <Link

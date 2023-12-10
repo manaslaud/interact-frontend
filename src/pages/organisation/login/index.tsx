@@ -21,6 +21,8 @@ import { SERVER_ERROR } from '@/config/errors';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setCurrentOrg } from '@/slices/orgSlice';
+import Link from 'next/link';
+import { Users } from '@phosphor-icons/react';
 
 const Login = () => {
   const router = useRouter();
@@ -104,8 +106,20 @@ const Login = () => {
       <div className="h-screen flex">
         <div className="w-[55%] max-lg:hidden h-full bg-onboarding bg-cover"></div>
         <div className="w-[45%] max-lg:w-full h-full font-primary py-8 px-8 flex flex-col justify-between items-center">
-          <div className="w-full flex justify-start">
+          <div className="w-full flex justify-between items-center">
             <ReactSVG src="/onboarding_logo.svg" />
+            <Link
+              href={`/login`}
+              className="w-12 hover:w-36 h-12 group overflow-clip relative rounded-full border-[1px] border-primary_black hover:shadow-xl transition-ease-300"
+            >
+              <div className="w-full text-center absolute top-32 group-hover:top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 font-medium transition-ease-300">
+                User Login
+              </div>
+              <Users
+                className="absolute top-1/2 group-hover:-top-8 right-1/2 translate-x-1/2 -translate-y-1/2 transition-ease-300"
+                size={24}
+              />
+            </Link>
           </div>
           <form onSubmit={handleSubmit} className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             <div className="flex flex-col gap-2 text-center">
@@ -123,7 +137,7 @@ const Login = () => {
             </div>
             <div className="w-full flex items-center justify-between">
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
-              <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with username</div>
+              <div className="w-[50%] text-center text-sm max-lg:text-xs text-gray-400">or continue with email</div>
               <div className="w-[25%] h-[1px] bg-gray-200"></div>
             </div>
 
@@ -175,7 +189,7 @@ const Login = () => {
                 <div> Continue</div>
                 <ArrowRight size={20} weight="regular" />
               </button>
-              <div onClick={() => router.push('/signup')} className="text-gray-400 text-sm cursor-pointer">
+              <div onClick={() => router.push('/organisation/signup')} className="text-gray-400 text-sm cursor-pointer">
                 Don&apos;t have an Account? <span className="font-medium underline underline-offset-2">Sign Up</span>
               </div>
               <div
