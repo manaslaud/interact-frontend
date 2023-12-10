@@ -112,7 +112,7 @@ const Sidebar = ({ index }: Props) => {
           <div className="w-fit flex flex-col gap-2">
             <SidebarItem
               index={10}
-              title="Organizations"
+              title="Organisations"
               icon={<Buildings size={24} />}
               active={active}
               setActive={setActive}

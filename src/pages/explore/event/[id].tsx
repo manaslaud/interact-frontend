@@ -18,6 +18,9 @@ import Link from 'next/link';
 import moment from 'moment';
 import getIcon from '@/utils/funcs/get_icon';
 import getDomainName from '@/utils/funcs/get_domain_name';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
+import OrgSidebar from '@/components/common/org_sidebar';
 
 interface Props {
   id: string;
@@ -27,6 +30,8 @@ const Event = ({ id }: Props) => {
   const [event, setEvent] = useState(initialEvent);
   const [similarEvents, setSimilarEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const user = useSelector(userSelector);
 
   const getEvent = () => {
     const URL = `${EXPLORE_URL}/events/${id}`;
@@ -72,7 +77,7 @@ const Event = ({ id }: Props) => {
 
   return (
     <BaseWrapper title="Event">
-      <Sidebar index={2} />
+      {user.isOrganization ? <OrgSidebar index={1} /> : <Sidebar index={2} />}
       <MainWrapper>
         <div className="w-full py-12 px-20 max-md:p-2 flex flex-col transition-ease-out-500 font-primary">
           {loading ? (

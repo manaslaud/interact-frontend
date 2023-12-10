@@ -12,6 +12,8 @@ import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '@/components/common/loader';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_MANAGER } from '@/config/constants';
 
 interface Props {
   userID: string;
@@ -67,18 +69,22 @@ const Projects = ({ userID, displayOnProfile = false, contributing = false }: Pr
       {displayOnProfile ? (
         <>
           {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
-          <div
-            onClick={() => setClickedOnNewProject(true)}
-            className={`mb-8 w-108 max-md:w-5/6 h-24 max-md:hover:scale-105 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}
-          >
-            <div className="backdrop-blur-md opacity-0 group-hover:opacity-60 w-2/3 h-2/3 rounded-xl transition-ease-out-300"></div>
-            <div className="font-extrabold text-xl group-hover:text-2xl text-gradient absolute translate-y-0 group-hover:-translate-y-2 transition-ease-out-300">
-              Create a new Project!
+          {checkOrgAccess(ORG_MANAGER) ? (
+            <div
+              onClick={() => setClickedOnNewProject(true)}
+              className={`mb-8 w-108 max-md:w-5/6 h-24 max-md:hover:scale-105 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}
+            >
+              <div className="backdrop-blur-md opacity-0 group-hover:opacity-60 w-2/3 h-2/3 rounded-xl transition-ease-out-300"></div>
+              <div className="font-extrabold text-xl group-hover:text-2xl text-gradient absolute translate-y-0 group-hover:-translate-y-2 transition-ease-out-300">
+                Create a new Project!
+              </div>
+              <div className="text-xs font-semibold text-primary_black absolute translate-x-0 translate-y-16 group-hover:translate-y-4 transition-ease-out-300">
+                Woohooh! New Project! Who Dis?
+              </div>
             </div>
-            <div className="text-xs font-semibold text-primary_black absolute translate-x-0 translate-y-16 group-hover:translate-y-4 transition-ease-out-300">
-              Woohooh! New Project! Who Dis?
-            </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <></>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/common/sidebar';
 import { SERVER_ERROR } from '@/config/errors';
-import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
+import { ORG_URL, USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { OrganizationMembership } from '@/types';
 import Toaster from '@/utils/toaster';
@@ -12,10 +12,16 @@ import Image from 'next/image';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { setCurrentOrg, setCurrentOrgMembership } from '@/slices/orgSlice';
+import { resetCurrentOrg, setCurrentOrg, setCurrentOrgMembership } from '@/slices/orgSlice';
+import { Trash } from '@phosphor-icons/react';
+import { initialOrganizationMembership } from '@/types/initials';
+import ConfirmDelete from '@/components/common/confirm_delete';
+import deleteHandler from '@/handlers/delete_handler';
 
 const Organizations = () => {
   const [memberships, setMemberships] = useState<OrganizationMembership[]>([]);
+  const [clickedOnLeaveOrg, setClickedOnLeaveOrg] = useState(false);
+  const [clickedMembership, setClickedMembership] = useState(initialOrganizationMembership);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -35,6 +41,7 @@ const Organizations = () => {
   };
 
   useEffect(() => {
+    dispatch(resetCurrentOrg());
     fetchMemberships();
   }, []);
 
@@ -45,11 +52,34 @@ const Organizations = () => {
     router.push('/organisation/posts');
   };
 
+  const handleLeaveOrg = async () => {
+    const toaster = Toaster.startLoad('Leaving Organisation...');
+
+    const URL = `${ORG_URL}/${clickedMembership.organizationID}/membership`;
+
+    const res = await deleteHandler(URL);
+
+    if (res.statusCode === 204) {
+      setMemberships(prev => prev.filter(m => m.id != clickedMembership.id));
+      setClickedMembership(initialOrganizationMembership);
+      setClickedOnLeaveOrg(false);
+      Toaster.stopLoad(toaster, 'Left Organisation', 1);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
   return (
     <BaseWrapper title="Organizations">
       <Sidebar index={10} />
       <MainWrapper>
         <div className="w-full flex flex-col gap-8 px-32 py-10">
+          {clickedOnLeaveOrg ? (
+            <ConfirmDelete handleDelete={handleLeaveOrg} setShow={setClickedOnLeaveOrg} title="Leave Organisation?" />
+          ) : (
+            <></>
+          )}
           <div className="text-5xl font-semibold dark:text-white font-primary">Memberships</div>
 
           <div className="w-full flex justify-between flex-wrap">
@@ -71,7 +101,17 @@ const Organizations = () => {
                 </div>
                 <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
                   <div className="w-full flex flex-col gap-2">
-                    <div className="text-3xl font-bold text-gradient">{membership.organization.title}</div>
+                    <div className="w-full flex justify-between items-center">
+                      <div className="text-3xl font-bold text-gradient">{membership.organization.title}</div>
+                      <Trash
+                        onClick={el => {
+                          el.stopPropagation();
+                          setClickedMembership(membership);
+                          setClickedOnLeaveOrg(true);
+                        }}
+                        size={24}
+                      />
+                    </div>
                     <div className="">{membership.title}</div>
                     <div className="font-medium">{membership.role}</div>
                     <div className="text-xs">Joined {moment(membership.createdAt).format('DD MMM YYYY')}</div>

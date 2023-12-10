@@ -95,7 +95,6 @@ const Members = () => {
                             <InvitationCard
                               key={invitation.id}
                               invitation={invitation}
-                              organization={organization}
                               setOrganization={setOrganization}
                             />
                           );

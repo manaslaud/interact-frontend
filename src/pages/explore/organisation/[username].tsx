@@ -21,6 +21,8 @@ import PostsLoader from '@/components/loaders/posts';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import About from '@/screens/profile/about';
 import Events from '@/screens/profile/events';
+import OrgSidebar from '@/components/common/org_sidebar';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   username: string;
@@ -33,6 +35,7 @@ const User = ({ username }: Props) => {
   const [loading, setLoading] = useState(true);
 
   const open = useSelector(navbarOpenSelector);
+  const loggedInUser = useSelector(userSelector);
 
   const getUser = () => {
     const URL = `${EXPLORE_URL}/orgs/${username}`;
@@ -60,7 +63,7 @@ const User = ({ username }: Props) => {
 
   return (
     <BaseWrapper title={user.name}>
-      <Sidebar index={2} />
+      {loggedInUser.isOrganization ? <OrgSidebar index={1} /> : <Sidebar index={2} />}
       <MainWrapper>
         <div className="w-full flex max-lg:flex-col transition-ease-out-500 font-primary">
           {user.coverPic != '' ? (

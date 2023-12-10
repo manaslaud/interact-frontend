@@ -1,40 +1,30 @@
-import Sidebar from '@/components/common/sidebar';
+import OrgSidebar from '@/components/common/org_sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/explore/searchbar';
 import Events from '@/screens/explore/events';
-import Openings from '@/screens/explore/openings';
 import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
 import ProfileCompletion from '@/sections/home/profile_completion';
 import { exploreTabSelector, setExploreTab } from '@/slices/feedSlice';
-import { userSelector } from '@/slices/userSlice';
+import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 const Explore = () => {
   const active = useSelector(exploreTabSelector);
   const initialSearch = new URLSearchParams(window.location.search).get('search');
-
-  const user = useSelector(userSelector);
-
-  const router = useRouter(); //TODO use window.location instead of router
-
-  useEffect(() => {
-    if (user.isOrganization) router.replace('/organisation/explore');
-  }, []);
   return (
     <BaseWrapper title="Explore">
-      <Sidebar index={2} />
+      <OrgSidebar index={1} />
       <MainWrapper>
         <div
           className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
         >
           <TabMenu
-            items={['Projects', 'Openings', 'Users', 'Organisations', 'Events']}
+            items={['Projects', 'Users', 'Organisations', 'Events']}
             active={active}
             setReduxState={setExploreTab}
             width="720px"
@@ -43,16 +33,13 @@ const Explore = () => {
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
           </div>
-          <div className={`w-full ${active === 1 ? 'block' : 'hidden'}`}>
-            <Openings />
-          </div>
-          <div className={`w-full ${active === 2 ? 'block' : 'hidden'} `}>
+          <div className={`w-full ${active === 1 ? 'block' : 'hidden'} `}>
             <Users />
           </div>
-          <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
+          <div className={`w-full ${active === 2 ? 'block' : 'hidden'} `}>
             <Users org={true} />
           </div>
-          <div className={`w-full ${active === 4 ? 'block' : 'hidden'} `}>
+          <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
             <Events />
           </div>
         </div>
@@ -62,4 +49,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default OrgOnlyAndProtect(Explore);

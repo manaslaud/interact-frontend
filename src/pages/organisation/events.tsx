@@ -84,9 +84,9 @@ const Events = () => {
     <BaseWrapper title="Events">
       <OrgSidebar index={12} />
       <MainWrapper>
-        <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding">
+        <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding pl-0 pb-0">
           <div className="w-full flex justify-between items-center">
-            <div className="w-fit text-6xl font-semibold dark:text-white font-primary">Events</div>
+            <div className="w-fit text-6xl font-semibold dark:text-white font-primary pl-6">Events</div>
 
             {checkOrgAccess(ORG_SENIOR) ? (
               <Plus
@@ -126,7 +126,7 @@ const Events = () => {
                     next={getEvents}
                     hasMore={hasMore}
                     loader={<Loader />}
-                    className="w-full flex flex-wrap gap-6"
+                    className="w-full flex flex-wrap pl-6 pb-10 gap-6"
                   >
                     {events.map(event => (
                       <EventCard

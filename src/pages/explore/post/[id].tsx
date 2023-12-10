@@ -11,6 +11,9 @@ import PostComponent from '@/components/home/post';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import OrgSidebar from '@/components/common/org_sidebar';
+import { userSelector } from '@/slices/userSlice';
+import { useSelector } from 'react-redux';
 
 interface Props {
   id: string;
@@ -19,6 +22,8 @@ interface Props {
 const Post = ({ id }: Props) => {
   const [post, setPost] = useState(initialPost);
   const [loading, setLoading] = useState(true);
+
+  const user = useSelector(userSelector);
 
   const getPost = () => {
     const URL = `${POST_URL}/${id}`;
@@ -45,7 +50,7 @@ const Post = ({ id }: Props) => {
 
   return (
     <BaseWrapper title="Post">
-      <Sidebar index={2} />
+      {user.isOrganization ? <OrgSidebar index={1} /> : <Sidebar index={2} />}
       <MainWrapper>
         <div className="w-[50vw] pt-6 mx-auto max-lg:w-full flex max-md:flex-col transition-ease-out-500 font-primary">
           {loading ? <Loader /> : <PostComponent post={post} />}

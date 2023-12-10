@@ -1,9 +1,8 @@
 import { Invitation, Organization } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { INVITATION_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import { useSelector } from 'react-redux';
-import { userSelector } from '@/slices/userSlice';
 import moment from 'moment';
 import getInvitationStatus from '@/utils/funcs/get_invitation_status';
 import { SERVER_ERROR } from '@/config/errors';
@@ -12,21 +11,21 @@ import Toaster from '@/utils/toaster';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER } from '@/config/constants';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   invitation: Invitation;
-  organization: Organization;
   setOrganization?: React.Dispatch<React.SetStateAction<Organization>>;
 }
 
-const InvitationCard = ({ invitation, organization, setOrganization }: Props) => {
+const InvitationCard = ({ invitation, setOrganization }: Props) => {
   const [clickedOnWithdraw, setClickedOnWithdraw] = useState(false);
-  const user = useSelector(userSelector);
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleWithdraw = async () => {
     const toaster = Toaster.startLoad('Withdrawing Invitation...');
 
-    const URL = `${INVITATION_URL}/withdraw/${invitation.id}`;
+    const URL = `${ORG_URL}/${currentOrgID}/membership/withdraw/${invitation.id}`;
 
     const res = await deleteHandler(URL);
 
