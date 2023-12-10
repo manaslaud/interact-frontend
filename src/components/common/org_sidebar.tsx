@@ -4,6 +4,7 @@ import {
   ArrowLineLeft,
   Bell,
   BookmarkSimple,
+  Buildings,
   ChatTeardrop,
   ClockCounterClockwise,
   DoorOpen,
@@ -13,7 +14,6 @@ import {
   NoteBlank,
   RocketLaunch,
   Ticket,
-  UserCircle,
   Wrench,
 } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
 import useUserStateFetcher from '@/hooks/user_fetcher';
 import BottomBar from './bottombar';
 import { userSelector } from '@/slices/userSlice';
-import { resetCurrentOrg } from '@/slices/orgSlice';
+import { currentOrgSelector, resetCurrentOrg } from '@/slices/orgSlice';
 
 interface Props {
   index: number;
@@ -36,6 +36,7 @@ const OrgSidebar = ({ index }: Props) => {
   const user = useSelector(userSelector);
 
   const userFetcher = useUserStateFetcher();
+  const currentOrg = useSelector(currentOrgSelector);
 
   useEffect(() => {
     if (user.id != '') userFetcher();
@@ -135,7 +136,7 @@ const OrgSidebar = ({ index }: Props) => {
                 index={8}
                 org={true}
                 title="Profile"
-                icon={<UserCircle size={24} />}
+                icon={<Buildings size={24} />}
                 active={active}
                 setActive={setActive}
                 open={open}
@@ -170,6 +171,16 @@ const OrgSidebar = ({ index }: Props) => {
             </>
           ) : (
             <>
+              <SidebarItem
+                index={8}
+                url="profile"
+                org={true}
+                title={currentOrg.title}
+                icon={<Buildings size={24} />}
+                active={active}
+                setActive={setActive}
+                open={open}
+              />
               <SidebarItem
                 index={11}
                 onClick={() => {

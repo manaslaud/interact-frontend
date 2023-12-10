@@ -19,7 +19,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 
-const Home = () => {
+const Notifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,8 +56,8 @@ const Home = () => {
     <BaseWrapper title="Notifications">
       <OrgSidebar index={9} />
       <MainWrapper>
-        <div className="w-full max-lg:w-full mx-auto flex flex-col gap-4 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
-          <div className="text-3xl font-extrabold text-gradient pl-2">Notifications</div>
+        <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding">
+          <div className="w-full text-6xl font-semibold dark:text-white font-primary">Notifications</div>
           {loading ? (
             <Loader />
           ) : (
@@ -110,4 +110,4 @@ const Home = () => {
   );
 };
 
-export default OrgOnlyAndProtect(Home);
+export default OrgOnlyAndProtect(Notifications);

@@ -21,6 +21,7 @@ import { initialEvent } from '@/types/initials';
 import EditEvent from '@/sections/organization/events/edit_event';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import deleteHandler from '@/handlers/delete_handler';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Events = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -29,17 +30,22 @@ const Events = () => {
   const [clickedEditEvent, setClickedEditEvent] = useState(initialEvent);
   const [clickedOnDeleteEvent, setClickedOnDeleteEvent] = useState(false);
   const [clickedDeleteEvent, setClickedDeleteEvent] = useState(initialEvent);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
   const currentOrg = useSelector(currentOrgSelector);
 
   const getEvents = () => {
-    const URL = `${ORG_URL}/${currentOrg.id}/events`;
+    const URL = `${ORG_URL}/${currentOrg.id}/events?page=${page}&limit=${10}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          setEvents(res.data.events);
+          const addEvents = [...events, ...(res.data.events || [])];
+          if (addEvents.length === events.length) setHasMore(false);
+          setEvents(addEvents);
+          setPage(prev => prev + 1);
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -115,7 +121,13 @@ const Events = () => {
                   //TODO noEvents
                   <NoFeed />
                 ) : (
-                  <div className="w-full flex flex-wrap gap-6">
+                  <InfiniteScroll
+                    dataLength={events.length}
+                    next={getEvents}
+                    hasMore={hasMore}
+                    loader={<Loader />}
+                    className="w-full flex flex-wrap gap-6"
+                  >
                     {events.map(event => (
                       <EventCard
                         key={event.id}
@@ -127,7 +139,7 @@ const Events = () => {
                         setClickedDeleteEvent={setClickedDeleteEvent}
                       />
                     ))}
-                  </div>
+                  </InfiniteScroll>
                 )}
               </div>
             )}

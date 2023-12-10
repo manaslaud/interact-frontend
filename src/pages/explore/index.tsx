@@ -23,7 +23,12 @@ const Explore = () => {
         <div
           className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
         >
-          <TabMenu items={['Projects', 'Openings', 'Users', 'Events']} active={active} setReduxState={setExploreTab} />
+          <TabMenu
+            items={['Projects', 'Openings', 'Users', 'Organisations', 'Events']}
+            active={active}
+            setReduxState={setExploreTab}
+            width="720px"
+          />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Projects />
@@ -35,6 +40,9 @@ const Explore = () => {
             <Users />
           </div>
           <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
+            <Users org={true} />
+          </div>
+          <div className={`w-full ${active === 4 ? 'block' : 'hidden'} `}>
             <Events />
           </div>
         </div>

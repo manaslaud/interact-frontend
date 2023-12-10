@@ -10,14 +10,19 @@ import { userSelector } from '@/slices/userSlice';
 interface Props {
   user: User;
   forTrending?: boolean;
+  org?: boolean;
 }
 
-const UserCard = ({ user, forTrending = false }: Props) => {
+const UserCard = ({ user, forTrending = false, org = false }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   const loggedInUser = useSelector(userSelector);
   return (
     <Link
-      href={`${user.username != loggedInUser.username ? `/explore/user/${user.username}` : '/profile'}`}
+      href={`${
+        user.username != loggedInUser.username
+          ? `/explore/${org ? 'organisation' : 'user'}/${user.username}`
+          : '/profile'
+      }`}
       target="_blank"
       className={`w-full font-primary dark:text-white border-[1px] dark:border-dark_primary_btn dark:bg-transparent dark:hover:bg-transparent rounded-lg flex flex-col ${
         !forTrending

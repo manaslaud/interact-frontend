@@ -30,6 +30,7 @@ const EditMember = ({ setShow, membership, setOrganization }: Props) => {
   const orgMemberShip = useSelector(currentOrgMembershipSelector) || initialOrganizationMembership;
 
   const handleSubmit = async () => {
+    //TODO edit membership over sockets
     if (mutex) return;
     setMutex(true);
 

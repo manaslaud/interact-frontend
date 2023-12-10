@@ -26,13 +26,7 @@ const EventCard = ({
 }: Props) => {
   const variants = ['w-96', 'w-80'];
   return (
-    <Link
-      onClick={el => {
-        if (org) el.preventDefault();
-      }}
-      href={`/explore/event/${event.id}`}
-      className={`w-${size} rounded-xl hover:shadow-xl transition-ease-300`}
-    >
+    <Link href={`/explore/event/${event.id}`} className={`w-${size} rounded-xl hover:shadow-xl transition-ease-300`}>
       <div className="relative group">
         <Image
           width={10000}
@@ -44,7 +38,9 @@ const EventCard = ({
         {org ? (
           <div className="flex gap-2 absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300">
             <div
-              onClick={() => {
+              onClick={el => {
+                el.stopPropagation();
+                el.preventDefault();
                 if (setClickedEditEvent) setClickedEditEvent(event);
                 if (setClickedOnEditEvent) setClickedOnEditEvent(true);
               }}
@@ -53,7 +49,9 @@ const EventCard = ({
               <PencilSimple size={18} />
             </div>
             <div
-              onClick={() => {
+              onClick={el => {
+                el.stopPropagation();
+                el.preventDefault();
                 if (setClickedDeleteEvent) setClickedDeleteEvent(event);
                 if (setClickedOnDeleteEvent) setClickedOnDeleteEvent(true);
               }}

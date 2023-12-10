@@ -8,7 +8,7 @@ import getIcon from '@/utils/funcs/get_icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { setExploreTab } from '@/slices/feedSlice';
 import FollowBtn from '@/components/common/follow_btn';
-import { Chat, Share, Warning } from '@phosphor-icons/react';
+import { Buildings, Chat, Share, Warning } from '@phosphor-icons/react';
 import ShareProfile from '../lowers/share_profile';
 import { userIDSelector, userSelector } from '@/slices/userSlice';
 import SendMessage from './send_message';
@@ -87,14 +87,24 @@ const ProfileCard = ({ user }: Props) => {
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
 
       <div className="w-[400px] max-lg:w-2/3 max-md:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-lg:pb-8 max-lg:pt-4 px-4 max-lg:px-12 max-md:px-4 bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:bg-transparent relative rounded-md z-10">
-        <Image
-          crossOrigin="anonymous"
-          width={10000}
-          height={10000}
-          alt={'User Pic'}
-          src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-          className={'rounded-full max-lg:mx-auto w-48 h-48 cursor-default'}
-        />
+        <div className="relative w-48 h-48 rounded-full">
+          <Image
+            crossOrigin="anonymous"
+            width={10000}
+            height={10000}
+            alt={'User Pic'}
+            src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+            className="rounded-full max-lg:mx-auto w-48 h-48 cursor-default"
+          />
+          {user.isOrganization ? (
+            <div className="w-12 h-12 rounded-full absolute top-0 right-0 glassMorphism flex-center shadow-lg">
+              <Buildings size={24} />
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+
         <div className="text-3xl max-lg:text-2xl text-center font-bold text-gradient">{user.name}</div>
 
         <div className="w-full flex justify-center text-lg gap-6">
@@ -117,7 +127,9 @@ const ProfileCard = ({ user }: Props) => {
         <div className="w-full flex flex-col gap-8 mt-2">
           {user.tags && user.tags.length > 0 ? (
             <div className="w-full flex flex-col gap-2">
-              <div className="text-sm ml-1 font-medium uppercase text-gray-500">Skills</div>
+              <div className="text-sm ml-1 font-medium uppercase text-gray-500">
+                {user.isOrganization ? 'Tags' : 'Skills'}
+              </div>
               <div
                 className={`w-full flex flex-wrap items-center ${
                   user.tags.length == 1 ? 'justify-start' : 'justify-center'

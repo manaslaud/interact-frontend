@@ -24,7 +24,7 @@ const Events = () => {
       search && search != ''
         ? `${EXPLORE_URL}/events/trending?${'search=' + search}`
         : userID != ''
-        ? `${EXPLORE_URL}/events/recommended?page=${page}&limit=${10}`
+        ? `${EXPLORE_URL}/events/trending?page=${page}&limit=${10}`
         : `${EXPLORE_URL}/events/trending?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
@@ -49,14 +49,14 @@ const Events = () => {
     fetchEvents(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
   return (
-    <div className="w-full flex flex-col gap-6 py-2">
+    <div className="w-full flex flex-col gap-6 pt-2">
       {loading ? (
         <Loader />
       ) : (
         <>
           {events.length > 0 ? (
             <InfiniteScroll
-              className="w-[720px] max-md:w-full max-md:px-4 mx-auto flex flex-wrap gap-6"
+              className="w-full px-12 pb-12 mx-auto flex flex-wrap gap-6"
               dataLength={events.length}
               next={() => fetchEvents(new URLSearchParams(window.location.search).get('search'))}
               hasMore={hasMore}

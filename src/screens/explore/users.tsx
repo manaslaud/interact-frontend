@@ -12,7 +12,11 @@ import ProfileCompletion from '@/sections/explore/profile_completion';
 import { useSelector } from 'react-redux';
 import { userIDSelector } from '@/slices/userSlice';
 
-const Users = () => {
+interface Props {
+  org?: boolean;
+}
+
+const Users = ({ org = false }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
@@ -21,12 +25,13 @@ const Users = () => {
   const userID = useSelector(userIDSelector) || '';
 
   const fetchUsers = async (search: string | null) => {
+    const sub_url = org ? 'orgs' : 'users';
     const URL =
       search && search != ''
-        ? `${EXPLORE_URL}/users/trending?${'search=' + search}`
+        ? `${EXPLORE_URL}/${sub_url}/trending?${'search=' + search}`
         : userID != ''
-        ? `${EXPLORE_URL}/users/recommended?page=${page}&limit=${10}`
-        : `${EXPLORE_URL}/users/trending?page=${page}&limit=${10}`;
+        ? `${EXPLORE_URL}/${sub_url}/recommended?page=${page}&limit=${10}`
+        : `${EXPLORE_URL}/${sub_url}/trending?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       if (search && search != '') {
@@ -63,9 +68,9 @@ const Users = () => {
               hasMore={hasMore}
               loader={<Loader />}
             >
-              <ProfileCompletion />
+              {!org ? <ProfileCompletion /> : <></>}
               {users.map(user => {
-                return <UserCard key={user.id} user={user} />;
+                return <UserCard key={user.id} user={user} org={org} />;
               })}
             </InfiniteScroll>
           ) : (

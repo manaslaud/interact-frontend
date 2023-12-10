@@ -20,7 +20,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
 
-const Home = () => {
+const Notifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -111,4 +111,4 @@ const Home = () => {
   );
 };
 
-export default NonOrgOnlyAndProtect(Home);
+export default NonOrgOnlyAndProtect(Notifications);

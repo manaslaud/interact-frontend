@@ -23,6 +23,7 @@ import {
   GoogleLogo,
   GooglePhotosLogo,
   GooglePlayLogo,
+  IconWeight,
   InstagramLogo,
   Link,
   LinkedinLogo,
@@ -57,118 +58,118 @@ import {
   YoutubeLogo,
 } from '@phosphor-icons/react';
 
-const getIcon = (str: string, size = 32): ReactElement => {
+const getIcon = (str: string, size = 32, weight: IconWeight = 'duotone'): ReactElement => {
   switch (str.toLowerCase()) {
     case 'amazon':
-      return <AmazonLogo size={size} weight="duotone" />;
+      return <AmazonLogo size={size} weight={weight} />;
     case 'android':
-      return <AndroidLogo size={size} weight="duotone" />;
+      return <AndroidLogo size={size} weight={weight} />;
     case 'angular':
-      return <AngularLogo size={size} weight="duotone" />;
+      return <AngularLogo size={size} weight={weight} />;
     case 'apple':
-      return <AppleLogo size={size} weight="duotone" />;
+      return <AppleLogo size={size} weight={weight} />;
     case 'appstore':
-      return <AppStoreLogo size={size} weight="duotone" />;
+      return <AppStoreLogo size={size} weight={weight} />;
     case 'behance':
-      return <BehanceLogo size={size} weight="duotone" />;
+      return <BehanceLogo size={size} weight={weight} />;
     case 'codepen':
-      return <CodepenLogo size={size} weight="duotone" />;
+      return <CodepenLogo size={size} weight={weight} />;
     case 'codesandbox':
-      return <CodesandboxLogo size={size} weight="duotone" />;
+      return <CodesandboxLogo size={size} weight={weight} />;
     case 'discord':
-      return <DiscordLogo size={size} weight="duotone" />;
+      return <DiscordLogo size={size} weight={weight} />;
     case 'dribbble':
-      return <DribbbleLogo size={size} weight="duotone" />;
+      return <DribbbleLogo size={size} weight={weight} />;
     case 'dropbox':
-      return <DropboxLogo size={size} weight="duotone" />;
+      return <DropboxLogo size={size} weight={weight} />;
     case 'facebook':
-      return <FacebookLogo size={size} weight="duotone" />;
+      return <FacebookLogo size={size} weight={weight} />;
     case 'figma':
-      return <FigmaLogo size={size} weight="duotone" />;
+      return <FigmaLogo size={size} weight={weight} />;
     case 'framer':
-      return <FramerLogo size={size} weight="duotone" />;
+      return <FramerLogo size={size} weight={weight} />;
     case 'git':
-      return <GitBranch size={size} weight="duotone" />;
+      return <GitBranch size={size} weight={weight} />;
     case 'github':
-      return <GithubLogo size={size} weight="duotone" />;
+      return <GithubLogo size={size} weight={weight} />;
     case 'gitlab':
-      return <GitlabLogo size={size} weight="duotone" />;
+      return <GitlabLogo size={size} weight={weight} />;
     case 'google':
-      return <GoogleLogo size={size} weight="duotone" />;
+      return <GoogleLogo size={size} weight={weight} />;
     case 'chrome':
-      return <GoogleChromeLogo size={size} weight="duotone" />;
+      return <GoogleChromeLogo size={size} weight={weight} />;
     case 'drive':
-      return <GoogleDriveLogo size={size} weight="duotone" />;
+      return <GoogleDriveLogo size={size} weight={weight} />;
     case 'photos':
-      return <GooglePhotosLogo size={size} weight="duotone" />;
+      return <GooglePhotosLogo size={size} weight={weight} />;
     case 'play':
-      return <GooglePlayLogo size={size} weight="duotone" />;
+      return <GooglePlayLogo size={size} weight={weight} />;
     case 'instagram':
-      return <InstagramLogo size={size} weight="duotone" />;
+      return <InstagramLogo size={size} weight={weight} />;
     case 'linkedin':
-      return <LinkedinLogo size={size} weight="duotone" />;
+      return <LinkedinLogo size={size} weight={weight} />;
     case 'linux':
-      return <LinuxLogo size={size} weight="duotone" />;
+      return <LinuxLogo size={size} weight={weight} />;
     case 'medium':
-      return <MediumLogo size={size} weight="duotone" />;
+      return <MediumLogo size={size} weight={weight} />;
     case 'messenger':
-      return <MessengerLogo size={size} weight="duotone" />;
+      return <MessengerLogo size={size} weight={weight} />;
     case 'meta':
-      return <MetaLogo size={size} weight="duotone" />;
+      return <MetaLogo size={size} weight={weight} />;
     case 'microsoftexcel':
-      return <MicrosoftExcelLogo size={size} weight="duotone" />;
+      return <MicrosoftExcelLogo size={size} weight={weight} />;
     case 'microsoftoutlook':
-      return <MicrosoftOutlookLogo size={size} weight="duotone" />;
+      return <MicrosoftOutlookLogo size={size} weight={weight} />;
     case 'microsoftpowerpoint':
-      return <MicrosoftPowerpointLogo size={size} weight="duotone" />;
+      return <MicrosoftPowerpointLogo size={size} weight={weight} />;
     case 'microsoftteams':
-      return <MicrosoftTeamsLogo size={size} weight="duotone" />;
+      return <MicrosoftTeamsLogo size={size} weight={weight} />;
     case 'microsoftword':
-      return <MicrosoftWordLogo size={size} weight="duotone" />;
+      return <MicrosoftWordLogo size={size} weight={weight} />;
     case 'notion':
-      return <NotionLogo size={size} weight="duotone" />;
+      return <NotionLogo size={size} weight={weight} />;
     case 'patreon':
-      return <PatreonLogo size={size} weight="duotone" />;
+      return <PatreonLogo size={size} weight={weight} />;
     case 'paypal':
-      return <PaypalLogo size={size} weight="duotone" />;
+      return <PaypalLogo size={size} weight={weight} />;
     case 'phosphor':
-      return <PhosphorLogo size={size} weight="duotone" />;
+      return <PhosphorLogo size={size} weight={weight} />;
     case 'pinterest':
-      return <PinterestLogo size={size} weight="duotone" />;
+      return <PinterestLogo size={size} weight={weight} />;
     case 'react':
-      return <Atom size={size} weight="duotone" />;
+      return <Atom size={size} weight={weight} />;
     case 'reddit':
-      return <RedditLogo size={size} weight="duotone" />;
+      return <RedditLogo size={size} weight={weight} />;
     case 'slack':
-      return <SlackLogo size={size} weight="duotone" />;
+      return <SlackLogo size={size} weight={weight} />;
     case 'snapchat':
-      return <SnapchatLogo size={size} weight="duotone" />;
+      return <SnapchatLogo size={size} weight={weight} />;
     case 'soundcloud':
-      return <SoundcloudLogo size={size} weight="duotone" />;
+      return <SoundcloudLogo size={size} weight={weight} />;
     case 'spotify':
-      return <SpotifyLogo size={size} weight="duotone" />;
+      return <SpotifyLogo size={size} weight={weight} />;
     case 'stackoverflow':
-      return <StackOverflowLogo size={size} weight="duotone" />;
+      return <StackOverflowLogo size={size} weight={weight} />;
     case 'stripe':
-      return <StripeLogo size={size} weight="duotone" />;
+      return <StripeLogo size={size} weight={weight} />;
     case 'telegram':
-      return <TelegramLogo size={size} weight="duotone" />;
+      return <TelegramLogo size={size} weight={weight} />;
     case 'tiktok':
-      return <TiktokLogo size={size} weight="duotone" />;
+      return <TiktokLogo size={size} weight={weight} />;
     case 'twitch':
-      return <TwitchLogo size={size} weight="duotone" />;
+      return <TwitchLogo size={size} weight={weight} />;
     case 'twitter':
-      return <TwitterLogo size={size} weight="duotone" />;
+      return <TwitterLogo size={size} weight={weight} />;
     case 'webhooks':
-      return <WebhooksLogo size={size} weight="duotone" />;
+      return <WebhooksLogo size={size} weight={weight} />;
     case 'whatsapp':
-      return <WhatsappLogo size={size} weight="duotone" />;
+      return <WhatsappLogo size={size} weight={weight} />;
     case 'windows':
-      return <WindowsLogo size={size} weight="duotone" />;
+      return <WindowsLogo size={size} weight={weight} />;
     case 'youtube':
-      return <YoutubeLogo size={size} weight="duotone" />;
+      return <YoutubeLogo size={size} weight={weight} />;
     default:
-      return <Link size={size} weight="duotone" />;
+      return <Link size={size} weight={weight} />;
   }
 };
 
