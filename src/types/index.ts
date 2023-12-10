@@ -97,6 +97,9 @@ export interface Profile {
   description: string;
   areasOfCollaboration: string[];
   hobbies: string[];
+  location: string;
+  phoneNo: string;
+  email: string;
 }
 
 export interface User {

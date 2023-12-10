@@ -47,6 +47,9 @@ export const initialProfile: Profile = {
   hobbies: [],
   yearOfGraduation: 0,
   school: '',
+  email: '',
+  location: '',
+  phoneNo: '',
 };
 
 export const initialUser: User = {

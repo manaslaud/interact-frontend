@@ -1,21 +1,23 @@
 import Sentences from '@/components/utils/edit_sentences';
 import Tags from '@/components/utils/edit_tags';
 import { SERVER_ERROR } from '@/config/errors';
-import { USER_URL } from '@/config/routes';
+import { ORG_URL, USER_URL } from '@/config/routes';
 import patchHandler from '@/handlers/patch_handler';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { Profile, User } from '@/types';
 import isArrEdited from '@/utils/funcs/check_array_edited';
 import Toaster from '@/utils/toaster';
-import { Buildings, CalendarBlank, Certificate, PencilSimple } from '@phosphor-icons/react';
-import moment from 'moment';
+import { Buildings, CalendarBlank, Certificate, Envelope, MapPin, PencilSimple, Phone } from '@phosphor-icons/react';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface Props {
   profile: Profile;
   setUser: React.Dispatch<React.SetStateAction<User>>;
+  org?: boolean;
 }
 
-const About = ({ profile, setUser }: Props) => {
+const About = ({ profile, setUser, org = false }: Props) => {
   const [school, setSchool] = useState(profile.school || '');
   const [degree, setDegree] = useState(profile.degree || '');
   const [yog, setYOG] = useState(profile.yearOfGraduation || 0);
@@ -23,6 +25,10 @@ const About = ({ profile, setUser }: Props) => {
   const [description, setDescription] = useState(profile.description || '');
   const [hobbies, setHobbies] = useState(profile.hobbies || []);
   const [areas, setAreas] = useState(profile.areasOfCollaboration || []);
+
+  const [email, setEmail] = useState(profile.email || '');
+  const [phoneNo, setPhoneNo] = useState(profile.phoneNo || '');
+  const [location, setLocation] = useState(profile.location || '');
 
   const [mutex, setMutex] = useState(false);
 
@@ -32,6 +38,11 @@ const About = ({ profile, setUser }: Props) => {
   const [clickedOnDescription, setClickedOnDescription] = useState(false);
   const [clickedOnHobbies, setClickedOnHobbies] = useState(false);
   const [clickedOnAreas, setClickedOnAreas] = useState(false);
+  const [clickedOnEmail, setClickedOnEmail] = useState(false);
+  const [clickedOnPhoneNo, setClickedOnPhoneNo] = useState(false);
+  const [clickedOnLocation, setClickedOnLocation] = useState(false);
+
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleSubmit = async (field: string) => {
     if (mutex) return;
@@ -43,11 +54,14 @@ const About = ({ profile, setUser }: Props) => {
     if (field == 'school') formData.append('school', school);
     else if (field == 'degree') formData.append('degree', degree);
     else if (field == 'yog') formData.append('yog', String(yog));
+    else if (field == 'email') formData.append('email', email);
+    else if (field == 'phoneNo') formData.append('phoneNo', phoneNo);
+    else if (field == 'location') formData.append('location', location);
     else if (field == 'description') formData.append('description', description.replace(/\n{3,}/g, '\n\n'));
     else if (field == 'hobbies') hobbies.forEach(hobby => formData.append('hobbies[]', hobby));
     else if (field == 'areas') areas.forEach(area => formData.append('areas[]', area));
 
-    const URL = `${USER_URL}/me/profile`;
+    const URL = org ? `${ORG_URL}/${currentOrgID}/profile` : `${USER_URL}/me/profile`;
 
     const res = await patchHandler(URL, formData);
 
@@ -65,6 +79,9 @@ const About = ({ profile, setUser }: Props) => {
       else if (field == 'description') setClickedOnDescription(false);
       else if (field == 'hobbies') setClickedOnHobbies(false);
       else if (field == 'areas') setClickedOnAreas(false);
+      else if (field == 'email') setClickedOnEmail(false);
+      else if (field == 'phoneNo') setClickedOnPhoneNo(false);
+      else if (field == 'location') setClickedOnLocation(false);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
@@ -87,6 +104,9 @@ const About = ({ profile, setUser }: Props) => {
       else if (field == 'degree') return degree == profile.degree;
       else if (field == 'yog') return yog == profile.yearOfGraduation || yog < 1980;
       else if (field == 'description') return description == profile.description;
+      else if (field == 'email') return email == profile.email;
+      else if (field == 'phoneNo') return phoneNo == profile.phoneNo;
+      else if (field == 'location') return location == profile.location;
       else if (field == 'hobbies') return !isArrEdited(hobbies, profile.hobbies);
       else if (field == 'areas') return !isArrEdited(areas, profile.areasOfCollaboration);
       return true;
@@ -117,118 +137,236 @@ const About = ({ profile, setUser }: Props) => {
 
   return (
     <div className="w-[640px] max-md:w-screen text-primary_black mx-auto flex flex-col gap-4 max-md:px-6 pb-8">
-      <div className="w-full flex flex-col gap-2">
-        <div className="w-full flex justify-between items-center flex-wrap gap-4">
-          <div className="w-fit min-w-[80%] flex gap-2 items-center text-xl font-medium">
-            <Buildings weight="bold" size={24} />
+      {!org ? (
+        <>
+          <div className="w-full flex flex-col gap-2">
+            <div className="w-full flex justify-between items-center flex-wrap gap-4">
+              <div className="w-fit min-w-[80%] flex gap-2 items-center text-xl font-medium">
+                <Buildings weight="bold" size={24} />
 
-            {clickedOnSchool ? (
-              <div className="w-full">
-                <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                  College Name ({school.trim().length}/25)
-                </div>
-                <input
-                  maxLength={25}
-                  value={school}
-                  onChange={el => setSchool(el.target.value)}
-                  placeholder="Interact University"
-                  className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
-                />
-                <SaveBtn setter={setClickedOnSchool} field="school" />
-              </div>
-            ) : (
-              <div
-                onClick={() => setClickedOnSchool(true)}
-                className={`w-fit relative group rounded-lg p-2 pr-10 ${
-                  profile.school.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
-                } cursor-pointer transition-ease-300`}
-              >
-                <PencilSimple
-                  className={`absolute ${
-                    profile.school.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                  }  -translate-y-1/2 top-1/2 right-2 transition-ease-300`}
-                />
-                {profile.school.trim() == '' ? (
-                  <div className="text-sm font-normal">Add College Name</div>
+                {clickedOnSchool ? (
+                  <div className="w-full">
+                    <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                      College Name ({school.trim().length}/25)
+                    </div>
+                    <input
+                      maxLength={25}
+                      value={school}
+                      onChange={el => setSchool(el.target.value)}
+                      placeholder="Interact University"
+                      className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
+                    />
+                    <SaveBtn setter={setClickedOnSchool} field="school" />
+                  </div>
                 ) : (
-                  <div>{profile.school}</div>
+                  <div
+                    onClick={() => setClickedOnSchool(true)}
+                    className={`w-fit relative group rounded-lg p-2 pr-10 ${
+                      profile.school.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
+                    } cursor-pointer transition-ease-300`}
+                  >
+                    <PencilSimple
+                      className={`absolute ${
+                        profile.school.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }  -translate-y-1/2 top-1/2 right-2 transition-ease-300`}
+                    />
+                    {profile.school.trim() == '' ? (
+                      <div className="text-sm font-normal">Add College Name</div>
+                    ) : (
+                      <div>{profile.school}</div>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
-          </div>
-          {profile.school != '' ? (
-            <div className="flex gap-1 items-center max-md:flex-row-reverse">
-              {clickedOnYOG ? (
-                <div className="w-fit">
-                  <div className="text-xs ml-1 font-medium uppercase text-gray-500">Graduation Year</div>
+              {profile.school != '' ? (
+                <div className="flex gap-1 items-center max-md:flex-row-reverse">
+                  {clickedOnYOG ? (
+                    <div className="w-fit">
+                      <div className="text-xs ml-1 font-medium uppercase text-gray-500">Graduation Year</div>
+                      <input
+                        value={yog}
+                        type="number"
+                        onChange={el => setYOG(Number(el.target.value))}
+                        placeholder="2023"
+                        className="w-fit text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
+                      />
+                      <SaveBtn setter={setClickedOnYOG} field="yog" />
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => setClickedOnYOG(true)}
+                      className={`w-fit relative group rounded-lg p-2 pl-8 max-md:pr-8 max-md:pl-0 ${
+                        profile.yearOfGraduation == 0 ? 'bg-gray-100' : 'hover:bg-gray-100'
+                      } cursor-pointer transition-ease-300`}
+                    >
+                      <PencilSimple
+                        className={`absolute ${
+                          profile.yearOfGraduation == 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                        }  -translate-y-1/2 top-1/2 md:left-2 max-md:right-2 transition-ease-300`}
+                      />
+                      {profile.yearOfGraduation == 0 ? (
+                        <div className="text-sm">Add Degree Completion Year</div>
+                      ) : (
+                        <div>{profile.yearOfGraduation}</div>
+                      )}
+                    </div>
+                  )}
+
+                  <CalendarBlank weight="bold" size={20} />
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="w-full flex gap-2 items-center text-lg">
+              <Certificate weight="bold" size={24} />
+
+              {clickedOnDegree ? (
+                <div className="w-3/4">
+                  <div className="text-xs ml-1 font-medium uppercase text-gray-500">
+                    Degree Name ({degree.trim().length}/25)
+                  </div>
                   <input
-                    value={yog}
-                    type="number"
-                    onChange={el => setYOG(Number(el.target.value))}
-                    placeholder="2023"
-                    className="w-fit text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
+                    maxLength={25}
+                    value={degree}
+                    onChange={el => setDegree(el.target.value)}
+                    placeholder="Bachelors in Interacting"
+                    className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
                   />
-                  <SaveBtn setter={setClickedOnYOG} field="yog" />
+                  <SaveBtn setter={setClickedOnDegree} field="degree" />
                 </div>
               ) : (
                 <div
-                  onClick={() => setClickedOnYOG(true)}
-                  className={`w-fit relative group rounded-lg p-2 pl-8 max-md:pr-8 max-md:pl-0 ${
-                    profile.yearOfGraduation == 0 ? 'bg-gray-100' : 'hover:bg-gray-100'
+                  onClick={() => setClickedOnDegree(true)}
+                  className={`w-fit relative group rounded-lg p-2 pr-10 ${
+                    profile.degree.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
                   } cursor-pointer transition-ease-300`}
                 >
                   <PencilSimple
                     className={`absolute ${
-                      profile.yearOfGraduation == 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                    }  -translate-y-1/2 top-1/2 md:left-2 max-md:right-2 transition-ease-300`}
+                      profile.degree.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }  -translate-y-1/2 top-1/2 right-2 transition-ease-300`}
                   />
-                  {profile.yearOfGraduation == 0 ? (
-                    <div className="text-sm">Add Degree Completion Year</div>
+                  {profile.degree.trim() == '' ? (
+                    <div className="text-sm">Add Degree Name</div>
                   ) : (
-                    <div>{profile.yearOfGraduation}</div>
+                    <div>{profile.degree}</div>
                   )}
                 </div>
               )}
-
-              <CalendarBlank weight="bold" size={20} />
             </div>
-          ) : (
-            <></>
-          )}
+          </div>
+          <div className="w-full h-[1px] border-t-[1px] border-gray-400 border-dashed"></div>
+        </>
+      ) : (
+        <></>
+      )}
+
+      <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex justify-between items-center flex-wrap gap-4">
+          <div className="w-fit flex gap-2 items-center text-xl font-medium">
+            <Envelope weight="regular" size={24} />
+
+            {clickedOnEmail ? (
+              <div className="w-fit">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Public Email</div>
+                <input
+                  value={email}
+                  onChange={el => setEmail(el.target.value)}
+                  placeholder="Email"
+                  className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 text-sm font-medium bg-transparent"
+                />
+                <SaveBtn setter={setClickedOnEmail} field="email" />
+              </div>
+            ) : (
+              <div
+                onClick={() => setClickedOnEmail(true)}
+                className={`w-fit relative group rounded-lg p-2 pr-10 ${
+                  profile.email.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
+                } cursor-pointer transition-ease-300`}
+              >
+                <PencilSimple
+                  className={`absolute ${
+                    profile.email.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  }  -translate-y-1/2 top-1/2 right-2 transition-ease-300`}
+                />
+                {profile.email.trim() == '' ? (
+                  <div className="text-sm font-normal">Add Public Email</div>
+                ) : (
+                  <div>{profile.email}</div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex gap-2 items-center max-md:flex-row-reverse">
+            {clickedOnPhoneNo ? (
+              <div className="w-fit">
+                <div className="text-xs ml-1 font-medium uppercase text-gray-500">Public Phone Number</div>
+                <input
+                  value={phoneNo}
+                  type="string"
+                  onChange={el => setPhoneNo(el.target.value)}
+                  className="w-fit text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 text-sm font-medium bg-transparent"
+                />
+                <SaveBtn setter={setClickedOnPhoneNo} field="phoneNo" />
+              </div>
+            ) : (
+              <div
+                onClick={() => setClickedOnPhoneNo(true)}
+                className={`w-fit relative group rounded-lg p-2 pl-10 max-md:pr-8 max-md:pl-0 ${
+                  profile.phoneNo == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
+                } cursor-pointer transition-ease-300`}
+              >
+                <PencilSimple
+                  className={`absolute ${
+                    profile.phoneNo == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  }  -translate-y-1/2 top-1/2 md:left-2 max-md:right-2 transition-ease-300`}
+                  size={20}
+                />
+                {profile.phoneNo == '' ? (
+                  <div className="text-sm">Add Public Phone No</div>
+                ) : (
+                  <div>{profile.phoneNo}</div>
+                )}
+              </div>
+            )}
+
+            <Phone weight="regular" size={20} />
+          </div>
         </div>
         <div className="w-full flex gap-2 items-center text-lg">
-          <Certificate weight="bold" size={24} />
+          <MapPin weight="regular" size={24} />
 
-          {clickedOnDegree ? (
+          {clickedOnLocation ? (
             <div className="w-3/4">
               <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                Degree Name ({degree.trim().length}/25)
+                Location ({location.trim().length}/25)
               </div>
               <input
                 maxLength={25}
-                value={degree}
-                onChange={el => setDegree(el.target.value)}
-                placeholder="Bachelors in Interacting"
+                value={location}
+                onChange={el => setLocation(el.target.value)}
                 className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
               />
-              <SaveBtn setter={setClickedOnDegree} field="degree" />
+              <SaveBtn setter={setClickedOnLocation} field="location" />
             </div>
           ) : (
             <div
-              onClick={() => setClickedOnDegree(true)}
+              onClick={() => setClickedOnLocation(true)}
               className={`w-fit relative group rounded-lg p-2 pr-10 ${
-                profile.degree.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
+                profile.location.trim() == '' ? 'bg-gray-100' : 'hover:bg-gray-100'
               } cursor-pointer transition-ease-300`}
             >
               <PencilSimple
                 className={`absolute ${
-                  profile.degree.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  profile.location.trim() == '' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                 }  -translate-y-1/2 top-1/2 right-2 transition-ease-300`}
               />
-              {profile.degree.trim() == '' ? (
-                <div className="text-sm">Add Degree Name</div>
+              {profile.location.trim() == '' ? (
+                <div className="text-sm">Add Location</div>
               ) : (
-                <div>{profile.degree}</div>
+                <div>{profile.location}</div>
               )}
             </div>
           )}
@@ -273,15 +411,17 @@ const About = ({ profile, setUser }: Props) => {
       <div className="w-full flex flex-col gap-2">
         {clickedOnAreas ? (
           <div className="w-full flex flex-col gap-2">
-            <div className="text-xs ml-1 font-medium uppercase">
-              Preferred Areas of Collaboration ({areas.length || 0}/10)
+            <div className="text-sm font-medium uppercase">
+              {org ? 'Areas of Work' : 'Preferred Areas of Collaboration'} ({areas.length || 0}/10)
             </div>
             <Tags tags={areas} setTags={setAreas} maxTags={10} />
             <SaveBtn setter={setClickedOnAreas} field="areas" />
           </div>
         ) : (
           <>
-            <div className="text-sm font-medium uppercase">Preferred Areas of Collaboration</div>
+            <div className="text-sm font-medium uppercase">
+              {org ? 'Areas of Work' : 'Preferred Areas of Collaboration'}
+            </div>
 
             <div
               onClick={() => setClickedOnAreas(true)}
@@ -326,14 +466,16 @@ const About = ({ profile, setUser }: Props) => {
 
       {clickedOnHobbies ? (
         <div className="w-full flex flex-col gap-2">
-          <div className="text-sm font-medium uppercase">Hobbies and Interest ({hobbies.length || 0}/5)</div>
+          <div className="text-sm font-medium uppercase">
+            {org ? 'Message Board' : 'Hobbies and Interest'} ({hobbies.length || 0}/5)
+          </div>
           <Sentences sentences={hobbies} setSentences={setHobbies} maxSentences={5} />
           <SaveBtn setter={setClickedOnHobbies} field="hobbies" />
         </div>
       ) : (
         <div onClick={() => setClickedOnHobbies(true)} className="w-full flex flex-col gap-2">
           <div className="w-full flex justify-between group cursor-pointer">
-            <div className="text-sm font-medium uppercase">Hobbies and Interest</div>
+            <div className="text-sm font-medium uppercase">{org ? 'Message Board' : 'Hobbies and Interest'}</div>
             <PencilSimple className={`opacity-0 group-hover:opacity-100 transition-ease-300`} />
           </div>
 

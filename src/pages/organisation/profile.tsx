@@ -23,7 +23,8 @@ import { setReduxTagline } from '@/slices/userSlice';
 import PostsLoader from '@/components/loaders/posts';
 import Protect from '@/utils/wrappers/protect';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import About from '@/screens/profile/my_about';
+import About from '@/screens/profile/about';
+import MyAbout from '@/screens/profile/my_about';
 import OrgSidebar from '@/components/common/org_sidebar';
 import Events from '@/screens/profile/events';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
@@ -293,8 +294,10 @@ const Profile = () => {
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
               {loading ? (
                 <Loader />
+              ) : checkOrgAccess(ORG_SENIOR) ? (
+                <MyAbout profile={user.profile ? user.profile : initialProfile} setUser={setUser} org={true} />
               ) : (
-                <About profile={user.profile ? user.profile : initialProfile} setUser={setUser} />
+                <About profile={user.profile ? user.profile : initialProfile} org={true} />
               )}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
