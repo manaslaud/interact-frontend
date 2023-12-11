@@ -118,6 +118,8 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
     setMutex(false);
   };
 
+  const user = useSelector(userSelector);
+
   return (
     <div className="sticky max-lg:fixed top-[158px] max-lg:top-0 max-lg:right-0 w-[48%] max-lg:w-full max-h-[80vh] max-lg:max-h-screen max-lg:h-screen max-lg:z-50 overflow-y-auto flex flex-col gap-6 max-lg:gap-8 bg-white dark:bg-transparent p-6 font-primary dark:text-white border-[1px] max-lg:border-0 border-primary_btn  dark:border-dark_primary_btn rounded-lg max-lg:rounded-none max-lg:animate-fade_third z-20">
       {clickedOnEditMembership ? (
@@ -241,7 +243,11 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
             <div className="grow flex flex-col">
               <div className="w-full flex items-center justify-between pr-2">
                 <div className="text-2xl font-medium">{chat.title}</div>
-                <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" size={24} />
+                {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+                  <Pen onClick={() => setClickedOnEdit(true)} className="cursor-pointer" size={24} />
+                ) : (
+                  <></>
+                )}
               </div>
 
               <div className="text-sm">{chat.description}</div>
@@ -255,13 +261,18 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
           {chat.memberships.length} Participant{chat.memberships.length == 1 ? '' : 's'}
         </div>
         <div className="w-full flex flex-col gap-1">
-          <div
-            onClick={() => setClickedOnAddMembers(true)}
-            className="w-full h-12 p-4 bg-primary_comp dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
-          >
-            <div className="">Add Members</div>
-            <Plus size={24} />
-          </div>
+          {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+            <div
+              onClick={() => setClickedOnAddMembers(true)}
+              className="w-full h-12 p-4 bg-primary_comp dark:bg-dark_primary_comp_hover rounded-md flex items-center justify-between cursor-pointer"
+            >
+              <div className="">Add Members</div>
+              <Plus size={24} />
+            </div>
+          ) : (
+            <></>
+          )}
+
           {chat.memberships.map(m => {
             return (
               <div
@@ -286,14 +297,18 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                     <div className="text-sm">{m.role}</div>
                   </div>
                 </div>
-                <Pen
-                  onClick={() => {
-                    setClickedEditUserMembership(m);
-                    setClickedOnEditMembership(true);
-                  }}
-                  className="cursor-pointer"
-                  size={18}
-                />
+                {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+                  <Pen
+                    onClick={() => {
+                      setClickedEditUserMembership(m);
+                      setClickedOnEditMembership(true);
+                    }}
+                    className="cursor-pointer"
+                    size={18}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })}
@@ -320,12 +335,16 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
         on {moment(chat.createdAt).format('DD MMM YYYY')}
       </div>
 
-      <div
-        onClick={() => setClickedOnDelete(true)}
-        className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
-      >
-        Delete Group
-      </div>
+      {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+        <div
+          onClick={() => setClickedOnDelete(true)}
+          className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+        >
+          Delete Group
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

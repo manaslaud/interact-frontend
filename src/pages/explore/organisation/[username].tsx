@@ -100,7 +100,7 @@ const User = ({ username }: Props) => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <About profile={user.profile || initialProfile} />}
+              {loading ? <Loader /> : <About profile={user.profile || initialProfile} org={true} />}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
               {loading ? (

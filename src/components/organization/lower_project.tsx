@@ -22,8 +22,7 @@ import Tasks from '@/sections/workspace/tasks';
 import NewTask from '@/sections/workspace/new_task';
 import History from '@/sections/workspace/history';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
-import { ORG_MEMBER, ORG_SENIOR } from '@/config/constants';
-import { truncate } from 'fs';
+import { ORG_SENIOR } from '@/config/constants';
 
 interface Props {
   project: Project;

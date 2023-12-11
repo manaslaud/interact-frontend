@@ -4,7 +4,7 @@ import Images from '@/components/utils/new_cover';
 import { VERIFICATION_ERROR } from '@/config/errors';
 import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { currentOrgIDSelector } from '@/slices/orgSlice';
+import { currentOrgIDSelector, currentOrgSelector } from '@/slices/orgSlice';
 import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
@@ -37,7 +37,7 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
 
   const dispatch = useDispatch();
 
-  const currentOrgID = useSelector(currentOrgIDSelector);
+  const currentOrg = useSelector(currentOrgSelector);
 
   const handleSubmit = async () => {
     if (title.trim() == '') {
@@ -73,7 +73,7 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
     formData.append('isPrivate', String(isPrivate));
     if (image) formData.append('coverPic', image);
 
-    const URL = org ? `${ORG_URL}/${currentOrgID}/projects` : PROJECT_URL;
+    const URL = org ? `${ORG_URL}/${currentOrg.id}/projects` : PROJECT_URL;
 
     const res = await postHandler(URL, formData, 'multipart/form-data');
 
@@ -88,7 +88,7 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
       setTags([]);
       setLinks([]);
       setImage(undefined);
-      dispatch(setOwnerProjects([...user.ownerProjects, project.id]));
+      if (currentOrg.userID == user.id) dispatch(setOwnerProjects([...user.ownerProjects, project.id])); //TODO building project for org thing
       setShow(false);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);

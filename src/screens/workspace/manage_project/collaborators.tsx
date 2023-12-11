@@ -19,28 +19,27 @@ const Collaborators = ({ project, setProject }: Props) => {
   return (
     <div className="w-[50vw] max-lg:w-screen mx-auto flex flex-col gap-8">
       {clickedOnAddCollaborator ? (
-        <>
-          {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-            <AddCollaborators setShow={setClickedOnAddCollaborator} project={project} setProject={setProject} />
-          ) : (
-            <></>
-          )}
-        </>
+        <AddCollaborators setShow={setClickedOnAddCollaborator} project={project} setProject={setProject} />
       ) : (
         <></>
       )}
       <div className="w-taskbar max-lg:w-[95%] h-taskbar mx-auto flex gap-2 font-primary text-gray-200 text-lg">
-        <div
-          onClick={() => setClickedOnAddCollaborator(true)}
-          className="w-4/5 max-lg:w-2/3 h-full text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-lg:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-md hover:shadow-lg transition-ease-300 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
-        >
-          <div className="pl-2 max-lg:text-sm">Add Collaborators</div>
-          <Plus
-            size={36}
-            className="dark:text-gray-200 max-lg:w-8 max-lg:h-8 flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
-            weight="regular"
-          />
-        </div>
+        {project.userID == user.id || user.managerProjects.includes(project.id) ? (
+          <div
+            onClick={() => setClickedOnAddCollaborator(true)}
+            className="w-4/5 max-lg:w-2/3 h-full text-gray-400 dark:text-gray-200 bg-white dark:bg-gradient-to-l dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end px-4 max-lg:px-2 py-3 rounded-lg cursor-pointer border-gray-300 border-[1px] dark:border-0 shadow-md hover:shadow-lg transition-ease-300 dark:hover:shadow-outer dark:shadow-outer flex justify-between items-center"
+          >
+            <div className="pl-2 max-lg:text-sm">Add Collaborators</div>
+            <Plus
+              size={36}
+              className="dark:text-gray-200 max-lg:w-8 max-lg:h-8 flex-center rounded-full hover:bg-primary_comp_hover dark:hover:bg-[#e9e9e933] p-2 transition-ease-300"
+              weight="regular"
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div
           onClick={() => setClickedOnInvitations(prev => !prev)}
           className={`w-1/5 max-lg:w-1/3  h-full max-lg:text-sm text-gray-400 dark:text-gray-200 ${

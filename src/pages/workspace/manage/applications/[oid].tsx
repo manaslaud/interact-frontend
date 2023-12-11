@@ -12,10 +12,12 @@ import { ArrowArcLeft, SlidersHorizontal } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import React, { useEffect, useState } from 'react';
-import { initialApplication } from '@/types/initials';
 import ApplicationCard from '@/components/workspace/manage_project/application_card';
 import ApplicationView from '@/sections/workspace/manage_project/application_view';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
+import OrgSidebar from '@/components/common/org_sidebar';
 
 interface Props {
   oid: string;
@@ -75,9 +77,12 @@ const Applications = ({ oid }: Props) => {
   //     });
   // }, [clickedApplicationID]);
 
+  const user = useSelector(userSelector);
+
   return (
     <BaseWrapper title="Applications">
-      <Sidebar index={3} />
+      {user.isOrganization ? <OrgSidebar index={3} /> : <Sidebar index={3} />}
+
       <MainWrapper>
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex justify-between p-base_padding">

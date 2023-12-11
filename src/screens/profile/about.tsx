@@ -130,7 +130,12 @@ const About = ({ profile, org = false }: Props) => {
 
       {!profile.areasOfCollaboration || profile.areasOfCollaboration.length == 0 ? (
         !profile.hobbies || profile.hobbies.length == 0 ? (
-          profile.degree == '' && profile.description == '' && profile.school == '' ? (
+          profile.degree == '' &&
+          profile.description == '' &&
+          profile.school == '' &&
+          profile.email == '' &&
+          profile.phoneNo == '' &&
+          profile.location == '' ? (
             <div className="w-fit mx-auto font-medium text-xl">No Content Here</div>
           ) : (
             <></>

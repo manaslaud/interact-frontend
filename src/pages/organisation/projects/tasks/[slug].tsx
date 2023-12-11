@@ -1,8 +1,7 @@
 import Loader from '@/components/common/loader';
-import Sidebar from '@/components/common/sidebar';
 import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { ORG_URL, PROJECT_URL } from '@/config/routes';
+import { EXPLORE_URL, ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';
@@ -17,7 +16,12 @@ import MainWrapper from '@/wrappers/main';
 import { GetServerSidePropsContext } from 'next';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import OrgSidebar from '@/components/common/org_sidebar';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_SENIOR } from '@/config/constants';
+import { useRouter } from 'next/router';
+import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 
 interface Props {
   slug: string;
@@ -38,12 +42,35 @@ const Tasks = ({ slug }: Props) => {
 
   const user = useSelector(userSelector);
 
-  const getTasks = () => {
-    const URL = `${PROJECT_URL}/tasks/populated/${slug}`;
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
+  const getProject = () => {
+    const URL = `${ORG_URL}/${currentOrgID}/projects/${slug}`;
+
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
           setProject(res.data.project);
+        } else {
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+          else {
+            Toaster.error(SERVER_ERROR, 'error_toaster');
+          }
+        }
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
+  const getTasks = () => {
+    const URL = user.managerProjects.includes(project.id)
+      ? `${PROJECT_URL}/tasks/populated/${slug}`
+      : `${ORG_URL}/${currentOrgID}/projects/tasks/populated/${slug}`;
+
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
           const taskData = res.data.tasks || [];
           setTasks(taskData);
           setFilteredTasks(taskData);
@@ -70,9 +97,16 @@ const Tasks = ({ slug }: Props) => {
       });
   };
 
+  const router = useRouter();
+
   useEffect(() => {
-    getTasks();
+    getProject();
   }, [slug]);
+
+  useEffect(() => {
+    if (!checkOrgAccess(ORG_SENIOR) && !user.managerProjects.includes(project.id)) router.back();
+    getTasks();
+  }, [project]);
 
   const filterAssigned = (status: boolean) => {
     setFilterStatus(status);
@@ -96,7 +130,7 @@ const Tasks = ({ slug }: Props) => {
 
   return (
     <BaseWrapper title="Tasks">
-      <Sidebar index={3} />
+      <OrgSidebar index={3} />
 
       <MainWrapper>
         {clickedOnNewTask ? (
@@ -183,10 +217,10 @@ const Tasks = ({ slug }: Props) => {
   );
 };
 
-export default WidthCheck(NonOrgOnlyAndProtect(Tasks));
+export default WidthCheck(OrgMembersOnlyAndProtect(Tasks));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { slug } = context.query;
+  const { slug, org } = context.query;
 
   return {
     props: { slug },

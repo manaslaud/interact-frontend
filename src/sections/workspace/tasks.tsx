@@ -71,7 +71,7 @@ const Tasks = ({ project, setShow, setClickedOnNewTask, org = false }: Props) =>
           <Gavel className="max-md:hidden" size={40} weight="duotone" />
           <div className="grow flex justify-between items-center">
             Recent Tasks
-            <Link href={`/workspace/tasks/${project.slug}${org ? '?org=true' : ''}`} target="_blank">
+            <Link href={`/${org ? 'organisation/projects' : 'workspace'}/tasks/${project.slug}`} target="_blank">
               <Share className="cursor-pointer" size={36} weight="duotone" />
             </Link>
           </div>

@@ -4,7 +4,7 @@ import MainWrapper from '@/wrappers/main';
 import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
 import { initialProject } from '@/types/initials';
-import { PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
@@ -19,7 +19,9 @@ import Protect from '@/utils/wrappers/protect';
 import Collaborators from '@/screens/workspace/manage_project/collaborators';
 import Chats from '@/screens/workspace/manage_project/chats';
 import WidthCheck from '@/utils/wrappers/widthCheck';
-import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import { ORG_SENIOR } from '@/config/constants';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
 
 interface Props {
   slug: string;
@@ -34,11 +36,13 @@ const ManageProject = ({ slug }: Props) => {
 
   const router = useRouter();
 
+  const currentOrgID = useSelector(currentOrgIDSelector);
+
   const fetchProject = async () => {
-    const URL = `${PROJECT_URL}/${slug}`;
+    const URL = `${ORG_URL}/${currentOrgID}/projects/${slug}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      if (res.data.project.userID != user.id && !user.editorProjects.includes(res.data.project.id)) router.back();
+      if (!checkOrgAccess(ORG_SENIOR) && !user.managerProjects.includes(project.id)) router.back();
       setProject(res.data.project);
       setLoading(false);
     } else {
@@ -86,7 +90,7 @@ const ManageProject = ({ slug }: Props) => {
   );
 };
 
-export default WidthCheck(NonOrgOnlyAndProtect(ManageProject));
+export default WidthCheck(Protect(ManageProject));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.query;
