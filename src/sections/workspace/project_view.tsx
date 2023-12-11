@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MEMBERSHIP_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -18,7 +18,6 @@ import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
 import { useSwipeable } from 'react-swipeable';
 import ConfirmDelete from '@/components/common/confirm_delete';
-import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   projectSlugs: string[];
@@ -50,8 +49,6 @@ const ProjectView = ({
   const router = useRouter();
 
   const user = useSelector(userSelector);
-
-  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const fetchProject = async (abortController: AbortController) => {
     setLoading(true);
@@ -112,6 +109,7 @@ const ProjectView = ({
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
       setClickedOnDelete(false);
+      setClickedOnProject(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);

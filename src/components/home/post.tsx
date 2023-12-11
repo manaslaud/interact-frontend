@@ -155,7 +155,11 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
       )}
       <div className="h-full">
         <Link
-          href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+          href={`${
+            post.user.username != loggedInUser.username
+              ? `/explore/user/${post.user.isOrganization ? 'organisation/' : ''}${post.user.username}`
+              : `/${post.user.isOrganization ? 'organisation/' : ''}profile`
+          }`}
           className="rounded-full"
         >
           <Image
@@ -175,7 +179,11 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
       >
         <div className="w-full h-fit flex justify-between">
           <Link
-            href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+            href={`${
+              post.user.username != loggedInUser.username
+                ? `/explore/user/${post.user.isOrganization ? 'organisation/' : ''}${post.user.username}`
+                : `/${post.user.isOrganization ? 'organisation/' : ''}profile`
+            }`}
             className="font-medium flex items-center gap-1"
           >
             {post.user.username}

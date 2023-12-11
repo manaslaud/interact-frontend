@@ -78,7 +78,7 @@ const About = ({ profile, org = false }: Props) => {
           <></>
         )}
       </div>
-      {profile.email != '' || profile.phoneNo != '' ? (
+      {profile.email != '' || profile.phoneNo != '' || profile.location ? (
         <div className="w-full h-[1px] border-t-[1px] border-gray-400 border-dashed"></div>
       ) : (
         <></>

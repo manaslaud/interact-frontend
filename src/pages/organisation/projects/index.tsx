@@ -2,11 +2,11 @@ import Loader from '@/components/common/loader';
 import ProjectCard from '@/components/organization/project_card';
 import { EXPLORE_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { Project } from '@/types';
+import { OrganizationMembership, Project } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import ProjectView from '@/sections/organization/projects/project_view';
-import NewProject from '@/sections/workspace/new_project';
+import NewProject from '@/sections/organization/projects/new_project';
 import { Plus } from '@phosphor-icons/react';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
@@ -96,11 +96,7 @@ const Projects = () => {
               <></>
             )}
           </div>
-          {clickedOnNewProject ? (
-            <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} org={true} />
-          ) : (
-            <></>
-          )}
+          {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
 
           {loading ? (
             <Loader />

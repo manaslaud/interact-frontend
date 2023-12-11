@@ -1,27 +1,24 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
 import Images from '@/components/utils/new_cover';
-import { VERIFICATION_ERROR } from '@/config/errors';
-import { ORG_URL, PROJECT_URL } from '@/config/routes';
+import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { currentOrgIDSelector, currentOrgSelector } from '@/slices/orgSlice';
-import { setOwnerProjects, userSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
 import { X } from '@phosphor-icons/react';
-import { useWindowWidth } from '@react-hook/window-size';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
-  org?: boolean;
 }
 
-const NewProject = ({ setShow, setProjects, org = false }: Props) => {
+const NewProject = ({ setShow, setProjects }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tagline, setTagline] = useState('');
@@ -34,10 +31,6 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
-
-  const dispatch = useDispatch();
-
-  const currentOrg = useSelector(currentOrgSelector);
 
   const handleSubmit = async () => {
     if (title.trim() == '') {
@@ -73,7 +66,7 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
     formData.append('isPrivate', String(isPrivate));
     if (image) formData.append('coverPic', image);
 
-    const URL = org ? `${ORG_URL}/${currentOrg.id}/projects` : PROJECT_URL;
+    const URL = PROJECT_URL;
 
     const res = await postHandler(URL, formData, 'multipart/form-data');
 
@@ -88,7 +81,6 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
       setTags([]);
       setLinks([]);
       setImage(undefined);
-      if (currentOrg.userID == user.id) dispatch(setOwnerProjects([...user.ownerProjects, project.id])); //TODO building project for org thing
       setShow(false);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);
@@ -99,7 +91,7 @@ const NewProject = ({ setShow, setProjects, org = false }: Props) => {
           router.push('/verification'); //TODO use window location instead
         } else Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
-        Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
     setMutex(false);

@@ -115,6 +115,7 @@ const ProjectView = ({
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
       setClickedOnDelete(false);
+      setClickedOnProject(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       Toaster.stopLoad(toaster, 'Internal Server Error.', 0);

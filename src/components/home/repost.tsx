@@ -144,7 +144,11 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
       )}
       <div className="h-full">
         <Link
-          href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+          href={`${
+            post.user.username != loggedInUser.username
+              ? `/explore/user/${post.user.isOrganization ? 'organisation/' : ''}${post.user.username}`
+              : `/${post.user.isOrganization ? 'organisation/' : ''}profile`
+          }`}
           className="rounded-full"
         >
           <Image
@@ -160,7 +164,11 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
       <div className="grow max-w-[94%] max-md:max-w-[89%] flex flex-col gap-2">
         <div className="w-full h-fit flex justify-between">
           <Link
-            href={`${post.user.username != loggedInUser.username ? `/explore/user/${post.user.username}` : '/profile'}`}
+            href={`${
+              post.user.username != loggedInUser.username
+                ? `/explore/user/${post.user.isOrganization ? 'organisation/' : ''}${post.user.username}`
+                : `/${post.user.isOrganization ? 'organisation/' : ''}profile`
+            }`}
             className="font-medium flex items-center gap-1"
           >
             {post.user.username}
