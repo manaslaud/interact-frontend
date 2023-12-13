@@ -438,3 +438,22 @@ export interface Event {
   noViews: number;
   createdAt: Date;
 }
+
+export interface OrganizationHistory {
+  ID: string;
+  OrganizationID: string;
+  HistoryType: number;
+  UserID: string;
+  User: User; 
+  PostID?: string;
+  Post?: Post; 
+  EventID?: string;
+  Event?: Event; 
+  ProjectID?: string;
+  Project?: Project; 
+  TaskID?: string;
+  Task?: Task;
+  InvitationID?: string;
+  Invitation?: Invitation; 
+  CreatedAt: Date;
+}
