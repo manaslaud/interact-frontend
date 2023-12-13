@@ -7,8 +7,8 @@ interface Props {
 }
 
 const Deleted = ({ history }: Props) => {
-  switch (history.HistoryType) {
-    case 1: 
+  switch (history.historyType) {
+    case 1:
       return (
         <OrganizationHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">deleted an Opening.</div>

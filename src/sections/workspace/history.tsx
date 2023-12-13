@@ -1,8 +1,8 @@
 import Loader from '@/components/common/loader';
-import Created from '@/components/project_history/created';
-import Deleted from '@/components/project_history/deleted';
-import Edited from '@/components/project_history/edited';
-import Membership from '@/components/project_history/membership';
+import Created from '@/components/history/project/created';
+import Deleted from '@/components/history/project/deleted';
+import Edited from '@/components/history/project/edited';
+import Membership from '@/components/history/project/membership';
 import { SERVER_ERROR } from '@/config/errors';
 import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';

@@ -7,31 +7,31 @@ interface Props {
 }
 
 const Edited = ({ history }: Props) => {
-  switch (history.HistoryType) {
-    case 2: 
+  switch (history.historyType) {
+    case 2:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated {history.Event?.description}</div>
+          <div className="w-fit text-center flex-center gap-4">Updated {history.event?.description}</div>
         </OrganizationHistoryWrapper>
       );
-    case 8: 
+    case 8:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated {history.Post?.content}</div>
+          <div className="w-fit text-center flex-center gap-4">Updated {history.post?.content}</div>
         </OrganizationHistoryWrapper>
       );
-      
-      case 11: 
+
+    case 11:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated {history.Post?.content}</div>
+          <div className="w-fit text-center flex-center gap-4">Updated {history.post?.content}</div>
         </OrganizationHistoryWrapper>
       );
-      
-      case 14: 
+
+    case 14:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated Details  {history.OrganizationID}</div>
+          <div className="w-fit text-center flex-center gap-4">Updated Details {history.organizationID}</div>
         </OrganizationHistoryWrapper>
       );
 
