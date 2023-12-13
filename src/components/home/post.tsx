@@ -21,6 +21,7 @@ import { currentOrgIDSelector } from '@/slices/orgSlice';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_SENIOR } from '@/config/constants';
 import { Buildings } from '@phosphor-icons/react';
+import isArrEdited from '@/utils/funcs/check_array_edited';
 
 interface Props {
   post: Post;
@@ -72,9 +73,12 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
 
     const URL = org ? `${ORG_URL}/${currentOrgID}/posts/${post.id}` : `${POST_URL}/${post.id}`;
 
-    const formData = {
-      content: caption.replace(/\n{3,}/g, '\n\n'),
-    };
+    const taggedUsers = (post.taggedUsers || []).map(u => u.username);
+    const newTags = (caption.match(/@([\w-]+)/g) || []).map(match => match.substring(1));
+
+    const formData = new FormData();
+    formData.append('content', caption.replace(/\n{3,}/g, '\n\n'));
+    if (isArrEdited(taggedUsers, newTags)) newTags.forEach(tag => formData.append('taggedUsernames[]', tag));
 
     const res = await patchHandler(URL, formData);
     if (res.statusCode === 200) {
@@ -286,7 +290,9 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
             </div>
           </div>
         ) : (
-          <div className="w-full text-sm whitespace-pre-wrap mb-2">{renderContentWithLinks(post.content)}</div>
+          <div className="w-full text-sm whitespace-pre-wrap mb-2">
+            {renderContentWithLinks(post.content, post.taggedUsers)}
+          </div>
         )}
         {showLowerPost ? <LowerPost setFeed={setFeed} post={post} /> : <></>}
       </div>

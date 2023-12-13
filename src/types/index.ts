@@ -82,6 +82,7 @@ export interface Opening {
   description: string;
   applications: [];
   noOfApplications: number;
+  noImpressions: number;
   tags: string[];
   active: boolean;
   createdAt: Date;
@@ -125,6 +126,7 @@ export interface User {
   projects: Project[];
   noFollowers: number;
   noFollowing: number;
+  noImpressions: number;
   isFollowing?: boolean;
   passwordChangedAt: Date;
   lastViewed: Project[];
@@ -171,6 +173,7 @@ export interface Project {
   noLikes: number;
   noShares: number;
   noComments: number;
+  noImpressions: number;
   tags: string[];
   category: string;
   memberships: Membership[];
@@ -205,12 +208,13 @@ export interface Post {
   noLikes: number;
   noShares: number;
   noComments: number;
+  noImpressions: number;
   comments: string[];
   postedAt: Date;
   tags: string[];
   hashes: string[];
   edited: boolean;
-  usersTagged: PostTag[];
+  taggedUsers: User[];
 }
 
 export interface Comment {
@@ -430,6 +434,7 @@ export interface Event {
   noLikes: number;
   noShares: number;
   noComments: number;
+  noImpressions: number;
   noViews: number;
   createdAt: Date;
 }

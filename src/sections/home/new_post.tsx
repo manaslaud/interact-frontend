@@ -1,5 +1,5 @@
 import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
-import { ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { EXPLORE_URL, ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
@@ -8,9 +8,10 @@ import Image from 'next/image';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import NewPostImages from '@/components/home/new_post_images';
-import { Post } from '@/types';
+import { Post, User } from '@/types';
 import { useWindowWidth } from '@react-hook/window-size';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
+import getHandler from '@/handlers/get_handler';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +22,11 @@ interface Props {
 const NewPost = ({ setShow, setFeed, org = false }: Props) => {
   const [content, setContent] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
+
+  const [taggedUsernames, setTaggedUsernames] = useState<string[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [showUsers, setShowUsers] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<number | null>(null);
 
   let profilePic = useSelector(userSelector).profilePic;
   let name = useSelector(userSelector).name;
@@ -40,6 +46,87 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
     };
   }, []);
 
+  const fetchUsers = async (search: string) => {
+    const URL = `${EXPLORE_URL}/users/trending?search=${search}&limit=${10}`;
+    const res = await getHandler(URL);
+    if (res.statusCode == 200) {
+      setUsers(res.data.users || []);
+    } else {
+      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+      else Toaster.error(SERVER_ERROR, 'error_toaster');
+    }
+  };
+
+  const handleContentChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value, selectionStart } = e.target;
+
+    const cursorPos = selectionStart;
+    setCursorPosition(cursorPos);
+
+    setContent(value);
+
+    const lastWord = value.substring(0, cursorPos).split(' ').pop();
+
+    // Detect backspace key press
+    if ((e.nativeEvent as InputEvent).inputType === 'deleteContentBackward') {
+      // Check if the last word starts with "@" (indicating a tagged user)
+      if (lastWord && lastWord.startsWith('@')) {
+        const usernameToRemove = lastWord.substring(1); // Remove "@" symbol
+        handleRemoveTag(usernameToRemove);
+      }
+    } else {
+      if (lastWord && lastWord.startsWith('@')) {
+        // Remove "@" symbol
+        const usernameToSearch = lastWord.substring(1);
+
+        await fetchUsers(usernameToSearch);
+        setShowUsers(true);
+      } else if (showUsers) {
+        setShowUsers(false);
+      }
+    }
+  };
+
+  const handleTagUser = (username: string) => {
+    if (!taggedUsernames.includes(username)) setTaggedUsernames(prevUsernames => [...prevUsernames, username]);
+
+    if (cursorPosition !== null) {
+      // Find the last "@" symbol before the current cursor position
+      const lastAtIndex = content.lastIndexOf('@', cursorPosition - 1);
+
+      if (lastAtIndex !== -1) {
+        // Replace the part of the content with the selected username
+        setContent(prevContent => {
+          const contentBefore = prevContent.substring(0, lastAtIndex);
+          const contentAfter = prevContent.substring(cursorPosition);
+          return `${contentBefore}@${username} ${contentAfter}`;
+        });
+      }
+    }
+
+    setShowUsers(false);
+  };
+
+  const handleRemoveTag = (username: string) => {
+    setTaggedUsernames(prevUsernames => prevUsernames.filter(u => u !== username));
+
+    if (cursorPosition !== null) {
+      // Find the last occurrence of `@username` before the current cursor position
+      const lastAtIndex = content.lastIndexOf(`@${username}`, cursorPosition - 1);
+
+      if (lastAtIndex !== -1) {
+        // Replace the tagged username with an empty string in the content
+        setContent(prevContent => {
+          const contentBefore = prevContent.substring(0, lastAtIndex);
+          const contentAfter = prevContent.substring(lastAtIndex + `@${username}`.length);
+          return `${contentBefore}${contentAfter}`;
+        });
+      }
+    }
+
+    setShowUsers(false);
+  };
+
   const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleSubmit = async () => {
@@ -55,7 +142,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
       formData.append('images', file);
     });
     formData.append('content', content.replace(/\n{3,}/g, '\n\n'));
-
+    taggedUsernames.forEach(username => formData.append('taggedUsernames', username));
     const URL = org ? `${ORG_URL}/${currentOrgID}/posts` : POST_URL;
 
     const res = await postHandler(URL, formData, 'multipart/form-data');
@@ -115,7 +202,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
                   <textarea
                     className="w-full bg-transparent focus:outline-none min-h-[154px]"
                     value={content}
-                    onChange={el => setContent(el.target.value)}
+                    onChange={handleContentChange}
                     maxLength={1000}
                     placeholder="Start a conversation..."
                   ></textarea>
@@ -131,7 +218,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
               <textarea
                 className="w-full bg-transparent focus:outline-none min-h-[154px]"
                 value={content}
-                onChange={el => setContent(el.target.value)}
+                onChange={handleContentChange}
                 maxLength={1000}
                 placeholder="Start a conversation..."
               ></textarea>
@@ -147,6 +234,30 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
         >
           Post
         </div>
+        {showUsers && users.length > 0 && (
+          <div className="w-full flex flex-wrap justify-center gap-4">
+            {users.map(user => (
+              <div
+                key={user.id}
+                onClick={() => handleTagUser(user.username)}
+                className="w-1/4 hover:scale-105 flex items-center gap-2 rounded-md border-[1px] border-primary_btn p-1 hover:bg-primary_comp cursor-pointer transition-ease-300"
+              >
+                <Image
+                  crossOrigin="anonymous"
+                  width={10000}
+                  height={10000}
+                  alt={'User Pic'}
+                  src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+                  className="rounded-full w-8 h-8"
+                />
+                <div className="">
+                  <div className="text-sm font-medium line-clamp-1">{user.name}</div>
+                  <div className="text-xs">@{user.username}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div
         onClick={() => setShow(false)}

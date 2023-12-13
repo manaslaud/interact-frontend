@@ -168,7 +168,7 @@ const Event = ({ id }: Props) => {
                     <div className="flex flex-col items-center gap-2 p-4 cursor-default">
                       <Eye size={24} />
                       <div className="flex flex-col text-center items-center">
-                        <div> 157,353</div>
+                        <div>{event.noImpressions}</div>
                         <div className="text-xs text-gray-500">Impressions</div>
                       </div>
                     </div>
@@ -242,7 +242,7 @@ const Event = ({ id }: Props) => {
                       <div className="flex flex-col items-center gap-2 p-4 cursor-default">
                         <Users size={24} />
                         <div className="flex flex-col text-center items-center">
-                          <div>{event.organization.noProjects}</div>
+                          <div>{event.organization.noMembers}</div>
                           <div className="text-xs text-gray-500">Members</div>
                         </div>
                       </div>

@@ -1,8 +1,10 @@
+import { User } from '@/types';
 import Link from 'next/link';
 import React from 'react';
 
-const renderContentWithLinks = (caption: string) => {
+const renderContentWithLinks = (caption: string, taggedUsers: User[]) => {
   const lines = caption.split('\n');
+  const taggedUsernames = (taggedUsers || []).map(u => u.username);
 
   return lines.map((line, lineIndex) => {
     const words = line.split(/\s+/);
@@ -31,6 +33,19 @@ const renderContentWithLinks = (caption: string) => {
               <Link
                 key={wordIndex}
                 href={`/explore?search=${word.replace('#', '')}`}
+                className="font-medium hover:text-primary_text transition-ease-200"
+                target="_blank"
+              >
+                {word}{' '}
+              </Link>
+            );
+          }
+
+          if (word.startsWith('@') && taggedUsernames.includes(word.replace('@', ''))) {
+            return (
+              <Link
+                key={wordIndex}
+                href={`/explore/user/${word.replace('@', '')}`}
                 className="font-medium hover:text-primary_text transition-ease-200"
                 target="_blank"
               >

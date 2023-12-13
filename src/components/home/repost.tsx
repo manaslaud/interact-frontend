@@ -223,7 +223,9 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
             </div>
           </div>
         ) : (
-          <div className="w-full text-sm whitespace-pre-wrap mb-2">{renderContentWithLinks(post.content)}</div>
+          <div className="w-full text-sm whitespace-pre-wrap mb-2">
+            {renderContentWithLinks(post.content, post.taggedUsers)}
+          </div>
         )}
         {showLowerPost ? <LowerPost post={post} /> : <></>}
       </div>
