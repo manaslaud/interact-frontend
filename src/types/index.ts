@@ -456,4 +456,5 @@ export interface OrganizationHistory {
   invitationID?: string;
   invitation?: Invitation;
   createdAt: Date;
+  deletedText:String;
 }
