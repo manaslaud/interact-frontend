@@ -49,7 +49,7 @@ const Events = ({ orgID, displayOnProfile = false }: Props) => {
   }, []);
 
   return (
-    <div className="w-[45vw] mx-auto max-md:pb-2 z-50">
+    <div className="w-[50vw] mx-auto max-md:pb-2 z-50">
       {/* {displayOnProfile ? (
         <>
           {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
@@ -77,7 +77,7 @@ const Events = ({ orgID, displayOnProfile = false }: Props) => {
           next={getEvents}
           hasMore={hasMore}
           loader={<Loader />}
-          className={`w-full flex flex-wrap ${events.length > 0 ? 'px-4' : ''} pb-12 gap-6`}
+          className="w-full flex flex-wrap justify-center px-4 pb-12 gap-6"
         >
           {events.length > 0 ? (
             events.map(event => <EventCard key={event.id} event={event} size={80} />)

@@ -81,7 +81,11 @@ const User = ({ username }: Props) => {
           ) : (
             <></>
           )}
-          {loading ? <ProfileCardLoader width="400px" /> : <ProfileCard user={user} />}
+          {loading ? (
+            <ProfileCardLoader width="400px" />
+          ) : (
+            <ProfileCard user={user} organisation={organisation} org={true} />
+          )}
           <div className={`grow flex flex-col gap-12 pt-12 max-lg:pt-0`}>
             {user.tagline && user.tagline != '' ? (
               <div className="w-full h-24 font-bold text-5xl max-lg:text-3xl flex-center text-center dark:text-white">
@@ -100,7 +104,11 @@ const User = ({ username }: Props) => {
             />
 
             <div className={`${active === 0 ? 'block' : 'hidden'}`}>
-              {loading ? <Loader /> : <About profile={user.profile || initialProfile} org={true} />}
+              {loading ? (
+                <Loader />
+              ) : (
+                <About profile={user.profile || initialProfile} organisation={organisation} org={true} />
+              )}
             </div>
             <div className={`${active === 1 ? 'block' : 'hidden'}`}>
               {loading ? (

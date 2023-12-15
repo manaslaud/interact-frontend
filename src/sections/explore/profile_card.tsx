@@ -1,5 +1,5 @@
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
-import { User } from '@/types';
+import { Organization, User } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import getDomainName from '@/utils/funcs/get_domain_name';
@@ -17,11 +17,14 @@ import { useRouter } from 'next/router';
 import Connections from './connections_view';
 import Report from '@/components/common/report';
 import SignUp from '@/components/common/signup_box';
+import { initialOrganization } from '@/types/initials';
 interface Props {
   user: User;
+  organisation?: Organization;
+  org?: boolean;
 }
 
-const ProfileCard = ({ user }: Props) => {
+const ProfileCard = ({ user, organisation = initialOrganization, org = false }: Props) => {
   const dispatch = useDispatch();
   const [numFollowers, setNumFollowers] = useState(user.noFollowers);
   const [clickedOnShare, setClickedOnShare] = useState(false);
@@ -84,7 +87,17 @@ const ProfileCard = ({ user }: Props) => {
       )}
 
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
-      {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
+      {clickedOnFollowing ? (
+        <Connections
+          type={org ? 'members' : 'following'}
+          user={user}
+          setShow={setClickedOnFollowing}
+          orgID={organisation.id}
+          org={org}
+        />
+      ) : (
+        <></>
+      )}
 
       <div className="w-[400px] max-lg:w-2/3 max-md:w-[90%] overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-lg:pb-8 max-lg:pt-4 px-4 max-lg:px-12 max-md:px-4 bg-[#ffffff2d] dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:bg-transparent relative rounded-md z-10">
         <div className="relative w-48 h-48 rounded-full">
@@ -112,10 +125,17 @@ const ProfileCard = ({ user }: Props) => {
             <div className="font-bold">{numFollowers}</div>
             <div>Follower{numFollowers != 1 ? 's' : ''}</div>
           </div>
-          <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
-            <div className="font-bold">{user.noFollowing}</div>
-            <div>Following</div>
-          </div>
+          {org ? (
+            <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
+              <div className="font-bold">{organisation.noMembers}</div>
+              <div>Member{organisation.noMembers != 1 ? 's' : ''}</div>
+            </div>
+          ) : (
+            <div onClick={() => setClickedOnFollowing(true)} className="flex gap-1 cursor-pointer">
+              <div className="font-bold">{user.noFollowing}</div>
+              <div>Following</div>
+            </div>
+          )}
         </div>
 
         <div className="w-full h-[1px] border-t-[1px] border-gray-400 border-dashed"></div>

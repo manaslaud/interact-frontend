@@ -2,20 +2,22 @@ import Loader from '@/components/common/loader';
 import UserCard from '@/components/explore/user_card';
 import UserCardLoader from '@/components/loaders/user_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { CONNECTION_URL } from '@/config/routes';
+import { CONNECTION_URL, ORG_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { User } from '@/types';
+import { OrganizationMembership, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Props {
-  type: string; // followers or following
+  type: string; // followers, following or members
   user: User;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  orgID?: string;
+  org?: Boolean;
 }
 
-const Connections = ({ type, user, setShow }: Props) => {
+const Connections = ({ type, user, setShow, orgID = '', org = false }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,10 +26,16 @@ const Connections = ({ type, user, setShow }: Props) => {
 
   const fetchUsers = async () => {
     setLoading(true);
-    const URL = `${CONNECTION_URL}/${type}/${user.id}?page=${page}&limit=${10}`;
+    const BASE_URL = org ? `${ORG_URL}/${orgID}/explore_membership` : `${CONNECTION_URL}/${type}/${user.id}`;
+    const URL = `${BASE_URL}?page=${page}&limit=${10}`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
-      const newUsers = res.data.users || [];
+      var newUsers: User[] = res.data.users || [];
+      if (org) {
+        newUsers = [];
+        const memberships: OrganizationMembership[] = res.data.memberships || [];
+        memberships.forEach(m => newUsers.push(m.user));
+      }
       const addedUsers = [...users, ...newUsers];
       if (addedUsers.length === users.length) setHasMore(false);
       setUsers(addedUsers);
