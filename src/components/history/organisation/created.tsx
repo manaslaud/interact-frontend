@@ -23,7 +23,7 @@ const Created = ({ history }: Props) => {
     case 3:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4"> Invited user :{history.invitation?.user.id}🎉</div>
+          <div className="w-fit text-center flex-center gap-4"> Invited user :{history.invitation?.user.username}🎉</div>
         </OrganizationHistoryWrapper>
       );
 

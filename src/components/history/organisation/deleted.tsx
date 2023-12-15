@@ -17,13 +17,13 @@ const Deleted = ({ history }: Props) => {
       case 4: 
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Withdrew an invitation:{history.invitation?.user.id}</div>
+          <div className="w-fit text-center flex-center gap-4">Withdrew an invitation:{history.invitation?.user.username}</div>
         </OrganizationHistoryWrapper>
       );
       case 5: 
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Removed a member: {history.user.id}.</div>
+          <div className="w-fit text-center flex-center gap-4">Removed a member: {history.user.username}.</div>
         </OrganizationHistoryWrapper>
       );
       case 7: 
