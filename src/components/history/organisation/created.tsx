@@ -11,38 +11,38 @@ const Created = ({ history }: Props) => {
     case -1:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Created {history.organizationID}! 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Created organisation: {history.organizationID}! 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 0:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Created {history.event?.title} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Created event: {history.event?.title} 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 3:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">{history.invitation?.user.id}🎉</div>
+          <div className="w-fit text-center flex-center gap-4"> Invited user :{history.invitation?.user.id}🎉</div>
         </OrganizationHistoryWrapper>
       );
 
     case 6:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">{history.post?.content} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Created post: {history.post?.content} 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 9:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">{history.project?.description} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4"> Created project:{history.project?.description} 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 12:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">{history.task?.description} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Created task:{history.task?.description} 🎉</div>
         </OrganizationHistoryWrapper>
       );
 
