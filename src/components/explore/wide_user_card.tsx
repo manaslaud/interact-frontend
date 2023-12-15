@@ -31,7 +31,7 @@ const UserCard = ({ user }: Props) => {
           height={10000}
           alt={'User Pic'}
           src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
-          className="w-full rounded-t-xl fade-img absolute top-0"
+          className="w-full h-40 rounded-t-xl fade-img absolute top-0"
         />
         <div className="w-full flex gap-4 p-4">
           <Image

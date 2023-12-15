@@ -1,21 +1,13 @@
-import ProjectCard from '@/components/explore/project_card';
-import { Event, Project } from '@/types';
+import { Event } from '@/types';
 import React, { useEffect, useState } from 'react';
-import ProjectView from '../../sections/explore/project_view';
-import { useSelector } from 'react-redux';
-import { navbarOpenSelector } from '@/slices/feedSlice';
-import NewProject from '@/sections/workspace/new_project';
-import NoUserItems from '@/components/empty_fillers/user_items';
-import { EXPLORE_URL, ORG_URL } from '@/config/routes';
+import { ORG_URL } from '@/config/routes';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '@/components/common/loader';
-import { currentOrgSelector } from '@/slices/orgSlice';
-import { initialEvent } from '@/types/initials';
-import projects from './projects';
 import EventCard from '@/components/explore/event_card';
+import NoUserItems from '@/components/empty_fillers/user_items';
 
 interface Props {
   orgID: string;
@@ -85,11 +77,13 @@ const Events = ({ orgID, displayOnProfile = false }: Props) => {
           next={getEvents}
           hasMore={hasMore}
           loader={<Loader />}
-          className="w-full flex flex-wrap px-4 pb-12 gap-6"
+          className={`w-full flex flex-wrap ${events.length > 0 ? 'px-4' : ''} pb-12 gap-6`}
         >
-          {events.map(event => (
-            <EventCard key={event.id} event={event} size={80} />
-          ))}
+          {events.length > 0 ? (
+            events.map(event => <EventCard key={event.id} event={event} size={80} />)
+          ) : (
+            <>{!displayOnProfile ? <NoUserItems /> : <></>}</>
+          )}
         </InfiniteScroll>
       )}
     </div>

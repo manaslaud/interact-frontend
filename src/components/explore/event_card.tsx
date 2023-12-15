@@ -40,7 +40,7 @@ const EventCard = ({
           height={10000}
           src={`${EVENT_PIC_URL}/${event.coverPic}`}
           alt=""
-          className="w-full object-cover rounded-t-xl"
+          className={`w-full ${size == 96 ? 'h-56' : 'h-[218px]'} object-cover rounded-t-xl`}
         />
         {org ? (
           <div className="flex gap-2 absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300">

@@ -126,7 +126,7 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
       <Link
         target="_blank"
         onClick={() => dispatch(setExploreTab(3))}
-        href={`/explore?uid=${invitation.organization.title}`}
+        href={`/explore?orgId=${invitation.organization.title}`}
         className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between"
       >
         <div className="grow flex flex-col gap-2">

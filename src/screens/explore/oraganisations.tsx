@@ -47,7 +47,9 @@ const Organisations = () => {
 
   useEffect(() => {
     setPage(1);
-    fetchUsers(new URLSearchParams(window.location.search).get('search'));
+    const orgId = new URLSearchParams(window.location.search).get('orgId');
+    if (orgId && orgId != '') fetchUsers(orgId);
+    else fetchUsers(new URLSearchParams(window.location.search).get('search'));
   }, [window.location.search]);
   return (
     <div className="w-full flex flex-col gap-6">

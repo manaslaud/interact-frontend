@@ -6,9 +6,18 @@ import Tags from '@/components/utils/edit_tags';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
 import { Check, PencilSimple, X } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import patchHandler from '@/handlers/patch_handler';
-import { userIDSelector } from '@/slices/userSlice';
+import {
+  resetReduxLinks,
+  setProfilePic,
+  setReduxBio,
+  setReduxLinks,
+  setReduxName,
+  setReduxTagline,
+  userIDSelector,
+  userSelector,
+} from '@/slices/userSlice';
 import Links from '@/components/utils/edit_links';
 import getDomainName from '@/utils/funcs/get_domain_name';
 import getIcon from '@/utils/funcs/get_icon';
@@ -48,6 +57,9 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
 
   const currentOrg = useSelector(currentOrgSelector);
   const currentUserID = useSelector(userIDSelector);
+  const loggedInUser = useSelector(userSelector);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (field: string) => {
     if (name.trim() == '') {
@@ -76,6 +88,16 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
     if (res.statusCode === 200) {
       const profilePic = res.data.user.profilePic;
       const coverPic = res.data.user.coverPic;
+      if (loggedInUser.id == currentOrg.userID) {
+        dispatch(setProfilePic(profilePic));
+        if (field == 'name') dispatch(setReduxName(name));
+        else if (field == 'bio') dispatch(setReduxBio(bio));
+        else if (field == 'tagline') dispatch(setReduxTagline(tagline));
+        else if (field == 'links') {
+          if (links.length > 0) dispatch(setReduxLinks(links));
+          else dispatch(resetReduxLinks()); //TODO not working
+        }
+      }
       setUser(prev => ({
         ...prev,
         name: field == 'name' ? name : prev.name,

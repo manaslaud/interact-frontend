@@ -24,7 +24,7 @@ const OrgCard = ({ user }: Props) => {
           height={10000}
           alt={'User Pic'}
           src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
-          className="w-full rounded-t-xl fade-img"
+          className="w-full h-32 rounded-t-xl fade-img"
         />
         <Image
           crossOrigin="anonymous"
@@ -43,36 +43,38 @@ const OrgCard = ({ user }: Props) => {
           className="w-32 h-32 rounded-full mx-auto"
         /> */}
       </div>
-      <div className="w-full flex flex-col gap-4 p-4 pt-12">
-        <div className="w-full flex flex-col items-center">
-          <div className="w-full text-center text-2xl font-semibold line-clamp-2">{user.name}</div>
-          <div className="text-sm text-gray-500 font-medium">@{user.username}</div>
-        </div>
+      <div className="w-full h-full flex flex-col justify-between gap-4 p-4 pt-12">
+        <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col items-center">
+            <div className="w-full text-center text-2xl font-semibold line-clamp-2">{user.name}</div>
+            <div className="text-sm text-gray-500 font-medium">@{user.username}</div>
+          </div>
 
-        <div className="w-full flex flex-col gap-2 px-2 font-medium text-xs text-gray-700">
-          <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
-            <div className="flex gap-1 items-center">
-              <Users />{' '}
-              <div>
-                {noFollowers} Follower{noFollowers != 1 ? 's' : ''}
+          <div className="w-full flex flex-col gap-2 px-2 font-medium text-xs text-gray-700">
+            <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
+              <div className="flex gap-1 items-center">
+                <Users />{' '}
+                <div>
+                  {noFollowers} Follower{noFollowers != 1 ? 's' : ''}
+                </div>
+              </div>
+              <div className="flex gap-1 items-center">
+                <div>{user.noImpressions}</div> <Eye />
               </div>
             </div>
-            <div className="flex gap-1 items-center">
-              <div>{user.noImpressions}</div> <Eye />
-            </div>
+            {user.profile?.location ? (
+              <div className="flex gap-1 items-center">
+                <MapPin /> <div className="text-xs">{user.profile.location}</div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          {user.profile?.location ? (
-            <div className="flex gap-1 items-center">
-              <MapPin /> <div className="text-xs">{user.profile.location}</div>
-            </div>
-          ) : (
-            <></>
-          )}
+
+          <div className="border-t-[1px] border-gray-500 border-dashed"></div>
+
+          {user.tagline != '' ? <div className="text-sm text-gray-600 text-center">{user.tagline}</div> : <></>}
         </div>
-
-        <div className="border-t-[1px] border-gray-500 border-dashed"></div>
-
-        <div className="text-sm text-gray-600 text-center">{user.tagline}</div>
         <div
           onClick={el => {
             el.preventDefault();
