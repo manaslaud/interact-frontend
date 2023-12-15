@@ -42,29 +42,52 @@ const SearchBar = ({ initialValue = '' }: Props) => {
   }, [window.location.search]);
 
   return (
-    <div className="relative w-taskbar max-md:w-taskbar_md mx-auto">
-      <form
-        onSubmit={handleSubmit}
-        className={`w-full h-taskbar px-4 text-gray-500 ${
-          search.trim().length > 0 ? 'bg-white' : 'bg-gray-100'
-        } dark:text-white flex items-center justify-between gap-8 mx-auto rounded-md border-white border-2 dark:border-0 shadow-lg dark:shadow-outer dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end transition-ease-200`}
-      >
-        <input
-          className="h-full grow bg-transparent focus:outline-none font-primary font-medium"
-          type="text"
-          onClick={() => setShowSearchSuggestions(true)}
-          placeholder="Search"
-          value={search}
-          onChange={handleChange}
-        />
-        <MagnifyingGlass size={32} className="opacity-75" />
-      </form>
-      {showSearchSuggestions ? (
-        <SearchSuggestions search={search} setSearch={setSearch} setShow={setShowSearchSuggestions} />
-      ) : (
-        <></>
-      )}
-    </div>
+    <>
+      <div className="relative md:hidden w-taskbar max-md:w-taskbar_md mx-auto">
+        <form
+          onSubmit={handleSubmit}
+          className={`w-full h-taskbar px-4 text-gray-500 ${
+            search.trim().length > 0 ? 'bg-white' : 'bg-gray-100'
+          } dark:text-white flex items-center justify-between gap-8 mx-auto rounded-md border-white border-2 dark:border-0 shadow-lg dark:shadow-outer dark:bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end transition-ease-200`}
+        >
+          <input
+            className="h-full grow bg-transparent focus:outline-none font-primary font-medium"
+            type="text"
+            onClick={() => setShowSearchSuggestions(true)}
+            placeholder="Search"
+            value={search}
+            onChange={handleChange}
+          />
+          <MagnifyingGlass size={32} className="opacity-75" />
+        </form>
+        {showSearchSuggestions ? (
+          <SearchSuggestions search={search} setSearch={setSearch} setShow={setShowSearchSuggestions} />
+        ) : (
+          <></>
+        )}
+      </div>
+      <div className="w-[640px] max-md:hidden fixed top-2 right-1/2 translate-x-1/2 max-md:w-taskbar_md mx-auto z-50">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full h-11 px-4 border-[1px] border-gray-300 text-gray-500 bg-gray-100 flex items-center justify-between gap-8 mx-auto rounded-md"
+        >
+          <input
+            className="h-full grow bg-transparent focus:outline-none font-primary font-medium"
+            type="text"
+            onClick={() => setShowSearchSuggestions(true)}
+            placeholder="Search"
+            value={search}
+            onChange={handleChange}
+          />
+          <MagnifyingGlass size={24} className="opacity-75" weight="bold" />
+        </form>
+        {showSearchSuggestions ? (
+          <SearchSuggestions search={search} setSearch={setSearch} setShow={setShowSearchSuggestions} />
+        ) : (
+          <></>
+        )}
+      </div>
+    </>
   );
 };
 

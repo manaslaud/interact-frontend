@@ -2,7 +2,7 @@ import React from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL } from '@/config/routes';
-import { Buildings, CircleDashed, HeartStraight } from '@phosphor-icons/react';
+import { Buildings, CircleDashed, Eye, HeartStraight } from '@phosphor-icons/react';
 
 interface Props {
   index: number;
@@ -80,8 +80,8 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
               <div>{project.noLikes}</div>
             </div>
             <div className="flex items-center gap-1 text-xs">
-              <CircleDashed size={16} />
-              <div>{project.totalNoViews}</div>
+              <Eye size={16} />
+              <div>{project.noImpressions}</div>
             </div>
           </div>
         </div>

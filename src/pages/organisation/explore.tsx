@@ -2,6 +2,7 @@ import OrgSidebar from '@/components/common/org_sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/explore/searchbar';
 import Events from '@/screens/explore/events';
+import Organisations from '@/screens/explore/oraganisations';
 import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
 import ProfileCompletion from '@/sections/home/profile_completion';
@@ -37,7 +38,7 @@ const Explore = () => {
             <Users />
           </div>
           <div className={`w-full ${active === 2 ? 'block' : 'hidden'} `}>
-            <Users org={true} />
+            <Organisations />
           </div>
           <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
             <Events />

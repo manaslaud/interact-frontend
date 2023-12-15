@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { USER_PROFILE_PIC_URL } from '@/config/routes';
+import { USER_COVER_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import { User } from '@/types';
 import Link from 'next/link';
 import FollowBtn from '../common/follow_btn';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
+import { Buildings, Eye, MapPin, Users } from '@phosphor-icons/react';
 
 interface Props {
   user: User;
   forTrending?: boolean;
-  org?: boolean;
 }
 
-const UserCard = ({ user, forTrending = false, org = false }: Props) => {
+const UserCard = ({ user, forTrending = false }: Props) => {
   const [noFollowers, setNoFollowers] = useState(user.noFollowers);
   const loggedInUser = useSelector(userSelector);
   return (
     <Link
       href={`${
         user.username != loggedInUser.username
-          ? `/explore/${org ? 'organisation' : 'user'}/${user.username}`
+          ? `/explore/${user.isOrganization ? 'organisation' : 'user'}/${user.username}`
           : '/profile'
       }`}
       target="_blank"
@@ -32,14 +32,24 @@ const UserCard = ({ user, forTrending = false, org = false }: Props) => {
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2 w-fit">
-          <Image
-            crossOrigin="anonymous"
-            width={10000}
-            height={10000}
-            alt={'User Pic'}
-            src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-            className={`rounded-full ${!forTrending ? 'w-14 h-14' : 'w-10 h-10'}`}
-          />
+          <div className="w-14 h-14 relative rounded-full">
+            <Image
+              crossOrigin="anonymous"
+              width={10000}
+              height={10000}
+              alt={'User Pic'}
+              src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+              className={`rounded-full ${!forTrending ? 'w-14 h-14' : 'w-10 h-10'}`}
+            />
+            {user.isOrganization ? (
+              <div className="w-6 h-6 rounded-full absolute -top-2 -right-2 glassMorphism flex-center shadow-lg">
+                <Buildings size={12} />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+
           <div className="flex flex-col font-light">
             <div className={`text-lg ${!forTrending ? 'text-lg font-semibold' : 'text-base font-medium'}`}>
               {user.name}
@@ -62,7 +72,6 @@ const UserCard = ({ user, forTrending = false, org = false }: Props) => {
         <div
           onClick={el => {
             el.preventDefault();
-            el.stopPropagation();
           }}
         >
           <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} smaller={forTrending} />

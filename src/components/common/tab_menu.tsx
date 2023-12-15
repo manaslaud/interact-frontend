@@ -13,7 +13,7 @@ interface Props {
 
 const TabMenu = ({ items, active, setReduxState, setState, width = '500px', sticky = false }: Props) => {
   const dispatch = useDispatch();
-  const variants = ['w-[500px]', 'w-[640px]', 'w-[720px]', 'w-[100%]'];
+  const variants = ['w-[500px]', 'w-[640px]', 'w-[720px]', 'w-[840px]', 'w-[100%]'];
   return (
     <div
       className={`w-[${width}] max-md:w-[95%] h-[45px] p-1 rounded-lg bg-gradient-to-b dark:from-dark_primary_gradient_start dark:to-dark_primary_gradient_end shadow-lg dark:shadow-outer mx-auto border-gray-300 border-[1px] dark:border-0 bg-white dark:bg-slate-100 flex justify-around gap-1 ${

@@ -11,9 +11,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { SERVER_ERROR } from '@/config/errors';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { useSelector } from 'react-redux';
-import Created from '@/components/organisation_history/created';
-import Deleted from '@/components/organisation_history/deleted';
-import Edited from '@/components/organisation_history/edited';
+import Created from '@/components/history/organisation/created';
+import Deleted from '@/components/history/organisation/deleted';
+import Edited from '@/components/history/organisation/edited';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 
@@ -33,7 +33,6 @@ const History = () => {
       if (addedHistory.length === history.length) setHasMore(false);
       setHistory(addedHistory);
       setPage(prev => prev + 1);
-      console.log(addedHistory)
       setLoading(false);
     } else {
       if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -62,46 +61,45 @@ const History = () => {
               className="w-full flex flex-col gap-2"
             >
               {history.map((history, index) => {
-                switch (history.HistoryType) {
-                    case -1:
-                    return (<Created  key={index} history={history} />);
-                    case 0:
-                    return (<Created  key={index} history={history} />);
-                    case 1:
-                      return <Deleted history={history} />;
-                    case 2:
-                        return (<Edited  key={index} history={history} />);
-                    case 3:
-                    return (<Created  key={index} history={history} />);
-                    case 4:
-                      return <Deleted history={history} />;
-                    case 5:
-                      return <Deleted history={history} />;
-                      case 6:
-                        return (<Created  key={index} history={history} />);
-    
-                      case 7:
-                        return <Deleted history={history} />;
-                        case 8:
-                          return (<Edited  key={index} history={history} />);
-      
-                        case 9:
-                          return (<Created  key={index} history={history} />);
-                          case 10:
-                            return <Deleted history={history} />;
-        
-                          case 11:
-                            return (<Edited  key={index} history={history} />);
-        
-                          case 12:
-                            return (<Created  key={index} history={history} />);
-                            case 13:
-                              return <Deleted history={history} />;
-                            case 14:
-                              return (<Edited  key={index} history={history} />);
-                          default:
-                            return <></>;
-                  
+                switch (history.historyType) {
+                  case -1:
+                    return <Created key={index} history={history} />;
+                  case 0:
+                    return <Created key={index} history={history} />;
+                  case 1:
+                    return <Deleted history={history} />;
+                  case 2:
+                    return <Edited key={index} history={history} />;
+                  case 3:
+                    return <Created key={index} history={history} />;
+                  case 4:
+                    return <Deleted history={history} />;
+                  case 5:
+                    return <Deleted history={history} />;
+                  case 6:
+                    return <Created key={index} history={history} />;
+
+                  case 7:
+                    return <Deleted history={history} />;
+                  case 8:
+                    return <Edited key={index} history={history} />;
+
+                  case 9:
+                    return <Created key={index} history={history} />;
+                  case 10:
+                    return <Deleted history={history} />;
+
+                  case 11:
+                    return <Edited key={index} history={history} />;
+
+                  case 12:
+                    return <Created key={index} history={history} />;
+                  case 13:
+                    return <Deleted history={history} />;
+                  case 14:
+                    return <Edited key={index} history={history} />;
+                  default:
+                    return <></>;
                 }
               })}
             </InfiniteScroll>

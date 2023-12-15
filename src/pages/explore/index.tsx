@@ -3,6 +3,7 @@ import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/explore/searchbar';
 import Events from '@/screens/explore/events';
 import Openings from '@/screens/explore/openings';
+import Organisations from '@/screens/explore/oraganisations';
 import Projects from '@/screens/explore/projects';
 import Users from '@/screens/explore/users';
 import ProfileCompletion from '@/sections/home/profile_completion';
@@ -30,14 +31,12 @@ const Explore = () => {
     <BaseWrapper title="Explore">
       <Sidebar index={2} />
       <MainWrapper>
-        <div
-          className={`w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding`}
-        >
+        <div className="w-full max-lg:w-full flex flex-col items-center gap-4 transition-ease-out-500 pt-20 pb-base_padding">
           <TabMenu
             items={['Projects', 'Openings', 'Users', 'Organisations', 'Events']}
             active={active}
             setReduxState={setExploreTab}
-            width="720px"
+            width="840px"
           />
           <SearchBar initialValue={initialSearch && initialSearch != '' ? initialSearch : ''} />
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
@@ -50,7 +49,7 @@ const Explore = () => {
             <Users />
           </div>
           <div className={`w-full ${active === 3 ? 'block' : 'hidden'} `}>
-            <Users org={true} />
+            <Organisations />
           </div>
           <div className={`w-full ${active === 4 ? 'block' : 'hidden'} `}>
             <Events />

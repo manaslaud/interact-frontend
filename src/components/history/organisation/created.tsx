@@ -6,47 +6,49 @@ interface Props {
   history: OrganizationHistory;
 }
 
-const Deleted = ({ history }: Props) => {
-  switch (history.HistoryType) {
-    case 1: 
+const Created = ({ history }: Props) => {
+  switch (history.historyType) {
+    case -1:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Deleted an event: {history.Event?.description}.</div>
+          <div className="w-fit text-center flex-center gap-4">Created {history.organizationID}! 🎉</div>
         </OrganizationHistoryWrapper>
       );
-      case 4: 
+    case 0:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Withdrew an invitation:{history.Invitation?.user.id}</div>
+          <div className="w-fit text-center flex-center gap-4">Created {history.event?.title} 🎉</div>
         </OrganizationHistoryWrapper>
       );
-      case 5: 
+    case 3:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Removed a member: {history.User.id}.</div>
+          <div className="w-fit text-center flex-center gap-4">{history.invitation?.user.id}🎉</div>
         </OrganizationHistoryWrapper>
       );
-      case 7: 
+
+    case 6:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Deleted a post: {history.Post?.content}.</div>
+          <div className="w-fit text-center flex-center gap-4">{history.post?.content} 🎉</div>
         </OrganizationHistoryWrapper>
       );
-      case 10: 
+    case 9:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Deleted a project: {history.Project?.description}.</div>
+          <div className="w-fit text-center flex-center gap-4">{history.project?.description} 🎉</div>
         </OrganizationHistoryWrapper>
       );
-      case 13: 
+    case 12:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Deleted a task: {history.Task?.description}</div>
+          <div className="w-fit text-center flex-center gap-4">{history.task?.description} 🎉</div>
         </OrganizationHistoryWrapper>
       );
+
     default:
       return <></>;
   }
 };
 
-export default Deleted;
+export default Created;

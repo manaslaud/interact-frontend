@@ -440,20 +440,20 @@ export interface Event {
 }
 
 export interface OrganizationHistory {
-  ID: string;
-  OrganizationID: string;
-  HistoryType: number;
-  UserID: string;
-  User: User; 
-  PostID?: string;
-  Post?: Post; 
-  EventID?: string;
-  Event?: Event; 
-  ProjectID?: string;
-  Project?: Project; 
-  TaskID?: string;
-  Task?: Task;
-  InvitationID?: string;
-  Invitation?: Invitation; 
-  CreatedAt: Date;
+  id: string;
+  organizationID: string;
+  historyType: number;
+  userID: string;
+  user: User;
+  postID?: string;
+  post?: Post;
+  eventID?: string;
+  event?: Event;
+  projectID?: string;
+  project?: Project;
+  taskID?: string;
+  task?: Task;
+  invitationID?: string;
+  invitation?: Invitation;
+  createdAt: Date;
 }

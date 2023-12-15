@@ -10,6 +10,7 @@ import NoSearch from '@/components/empty_fillers/search';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import { userIDSelector } from '@/slices/userSlice';
+import { navbarOpenSelector } from '@/slices/feedSlice';
 
 const Events = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -18,6 +19,8 @@ const Events = () => {
   const [page, setPage] = useState(1);
 
   const userID = useSelector(userIDSelector) || '';
+
+  const open = useSelector(navbarOpenSelector);
 
   const fetchEvents = async (search: string | null) => {
     const URL =
@@ -56,14 +59,16 @@ const Events = () => {
         <>
           {events.length > 0 ? (
             <InfiniteScroll
-              className="w-full px-12 pb-12 mx-auto flex flex-wrap gap-6"
+              className={`w-full ${
+                open ? 'px-2 gap-4' : 'px-8 gap-8'
+              } pb-12 flex flex-wrap justify-center transition-ease-out-500`}
               dataLength={events.length}
               next={() => fetchEvents(new URLSearchParams(window.location.search).get('search'))}
               hasMore={hasMore}
               loader={<Loader />}
             >
               {events.map(event => {
-                return <EventCard key={event.id} event={event} />;
+                return <EventCard key={event.id} event={event} size={96} />;
               })}
             </InfiniteScroll>
           ) : (

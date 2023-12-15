@@ -22,6 +22,7 @@ import WidthCheck from '@/utils/wrappers/widthCheck';
 import About from '@/screens/profile/about';
 import OrgSidebar from '@/components/common/org_sidebar';
 import { userSelector } from '@/slices/userSlice';
+import { useRouter } from 'next/router';
 
 interface Props {
   username: string;
@@ -57,6 +58,12 @@ const User = ({ username }: Props) => {
   useEffect(() => {
     getUser();
   }, [username]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user.isOrganization) router.replace(`/explore/organisation/${username}`);
+  }, [user]);
 
   return (
     <BaseWrapper title={user.name}>

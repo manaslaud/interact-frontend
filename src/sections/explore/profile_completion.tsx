@@ -48,28 +48,28 @@ const ProfileCompletion = () => {
       }}
       className={`${
         hide ? 'hidden' : ''
-      } w-full py-4 p-8 max-md:p-4 flex items-center justify-between hover:shadow-xl border-[1px] bg-white dark:bg-transparent dark:text-white border-gray-400 dark:border-dark_primary_btn rounded-md cursor-pointer transition-ease-500`}
+      } w-96 p-6 max-md:p-4 flex flex-col items-center justify-between hover:shadow-xl bg-white dark:bg-transparent dark:text-white dark:border-dark_primary_btn rounded-xl cursor-pointer transition-ease-500`}
     >
-      <div className="flex flex-col gap-1">
-        <div className="text-gradient text-5xl font-bold">Complete Profile</div>
-        <div className="text-xl font-medium">to increase your reach!</div>
-      </div>
       <div className="relative">
-        <div className="text-2xl font-bold absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 text-gradient">
+        <div className="text-3xl font-bold absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 text-gradient">
           {completionPercentage}%
         </div>
-        <svg id="dynamicCircle" className="-rotate-90" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <svg id="dynamicCircle" className="-rotate-90" width="150" height="150" xmlns="http://www.w3.org/2000/svg">
           <circle
             id="circleBackground"
-            cx="50"
-            cy="50"
-            r="40"
+            cx="75"
+            cy="75"
+            r="60"
             className="stroke-dark_primary_btn"
             fill="transparent"
-            strokeWidth="5"
-            strokeDasharray="251.3274"
+            strokeWidth="8"
+            strokeDasharray="376.8"
           />
         </svg>
+      </div>
+      <div className="w-full text-center flex flex-col gap-1">
+        <div className="text-gradient text-5xl font-bold">Complete Profile</div>
+        <div className="text-lg font-medium">to increase your reach!</div>
       </div>
     </Link>
   );

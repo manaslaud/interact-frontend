@@ -32,6 +32,10 @@ const Navbar = () => {
         <Link href={'/home'} className="static dark:hidden px-4 max-md:px-0">
           <ReactSVG src="/onboarding_logo.svg" />
         </Link>
+        {/* <div className="w-80 border-2 border-gray-200 bg-gray-100 px-4 py-2 rounded-lg h-10 flex justify-between items-center text-gray-500">
+          <input className="grow bg-gray-100 text-sm focus:outline-none" type="search" placeholder="Search" />
+          <MagnifyingGlass className="text-gray-500" weight="bold" />
+        </div> */}
         {user.isLoggedIn ? (
           <div className="flex items-center gap-2 max-md:gap-0 z-0">
             <div

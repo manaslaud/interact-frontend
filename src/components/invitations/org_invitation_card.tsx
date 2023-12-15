@@ -11,7 +11,7 @@ import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMemberProjects, setOrganizationMemberships, userSelector } from '@/slices/userSlice';
 import ConfirmDelete from '../common/confirm_delete';
-import { setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
+import { setExploreTab, setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
 import { ORG_MEMBER } from '@/config/constants';
 
 interface Props {
@@ -109,7 +109,11 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
       ) : (
         <></>
       )}
-      <Link target="_blank" href={`/explore?pid=${invitation.project.slug}`}>
+      <Link
+        onClick={() => dispatch(setExploreTab(3))}
+        target="_blank"
+        href={`/explore?uid=${invitation.organization.title}`}
+      >
         <Image
           crossOrigin="anonymous"
           width={10000}
@@ -119,15 +123,14 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
           className={'rounded-md w-32 h-32'}
         />
       </Link>
-      <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
+      <Link
+        target="_blank"
+        onClick={() => dispatch(setExploreTab(3))}
+        href={`/explore?orgId=${invitation.organization.title}`}
+        className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between"
+      >
         <div className="grow flex flex-col gap-2">
-          <Link
-            target="_blank"
-            href={`/explore?pid=${invitation.organizationID}`}
-            className="text-3xl font-bold text-gradient"
-          >
-            {invitation.organization.title}
-          </Link>
+          <div className="text-3xl font-bold text-gradient">{invitation.organization.title}</div>
           <div className="font-semibold">{invitation.title}</div>
           <div className="font-medium">{'Member'}</div>
           <div className="text-xs">Invited {moment(invitation.createdAt).format('DD MMM YYYY')}</div>
@@ -135,13 +138,19 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
         {invitation.status == 0 ? (
           <div className="flex gap-4">
             <div
-              onClick={handleAccept}
+              onClick={el => {
+                el.preventDefault();
+                handleAccept();
+              }}
               className="w-24 h-10 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Accept
             </div>
             <div
-              onClick={() => setClickedOnReject(true)}
+              onClick={el => {
+                el.preventDefault();
+                setClickedOnReject(true);
+              }}
               className="w-24 h-10 font-semibold border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:shadow-xl dark:text-white dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active flex-center rounded-lg transition-ease-300 cursor-pointer"
             >
               Reject
@@ -152,7 +161,7 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
             {invitation.status == 1 ? 'Accepted' : 'Rejected'}
           </div>
         )}
-      </div>
+      </Link>
     </div>
   );
 };
