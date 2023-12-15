@@ -104,8 +104,8 @@ const FollowBtn = ({ toFollowID, setFollowerCount, smaller = false, profileDesig
             onClick={submitHandler}
             className={`${
               isFollowing
-                ? 'w-20 border-2 border-primary_btn dark:border-dark_primary_btn'
-                : 'w-16 bg-zinc-800 dark:bg-purple-950 text-white'
+                ? `${smaller ? 'w-20' : 'w-24'} border-2 border-gray-500 text-gray-600 dark:border-dark_primary_btn`
+                : `${smaller ? 'w-16' : 'w-20'} bg-zinc-800 dark:bg-purple-950 text-white`
             } h-8 rounded-3xl flex justify-center items-center cursor-pointer ${
               smaller ? 'text-xs' : 'text-sm'
             } transition-ease-150`}

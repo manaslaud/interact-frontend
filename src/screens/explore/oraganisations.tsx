@@ -5,14 +5,13 @@ import { User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Loader from '@/components/common/loader';
-import UserCard from '@/components/explore/wide_user_card';
 import NoSearch from '@/components/empty_fillers/search';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ProfileCompletion from '@/sections/explore/profile_completion';
 import { useSelector } from 'react-redux';
 import { userIDSelector } from '@/slices/userSlice';
+import OrgCard from '@/components/explore/org_card';
 
-const Users = () => {
+const Organisations = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
@@ -21,7 +20,7 @@ const Users = () => {
   const userID = useSelector(userIDSelector) || '';
 
   const fetchUsers = async (search: string | null) => {
-    const sub_url = 'users';
+    const sub_url = 'orgs';
     const URL =
       search && search != ''
         ? `${EXPLORE_URL}/${sub_url}/trending?${'search=' + search}`
@@ -64,9 +63,8 @@ const Users = () => {
               hasMore={hasMore}
               loader={<Loader />}
             >
-              <ProfileCompletion />
               {users.map(user => {
-                return <UserCard key={user.id} user={user} />;
+                return <OrgCard key={user.id} user={user} />;
               })}
             </InfiniteScroll>
           ) : (
@@ -78,4 +76,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Organisations;

@@ -83,7 +83,7 @@ const Event = ({ id }: Props) => {
   useEffect(() => {
     getEvent();
     getSimilarEvents();
-  }, []);
+  }, [id]);
 
   return (
     <BaseWrapper title="Event">
@@ -102,7 +102,7 @@ const Event = ({ id }: Props) => {
                   alt=""
                   className="w-full h-full object-cover rounded-xl absolute top-0 -z-10"
                 />
-                <div className="w-full h-full rounded-xl bg-white bg-opacity-20 backdrop-blur-sm absolute top-0 -z-[5]"></div>
+                <div className="w-full h-full rounded-xl bg-white bg-opacity-25 absolute top-0 -z-[5]"></div>
                 <div className="w-1/2 max-md:w-full h-full p-8 flex flex-col justify-between">
                   <div className="w-full flex flex-col gap-6">
                     <div className="flex flex-col gap-4">

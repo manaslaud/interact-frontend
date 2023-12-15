@@ -23,6 +23,7 @@ import ConfirmDelete from '@/components/common/confirm_delete';
 import deleteHandler from '@/handlers/delete_handler';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import { navbarOpenSelector } from '@/slices/feedSlice';
 
 const Events = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -81,6 +82,8 @@ const Events = () => {
     }
   };
 
+  const open = useSelector(navbarOpenSelector);
+
   return (
     <BaseWrapper title="Events">
       <OrgSidebar index={12} />
@@ -127,7 +130,7 @@ const Events = () => {
                     next={getEvents}
                     hasMore={hasMore}
                     loader={<Loader />}
-                    className="w-full flex flex-wrap pl-6 pb-10 gap-6"
+                    className="w-full pl-6 pb-12 mx-auto flex flex-wrap gap-8 justify-center"
                   >
                     {events.map(event => (
                       <EventCard
@@ -138,6 +141,7 @@ const Events = () => {
                         setClickedEditEvent={setClickedEditEvent}
                         setClickedOnDeleteEvent={setClickedOnDeleteEvent}
                         setClickedDeleteEvent={setClickedDeleteEvent}
+                        size={open ? '[22rem]' : 96}
                       />
                     ))}
                   </InfiniteScroll>

@@ -240,7 +240,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
               <div
                 key={user.id}
                 onClick={() => handleTagUser(user.username)}
-                className="w-1/4 hover:scale-105 flex items-center gap-2 rounded-md border-[1px] border-primary_btn p-1 hover:bg-primary_comp cursor-pointer transition-ease-300"
+                className="w-1/4 hover:scale-105 flex items-center gap-2 rounded-md border-[1px] border-primary_btn p-2 hover:bg-primary_comp cursor-pointer transition-ease-300"
               >
                 <Image
                   crossOrigin="anonymous"
@@ -248,11 +248,11 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
                   height={10000}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-                  className="rounded-full w-8 h-8"
+                  className="rounded-full w-12 h-12"
                 />
                 <div className="">
-                  <div className="text-sm font-medium line-clamp-1">{user.name}</div>
-                  <div className="text-xs">@{user.username}</div>
+                  <div className="text-sm font-semibold line-clamp-1">{user.name}</div>
+                  <div className="text-xs text-gray-500">@{user.username}</div>
                 </div>
               </div>
             ))}

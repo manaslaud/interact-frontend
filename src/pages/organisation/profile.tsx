@@ -1,10 +1,9 @@
 import TabMenu from '@/components/common/tab_menu';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import Sidebar from '@/components/common/sidebar';
 import React, { useEffect, useState } from 'react';
 import { initialProfile, initialUser } from '@/types/initials';
-import { ORG_URL, USER_COVER_PIC_URL, USER_URL } from '@/config/routes';
+import { ORG_URL, USER_COVER_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Image from 'next/image';
@@ -12,8 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import Posts from '@/screens/profile/posts';
 import Projects from '@/screens/profile/projects';
-import ProfileCard from '@/sections/profile/profile_card';
-import { Check, ImageSquare, Pen, PencilSimple, X } from '@phosphor-icons/react';
+import { Check, ImageSquare, PencilSimple, X } from '@phosphor-icons/react';
 import { resizeImage } from '@/utils/resize_image';
 import ProfileCardLoader from '@/components/loaders/profile_card';
 import { SERVER_ERROR } from '@/config/errors';
@@ -53,7 +51,6 @@ const Profile = () => {
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          console.log(res);
           setUser(res.data.organization.user);
           setTagline(res.data.organization.user.tagline);
           setCoverPicView(`${USER_COVER_PIC_URL}/${res.data.organization.user.coverPic}`);
