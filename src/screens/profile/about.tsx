@@ -1,13 +1,15 @@
-import { Profile } from '@/types';
+import { Organization, Profile } from '@/types';
+import { initialOrganization } from '@/types/initials';
 import { Buildings, CalendarBlank, Certificate, Envelope, MapPin, Phone } from '@phosphor-icons/react';
 import React from 'react';
 
 interface Props {
   profile: Profile;
+  organisation?: Organization;
   org?: boolean;
 }
 
-const About = ({ profile, org = false }: Props) => {
+const About = ({ profile, organisation = initialOrganization, org = false }: Props) => {
   return (
     <div className="w-[640px] max-md:w-screen text-primary_black mx-auto flex flex-col gap-4 max-md:px-6 pb-8">
       {!org ? (

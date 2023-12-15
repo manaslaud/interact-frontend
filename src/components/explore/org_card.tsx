@@ -62,6 +62,9 @@ const OrgCard = ({ user }: Props) => {
                 <div>{user.noImpressions}</div> <Eye />
               </div>
             </div>
+            {
+              //TODO no of members
+            }
             {user.profile?.location ? (
               <div className="flex gap-1 items-center">
                 <MapPin /> <div className="text-xs">{user.profile.location}</div>

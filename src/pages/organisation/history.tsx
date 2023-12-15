@@ -49,61 +49,40 @@ const History = () => {
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding">
           <div className="w-full text-6xl font-semibold dark:text-white font-primary">History</div>
-
-          {loading ? (
-            <Loader />
-          ) : (
-            <InfiniteScroll
-              dataLength={history.length}
-              next={fetchHistory}
-              hasMore={hasMore}
-              loader={<Loader />}
-              className="w-full flex flex-col gap-2"
-            >
-              {history.map((history, index) => {
-                switch (history.historyType) {
-                  case -1:
-                    return <Created key={index} history={history} />;
-                  case 0:
-                    return <Created key={index} history={history} />;
-                  case 1:
-                    return <Deleted history={history} />;
-                  case 2:
-                    return <Edited key={index} history={history} />;
-                  case 3:
-                    return <Created key={index} history={history} />;
-                  case 4:
-                    return <Deleted history={history} />;
-                  case 5:
-                    return <Deleted history={history} />;
-                  case 6:
-                    return <Created key={index} history={history} />;
-
-                  case 7:
-                    return <Deleted history={history} />;
-                  case 8:
-                    return <Edited key={index} history={history} />;
-
-                  case 9:
-                    return <Created key={index} history={history} />;
-                  case 10:
-                    return <Deleted history={history} />;
-
-                  case 11:
-                    return <Edited key={index} history={history} />;
-
-                  case 12:
-                    return <Created key={index} history={history} />;
-                  case 13:
-                    return <Deleted history={history} />;
-                  case 14:
-                    return <Edited key={index} history={history} />;
-                  default:
-                    return <></>;
-                }
-              })}
-            </InfiniteScroll>
-          )}
+          <div className="w-full">
+            {loading ? (
+              <Loader />
+            ) : (
+              <InfiniteScroll
+                dataLength={history.length}
+                next={fetchHistory}
+                hasMore={hasMore}
+                loader={<Loader />}
+                className="w-full flex flex-col gap-2"
+              >
+                {history.map((history, index) => {
+                  switch (history.historyType) {
+                    case -1:
+                    case 0:
+                    case 3:
+                    case 6:
+                    case 9:
+                    case 12:
+                      return <Created key={index} history={history} />;
+                    case 1:
+                      return <Deleted history={history} />;
+                    case 2:
+                    case 8:
+                    case 11:
+                    case 14:
+                      return <Edited key={index} history={history} />;
+                    default:
+                      return <></>;
+                  }
+                })}
+              </InfiniteScroll>
+            )}
+          </div>
         </div>
       </MainWrapper>
     </BaseWrapper>
