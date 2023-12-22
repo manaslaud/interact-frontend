@@ -5,23 +5,32 @@ import ProfileCompletion from '@/sections/home/profile_completion';
 import { homeTabSelector, onboardingSelector, setHomeTab } from '@/slices/feedSlice';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
-import { userIDSelector } from '@/slices/userSlice';
+import { userIDSelector, userSelector } from '@/slices/userSlice';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import OrgSidebar from '@/components/common/org_sidebar';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
   const onboarding = useSelector(onboardingSelector);
-  const userID = useSelector(userIDSelector) || '';
+  const user = useSelector(userSelector);
+
+  const router = useRouter(); //TODO use window.location instead of router
+
+  useEffect(() => {
+    if (!user.isOrganization) router.replace('/home');
+    else if (!user.isOnboardingComplete) router.replace('/organisation/onboarding');
+  }, []);
+
   return (
     <BaseWrapper title="Home">
       <OrgSidebar index={1} />
       <MainWrapper>
-        {onboarding && userID != '' ? (
+        {onboarding && user.id != '' ? (
           //TODO convert to OrgOnboarding
           <Onboarding />
         ) : (

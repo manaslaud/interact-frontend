@@ -1,4 +1,5 @@
 import {
+  setOnboardingStatus,
   setProfilePic,
   setReduxBio,
   setReduxLinks,
@@ -55,8 +56,8 @@ const Onboarding = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (name.trim() == '') {
-      Toaster.error('Name Cannot be empty', 'validation_toaster');
+    if (links.length < 1) {
+      Toaster.error('Add at least 1 Link');
       return;
     }
 
@@ -81,6 +82,7 @@ const Onboarding = () => {
       if (tagline != user.tagline) dispatch(setReduxTagline(tagline));
       dispatch(setReduxLinks(links));
       dispatch(setOnboarding(true));
+      dispatch(setOnboardingStatus(true));
       if (user.isOrganization) router.replace('/organisation/home');
       else router.replace('/home');
       Toaster.stopLoad(toaster, 'Profile Ready!', 1);
@@ -94,6 +96,35 @@ const Onboarding = () => {
     }
   };
 
+  const handleIncrementStep = () => {
+    switch (step) {
+      case 1:
+        if (name.trim() == '') Toaster.error('Name cannot be empty');
+        else setStep(prev => prev + 1);
+        break;
+      case 2:
+        if (tagline.trim() == '') Toaster.error('Tagline cannot be empty');
+        else setStep(prev => prev + 1);
+        break;
+      case 3:
+        if (bio.trim() == '') Toaster.error('Bio cannot be empty');
+        else setStep(prev => prev + 1);
+        break;
+      case 4:
+        if (tags.length < 3) Toaster.error('Add at least 3 Tags');
+        else setStep(prev => prev + 1);
+        break;
+      case 5:
+        setStep(prev => prev + 1);
+        break;
+      case 6:
+        if (links.length < 1) Toaster.error('Add at least 1 Link');
+        else setStep(prev => prev + 1);
+        break;
+      default:
+    }
+  };
+
   return (
     <>
       <Head>
@@ -101,23 +132,26 @@ const Onboarding = () => {
       </Head>
       <div className="w-screen h-screen">
         {!clickedOnBuild ? (
-          <div className="glassMorphism animate-fade_1 page w-[40rem] max-md:w-[90%] h-64 max-md:h-72 px-8 py-10 font-primary flex flex-col justify-between rounded-lg shadow-xl hover:shadow-2xl transition-ease-300 absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+          <div className="glassMorphism animate-fade_1 page w-fit max-md:w-[90%] h-64 max-md:h-72 px-8 py-10 font-primary flex flex-col justify-between rounded-lg shadow-xl hover:shadow-2xl transition-ease-300 absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
             <div className="flex flex-col gap-2">
-              <div className="text-5xl font-bold"> Build Your Organisation</div>
-              <div>and get yourself discovered!</div>
+              <div className="text-5xl font-bold">
+                Welcome to{' '}
+                <span className="bg-white px-2 rounded-md">
+                  <span className="text-gradient">Interact!</span>
+                </span>
+                🌟
+              </div>
+              <div>Complete your Profile and get yourself discovered!</div>
             </div>
 
-            <div className="w-full flex items-center justify-between gap-4">
-              <Link href={'/home'} className="h-fit hover-underline-animation after:bg-black">
-                maybe later
-              </Link>
+            <div className="w-full flex items-center justify-end gap-4">
               <div
                 onClick={() => setClickedOnBuild(true)}
-                className={`text-lg py-2 font-medium px-4 backdrop-blur-xl hover:shadow-lg ${
+                className={`py-2 font-medium px-4 backdrop-blur-xl hover:shadow-lg ${
                   clickedOnBuild ? 'cursor-default' : 'cursor-pointer'
                 } transition-ease-300 rounded-xl`}
               >
-                continue
+                Let&apos;s get Started!
               </div>
             </div>
           </div>
@@ -126,11 +160,11 @@ const Onboarding = () => {
             <div className="w-1/2 max-md:w-full flex flex-col gap-4 backdrop-blur-xl rounded-xl shadow-xl p-8 animate-fade_half">
               <div className="text-5xl max-md:text-3xl font-bold">
                 {step == 1
-                  ? 'Name of the Organisation'
+                  ? "What's your name?"
                   : step == 2
                   ? 'Add A Tagline'
                   : step == 3
-                  ? 'Add A Short Bio'
+                  ? 'Tell Us About Yourself'
                   : step == 4
                   ? 'Add Tags'
                   : step == 5
@@ -145,7 +179,7 @@ const Onboarding = () => {
                   className="w-full"
                   onSubmit={el => {
                     el.preventDefault();
-                    setStep(prev => prev + 1);
+                    handleIncrementStep();
                   }}
                 >
                   <input
@@ -161,7 +195,7 @@ const Onboarding = () => {
                   className="w-full"
                   onSubmit={el => {
                     el.preventDefault();
-                    setStep(prev => prev + 1);
+                    handleIncrementStep();
                   }}
                 >
                   <input
@@ -177,15 +211,15 @@ const Onboarding = () => {
                 <>
                   <textarea
                     className="bg-[#ffffff40] h-[96px] min-h-[96px] max-h-64 placeholder:text-[#202020c6] border-[1px] border-black rounded-lg p-2 focus:outline-none"
-                    maxLength={300}
-                    placeholder="A descriptive Bio"
+                    maxLength={500}
+                    placeholder="Write yourself a short bio"
                     value={bio}
                     onChange={el => setBio(el.target.value)}
                   />
                 </>
               ) : step == 4 ? (
                 <>
-                  <Tags tags={tags} setTags={setTags} blackBorder={true} />
+                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} />
                 </>
               ) : step == 5 ? (
                 <>
@@ -255,13 +289,11 @@ const Onboarding = () => {
                     prev
                   </div>
                 ) : (
-                  <Link href={'/home'} className="h-fit hover-underline-animation after:bg-black">
-                    finish this later
-                  </Link>
+                  <div></div>
                 )}
                 {step != 6 ? (
                   <div
-                    onClick={() => setStep(prev => prev + 1)}
+                    onClick={handleIncrementStep}
                     className="w-fit text-lg py-2 font-medium px-4 shadow-md hover:bg-[#ffffff40] hover:shadow-lg transition-ease-500 rounded-xl cursor-pointer"
                   >
                     continue
@@ -276,7 +308,7 @@ const Onboarding = () => {
                 )}
               </div>
             </div>
-            <div className="w-1/3 h-3/4 p-6 gap-6 shadow-2xl font-primary flex flex-col items-center animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
+            <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center border-[1px] border-[#07070712] animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
               <Image
                 crossOrigin="anonymous"
                 width={10000}
@@ -285,55 +317,51 @@ const Onboarding = () => {
                 src={userPicView}
                 className={`rounded-full max-md:mx-auto w-44 h-44 cursor-default`}
               />
-              <div className={`text-3xl text-center font-bold`}>{name}</div>
-
-              <div className="font-medium text-center break-words">{tagline || 'Here goes the Tagline'}</div>
-
-              <div className={`w-full ${bio == '' ? 'italic' : ''} text-sm text-center line-clamp-6`}>
-                {bio || 'Space for you to describe the organisation'}
+              <div className="w-full flex flex-col items-center gap-4">
+                <div className="text-4xl text-center font-bold">{name}</div>
+                <div className="font-medium text-lg text-center break-words">{tagline || 'Here goes your Tagline'}</div>
+                <div className="w-full border-t-[1px] border-dashed border-primary_black"></div>
+                <div className={`w-full ${bio == '' ? 'italic' : ''} text-sm text-center line-clamp-6`}>
+                  {bio || 'Space for you to describe yourself'}
+                </div>
+                <div className="w-full border-t-[1px] border-dashed border-primary_black"></div>
+                {tags.length > 0 ? (
+                  <div className="w-full gap-2 flex flex-wrap items-center justify-center">
+                    {tags.map(tag => {
+                      return (
+                        <div className="flex-center text-sm px-4 py-1 border-[1px] border-black  rounded-md" key={tag}>
+                          {tag}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black rounded-md">
+                    <Plus /> <div>Tags</div>
+                  </div>
+                )}
+                {links.length > 0 ? (
+                  <div className="w-full gap-2 flex flex-wrap items-center justify-center">
+                    {links.map((link, index) => {
+                      return (
+                        <Link
+                          href={link}
+                          target="_blank"
+                          key={index}
+                          className="w-fit h-8 border-[1px] border-black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                        >
+                          {getIcon(getDomainName(link), 24)}
+                          <div className="capitalize">{getDomainName(link)}</div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black rounded-md">
+                    <Plus /> <div>Links</div>
+                  </div>
+                )}
               </div>
-
-              {tags.length > 0 ? (
-                <div className={`w-full gap-2 flex flex-wrap items-center justify-center`}>
-                  {tags.map(tag => {
-                    return (
-                      <div className={`flex-center text-sm px-4 py-1 border-[1px] border-black  rounded-md`} key={tag}>
-                        {tag}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div
-                  className={`flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black  rounded-md`}
-                >
-                  <Plus /> <div>Tags</div>
-                </div>
-              )}
-
-              {links.length > 0 ? (
-                <div className={`w-full gap-2 flex flex-wrap items-center justify-center`}>
-                  {links.map((link, index) => {
-                    return (
-                      <Link
-                        href={link}
-                        target="_blank"
-                        key={index}
-                        className="w-fit h-8 border-[1px] border-black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
-                      >
-                        {getIcon(getDomainName(link), 24)}
-                        <div className="capitalize">{getDomainName(link)}</div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div
-                  className={`flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black  rounded-md`}
-                >
-                  <Plus /> <div>Links</div>
-                </div>
-              )}
             </div>
           </div>
         )}

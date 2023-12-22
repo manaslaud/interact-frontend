@@ -35,9 +35,12 @@ const Events = () => {
         setEvents(res.data.events || []);
         setHasMore(false);
       } else {
-        const addedEvents = [...events, ...(res.data.events || [])];
-        if (addedEvents.length === events.length) setHasMore(false);
-        setEvents(addedEvents);
+        if (!search && page == 1) setEvents(res.data.events || []);
+        else {
+          const addedEvents = [...events, ...(res.data.events || [])];
+          if (addedEvents.length === events.length) setHasMore(false);
+          setEvents(addedEvents);
+        }
         setPage(prev => prev + 1);
       }
       setLoading(false);

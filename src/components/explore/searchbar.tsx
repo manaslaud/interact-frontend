@@ -1,9 +1,10 @@
 import { EXPLORE_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { MagnifyingGlass, SlidersHorizontal } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import SearchSuggestions from './search_suggestions';
+import Filters from './filters';
 
 interface Props {
   initialValue?: string;
@@ -13,6 +14,7 @@ const SearchBar = ({ initialValue = '' }: Props) => {
   const [search, setSearch] = useState(initialValue);
   const router = useRouter();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
+  const [clickedOnFilters, setClickedOnFilters] = useState(false);
 
   const submitSearch = async () => {
     const URL = `${EXPLORE_URL}/search`;
@@ -26,8 +28,8 @@ const SearchBar = ({ initialValue = '' }: Props) => {
     setSearch(el.target.value);
   };
 
-  const handleSubmit = (el: React.FormEvent<HTMLFormElement>) => {
-    el.preventDefault();
+  const handleSubmit = (el?: React.FormEvent<HTMLFormElement>) => {
+    el?.preventDefault();
     if (search === '') router.push('/explore');
     else {
       submitSearch();
@@ -43,6 +45,12 @@ const SearchBar = ({ initialValue = '' }: Props) => {
 
   return (
     <>
+      {clickedOnFilters ? <Filters setShow={setClickedOnFilters} /> : <></>}
+      {showSearchSuggestions ? (
+        <SearchSuggestions search={search} setSearch={setSearch} setShow={setShowSearchSuggestions} />
+      ) : (
+        <></>
+      )}
       <div className="relative md:hidden w-taskbar max-md:w-taskbar_md mx-auto">
         <form
           onSubmit={handleSubmit}
@@ -66,10 +74,10 @@ const SearchBar = ({ initialValue = '' }: Props) => {
           <></>
         )}
       </div>
-      <div className="w-[640px] max-md:hidden fixed top-2 right-1/2 translate-x-1/2 max-md:w-taskbar_md mx-auto z-50">
+      <div className="w-[640px] max-md:hidden flex items-center gap-2 fixed top-2 right-1/2 translate-x-1/2 max-md:w-taskbar_md mx-auto z-20">
         <form
           onSubmit={handleSubmit}
-          className="w-full h-11 px-4 border-[1px] border-gray-300 text-gray-500 bg-gray-100 flex items-center justify-between gap-8 mx-auto rounded-md"
+          className="grow h-11 px-4 border-[1px] border-gray-300 text-gray-500 bg-gray-100 flex items-center justify-between gap-8 mx-auto rounded-md"
         >
           <input
             className="h-full grow bg-transparent focus:outline-none font-primary font-medium"
@@ -79,13 +87,22 @@ const SearchBar = ({ initialValue = '' }: Props) => {
             value={search}
             onChange={handleChange}
           />
-          <MagnifyingGlass size={24} className="opacity-75" weight="bold" />
+          <MagnifyingGlass
+            onClick={() => handleSubmit()}
+            size={24}
+            className="opacity-75 cursor-pointer"
+            weight="bold"
+          />
         </form>
-        {showSearchSuggestions ? (
-          <SearchSuggestions search={search} setSearch={setSearch} setShow={setShowSearchSuggestions} />
-        ) : (
-          <></>
-        )}
+        <SlidersHorizontal
+          onClick={() => {
+            setShowSearchSuggestions(false);
+            setClickedOnFilters(true);
+          }}
+          className="cursor-pointer text-gray-500 hover:bg-gray-100 rounded-full p-2 flex-center transition-ease-300"
+          size={42}
+          weight="duotone"
+        />
       </div>
     </>
   );

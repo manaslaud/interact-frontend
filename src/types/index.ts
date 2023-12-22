@@ -81,7 +81,7 @@ export interface Opening {
   title: string;
   description: string;
   applications: [];
-  noOfApplications: number;
+  noApplications: number;
   noImpressions: number;
   tags: string[];
   active: boolean;
@@ -127,7 +127,10 @@ export interface User {
   noFollowers: number;
   noFollowing: number;
   noImpressions: number;
+  noProjects: number;
+  noCollaborativeProjects: number;
   isFollowing?: boolean;
+  isOnboardingComplete: boolean;
   passwordChangedAt: Date;
   lastViewed: Project[];
   isVerified: boolean;
@@ -209,6 +212,7 @@ export interface Post {
   noShares: number;
   noComments: number;
   noImpressions: number;
+  noReposts: number;
   comments: string[];
   postedAt: Date;
   tags: string[];
@@ -456,5 +460,5 @@ export interface OrganizationHistory {
   invitationID?: string;
   invitation?: Invitation;
   createdAt: Date;
-  deletedText:String;
+  deletedText: String;
 }

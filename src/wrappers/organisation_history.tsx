@@ -20,7 +20,7 @@ const OrganisationHistoryWrapper: React.FC<WrapperProps> = ({ children, history 
               width={10000}
               height={10000}
               alt={'User Pic'}
-              src={`${USER_PROFILE_PIC_URL}/${history.user?.coverPic}`}
+              src={`${USER_PROFILE_PIC_URL}/${history.user?.profilePic}`}
               className={'rounded-full w-4 h-4 cursor-default border-[1px] border-black'}
             />
             <div className="font-semibold">{history.user?.name}</div>

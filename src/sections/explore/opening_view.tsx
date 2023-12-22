@@ -68,7 +68,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
               setOpening(initialOpening);
             }}
           />
-          <div className="flex max-md:flex-col justify-between items-center max-md:items-start max-md:gap-2">
+          <div className="flex max-md:flex-col flex-wrap justify-between items-center max-md:items-start gap-2">
             <div className="font-bold text-4xl text-gradient">{opening.title}</div>
             <LowerOpening opening={opening} />
           </div>

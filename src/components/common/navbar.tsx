@@ -46,7 +46,7 @@ const Navbar = () => {
             </div>
             <Link
               className="w-10 h-10 rounded-full flex-center hover:bg-primary_comp_hover dark:hover:bg-dark_primary_comp_hover transition-ease-300"
-              href={'/explore'}
+              href={`/${user.isOrganization ? 'organisation/' : ''}explore`}
             >
               <MagnifyingGlass className="max-md:w-6 max-md:h-6" size={24} weight="regular" />
             </Link>

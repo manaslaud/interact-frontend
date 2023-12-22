@@ -11,7 +11,7 @@ const Created = ({ history }: Props) => {
     case -1:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Created organisation: {history.organizationID}! 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Organisation was created! 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 0:
@@ -23,7 +23,10 @@ const Created = ({ history }: Props) => {
     case 3:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4"> Invited user :{history.invitation?.user.username}🎉</div>
+          <div className="w-fit text-center flex-center gap-4">
+            {' '}
+            Invited user :{history.invitation?.user.username}🎉
+          </div>
         </OrganizationHistoryWrapper>
       );
 

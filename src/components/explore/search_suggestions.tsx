@@ -51,7 +51,7 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
       ) : (
         <>
           {searches.length > 0 ? (
-            <div className="w-full bg-white dark:bg-transparent backdrop-blur-lg shadow-xl dark:border-dark_primary_btn dark:border-[1px] dark:text-white absolute top-16 max-md:top-14 flex flex-col gap-6 z-[25] rounded-md p-4">
+            <div className="w-[640px] bg-white dark:bg-transparent backdrop-blur-lg shadow-xl dark:border-dark_primary_btn dark:border-[1px] dark:text-white fixed top-20 right-1/2 translate-x-1/2 max-md:top-14 flex flex-col gap-6 z-[52] rounded-md p-4">
               <div className="w-full flex items-center justify-between">
                 <div className="text-4xl max-md:text-3xl font-bold ">
                   {search == '' ? 'Trending Searches' : 'Suggestions'}
@@ -82,6 +82,10 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
           )}
         </>
       )}
+      <div
+        onClick={() => setShow(false)}
+        className="w-screen h-screen fixed top-0 left-0 animate-fade_third z-30 max-lg:z-[51]"
+      ></div>
     </>
   );
 };

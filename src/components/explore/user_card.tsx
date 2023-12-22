@@ -32,7 +32,7 @@ const UserCard = ({ user, forTrending = false }: Props) => {
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2 w-fit">
-          <div className="w-14 h-14 relative rounded-full">
+          <div className={`${!forTrending ? 'w-14 h-14' : 'w-10 h-10'} relative rounded-full`}>
             <Image
               crossOrigin="anonymous"
               width={10000}

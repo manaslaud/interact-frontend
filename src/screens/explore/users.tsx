@@ -34,9 +34,12 @@ const Users = () => {
         setUsers(res.data.users || []);
         setHasMore(false);
       } else {
-        const addedUsers = [...users, ...(res.data.users || [])];
-        if (addedUsers.length === users.length) setHasMore(false);
-        setUsers(addedUsers);
+        if (!search && page == 1) setUsers(res.data.users || []);
+        else {
+          const addedUsers = [...users, ...(res.data.users || [])];
+          if (addedUsers.length === users.length) setHasMore(false);
+          setUsers(addedUsers);
+        }
         setPage(prev => prev + 1);
       }
       setLoading(false);
