@@ -166,13 +166,13 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
           <Link
             href={`${
               post.user.username != loggedInUser.username
-                ? `/explore/user/${post.user.isOrganization ? 'organisation/' : ''}${post.user.username}`
+                ? `/explore/${post.user.isOrganization ? 'organisation' : 'user'}/${post.user.username}`
                 : `/${post.user.isOrganization ? 'organisation/' : ''}profile`
             }`}
             className="font-medium flex items-center gap-1"
           >
             {post.user.username}
-            {post.user.isOrganization ? <Buildings /> : <></>}
+            {post.user.isOrganization ? <Buildings weight="duotone" /> : <></>}
           </Link>
           <div className="flex gap-2 font-light text-xs">
             <div>{moment(post.postedAt).fromNow()}</div>
