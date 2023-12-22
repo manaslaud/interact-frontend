@@ -18,6 +18,7 @@ import { setChats, userSelector } from '@/slices/userSlice';
 import { setCurrentGroupChatID } from '@/slices/messagingSlice';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import { resizeImage } from '@/utils/resize_image';
+import Report from '@/components/common/report';
 
 interface Props {
   chat: GroupChat;
@@ -35,6 +36,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnExit, setClickedOnExit] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
 
   const [title, setTitle] = useState(chat.title);
   const [description, setDescription] = useState(chat.description);
@@ -48,7 +50,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
 
   const dispatch = useDispatch();
 
-  const handleWithdrawInvitaion = async () => {
+  const handleWithdrawInvitation = async () => {
     const toaster = Toaster.startLoad('Withdrawing Invitation...');
 
     const URL = `${INVITATION_URL}/withdraw/${clickedInvitationToWithdraw.id}`;
@@ -142,7 +144,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
       {clickedOnWithdrawInvitation ? (
         <ConfirmDelete
           setShow={setClickedOnWithdrawInvitation}
-          handleDelete={handleWithdrawInvitaion}
+          handleDelete={handleWithdrawInvitation}
           title="Confirm Withdraw?"
         />
       ) : (
@@ -168,6 +170,7 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
         ) : (
           <></>
         )}
+        {clickedOnReport ? <Report setShow={setClickedOnReport} /> : <></>}
 
         <div className="w-full flex items-center justify-between p-2">
           <div className="text-3xl font-semibold">Group Info</div>
@@ -421,7 +424,10 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
           >
             Exit Group
           </div>
-          <div className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300">
+          <div
+            onClick={() => setClickedOnReport(true)}
+            className="w-full py-4 text-center dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active text-primary_danger rounded-lg cursor-pointer transition-ease-300"
+          >
             Report Group
           </div>
         </div>

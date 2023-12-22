@@ -365,7 +365,7 @@ const ProjectView = ({
                   ) : (
                     <></>
                   )}
-                  {user.managerProjects.includes(project.id) ? (
+                  {user.managerProjects.includes(project.id) || user.id == project.userID ? (
                     <Link
                       href={`/workspace/manage/${projectSlugs[clickedProjectIndex]}`}
                       target="_blank"

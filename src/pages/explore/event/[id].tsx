@@ -248,7 +248,8 @@ const Event = ({ id }: Props) => {
                       </div>
                     </div>
                     <div className="w-full text-sm text-center font-medium text-gray-500">
-                      On Interact Since {moment(event.organization.createdAt).format('MMM, YYYY')}
+                      On Interact Since{' '}
+                      <span className="font-semibold">{moment(event.organization.createdAt).format('MMM, YYYY')}</span>
                     </div>
                   </div>
                 </div>

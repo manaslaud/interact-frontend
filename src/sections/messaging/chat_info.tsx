@@ -77,23 +77,21 @@ const ChatInfo = ({ chat, setChat, setShow, setChats }: Props) => {
   };
   return (
     <>
+      {clickedOnBlock ? (
+        <ConfirmDelete
+          setShow={setClickedOnBlock}
+          handleDelete={handleBlock}
+          title={`Confirm ${isBlockedByUser(chat) ? 'Unblock' : 'Block'}?`}
+        />
+      ) : (
+        <></>
+      )}
+      {clickedOnDelete ? (
+        <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} title="Confirm Delete?" />
+      ) : (
+        <></>
+      )}
       <div className="w-full h-full overflow-y-auto flex flex-col gap-4">
-        {clickedOnBlock ? (
-          <ConfirmDelete
-            setShow={setClickedOnBlock}
-            handleDelete={handleBlock}
-            title={`Confirm ${isBlockedByUser(chat) ? 'Unblock' : 'Block'}?`}
-          />
-        ) : (
-          <></>
-        )}
-
-        {clickedOnDelete ? (
-          <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} title="Confirm Delete?" />
-        ) : (
-          <></>
-        )}
-
         <div className="w-full flex items-center justify-between p-2">
           <div className="text-3xl font-semibold">Chat Info</div>
           <X onClick={() => setShow(false)} className="cursor-pointer" size={32} />

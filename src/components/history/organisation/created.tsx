@@ -33,19 +33,21 @@ const Created = ({ history }: Props) => {
     case 6:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Created post: {history.post?.content} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4 line-clamp-1">
+            Created post: {history.post?.content} 🎉
+          </div>
         </OrganizationHistoryWrapper>
       );
     case 9:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4"> Created project:{history.project?.description} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4"> Created project:{history.project?.title} 🎉</div>
         </OrganizationHistoryWrapper>
       );
     case 12:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Created task:{history.task?.description} 🎉</div>
+          <div className="w-fit text-center flex-center gap-4">Created task:{history.task?.title} 🎉</div>
         </OrganizationHistoryWrapper>
       );
 

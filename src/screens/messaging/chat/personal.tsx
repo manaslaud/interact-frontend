@@ -100,7 +100,7 @@ const PersonalChat = () => {
     }
 
     return () => {
-      updateLastRead();
+      updateLastRead(); //TODO runs on the new chatID instead of the old one
     };
   }, [chatID]);
 

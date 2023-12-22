@@ -70,7 +70,7 @@ const Onboarding = () => {
     tags.forEach(tag => formData.append('tags', tag));
     links.forEach(link => formData.append('links', link));
 
-    const URL = `${USER_URL}/me`;
+    const URL = `${USER_URL}/me?action=onboarding`;
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
 

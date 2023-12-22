@@ -40,33 +40,6 @@ const ProjectCard = ({
 
   const dispatch = useDispatch();
 
-  const handleUnPublish = async () => {
-    const toaster = Toaster.startLoad('Editing your project...');
-
-    const formData = {
-      isPrivate: !project.isPrivate,
-    };
-
-    const URL = `${PROJECT_URL}/${project.slug}`;
-
-    const res = await patchHandler(URL, formData, 'multipart/form-data');
-
-    if (res.statusCode === 200) {
-      if (setProjects)
-        setProjects(prev =>
-          prev.map(p => {
-            if (p.id == project.id) {
-              return { ...p, isPrivate: !p.isPrivate };
-            } else return p;
-          })
-        );
-      Toaster.stopLoad(toaster, 'Project Added', 1);
-    } else {
-      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
-      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-    }
-  };
-
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your project...');
 
@@ -133,7 +106,7 @@ const ProjectCard = ({
               ) : (
                 <></>
               )}
-              {user.managerProjects.includes(project.id) ? (
+              {user.managerProjects.includes(project.id) || user.id == project.userID ? (
                 <Link
                   href={`/workspace/manage/${project.slug}`}
                   target="_blank"

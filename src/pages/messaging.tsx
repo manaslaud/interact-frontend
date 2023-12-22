@@ -1,3 +1,4 @@
+import OrgSidebar from '@/components/common/org_sidebar';
 import Sidebar from '@/components/common/sidebar';
 import TabMenu from '@/components/common/tab_menu';
 import SearchBar from '@/components/messaging/searchbar';
@@ -15,6 +16,7 @@ import {
   messagingTabSelector,
   setMessagingTab,
 } from '@/slices/messagingSlice';
+import { userSelector } from '@/slices/userSlice';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
@@ -34,6 +36,8 @@ const Messaging = () => {
   const [clickedOnNewGroup, setClickedOnNewGroup] = useState(false);
 
   const dispatch = useDispatch();
+
+  const user = useSelector(userSelector);
 
   useEffect(() => {
     setChatType(String(new URLSearchParams(window.location.search).get('chat')));
@@ -60,7 +64,7 @@ const Messaging = () => {
 
   return (
     <BaseWrapper title="Messaging">
-      <Sidebar index={-1} />
+      {user.isOrganization ? <OrgSidebar index={-1} /> : <Sidebar index={-1} />}
       <MainWrapper>
         <div
           onClick={() => setClickedOnNew(false)}
@@ -108,7 +112,7 @@ const Messaging = () => {
               width="100%"
               sticky={true}
             />
-            <div className="w-full">
+            <div className="w-full h-full overflow-y-auto">
               <div className={`${active === 0 ? 'block' : 'hidden'}`}>
                 <Personal />
               </div>
@@ -124,9 +128,9 @@ const Messaging = () => {
             </div>
           </div>
           <div
-            className={`w-[37.5vw] max-lg:w-screen h-full max-lg:h-base max-lg:fixed max-lg:top-navbar p-2 max-lg:p-0 ${
+            className={`w-[37.5vw] max-lg:w-screen h-full max-lg:h-base sticky max-lg:fixed top-navbar p-2 max-lg:p-0 ${
               currentChatID == '' && currentGroupChatID == '' ? 'hidden' : ''
-            } max-lg:z-30`}
+            } z-40 max-lg:z-30`}
           >
             {currentChatID == '' && currentGroupChatID == '' ? (
               <></>

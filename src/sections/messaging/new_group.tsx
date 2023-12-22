@@ -278,7 +278,7 @@ const NewGroup = ({ setShow }: Props) => {
 
       <div
         onClick={() => setShow(false)}
-        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-20"
+        className="bg-backdrop w-screen h-screen fixed top-0 left-0 animate-fade_third z-[41]"
       ></div>
     </>
   );

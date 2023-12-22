@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MESSAGING_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MESSAGING_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { currentGroupChatIDSelector } from '@/slices/messagingSlice';
 import { initialGroupChat, initialGroupChatMembership, initialUser } from '@/types/initials';
@@ -79,16 +79,6 @@ const GroupChat = () => {
   }, []);
 
   const messagesByDate = groupBy(messages, message => new Date(message.createdAt).toLocaleDateString());
-
-  useEffect(() => {
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.height = '100vh';
-
-    return () => {
-      document.documentElement.style.overflowY = 'auto';
-      document.documentElement.style.height = 'auto';
-    };
-  }, []);
 
   return (
     <div className="w-full h-full bg-gray-100 dark:bg-transparent dark:text-white font-primary border-2 max-lg:border-0 border-primary_btn dark:border-dark_primary_btn rounded-lg max-lg:rounded-none p-3 relative max-lg:backdrop-blur-2xl max-lg:z-50">
