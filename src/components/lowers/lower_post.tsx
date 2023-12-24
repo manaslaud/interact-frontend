@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Post, PostBookmark } from '@/types';
-import Cookies from 'js-cookie';
 import deleteHandler from '@/handlers/delete_handler';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +19,6 @@ import SignUp from '../common/signup_box';
 
 interface Props {
   post: Post;
-  setPost?: React.Dispatch<React.SetStateAction<Post>>;
   setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
@@ -30,7 +28,7 @@ interface bookMarkStatus {
   bookmarkID: string;
 }
 
-const LowerPost = ({ post, setPost, setFeed }: Props) => {
+const LowerPost = ({ post, setFeed }: Props) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post.noLikes);
   const [numComments, setNumComments] = useState(post.noComments);

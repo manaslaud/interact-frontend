@@ -5,7 +5,7 @@ import { COMMENT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import Toaster from '@/utils/toaster';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
-import { Comment, Post, Project } from '@/types';
+import { Comment, Event, Post, Project } from '@/types';
 import deleteHandler from '@/handlers/delete_handler';
 import moment from 'moment';
 import getHandler from '@/handlers/get_handler';
@@ -22,7 +22,7 @@ import CommentsLoader from '../loaders/comments';
 
 interface Props {
   type: string;
-  item: Project | Post;
+  item: Project | Post | Event;
   setNoComments: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -79,6 +79,11 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
             projectID: item.id,
             content: commentBody,
           }
+        : type === 'event'
+        ? {
+            eventID: item.id,
+            content: commentBody,
+          }
         : {};
 
     const res = await postHandler(COMMENT_URL, formData);
@@ -88,8 +93,9 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       setComments(newComments);
       setNoComments(prev => prev + 1);
       setCommentBody('');
-      if (item.userID != loggedInUser.id)
-        socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
+      //TODO
+      // if (item.userID != loggedInUser.id)
+      //   socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
     } else {
       if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
       else {

@@ -306,7 +306,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return {
       redirect: {
         permanent: true,
-        destination: '/home', //TODO check for /org/home and /home everywhere
+        destination: '/home',
       },
       props: { token },
     };

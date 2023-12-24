@@ -10,18 +10,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import Image from 'next/image';
-import WidthCheck from '@/utils/wrappers/widthCheck';
-import {
-  ArrowUpRight,
-  Buildings,
-  CalendarBlank,
-  CursorClick,
-  Eye,
-  MapPin,
-  Rocket,
-  Ticket,
-  Users,
-} from '@phosphor-icons/react';
+import { ArrowUpRight, Buildings, CalendarBlank, MapPin, Rocket, Ticket, Users } from '@phosphor-icons/react';
 import EventCard from '@/components/explore/event_card';
 import { Event } from '@/types';
 import Link from 'next/link';
@@ -31,6 +20,7 @@ import getDomainName from '@/utils/funcs/get_domain_name';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import OrgSidebar from '@/components/common/org_sidebar';
+import LowerEvent from '@/components/lowers/lower_event';
 
 interface Props {
   id: string;
@@ -85,6 +75,118 @@ const Event = ({ id }: Props) => {
     getSimilarEvents();
   }, [id]);
 
+  const AboutEvent = () => {
+    return (
+      <div className="bg-white w-3/5 max-md:w-full border-[1px] rounded-md">
+        <div className="w-full p-4 border-b-[1px] font-medium">About the event</div>
+        <div className="p-4 whitespace-pre-wrap text-gray-600 text-sm">{event.description}</div>
+
+        {event.tags && event.tags.length > 0 ? (
+          <div className="w-full flex flex-col gap-2 p-4">
+            <div className="font-medium">Tags</div>
+            <div className="flex flex-wrap gap-2">
+              {event.tags.map(tag => (
+                <div
+                  key={tag}
+                  className="flex-center px-2 py-1 border-[1px] border-dashed border-gray-400
+text-xs rounded-lg cursor-default"
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {event.links && event.links.length > 0 ? (
+          <div className="w-full flex flex-col gap-2 p-4">
+            <div className="font-medium">Links</div>
+            {event.links.map((link, index) => (
+              <Link
+                href={link}
+                target="_blank"
+                key={index}
+                className="w-fit flex items-center gap-2 px-4 py-2 rounded-lg hover:shadow-2xl transition-ease-300"
+              >
+                {getIcon(getDomainName(link), 32, 'light')}
+                <div className="text-xs text-gray-500">{getDomainName(link)}</div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <LowerEvent event={event} />
+      </div>
+    );
+  };
+
+  const AboutOrganisation = () => {
+    return (
+      <div className="bg-white w-2/5 max-md:w-full flex flex-col border-[1px] rounded-md">
+        <div className="w-full flex items-center gap-1 p-4 border-b-[1px] font-medium">
+          About the Organization <Buildings />
+        </div>
+        <div className="w-full h-full flex flex-col gap-2 justify-between p-4 pt-2">
+          <Link
+            href={`/explore/organisation/${event.organization.user.username}`}
+            target="_blank"
+            className="w-full flex flex-col gap-2 py-2 hover:p-2 rounded-xl hover:shadow-xl hover:scale-105 transition-ease-300"
+          >
+            <div className="w-full flex gap-2">
+              <Image
+                width={10000}
+                height={10000}
+                src={`${USER_PROFILE_PIC_URL}/${event.organization.user.profilePic}`}
+                alt=""
+                className="w-14 h-14 rounded-full"
+              />
+              <div className="w-[calc(100%-56px)] flex justify-between gap-2 flex-wrap">
+                <div className="">
+                  <div className="font-semibold text-2xl">{event.organization.title}</div>
+                  <div className="text-sm text-gray-500">@{event.organization.user.username}</div>
+                </div>
+                <ArrowUpRight size={24} />
+              </div>
+            </div>
+            <div className="text-sm">{event.organization.user.tagline}</div>
+          </Link>
+          <div className="text-sm">{event.organization.user.bio}</div>
+          <div className="w-full flex gap-4 items-center justify-center flex-wrap p-6">
+            <div className="flex flex-col items-center gap-2 p-4 cursor-default">
+              <Rocket size={24} />
+              <div className="flex flex-col text-center items-center">
+                <div>{event.organization.noProjects}</div>
+                <div className="text-xs text-gray-500">Projects</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2 p-4 cursor-default">
+              <Ticket size={24} />
+              <div className="flex flex-col text-center items-center">
+                <div>{event.organization.noEvents}</div>
+                <div className="text-xs text-gray-500">Total Events</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2 p-4 cursor-default">
+              <Users size={24} />
+              <div className="flex flex-col text-center items-center">
+                <div>{event.organization.noMembers}</div>
+                <div className="text-xs text-gray-500">Members</div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full text-sm text-center font-medium text-gray-500">
+            On Interact Since{' '}
+            <span className="font-semibold">{moment(event.organization.createdAt).format('MMM, YYYY')}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <BaseWrapper title="Event">
       {user.isOrganization ? <OrgSidebar index={1} /> : <Sidebar index={2} />}
@@ -117,11 +219,11 @@ const Event = ({ id }: Props) => {
                     <div className="text-sm">{event.tagline}</div>
                   </div>
 
-                  <div className="flex items-center gap-1 font-medium">
+                  <div className="w-fit p-2 glassMorphism rounded-lg flex items-center gap-1 font-medium">
                     <MapPin size={20} /> {event.location}
                   </div>
                 </div>
-                <div className="w-1/2 h-full flex-center">
+                <div className="w-1/2 max-md:w-full max-md:p-4 h-full flex-center">
                   <div className="glassMorphism flex flex-col gap-4 p-6 rounded-xl">
                     <div className="flex items-center gap-2 text-xl font-medium">
                       <CalendarBlank weight="bold" /> Event Dates
@@ -141,118 +243,8 @@ const Event = ({ id }: Props) => {
                 </div>
               </div>
               <div className="w-full flex max-md:flex-col gap-8">
-                <div className="bg-white w-3/5 max-md:w-full border-[1px] rounded-md">
-                  <div className="w-full p-4 border-b-[1px] font-medium">About the event</div>
-                  <div className="p-4 whitespace-pre-wrap text-gray-600 text-sm">{event.description}</div>
-
-                  {event.tags && event.tags.length > 0 ? (
-                    <div className="w-full flex flex-col gap-2 p-4">
-                      <div className="font-medium">Tags</div>
-                      <div className="flex flex-wrap gap-2">
-                        {event.tags.map(tag => (
-                          <div
-                            key={tag}
-                            className="flex-center px-2 py-1 border-[1px] border-dashed border-gray-400
-        text-xs rounded-lg cursor-default"
-                          >
-                            {tag}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-
-                  <div className="w-full flex gap-4 items-center justify-center flex-wrap p-6">
-                    <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                      <Eye size={24} />
-                      <div className="flex flex-col text-center items-center">
-                        <div>{event.noImpressions}</div>
-                        <div className="text-xs text-gray-500">Impressions</div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                      <CursorClick size={24} />
-                      <div className="flex flex-col text-center items-center">
-                        <div> {event.noViews}</div>
-                        <div className="text-xs text-gray-500">Views</div>
-                      </div>
-                    </div>
-                    {event.links && event.links.length > 0 ? (
-                      event.links.map((link, index) => (
-                        <Link
-                          href={link}
-                          target="_blank"
-                          key={index}
-                          className="flex flex-col items-center gap-2 p-4 rounded-lg hover:shadow-xl transition-ease-300"
-                        >
-                          {getIcon(getDomainName(link), 32, 'light')}
-                          <div className="text-xs text-gray-500">{getDomainName(link)}</div>
-                        </Link>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </div>
-                <div className="bg-white w-2/5 max-md:w-full flex flex-col border-[1px] rounded-md">
-                  <div className="w-full flex items-center gap-1 p-4 border-b-[1px] font-medium">
-                    About the Organization <Buildings />
-                  </div>
-                  <div className="w-full flex flex-col gap-2 p-4">
-                    <div className="w-full flex flex-col gap-2">
-                      <div className="w-full flex gap-2">
-                        <Image
-                          width={10000}
-                          height={10000}
-                          src={`${USER_PROFILE_PIC_URL}/${event.organization.user.profilePic}`}
-                          alt=""
-                          className="w-14 h-14 rounded-full"
-                        />
-                        <Link
-                          href={`/explore/organisation/${event.organization.user.username}`}
-                          className="w-[calc(100%-56px)] flex justify-between gap-2 flex-wrap"
-                        >
-                          <div className="">
-                            <div className="font-semibold text-2xl">{event.organization.title}</div>
-                            <div className="text-sm text-gray-500">@{event.organization.user.username}</div>
-                          </div>
-                          <ArrowUpRight size={24} />
-                        </Link>
-                      </div>
-                      <div className="text-sm">{event.organization.user.tagline}</div>
-                    </div>
-                    <div className="text-sm">{event.organization.user.bio}</div>
-                    <div className="w-full flex gap-4 items-center justify-center flex-wrap p-6">
-                      <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                        <Rocket size={24} />
-                        <div className="flex flex-col text-center items-center">
-                          <div>{event.organization.noProjects}</div>
-                          <div className="text-xs text-gray-500">Projects</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                        <Ticket size={24} />
-                        <div className="flex flex-col text-center items-center">
-                          <div>{event.organization.noEvents}</div>
-                          <div className="text-xs text-gray-500">Total Events</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-2 p-4 cursor-default">
-                        <Users size={24} />
-                        <div className="flex flex-col text-center items-center">
-                          <div>{event.organization.noMembers}</div>
-                          <div className="text-xs text-gray-500">Members</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-full text-sm text-center font-medium text-gray-500">
-                      On Interact Since{' '}
-                      <span className="font-semibold">{moment(event.organization.createdAt).format('MMM, YYYY')}</span>
-                    </div>
-                  </div>
-                </div>
+                <AboutEvent />
+                <AboutOrganisation />
               </div>
               <div className="w-full flex flex-col gap-4">
                 <div className="font-medium text-gray-600 text-center">Similar Events</div>
