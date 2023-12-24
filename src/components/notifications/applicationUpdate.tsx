@@ -17,8 +17,8 @@ const ApplicationUpdate = ({ notification, status }: Props) => {
     <NotificationWrapper notification={notification}>
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={100}
+        height={100}
         alt={'User Pic'}
         src={`${PROJECT_PIC_URL}/${notification.opening.project.coverPic}`}
         className={'rounded-xl w-12 h-16 cursor-default border-[1px] border-black'}

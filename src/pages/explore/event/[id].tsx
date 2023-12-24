@@ -138,8 +138,8 @@ text-xs rounded-lg cursor-default"
           >
             <div className="w-full flex gap-2">
               <Image
-                width={10000}
-                height={10000}
+                width={200}
+                height={200}
                 src={`${USER_PROFILE_PIC_URL}/${event.organization.user.profilePic}`}
                 alt=""
                 className="w-14 h-14 rounded-full"

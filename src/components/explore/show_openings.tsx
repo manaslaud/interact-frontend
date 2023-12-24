@@ -70,8 +70,8 @@ const Openings = ({ openings, slug, projectCoverPic }: Props) => {
                       className="w-full h-full object-cover absolute top-0 right-0 opacity-30 blur-[1px]"
                       src={`${PROJECT_PIC_URL}/${projectCoverPic}`}
                       alt="Project Cover"
-                      width={10000}
-                      height={10000}
+                      width={200}
+                      height={200}
                     />
                   </Link>
                 );
@@ -91,8 +91,8 @@ const Openings = ({ openings, slug, projectCoverPic }: Props) => {
                   className="w-full h-full object-cover absolute top-0 right-0 opacity-30 blur-[1px]"
                   src={`${PROJECT_PIC_URL}/${projectCoverPic}`}
                   alt="Project Cover"
-                  width={10000}
-                  height={10000}
+                  width={500}
+                  height={500}
                 />
               </Link>
             ) : (

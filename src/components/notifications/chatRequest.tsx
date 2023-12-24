@@ -19,8 +19,8 @@ const ChatRequest = ({ notification }: Props) => {
     <NotificationWrapper notification={notification}>
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={100}
+        height={100}
         alt={'User Pic'}
         src={`${USER_PROFILE_PIC_URL}/${notification.sender.profilePic}`}
         className={'rounded-full w-10 h-10 cursor-default border-[1px] border-black'}

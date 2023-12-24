@@ -95,8 +95,8 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
                     <Image
                       crossOrigin="anonymous"
                       className="w-full h-[368px] max-md:h-[304px] rounded-md object-cover"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${POST_PIC_URL}/${bookmark.postItems[0].post.images[0]}`}
                     />
@@ -119,8 +119,8 @@ const PostBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDelet
                       key={postItem.postID}
                       crossOrigin="anonymous"
                       className="w-[48%] h-[49%] object-cover rounded-md"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${POST_PIC_URL}/${postItem.post.images[0]}`}
                     />

@@ -27,8 +27,8 @@ const UserCard = ({ user }: Props) => {
       <div className="w-full relative">
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={200}
+          height={200}
           alt={'User Pic'}
           src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
           className="w-full h-40 rounded-t-xl fade-img absolute top-0"
@@ -36,8 +36,8 @@ const UserCard = ({ user }: Props) => {
         <div className="w-full flex gap-4 p-4">
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={200}
+            height={200}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
             className="w-24 h-24 rounded-full z-[1]"

@@ -87,8 +87,8 @@ const Navbar = () => {
                 setClickedOnNotifications(false);
                 setClickedOnProfile(prev => !prev);
               }}
-              width={10000}
-              height={10000}
+              width={50}
+              height={50}
               alt="user"
               src={`${USER_PROFILE_PIC_URL}/${user.profilePic != '' ? user.profilePic : 'default.jpg'}`}
             />

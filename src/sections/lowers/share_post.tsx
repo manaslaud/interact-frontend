@@ -101,8 +101,8 @@ const SharePost = ({ post, setShow }: Props) => {
               <div className="rounded-full">
                 <Image
                   crossOrigin="anonymous"
-                  width={10000}
-                  height={10000}
+                  width={100}
+                  height={100}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${post.user.profilePic}`}
                   className={'rounded-full w-8 h-8'}
@@ -140,8 +140,8 @@ const SharePost = ({ post, setShow }: Props) => {
                     >
                       <Image
                         crossOrigin="anonymous"
-                        width={10000}
-                        height={10000}
+                        width={50}
+                        height={50}
                         alt={'User Pic'}
                         src={`${USER_PROFILE_PIC_URL}/${getMessagingUser(chat).profilePic}`}
                         className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}

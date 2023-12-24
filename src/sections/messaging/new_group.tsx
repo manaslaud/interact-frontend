@@ -151,8 +151,8 @@ const NewGroup = ({ setShow }: Props) => {
                         >
                           <Image
                             crossOrigin="anonymous"
-                            width={10000}
-                            height={10000}
+                            width={50}
+                            height={50}
                             alt={'User Pic'}
                             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                             className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}
@@ -199,8 +199,8 @@ const NewGroup = ({ setShow }: Props) => {
                   <Image
                     crossOrigin="anonymous"
                     className="w-16 h-16 rounded-full object-cover"
-                    width={10000}
-                    height={10000}
+                    width={100}
+                    height={100}
                     alt="/"
                     src={groupPicView}
                   />
@@ -235,8 +235,8 @@ const NewGroup = ({ setShow }: Props) => {
                         </div>
                         <Image
                           crossOrigin="anonymous"
-                          width={10000}
-                          height={10000}
+                          width={50}
+                          height={50}
                           alt={'User Pic'}
                           src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                           className={'rounded-full w-12 h-12 cursor-default'}

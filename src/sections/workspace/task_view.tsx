@@ -275,8 +275,8 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, project,
                   >
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={100}
+                      height={100}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                       className={'rounded-full w-16 h-16'}

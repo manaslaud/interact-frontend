@@ -139,8 +139,8 @@ const ProjectCard = ({
           className="w-full h-full rounded-lg object-cover absolute top-0 left-0 "
           src={`${PROJECT_PIC_URL}/${project.coverPic}`}
           alt="Project Cover"
-          width={10000}
-          height={10000}
+          width={200}
+          height={200}
         />
         <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
           <div className="text-xl max-lg:text-base max-md:text-xl">{project.title}</div>

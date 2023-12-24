@@ -50,8 +50,9 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
         className="w-full h-full rounded-lg object-cover absolute top-0 left-0 "
         src={`${PROJECT_PIC_URL}/${project.coverPic}`}
         alt="Project Cover"
-        width={10000}
-        height={10000}
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 20vw"
+        width={100}
+        height={100}
       />
       <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
         <div className={`${Number(size) <= 64 ? 'text-base' : size == 72 ? 'text-lg' : 'text-xl'}`}>

@@ -116,8 +116,8 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
       >
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={100}
+          height={100}
           alt={'User Pic'}
           src={`${USER_PROFILE_PIC_URL}/${invitation.organization.user.profilePic}`}
           className={'rounded-md w-32 h-32'}

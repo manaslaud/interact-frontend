@@ -17,8 +17,8 @@ const SharedPostMessage = ({ message }: Props) => {
     <div key={message.id} className={`w-full flex gap-2 ${message.userID === userID ? 'flex-row-reverse' : ''}`}>
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={50}
+        height={50}
         alt={'User Pic'}
         src={`${USER_PROFILE_PIC_URL}/${message.user.profilePic}`}
         className={'rounded-full w-8 h-8 cursor-pointer border-[1px] border-black'}
@@ -31,8 +31,8 @@ const SharedPostMessage = ({ message }: Props) => {
                 <div className="rounded-full">
                   <Image
                     crossOrigin="anonymous"
-                    width={10000}
-                    height={10000}
+                    width={50}
+                    height={50}
                     alt={'User Pic'}
                     src={`${USER_PROFILE_PIC_URL}/${message.post.user.profilePic}`}
                     className={'rounded-full w-8 h-8'}
@@ -47,8 +47,8 @@ const SharedPostMessage = ({ message }: Props) => {
                 {message.post.images && message.post.images.length > 0 ? (
                   <Image
                     crossOrigin="anonymous"
-                    width={10000}
-                    height={10000}
+                    width={100}
+                    height={100}
                     alt={'Post Pic'}
                     src={`${POST_PIC_URL}/${message.post.images[0]}`}
                     className={`w-full rounded-lg`}

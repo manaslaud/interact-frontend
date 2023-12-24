@@ -108,8 +108,8 @@ const Applications = () => {
                     })()}
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={100}
+                      height={100}
                       alt={'User Pic'}
                       src={`${PROJECT_PIC_URL}/${application.project.coverPic}`}
                       className={'w-[120px] h-[120px] max-lg:w-[90px] max-lg:h-[90px] rounded-lg object-cover'}

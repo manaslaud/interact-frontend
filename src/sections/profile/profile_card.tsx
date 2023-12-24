@@ -219,8 +219,8 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
             <Image
               crossOrigin="anonymous"
               className="w-48 h-48 rounded-full object-cover transition-ease-200 cursor-pointer max-md:w-32 max-md:h-32"
-              width={10000}
-              height={10000}
+              width={200}
+              height={200}
               alt="/"
               src={userPicView}
             />
@@ -233,8 +233,8 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
             <Image
               crossOrigin="anonymous"
               className="w-48 h-48 rounded-full object-cover transition-ease-200 cursor-pointer max-md:w-32 max-md:h-32"
-              width={10000}
-              height={10000}
+              width={200}
+              height={200}
               alt="/"
               src={userPicView}
             />

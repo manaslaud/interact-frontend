@@ -74,6 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
             property="og:image:alt"
             content="Interact: The collaborative hub for project sharing and collaboration among college students, freelancers, professionals, and creatives."
           />
+          <link rel="preconnect" href="https://storage.googleapis.com" crossOrigin="use-credentials" />
         </Head>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>

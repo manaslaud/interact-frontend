@@ -206,14 +206,6 @@ html{
   background-color: rgb(255, 255, 255) !important;
 }
 
-  /* quill */
-
-  .ql-toolbar{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
     /* Scroll Bar */
 
   /* html {

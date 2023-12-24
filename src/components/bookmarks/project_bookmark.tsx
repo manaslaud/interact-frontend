@@ -97,8 +97,8 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                     <Image
                       crossOrigin="anonymous"
                       className="w-full h-[368px] max-md:h-[304px] rounded-md object-cover"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${bookmark.projectItems[0].project.coverPic}`}
                     />
@@ -121,8 +121,8 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       key={projectItem.projectID}
                       crossOrigin="anonymous"
                       className="w-[48%] h-[49%] object-cover rounded-md"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${projectItem.project.coverPic}`}
                     />

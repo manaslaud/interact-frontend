@@ -95,8 +95,8 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                     <Image
                       crossOrigin="anonymous"
                       className="w-full h-[368px] max-md:h-[304px] rounded-md object-cover"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${bookmark.openingItems[0].opening.project.coverPic}`}
                     />
@@ -119,8 +119,8 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       key={openingItem.openingID}
                       crossOrigin="anonymous"
                       className="w-[48%] h-[49%] object-cover rounded-md"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${openingItem.opening.project.coverPic}`}
                     />

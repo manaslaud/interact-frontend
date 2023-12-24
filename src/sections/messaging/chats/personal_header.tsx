@@ -20,8 +20,8 @@ const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
         <ArrowArcLeft onClick={() => dispatch(setCurrentChatID(''))} className="lg:hidden" size={24} />
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt={'User Pic'}
           src={`${USER_PROFILE_PIC_URL}/${getMessagingUser(chat).profilePic}`}
           className={'rounded-full w-12 h-12'}

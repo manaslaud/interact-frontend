@@ -30,8 +30,8 @@ const PictureList = ({ users }: Props) => {
                   <Image
                     key={index}
                     crossOrigin="anonymous"
-                    width={10000}
-                    height={10000}
+                    width={50}
+                    height={50}
                     alt={'User Pic'}
                     src={`${USER_PROFILE_PIC_URL}/${u.profilePic}`}
                     className={`w-4 h-4 rounded-full cursor-default absolute top-0 left-${index}`}

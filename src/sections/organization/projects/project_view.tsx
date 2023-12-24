@@ -207,8 +207,8 @@ const ProjectView = ({
             <div className="w-10 h-10 relative">
               <Image
                 crossOrigin="anonymous"
-                width={10000}
-                height={10000}
+                width={50}
+                height={50}
                 alt={'User Pic'}
                 src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
                 className={'w-10 h-10 rounded-full cursor-default absolute top-0 left-0 z-10'}
@@ -231,8 +231,8 @@ const ProjectView = ({
               <div className="grow flex gap-2 max-lg:gap-4">
                 <Image
                   crossOrigin="anonymous"
-                  width={10000}
-                  height={10000}
+                  width={50}
+                  height={50}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${project.user.profilePic}`}
                   className={'lg:hidden w-10 h-10 rounded-full cursor-default'}
@@ -268,8 +268,8 @@ const ProjectView = ({
                                 <Image
                                   key={index}
                                   crossOrigin="anonymous"
-                                  width={10000}
-                                  height={10000}
+                                  width={50}
+                                  height={50}
                                   alt={'User Pic'}
                                   src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
                                   className={`w-4 h-4 rounded-full cursor-default absolute top-0 left-${index}`}

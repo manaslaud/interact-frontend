@@ -63,8 +63,8 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
             ) : (
               <Image
                 crossOrigin="anonymous"
-                width={10000}
-                height={10000}
+                width={500}
+                height={500}
                 alt="project cover"
                 src={selectedImageUrl}
                 className="w-full rounded-xl cursor-pointer"
@@ -80,8 +80,8 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
             ) : (
               <Image
                 crossOrigin="anonymous"
-                width={10000}
-                height={10000}
+                width={500}
+                height={500}
                 alt="project cover"
                 src={selectedImageUrl}
                 className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 cursor-pointer object-contain"

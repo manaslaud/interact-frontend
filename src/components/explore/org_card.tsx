@@ -20,16 +20,16 @@ const OrgCard = ({ user }: Props) => {
       <div className="w-full relative">
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={500}
+          height={500}
           alt={'User Pic'}
           src={`${USER_COVER_PIC_URL}/${user.coverPic}`}
           className="w-full h-32 rounded-t-xl fade-img"
         />
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={500}
+          height={500}
           alt={'User Pic'}
           src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
           className="w-32 h-32 rounded-full absolute bottom-6 right-1/2 translate-x-1/2 translate-y-1/2"

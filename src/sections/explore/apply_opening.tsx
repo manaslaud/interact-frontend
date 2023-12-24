@@ -65,7 +65,7 @@ const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => 
     const res = await postHandler(URL, formData);
     if (res.statusCode === 201) {
       setOpening(prev => {
-        return { ...prev, noOfApplications: prev.noOfApplications + 1 };
+        return { ...prev, noApplications: prev.noApplications + 1 };
       });
       dispatch(setApplications([...applications, opening.id]));
       socketService.sendNotification(opening.userID, `${user.name} applied at an opening!`);
@@ -94,8 +94,8 @@ const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => 
           <div className="w-1/3 h-full max-lg:h-fit max-lg:w-full font-primary dark:text-white border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-lg:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={200}
+              height={200}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
               className={'w-[180px] h-[180px] max-lg:hidden max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}

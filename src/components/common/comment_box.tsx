@@ -133,8 +133,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
         <Image
           crossOrigin="anonymous"
           className="w-8 h-8 rounded-full cursor-default mt-2"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt="user"
           src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
         />
@@ -180,8 +180,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
                         >
                           <Image
                             crossOrigin="anonymous"
-                            width={10000}
-                            height={10000}
+                            width={50}
+                            height={50}
                             alt={'User Pic'}
                             src={`${USER_PROFILE_PIC_URL}/${comment.user.profilePic}`}
                             className={'rounded-full w-8 h-8 cursor-pointer'}

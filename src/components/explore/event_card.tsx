@@ -37,8 +37,8 @@ const EventCard = ({
           <Eye size={12} /> <div>{event.noImpressions}</div>
         </div>
         <Image
-          width={10000}
-          height={10000}
+          width={500}
+          height={500}
           src={`${EVENT_PIC_URL}/${event.coverPic}`}
           alt=""
           className={`w-full ${size == 96 ? 'h-56' : 'h-[218px]'} object-cover rounded-t-xl`}

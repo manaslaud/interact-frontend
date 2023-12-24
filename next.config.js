@@ -6,8 +6,7 @@ const path = require('path')
 const nextConfig = {
   reactStrictMode: false,
   images:{
-    unoptimized: true,
-    domains:[process.env.NEXT_PUBLIC_BACKEND_URL]
+    domains:[process.env.NEXT_PUBLIC_BACKEND_URL, "storage.googleapis.com"]
   },
   optimizeFonts:true,
   sassOptions: {

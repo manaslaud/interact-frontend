@@ -17,8 +17,8 @@ const OrganisationHistoryWrapper: React.FC<WrapperProps> = ({ children, history 
           <div className="w-fit flex-center gap-1">
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={50}
+              height={50}
               alt={'User Pic'}
               src={`${USER_PROFILE_PIC_URL}/${history.user?.profilePic}`}
               className={'rounded-full w-4 h-4 cursor-default border-[1px] border-black'}

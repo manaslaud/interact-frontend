@@ -110,8 +110,8 @@ const EditMembership = ({ setShow, membership, setChats }: Props) => {
         <div className="w-full flex items-center gap-4">
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={50}
+            height={50}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
             className="rounded-full w-14 h-14 dark:bg-dark_primary_comp_hover"

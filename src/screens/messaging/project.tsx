@@ -97,8 +97,8 @@ const Project = () => {
                           >
                             <Image
                               crossOrigin="anonymous"
-                              width={10000}
-                              height={10000}
+                              width={100}
+                              height={100}
                               alt={'User Pic'}
                               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
                               className={'w-[90px] h-[90px] max-lg:w-[60px] max-lg:h-[60px] rounded-lg object-cover'}

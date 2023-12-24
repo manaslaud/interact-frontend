@@ -210,8 +210,8 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                 <Image
                   crossOrigin="anonymous"
                   className="w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full object-cover"
-                  width={10000}
-                  height={10000}
+                  width={50}
+                  height={50}
                   alt="/"
                   src={groupPicView}
                 />
@@ -273,8 +273,8 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
               <Image
                 crossOrigin="anonymous"
                 className="w-14 h-14 rounded-full object-cover"
-                width={10000}
-                height={10000}
+                width={50}
+                height={50}
                 alt="/"
                 src={`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`}
               />
@@ -320,8 +320,8 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                     <Link href={`/explore/user/${m.user.username}`} className="rounded-full">
                       <Image
                         crossOrigin="anonymous"
-                        width={10000}
-                        height={10000}
+                        width={50}
+                        height={50}
                         alt={'User Pic'}
                         src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
                         className="rounded-full w-14 h-14"
@@ -366,8 +366,8 @@ const GroupInfo = ({ chat, setChat, membership, setShow }: Props) => {
                   <Link href={`/explore/user/${invitation.user.username}`} className="flex items-center gap-4">
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={50}
+                      height={50}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${invitation.user.profilePic}`}
                       className="rounded-full w-14 h-14"

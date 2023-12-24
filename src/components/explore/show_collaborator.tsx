@@ -43,8 +43,8 @@ const Collaborators = ({ memberships, workspace = false }: Props) => {
                   <div className="hover:scale-110 transition-ease-300">
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={100}
+                      height={100}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${membership.user.profilePic}`}
                       className="w-12 h-12 rounded-full"

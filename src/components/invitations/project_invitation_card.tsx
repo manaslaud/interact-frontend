@@ -100,8 +100,8 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
       <Link target="_blank" href={`/explore?pid=${invitation.project.slug}`}>
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={100}
+          height={100}
           alt={'User Pic'}
           src={`${PROJECT_PIC_URL}/${invitation.project.coverPic}`}
           className={'rounded-md w-32 h-32'}

@@ -329,8 +329,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
                         >
                           <Image
                             crossOrigin="anonymous"
-                            width={10000}
-                            height={10000}
+                            width={50}
+                            height={50}
                             alt={'User Pic'}
                             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                             className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}
@@ -366,8 +366,8 @@ const NewProject = ({ setShow, setProjects }: Props) => {
                       >
                         <Image
                           crossOrigin="anonymous"
-                          width={10000}
-                          height={10000}
+                          width={50}
+                          height={50}
                           alt={'User Pic'}
                           src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                           className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}

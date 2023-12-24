@@ -68,8 +68,8 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
       <div className="w-full bg-gray-100 hover:bg-white dark:hover:bg-transparent dark:bg-transparent font-primary dark:text-white border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-8 max-md:p-4 flex items-center gap-12 max-md:gap-4 transition-ease-300">
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt={'User Pic'}
           src={`${PROJECT_PIC_URL}/${project.coverPic}`}
           className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
@@ -82,11 +82,11 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
               {/* <div className="text-lg max-md:text-sm">{project.title}</div> */}
               <div className="text-sm text-gray-500">{moment(opening.createdAt).fromNow()}</div>
               <div className="text-sm mt-2">
-                {opening.noOfApplications} Application{opening.noOfApplications == 1 ? '' : 's'}
+                {opening.noApplications} Application{opening.noApplications == 1 ? '' : 's'}
               </div>
               {project.userID == user.id || user.managerProjects.includes(project.id) ? (
                 <>
-                  {opening.noOfApplications > 0 ? (
+                  {opening.noApplications > 0 ? (
                     <Link
                       href={`/workspace/manage/applications/${opening.id}`}
                       className="w-fit text-[#15bffd] text-sm max-md:text-sm underline underline-offset-4"

@@ -103,8 +103,8 @@ const ProfileCard = ({ user, organisation = initialOrganization, org = false }: 
         <div className="relative w-48 h-48 rounded-full">
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={100}
+            height={100}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
             className="rounded-full max-lg:mx-auto w-48 h-48 cursor-default"

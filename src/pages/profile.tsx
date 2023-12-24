@@ -189,8 +189,8 @@ const Profile = () => {
                 className={`${
                   open ? 'w-no_side_base_open' : 'w-no_side_base_close'
                 } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
-                width={10000}
-                height={10000}
+                width={500}
+                height={500}
                 alt="/"
                 src={coverPicView}
               />
@@ -211,8 +211,8 @@ const Profile = () => {
                 className={`${
                   open ? 'w-no_side_base_open' : 'w-no_side_base_close'
                 } max-lg:w-screen h-64 cursor-default fixed top-navbar fade-img transition-ease-out-500 object-cover`}
-                width={10000}
-                height={10000}
+                width={500}
+                height={500}
                 alt="/"
                 src={coverPicView}
               />

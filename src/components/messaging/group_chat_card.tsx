@@ -44,8 +44,8 @@ const GroupChatCard = ({ chat }: Props) => {
     >
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={100}
+        height={100}
         alt={'User Pic'}
         src={`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`}
         className={'rounded-full w-14 h-14 cursor-pointer border-[1px] border-black'}

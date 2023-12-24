@@ -86,8 +86,8 @@ const NewPostImages = ({ setSelectedFiles }: Props) => {
                       X
                     </div>
                     <Image
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt="post"
                       src={el}
                       className="w-[98%] rounded-3xl object-contain"

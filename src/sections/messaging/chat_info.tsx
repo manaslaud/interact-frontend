@@ -100,8 +100,8 @@ const ChatInfo = ({ chat, setChat, setShow, setChats }: Props) => {
         <div className="flex gap-2 items-center px-2">
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={50}
+            height={50}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${getMessagingUser(chat).profilePic}`}
             className={'rounded-full w-16 h-16'}

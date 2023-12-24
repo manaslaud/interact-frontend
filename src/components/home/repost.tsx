@@ -153,8 +153,8 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
         >
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={50}
+            height={50}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${post.user.profilePic}`}
             className={'rounded-full w-8 h-8'}

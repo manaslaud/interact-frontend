@@ -27,8 +27,8 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
     >
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={200}
+        height={200}
         alt={'User Pic'}
         src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
         className={'w-[140px] h-[140px] max-lg:w-[90px] max-lg:h-[90px] rounded-lg object-cover'}

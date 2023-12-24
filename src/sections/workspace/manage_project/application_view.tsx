@@ -183,8 +183,8 @@ const ApplicationView = ({
           <div className="w-full flex max-lg:flex-col items-center gap-8">
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={100}
+              height={100}
               alt={'User Pic'}
               src={`${USER_PROFILE_PIC_URL}/${application.user.profilePic}`}
               className={'rounded-full w-36 h-36'}

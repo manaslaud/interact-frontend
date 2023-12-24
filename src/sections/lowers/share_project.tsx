@@ -92,8 +92,8 @@ const ShareProject = ({ project, setShow, setNoShares }: Props) => {
           <div className="w-1/2 max-md:w-full font-primary  border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-lg p-4 flex flex-col items-center justify-center gap-4 max-lg:gap-4 transition-ease-300 cursor-default">
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={100}
+              height={100}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
               className={'w-[240px] h-[240px] max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}
@@ -136,8 +136,8 @@ hover:bg-primary_comp active:bg-primary_comp_hover dark:hover:bg-[#ffe1fc10] cur
                       >
                         <Image
                           crossOrigin="anonymous"
-                          width={10000}
-                          height={10000}
+                          width={50}
+                          height={50}
                           alt={'User Pic'}
                           src={`${USER_PROFILE_PIC_URL}/${getMessagingUser(chat).profilePic}`}
                           className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}

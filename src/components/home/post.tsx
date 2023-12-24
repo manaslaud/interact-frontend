@@ -168,8 +168,8 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
         >
           <Image
             crossOrigin="anonymous"
-            width={10000}
-            height={10000}
+            width={100}
+            height={100}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${post.user.profilePic}`}
             className={'rounded-full w-8 h-8'}
@@ -239,8 +239,8 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
                   >
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={500}
+                      height={500}
                       alt={'Post Pic'}
                       src={`${POST_PIC_URL}/${image}`}
                       className={`w-full`}

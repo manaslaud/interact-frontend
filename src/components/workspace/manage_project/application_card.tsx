@@ -72,8 +72,8 @@ const ApplicationCard = ({
       <div className="flex items-center justify-between gap-6">
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt={'User Pic'}
           src={`${USER_PROFILE_PIC_URL}/${application.user.profilePic}`}
           className={'rounded-full w-16 h-16'}

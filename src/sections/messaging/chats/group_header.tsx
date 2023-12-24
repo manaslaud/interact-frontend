@@ -20,8 +20,8 @@ const ChatHeader = ({ chat, setClickedOnInfo }: Props) => {
         <Image
           crossOrigin="anonymous"
           className="w-12 h-12 rounded-full object-cover"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt="/"
           src={`${GROUP_CHAT_PIC_URL}/${chat.coverPic}`}
         />

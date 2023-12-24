@@ -16,8 +16,8 @@ const Follow = ({ notification }: Props) => {
     <NotificationWrapper notification={notification}>
       <Image
         crossOrigin="anonymous"
-        width={10000}
-        height={10000}
+        width={50}
+        height={50}
         alt={'User Pic'}
         src={`${USER_PROFILE_PIC_URL}/${notification.sender.profilePic}`}
         className={'rounded-full w-10 h-10 cursor-default border-[1px] border-black'}

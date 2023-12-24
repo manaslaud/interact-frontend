@@ -22,8 +22,8 @@ const ApplicationCard = ({ application, setClickedOnApplication, setClickedAppli
       <div className="w-fit flex items-center gap-12  max-md:gap-4">
         <Image
           crossOrigin="anonymous"
-          width={10000}
-          height={10000}
+          width={50}
+          height={50}
           alt={'User Pic'}
           src={`${PROJECT_PIC_URL}/${application.opening.project.coverPic}`}
           className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}

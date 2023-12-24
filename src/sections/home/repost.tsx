@@ -3,7 +3,6 @@ import { EXPLORE_URL, ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/r
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
 import Image from 'next/image';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
@@ -174,8 +173,8 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
           <Image
             crossOrigin="anonymous"
             className="max-md:hidden w-16 h-16 rounded-full"
-            width={10000}
-            height={10000}
+            width={100}
+            height={100}
             alt="user"
             src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
           />
@@ -185,8 +184,8 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
                 <Image
                   crossOrigin="anonymous"
                   className="md:hidden w-16 h-16 rounded-full"
-                  width={10000}
-                  height={10000}
+                  width={100}
+                  height={100}
                   alt="user"
                   src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
                 />
@@ -209,8 +208,8 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
                 <div className="rounded-full">
                   <Image
                     crossOrigin="anonymous"
-                    width={10000}
-                    height={10000}
+                    width={50}
+                    height={50}
                     alt={'User Pic'}
                     src={`${USER_PROFILE_PIC_URL}/${post.user.profilePic}`}
                     className={'rounded-full w-8 h-8'}
@@ -246,8 +245,8 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
               >
                 <Image
                   crossOrigin="anonymous"
-                  width={10000}
-                  height={10000}
+                  width={50}
+                  height={50}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                   className="rounded-full w-12 h-12"

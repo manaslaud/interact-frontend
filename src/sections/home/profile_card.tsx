@@ -81,8 +81,8 @@ const ProfileCard = () => {
                 <Image
                   crossOrigin="anonymous"
                   priority={true}
-                  width={10000}
-                  height={10000}
+                  width={200}
+                  height={200}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                   className={`rounded-full ${

@@ -171,8 +171,8 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
               <Image
                 crossOrigin="anonymous"
                 className="w-14 h-14 max-lg:w-32 max-lg:h-32 rounded-full object-cover"
-                width={10000}
-                height={10000}
+                width={50}
+                height={50}
                 alt="/"
                 src={groupPicView}
               />
@@ -234,8 +234,8 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
           <>
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={50}
+              height={50}
               alt={'User Pic'}
               src={`${GROUP_CHAT_PIC_URL}/${showCoverPic}`}
               className={'rounded-full w-14 h-14 cursor-pointer border-[1px] border-black'}
@@ -283,8 +283,8 @@ const EditChat = ({ chat, project, setStateChats, setShow }: Props) => {
                   <Link href={`/explore/user/${m.user.username}`} className="rounded-full">
                     <Image
                       crossOrigin="anonymous"
-                      width={10000}
-                      height={10000}
+                      width={50}
+                      height={50}
                       alt={'User Pic'}
                       src={`${USER_PROFILE_PIC_URL}/${m.user.profilePic}`}
                       className="rounded-full w-12 h-12 dark:bg-dark_primary_comp_hover"

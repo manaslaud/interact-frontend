@@ -244,8 +244,8 @@ const Onboarding = () => {
                       <div className="w-full flex flex-col gap-4 p-4">
                         <Image
                           crossOrigin="anonymous"
-                          width={10000}
-                          height={10000}
+                          width={500}
+                          height={500}
                           alt={'User Pic'}
                           src={userPicView}
                           className={`rounded-full md:hidden max-md:mx-auto w-32 h-32 cursor-default`}
@@ -311,8 +311,8 @@ const Onboarding = () => {
             <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center border-[1px] border-[#07070712] animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
               <Image
                 crossOrigin="anonymous"
-                width={10000}
-                height={10000}
+                width={500}
+                height={500}
                 alt={'User Pic'}
                 src={userPicView}
                 className={`rounded-full max-md:mx-auto w-44 h-44 cursor-default`}

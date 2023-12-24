@@ -35,8 +35,8 @@ const UserCard = ({ user, forTrending = false }: Props) => {
           <div className={`${!forTrending ? 'w-14 h-14' : 'w-10 h-10'} relative rounded-full`}>
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={100}
+              height={100}
               alt={'User Pic'}
               src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
               className={`rounded-full ${!forTrending ? 'w-14 h-14' : 'w-10 h-10'}`}

@@ -63,8 +63,8 @@ const EditOpening = ({ setShow, opening, project, setProject }: Props) => {
           <div className="w-full flex max-lg:flex-col gap-12 max-lg:gap-4 max-md:items-center items-start">
             <Image
               crossOrigin="anonymous"
-              width={10000}
-              height={10000}
+              width={100}
+              height={100}
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
               className={'w-[160px] h-[160px] max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}
