@@ -99,6 +99,8 @@ const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => 
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
               className={'w-[180px] h-[180px] max-lg:hidden max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}
+              placeholder="blur"
+              blurDataURL={opening.project.blurHash}
             />
 
             <div className="w-full flex flex-col gap-4 max-lg:gap-2 px-8">

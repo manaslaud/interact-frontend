@@ -32,6 +32,8 @@ const OpeningCard = ({ opening, clickedOpening, setClickedOnOpening, setClickedO
         alt={'User Pic'}
         src={`${PROJECT_PIC_URL}/${opening.project.coverPic}`}
         className={'w-[140px] h-[140px] max-lg:w-[90px] max-lg:h-[90px] rounded-lg object-cover'}
+        placeholder="blur"
+        blurDataURL={opening.project.blurHash}
       />
 
       <div className="grow flex flex-col gap-2">

@@ -99,6 +99,8 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${bookmark.openingItems[0].opening.project.coverPic}`}
+                      placeholder="blur"
+                      blurDataURL={bookmark.openingItems[0].opening.project.blurHash}
                     />
                   </div>
                 ) : (
@@ -123,6 +125,8 @@ const OpeningBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${openingItem.opening.project.coverPic}`}
+                      placeholder="blur"
+                      blurDataURL={openingItem.opening.project.blurHash}
                     />
                   );
                 })}

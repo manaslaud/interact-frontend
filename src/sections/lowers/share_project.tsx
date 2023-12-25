@@ -97,6 +97,8 @@ const ShareProject = ({ project, setShow, setNoShares }: Props) => {
               alt={'User Pic'}
               src={`${PROJECT_PIC_URL}/${project.coverPic}`}
               className={'w-[240px] h-[240px] max-lg:w-[120px] max-lg:h-[120px] rounded-lg object-cover'}
+              placeholder="blur"
+              blurDataURL={project.blurHash}
             />
 
             <div className="w-full flex flex-col items-center gap-1">

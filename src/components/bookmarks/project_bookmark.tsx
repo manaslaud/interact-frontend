@@ -101,6 +101,8 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${bookmark.projectItems[0].project.coverPic}`}
+                      placeholder="blur"
+                      blurDataURL={bookmark.projectItems[0].project.blurHash}
                     />
                   </div>
                 ) : (
@@ -125,6 +127,8 @@ const ProjectBookmark = ({ bookmark, setClick, setBookmark, handleEdit, handleDe
                       height={500}
                       alt=""
                       src={`${PROJECT_PIC_URL}/${projectItem.project.coverPic}`}
+                      placeholder="blur"
+                      blurDataURL={projectItem.project.blurHash}
                     />
                   );
                 })}

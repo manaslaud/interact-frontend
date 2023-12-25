@@ -105,6 +105,8 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
           alt={'User Pic'}
           src={`${PROJECT_PIC_URL}/${invitation.project.coverPic}`}
           className={'rounded-md w-32 h-32'}
+          placeholder="blur"
+          blurDataURL={invitation.project.blurHash}
         />
       </Link>
       <div className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between">
