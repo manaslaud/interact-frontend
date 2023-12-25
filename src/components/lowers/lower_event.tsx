@@ -13,11 +13,12 @@ import ShareEvent from '@/sections/lowers/share_event';
 
 interface Props {
   event: Event;
+  numLikes: number;
+  setNumLikes: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const LowerEvent = ({ event }: Props) => {
+const LowerEvent = ({ event, numLikes, setNumLikes }: Props) => {
   const [liked, setLiked] = useState(false);
-  const [numLikes, setNumLikes] = useState(event.noLikes);
   const [numComments, setNumComments] = useState(event.noComments);
   const [clickedOnComment, setClickedOnComment] = useState(false);
   const [clickedOnShare, setClickedOnShare] = useState(false);
@@ -55,7 +56,7 @@ const LowerEvent = ({ event }: Props) => {
       } else {
         newLikes.push(event.id);
       }
-      //! Causing Re-render   dispatch(setLikes(newLikes));
+      dispatch(setLikes(newLikes));
     } else {
       setNumLikes(prev => (liked ? prev + 1 : prev - 1));
       setLiked(prev => !prev);

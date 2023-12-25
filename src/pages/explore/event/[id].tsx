@@ -31,14 +31,16 @@ const Event = ({ id }: Props) => {
   const [similarEvents, setSimilarEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const user = useSelector(userSelector);
+  const [eventLikes, setEventLikes] = useState(0);
 
+  const user = useSelector(userSelector);
   const getEvent = () => {
     const URL = `${EXPLORE_URL}/events/${id}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
           setEvent(res.data.event);
+          setEventLikes(res.data.event?.noLikes);
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -103,34 +105,67 @@ text-xs rounded-lg cursor-default"
         {event.links && event.links.length > 0 ? (
           <div className="w-full flex flex-col gap-2 p-4">
             <div className="font-medium">Links</div>
-            {event.links.map((link, index) => (
-              <Link
-                href={link}
-                target="_blank"
-                key={index}
-                className="w-fit flex items-center gap-2 px-4 py-2 rounded-lg hover:shadow-2xl transition-ease-300"
-              >
-                {getIcon(getDomainName(link), 32, 'light')}
-                <div className="text-xs text-gray-500">{getDomainName(link)}</div>
-              </Link>
-            ))}
+            <div className="flex flex-wrap gap-4">
+              {event.links.map((link, index) => (
+                <Link
+                  href={link}
+                  target="_blank"
+                  key={index}
+                  className="w-fit flex items-center gap-2 hover:scale-105 px-4 py-2 rounded-lg hover:shadow-2xl transition-ease-300"
+                >
+                  {getIcon(getDomainName(link), 32, 'light')}
+                  <div className="text-xs text-gray-500">{getDomainName(link)}</div>
+                </Link>
+              ))}
+            </div>
           </div>
         ) : (
           <></>
         )}
 
-        <LowerEvent event={event} />
+        {event.coordinators && event.coordinators.length > 0 ? (
+          <div className="w-full flex flex-col gap-2 p-4">
+            <div className="font-medium">Coordinators</div>
+            <div className="flex flex-col gap-4 px-4">
+              {event.coordinators.map((user, index) => (
+                <Link
+                  href={`/explore/user/${user.username}`}
+                  target="_blank"
+                  key={index}
+                  className="w-full flex items-center gap-4 hover:scale-105 p-2 rounded-lg hover:shadow-2xl transition-ease-300"
+                >
+                  <Image
+                    width={100}
+                    height={100}
+                    src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
+                    alt=""
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <div className="w-[calc(100%-64px)] flex flex-col">
+                    <div className="text-lg font-bold">{user.name}</div>
+                    <div className="text-sm dark:text-gray-200">@{user.username}</div>
+                    {user.tagline && user.tagline != '' ? <div className="text-sm mt-2">{user.tagline}</div> : <></>}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <LowerEvent event={event} numLikes={eventLikes} setNumLikes={setEventLikes} />
       </div>
     );
   };
 
   const AboutOrganisation = () => {
     return (
-      <div className="bg-white w-2/5 max-md:w-full flex flex-col border-[1px] rounded-md">
+      <div className="bg-white w-2/5 h-fit max-md:w-full flex flex-col border-[1px] rounded-md">
         <div className="w-full flex items-center gap-1 p-4 border-b-[1px] font-medium">
           About the Organization <Buildings />
         </div>
-        <div className="w-full h-full flex flex-col gap-2 justify-between p-4 pt-2">
+        <div className="w-full h-fit flex flex-col gap-4 p-4 pt-2">
           <Link
             href={`/explore/organisation/${event.organization.user.username}`}
             target="_blank"
@@ -188,7 +223,7 @@ text-xs rounded-lg cursor-default"
   };
 
   return (
-    <BaseWrapper title="Event">
+    <BaseWrapper title={event.title}>
       {user.isOrganization ? <OrgSidebar index={1} /> : <Sidebar index={2} />}
       <MainWrapper>
         <div className="w-full py-12 px-20 max-md:p-2 flex flex-col transition-ease-out-500 font-primary">

@@ -3,14 +3,17 @@ import Image from 'next/image';
 import { Event } from '@/types';
 import Link from 'next/link';
 import { EVENT_PIC_URL } from '@/config/routes';
-import { Eye, PencilSimple, Trash } from '@phosphor-icons/react';
+import { Eye, PencilSimple, Trash, Users } from '@phosphor-icons/react';
 import moment from 'moment';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { ORG_SENIOR } from '@/config/constants';
 
 interface Props {
   event: Event;
   size?: number | string;
   org?: boolean;
   setClickedOnEditEvent?: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedOnEditCollaborators?: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedEditEvent?: React.Dispatch<React.SetStateAction<Event>>;
   setClickedOnDeleteEvent?: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedDeleteEvent?: React.Dispatch<React.SetStateAction<Event>>;
@@ -21,6 +24,7 @@ const EventCard = ({
   size = 96,
   org = false,
   setClickedOnEditEvent,
+  setClickedOnEditCollaborators,
   setClickedEditEvent,
   setClickedOnDeleteEvent,
   setClickedDeleteEvent,
@@ -43,7 +47,7 @@ const EventCard = ({
           alt=""
           className={`w-full ${size == 96 ? 'h-56' : 'h-[218px]'} object-cover rounded-t-xl`}
         />
-        {org ? (
+        {org && checkOrgAccess(ORG_SENIOR) ? (
           <div className="flex gap-2 absolute opacity-0 group-hover:opacity-100 top-2 left-2 transition-ease-300">
             <div
               onClick={el => {
@@ -66,6 +70,17 @@ const EventCard = ({
               className="bg-white text-gray-500 text-xxs px-2 py-1 rounded-lg"
             >
               <PencilSimple size={18} />
+            </div>
+            <div
+              onClick={el => {
+                el.stopPropagation();
+                el.preventDefault();
+                if (setClickedEditEvent) setClickedEditEvent(event);
+                if (setClickedOnEditCollaborators) setClickedOnEditCollaborators(true);
+              }}
+              className="bg-white text-gray-500 text-xxs px-2 py-1 rounded-lg"
+            >
+              <Users size={18} />
             </div>
           </div>
         ) : (

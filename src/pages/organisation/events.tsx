@@ -24,11 +24,13 @@ import deleteHandler from '@/handlers/delete_handler';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { navbarOpenSelector } from '@/slices/feedSlice';
+import EditCoordinators from '@/sections/organization/events/edit_coordinators';
 
 const Events = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [clickedOnNewEvent, setClickedOnNewEvent] = useState(false);
   const [clickedOnEditEvent, setClickedOnEditEvent] = useState(false);
+  const [clickedOnEditCollaborators, setClickedOnEditCollaborators] = useState(false);
   const [clickedEditEvent, setClickedEditEvent] = useState(initialEvent);
   const [clickedOnDeleteEvent, setClickedOnDeleteEvent] = useState(false);
   const [clickedDeleteEvent, setClickedDeleteEvent] = useState(initialEvent);
@@ -111,6 +113,15 @@ const Events = () => {
             ) : (
               <></>
             )}
+            {clickedOnEditCollaborators ? (
+              <EditCoordinators
+                event={clickedEditEvent}
+                setEvents={setEvents}
+                setShow={setClickedOnEditCollaborators}
+              />
+            ) : (
+              <></>
+            )}
             {clickedOnDeleteEvent ? (
               <ConfirmDelete handleDelete={handleDeleteEvent} setShow={setClickedOnDeleteEvent} />
             ) : (
@@ -138,6 +149,7 @@ const Events = () => {
                         event={event}
                         org={true}
                         setClickedOnEditEvent={setClickedOnEditEvent}
+                        setClickedOnEditCollaborators={setClickedOnEditCollaborators}
                         setClickedEditEvent={setClickedEditEvent}
                         setClickedOnDeleteEvent={setClickedOnDeleteEvent}
                         setClickedDeleteEvent={setClickedDeleteEvent}

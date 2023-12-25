@@ -75,7 +75,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
   const addMembers = async (toaster: Id, projectID: string) => {
     if (userSlices.length == 0) {
-      Toaster.stopLoad(toaster, 'Project Added!', 0);
+      Toaster.stopLoad(toaster, 'Project Added!', 1);
       return;
     }
 
@@ -338,7 +338,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
                             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
                             className={'rounded-full w-12 h-12 cursor-pointer border-[1px] border-black'}
                           />
-                          <div className="w-5/6 flex flex-col">
+                          <div className="w-[calc(100%-48px)] flex flex-col">
                             <div className="text-lg font-bold">{user.name}</div>
                             <div className="text-sm dark:text-gray-200">@{user.username}</div>
                             {user.tagline && user.tagline != '' ? (
@@ -443,7 +443,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
             </div>
           )}
 
-          <div className="w-full flex items-center justify-between">
+          <div className="w-full flex items-end justify-between">
             {step != 0 ? (
               <div
                 onClick={() => setStep(prev => prev - 1)}

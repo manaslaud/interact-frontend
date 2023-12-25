@@ -15,6 +15,7 @@ import { setUnreadNotifications, unreadNotificationsSelector } from '@/slices/fe
 import { NOTIFICATION_URL } from '@/config/routes';
 import Link from 'next/link';
 import { SERVER_ERROR } from '@/config/errors';
+import { userSelector } from '@/slices/userSlice';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +26,8 @@ const Notifications = ({ setShow }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const user = useSelector(userSelector);
 
   useEffect(() => {
     getNotifications();
@@ -106,7 +109,10 @@ const Notifications = ({ setShow }: Props) => {
             )}
           </>
         )}
-        <Link href={'/notifications'} className="dark:text-white font-primary text-xs hover:underline my-2">
+        <Link
+          href={`${user.isOrganization ? '/organisation' : ''}/notifications`}
+          className="dark:text-white font-primary text-xs hover:underline my-2"
+        >
           view all
         </Link>
       </div>

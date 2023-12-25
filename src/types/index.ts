@@ -431,6 +431,7 @@ export interface Event {
   description: string;
   tags: string[];
   links: string[];
+  coordinators: User[];
   startTime: Date;
   endTime: Date;
   location: string;
