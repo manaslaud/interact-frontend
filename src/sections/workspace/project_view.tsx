@@ -18,6 +18,7 @@ import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
 import { useSwipeable } from 'react-swipeable';
 import ConfirmDelete from '@/components/common/confirm_delete';
+import PlaceholderImg from '@/utils/optimised_img';
 
 interface Props {
   projectSlugs: string[];
@@ -289,12 +290,15 @@ const ProjectView = ({
             </div>
             <div className="w-full h-[calc(100vh-56px)] max-lg:overflow-y-auto shadow-xl flex max-lg:flex-col">
               <Image
+                priority={true}
                 crossOrigin="anonymous"
                 className="w-3/4 max-lg:w-full h-full max-lg:h-96 rounded-tl-md max-lg:rounded-none object-cover"
                 src={`${PROJECT_PIC_URL}/${project.coverPic}`}
                 alt="Project Cover"
                 width={10000}
                 height={10000}
+                placeholder="blur"
+                blurDataURL={project.blurHash}
               />
 
               <div className="w-1/4 max-lg:w-full h-full max-lg:h-fit max-lg:min-h-[calc(100vh-65px-384px)] overflow-y-auto border-gray-300 border-t-[1px] border-r-[1px] dark:border-0 p-4 bg-white dark:bg-dark_primary_comp_hover flex flex-col justify-between gap-4">

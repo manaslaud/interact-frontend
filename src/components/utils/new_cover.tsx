@@ -24,7 +24,7 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
   }, []);
 
   return (
-    <div className="w-full max-md:h-full max-md:py-2 overflow-auto flex flex-col items-center gap-4">
+    <div className="w-full max-md:h-full hover:scale-105 max-md:py-2 overflow-auto flex flex-col items-center gap-4 transition-ease-300">
       <input
         type="file"
         className="hidden"
@@ -53,7 +53,7 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
         }}
       />
 
-      <label className="w-full" htmlFor="image">
+      <label className="w-fit" htmlFor="image">
         {type == 'Event' ? (
           <>
             {selectedImageUrl == '' ? (
@@ -65,7 +65,7 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
                 crossOrigin="anonymous"
                 width={500}
                 height={500}
-                alt="project cover"
+                alt="event cover"
                 src={selectedImageUrl}
                 className="w-full rounded-xl cursor-pointer"
               />
@@ -84,7 +84,7 @@ const CoverPic = ({ setSelectedFile, initialImage, type = 'Project' }: Props) =>
                 height={500}
                 alt="project cover"
                 src={selectedImageUrl}
-                className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 cursor-pointer object-contain"
+                className="rounded-xl w-80 max-md:w-56 h-80 max-md:h-56 cursor-pointer object-cover"
               />
             )}
           </>

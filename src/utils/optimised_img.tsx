@@ -1,23 +1,38 @@
 import React from 'react';
 import Image from 'next/image';
 
-type SIZE = 'sm' | 'md' | 'lg';
-
 interface Props {
-  src: string; //* src without extension name
+  src: string;
+  dataURL: string;
   alt: string;
-  size?: SIZE;
   className: string;
+  width: number;
+  height: number;
+  priority?: boolean;
+  scales?: string;
 }
 
-const BASE_EXT = 'jpg';
-
-const OptimisedImg = ({ src, alt, size = 'lg', className }: Props) => {
-  const getResizedPath = (): string => {
-    return `${src}_${size}.${BASE_EXT}`;
-  };
-
-  return <Image crossOrigin="use-credentials" src={src} alt={alt} width={10000} height={10000} className={className} />;
-};
-
-export default OptimisedImg;
+export default function PlaceholderImg({
+  src,
+  dataURL,
+  alt,
+  className,
+  width,
+  height,
+  priority = false,
+  scales = '',
+}: Props) {
+  return (
+    <Image
+      priority={priority}
+      crossOrigin="use-credentials"
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+      placeholder="blur"
+      blurDataURL={dataURL}
+    />
+  );
+}

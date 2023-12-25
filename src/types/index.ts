@@ -168,6 +168,7 @@ export interface Project {
   title: string;
   tagline: string;
   coverPic: string;
+  blurHash: string;
   description: string;
   page: string;
   user: User;

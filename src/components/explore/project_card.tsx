@@ -53,6 +53,8 @@ const ProjectCard = ({ index, project, size = 72, setClickedOnProject, setClicke
         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 20vw"
         width={100}
         height={100}
+        placeholder="blur"
+        blurDataURL={project.blurHash}
       />
       <div className="w-full glassMorphism text-white rounded-b-lg font-primary absolute bottom-0 right-0 flex flex-col px-4 py-2">
         <div className={`${Number(size) <= 64 ? 'text-base' : size == 72 ? 'text-lg' : 'text-xl'}`}>

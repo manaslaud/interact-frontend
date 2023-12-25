@@ -1,6 +1,6 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
-import Images from '@/components/utils/new_cover';
+import CoverPic from '@/components/utils/new_cover';
 import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
@@ -32,21 +32,27 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
   const user = useSelector(userSelector);
 
+  const [randomImage, setRandomImage] = useState(`default_${Math.floor(Math.random() * 9) + 1}.jpg`);
+
   const handleSubmit = async () => {
     if (title.trim() == '') {
-      Toaster.error('Enter Title');
+      Toaster.error('Title cannot be empty');
+      return;
+    }
+    if (category.trim() == '' || category == 'Select Category') {
+      Toaster.error('Select Category');
+      return;
+    }
+    if (tagline.trim() == '') {
+      Toaster.error('Tagline cannot be empty');
       return;
     }
     if (description.trim() == '') {
-      Toaster.error('Enter Description');
+      Toaster.error('Description cannot be empty');
       return;
     }
-    if (category.trim() == '') {
-      Toaster.error('Select Category');
-      return;
-    }
-    if (category == 'Select Category') {
-      Toaster.error('Select Category');
+    if (tags.length < 3) {
+      Toaster.error('Enter at least 3 tags');
       return;
     }
 
@@ -64,6 +70,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     links.forEach(link => formData.append('links', link));
     formData.append('category', category);
     formData.append('isPrivate', String(isPrivate));
+    formData.append('coverPic', randomImage);
     if (image) formData.append('coverPic', image);
 
     const URL = PROJECT_URL;
@@ -73,7 +80,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     if (res.statusCode === 201) {
       const project = res.data.project;
       project.user = user;
-      if (setProjects) setProjects(prev => [...prev, project]);
+      if (setProjects) setProjects(prev => [project, ...prev]);
       Toaster.stopLoad(toaster, 'Project Added', 1);
       setTitle('');
       setTagline('');
@@ -121,7 +128,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
           size={32}
         />
         <div className="w-80 max-lg:w-full lg:sticky lg:top-0">
-          <Images setSelectedFile={setImage} />
+          <CoverPic setSelectedFile={setImage} initialImage={randomImage} />
         </div>
         <div className="w-[calc(100%-320px)] max-lg:w-full h-full flex flex-col justify-between gap-2">
           <div className="w-full h-fit flex flex-col gap-6">

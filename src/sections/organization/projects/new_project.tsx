@@ -1,6 +1,6 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
-import Images from '@/components/utils/new_cover';
+import CoverPic from '@/components/utils/new_cover';
 import { SERVER_ERROR } from '@/config/errors';
 import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
@@ -91,27 +91,30 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     }
   };
 
+  const [randomImage, setRandomImage] = useState(`default_${Math.floor(Math.random() * 9) + 1}.jpg`);
+
   const handleSubmit = async () => {
     if (title.trim() == '') {
-      Toaster.error('Enter Title');
-      return;
-    }
-    if (description.trim() == '') {
-      Toaster.error('Enter Description');
-      return;
-    }
-    if (category.trim() == '') {
-      Toaster.error('Select Category');
-      return;
-    }
-    if (category == 'Select Category') {
-      Toaster.error('Select Category');
-      return;
-    }
-    if (userSlices.some(u => u.title === '')) {
       Toaster.error('Title cannot be empty');
       return;
     }
+    if (category.trim() == '' || category == 'Select Category') {
+      Toaster.error('Select Category');
+      return;
+    }
+    if (tagline.trim() == '') {
+      Toaster.error('Tagline cannot be empty');
+      return;
+    }
+    if (description.trim() == '') {
+      Toaster.error('Description cannot be empty');
+      return;
+    }
+    if (tags.length < 3) {
+      Toaster.error('Enter at least 3 tags');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
 
@@ -135,7 +138,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     if (res.statusCode === 201) {
       const project = res.data.project;
       project.user = user;
-      if (setProjects) setProjects(prev => [...prev, project]);
+      if (setProjects) setProjects(prev => [project, ...prev]);
       setTitle('');
       setTagline('');
       setDescription('');
@@ -206,7 +209,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
           {step == 0 ? (
             <div className="w-full flex max-lg:flex-col justify-between gap-8 max-lg:gap-4 ">
               <div className="w-80 max-lg:w-full lg:sticky lg:top-0">
-                <Images setSelectedFile={setImage} />
+                <CoverPic setSelectedFile={setImage} initialImage={randomImage} />
               </div>
               <div className="w-[calc(100%-320px)] max-lg:w-full h-full flex flex-col justify-between gap-2">
                 <div className="w-full h-fit flex flex-col gap-6">
