@@ -63,9 +63,9 @@ const Onboarding = () => {
     const toaster = Toaster.startLoad('Setting your Profile...');
     const formData = new FormData();
     if (userPic) formData.append('profilePic', userPic);
-    if (name != user.name) formData.append('name', name);
-    if (bio != user.bio) formData.append('bio', bio);
-    if (tagline != user.tagline) formData.append('tagline', tagline);
+    if (name != user.name) formData.append('name', name.trim());
+    if (bio != user.bio) formData.append('bio', bio.trim());
+    if (tagline != user.tagline) formData.append('tagline', tagline.trim());
     tags.forEach(tag => formData.append('tags', tag));
     links.forEach(link => formData.append('links', link));
 
@@ -156,20 +156,37 @@ const Onboarding = () => {
         ) : (
           <div className="w-full h-full flex justify-between font-primary items-center absolute top-0 left-0 px-24 max-md:px-4 animate-fade_half">
             <div className="w-1/2 max-md:w-full flex flex-col gap-4 backdrop-blur-xl rounded-xl shadow-xl p-8 animate-fade_half">
-              <div className="text-5xl max-md:text-3xl font-bold">
-                {step == 1
-                  ? "What's your name?"
-                  : step == 2
-                  ? 'Add A Tagline'
-                  : step == 3
-                  ? 'Tell Us About Yourself'
-                  : step == 4
-                  ? 'Add Tags'
-                  : step == 5
-                  ? 'Add a Profile Picture'
-                  : step == 6
-                  ? 'Almost Done!'
-                  : ''}
+              <div className="w-full flex items-center justify-between flex-wrap">
+                <div className="text-5xl max-md:text-3xl font-bold">
+                  {step == 1
+                    ? "What's your name?"
+                    : step == 2
+                    ? 'Your One-Liner '
+                    : step == 3
+                    ? 'Tell Us About Yourself'
+                    : step == 4
+                    ? 'Your skills/interests'
+                    : step == 5
+                    ? 'Add a Profile Picture'
+                    : step == 6
+                    ? 'Attach Your Socials'
+                    : ''}
+                </div>
+                <div className="text-base max-md:text-base font-medium">
+                  {step == 1
+                    ? `(${name.trim().length}/25)`
+                    : step == 2
+                    ? `(${tagline.trim().length}/25)`
+                    : step == 3
+                    ? `(${bio.trim().length}/500)`
+                    : step == 4
+                    ? `(${tags.length}/10)`
+                    : step == 5
+                    ? ''
+                    : step == 6
+                    ? `(${links.length}/3)`
+                    : ''}
+                </div>
               </div>
 
               {step == 1 ? (
@@ -217,7 +234,11 @@ const Onboarding = () => {
                 </>
               ) : step == 4 ? (
                 <>
-                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} />
+                  <div className="font-medium text-sm">
+                    Add <span className="underline underline-offset-2">at least three</span> and help us build your
+                    recommendations!
+                  </div>
+                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} suggestions={true} />
                 </>
               ) : step == 5 ? (
                 <>
@@ -272,7 +293,10 @@ const Onboarding = () => {
                 </>
               ) : step == 6 ? (
                 <>
-                  <div>Add links to your social</div>
+                  <div className="font-medium text-sm">
+                    Almost Done!, Just add <span className="underline underline-offset-2">at least one</span> link to
+                    your social and your are good to go!
+                  </div>
                   <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
                 </>
               ) : (
@@ -327,14 +351,17 @@ const Onboarding = () => {
                   <div className="w-full gap-2 flex flex-wrap items-center justify-center">
                     {tags.map(tag => {
                       return (
-                        <div className="flex-center text-sm px-4 py-1 border-[1px] border-black  rounded-md" key={tag}>
+                        <div
+                          className="flex-center text-xs text-primary_black px-2 py-1 border-[1px] border-primary_black  rounded-md"
+                          key={tag}
+                        >
                           {tag}
                         </div>
                       );
                     })}
                   </div>
                 ) : (
-                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black rounded-md">
+                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-primary_black rounded-md">
                     <Plus /> <div>Tags</div>
                   </div>
                 )}
@@ -346,7 +373,7 @@ const Onboarding = () => {
                           href={link}
                           target="_blank"
                           key={index}
-                          className="w-fit h-8 border-[1px] border-black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                          className="w-fit h-8 border-[1px] text-primary_black border-primary_black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                         >
                           {getIcon(getDomainName(link), 24)}
                           <div className="capitalize">{getDomainName(link)}</div>
