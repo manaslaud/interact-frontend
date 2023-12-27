@@ -6,12 +6,11 @@ import { initialOrganization } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import { EnvelopeSimple, Plus } from '@phosphor-icons/react';
+import { EnvelopeSimple, Info, Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import OrgSidebar from '@/components/common/org_sidebar';
-import { userSelector } from '@/slices/userSlice';
 import InvitationCard from '@/components/organization/invitation_card';
 import AddMembers from '@/sections/organization/members/add_members';
 import MemberCard from '@/components/organization/member_card';
@@ -19,6 +18,7 @@ import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER } from '@/config/constants';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import AccessTree from '@/components/organization/access_tree';
 
 const Members = () => {
   const [organization, setOrganization] = useState(initialOrganization);
@@ -44,7 +44,7 @@ const Members = () => {
 
   const [clickedOnAddMember, setClickedOnAddMember] = useState(false);
   const [clickedOnInvitations, setClickedOnInvitations] = useState(false);
-  const user = useSelector(userSelector);
+  const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   return (
     <BaseWrapper title="Manage Project">
@@ -56,6 +56,7 @@ const Members = () => {
           ) : (
             <></>
           )}
+          {clickedOnInfo ? <AccessTree type="membership" setShow={setClickedOnInfo} /> : <></>}
           <div className="w-full flex justify-between items-center p-base_padding">
             <div className="text-6xl font-semibold dark:text-white font-primary">
               {!clickedOnInvitations ? 'Members' : 'Invitations'}
@@ -78,6 +79,12 @@ const Members = () => {
                 className={`flex-center rounded-full ${
                   clickedOnInvitations ? 'bg-primary_comp_hover' : 'hover:bg-white'
                 } p-2 transition-ease-300 cursor-pointer`}
+                weight="regular"
+              />
+              <Info
+                onClick={() => setClickedOnInfo(true)}
+                size={42}
+                className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
                 weight="regular"
               />
             </div>

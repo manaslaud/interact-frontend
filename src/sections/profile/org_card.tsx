@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Tags from '@/components/utils/edit_tags';
 import Toaster from '@/utils/toaster';
 import { resizeImage } from '@/utils/resize_image';
-import { Check, PencilSimple, X } from '@phosphor-icons/react';
+import { Check, Info, PencilSimple, X } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
 import patchHandler from '@/handlers/patch_handler';
 import {
@@ -28,6 +28,7 @@ import { SERVER_ERROR } from '@/config/errors';
 import { currentOrgSelector } from '@/slices/orgSlice';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_SENIOR } from '@/config/constants';
+import AccessTree from '@/components/organization/access_tree';
 
 interface Props {
   user: User;
@@ -54,6 +55,8 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
   const [clickedOnTags, setClickedOnTags] = useState(false);
   const [clickedOnLinks, setClickedOnLinks] = useState(false);
   const [clickedOnProfilePic, setClickedOnProfilePic] = useState(false);
+
+  const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const currentOrg = useSelector(currentOrgSelector);
   const currentUserID = useSelector(userIDSelector);
@@ -189,8 +192,16 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
     <>
       {clickedOnFollowers ? <Connections type="followers" user={user} setShow={setClickedOnFollowers} /> : <></>}
       {clickedOnFollowing ? <Connections type="following" user={user} setShow={setClickedOnFollowing} /> : <></>}
+      {clickedOnInfo ? <AccessTree type="profile" setShow={setClickedOnInfo} /> : <></>}
       {/* <div className="w-[400px] overflow-y-auto overflow-x-hidden pb-4 max-md:mx-auto font-primary mt-base_padding max-md:mb-12 ml-base_padding h-base_md max-md:h-fit flex flex-col gap-4 dark:text-white items-center pt-12 max-md:pb-8 max-md:pt-4 px-4 bg-white dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn sticky max-md:static top-[90px] max-md:bg-transparent rounded-md z-10"> */}
-      <div className="w-[400px] max-lg:w-[80%] overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-8 max-lg:pb-8 max-md:pt-4 px-4 bg-white dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn max-md:bg-transparent rounded-md z-10">
+      <div className="w-[400px] max-lg:w-[80%] relative overflow-y-auto overflow-x-hidden pb-4 max-lg:mx-auto font-primary mt-base_padding max-lg:mb-12 ml-base_padding h-fit flex flex-col gap-4 dark:text-white items-center pt-8 max-lg:pb-8 max-md:pt-4 px-4 bg-white dark:bg-[#84478023] backdrop-blur-md shadow-md dark:shadow-none border-[1px] border-gray-300  dark:border-dark_primary_btn max-md:bg-transparent rounded-md z-10">
+        <Info
+          onClick={() => setClickedOnInfo(true)}
+          size={42}
+          className="absolute top-2 right-2 flex-center rounded-full hover:bg-primary_comp p-2 transition-ease-300 cursor-pointer"
+          weight="regular"
+        />
+
         <input
           type="file"
           className="hidden"

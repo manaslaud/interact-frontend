@@ -330,7 +330,7 @@ const Onboarding = () => {
                 )}
               </div>
             </div>
-            <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center border-[1px] border-[#07070712] animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
+            <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
               <Image
                 crossOrigin="anonymous"
                 width={500}

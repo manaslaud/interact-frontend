@@ -7,8 +7,8 @@ import getHandler from '@/handlers/get_handler';
 import Toaster from '@/utils/toaster';
 import Post from '@/components/home/post';
 import NewPost from '@/sections/home/new_post';
-import { Plus } from '@phosphor-icons/react';
-import { EXPLORE_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { Info, Plus } from '@phosphor-icons/react';
+import { EXPLORE_URL } from '@/config/routes';
 import NoFeed from '@/components/empty_fillers/feed';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostComponent from '@/components/home/post';
@@ -21,12 +21,14 @@ import { ORG_SENIOR } from '@/config/constants';
 import Masonry from 'react-masonry-css';
 import Loader from '@/components/common/loader';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import AccessTree from '@/components/organization/access_tree';
 
 const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [clickedOnNewPost, setClickedOnNewPost] = useState(false);
+  const [clickedOnInfo, setClickedOnInfo] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const currentOrg = useSelector(currentOrgSelector);
@@ -64,22 +66,29 @@ const Posts = () => {
         <div className="w-full flex flex-col items-center gap-2 max-md:px-2 p-base_padding">
           <div className="w-full flex justify-between items-center">
             <div className="w-fit text-6xl font-semibold dark:text-white font-primary">Posts</div>
-
-            {checkOrgAccess(ORG_SENIOR) ? (
-              <Plus
-                onClick={() => setClickedOnNewPost(true)}
+            <div className="flex items-center gap-2">
+              {checkOrgAccess(ORG_SENIOR) ? (
+                <Plus
+                  onClick={() => setClickedOnNewPost(true)}
+                  size={42}
+                  className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
+                  weight="regular"
+                />
+              ) : (
+                <></>
+              )}
+              <Info
+                onClick={() => setClickedOnInfo(true)}
                 size={42}
                 className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
                 weight="regular"
               />
-            ) : (
-              <></>
-            )}
+            </div>
           </div>
 
           <div className="w-full max-md:w-full mx-auto flex flex-col items-center gap-4">
             {clickedOnNewPost ? <NewPost setFeed={setPosts} setShow={setClickedOnNewPost} org={true} /> : <></>}
-
+            {clickedOnInfo ? <AccessTree type="post" setShow={setClickedOnInfo} /> : <></>}
             {loading ? (
               <Loader />
             ) : (

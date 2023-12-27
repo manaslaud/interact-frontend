@@ -1,5 +1,6 @@
 import Loader from '@/components/common/loader';
 import OrgSidebar from '@/components/common/org_sidebar';
+import AccessTree from '@/components/organization/access_tree';
 import ChatCard from '@/components/workspace/manage_project/chat_card';
 import { ORG_MANAGER } from '@/config/constants';
 import { SERVER_ERROR } from '@/config/errors';
@@ -16,7 +17,7 @@ import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
-import { Plus } from '@phosphor-icons/react';
+import { Info, Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -24,6 +25,8 @@ const Chats = () => {
   const [organization, setOrganization] = useState(initialOrganization);
   const [chats, setChats] = useState<GroupChat[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const [clickedOnNewChat, setClickedOnNewChat] = useState(false);
   const [clickedOnEditChat, setClickedOnEditChat] = useState(false);
@@ -58,19 +61,28 @@ const Chats = () => {
           ) : (
             <></>
           )}
+          {clickedOnInfo ? <AccessTree type="chat" setShow={setClickedOnInfo} /> : <></>}
+
           <div className="w-full flex justify-between items-center p-base_padding">
             <div className="text-6xl font-semibold dark:text-white font-primary">Chats</div>
-
-            {checkOrgAccess(ORG_MANAGER) ? (
-              <Plus
-                onClick={() => setClickedOnNewChat(true)}
+            <div className="flex items-center gap-2">
+              {checkOrgAccess(ORG_MANAGER) ? (
+                <Plus
+                  onClick={() => setClickedOnNewChat(true)}
+                  size={42}
+                  className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
+                  weight="regular"
+                />
+              ) : (
+                <></>
+              )}
+              <Info
+                onClick={() => setClickedOnInfo(true)}
                 size={42}
                 className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
                 weight="regular"
               />
-            ) : (
-              <></>
-            )}
+            </div>
           </div>
           <div className="w-full flex flex-col gap-2">
             {loading ? (
