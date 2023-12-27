@@ -16,6 +16,7 @@ import {
   setFetchedApplications,
   setFetchedChats,
   setFetchedContributingProjects,
+  setFetchedEventBookmarks,
   setFetchedFollowing,
   setFetchedLikes,
   setFetchedOpeningBookmarks,
@@ -33,6 +34,7 @@ import {
   setApplications,
   setChats,
   setEditorProjects,
+  setEventBookmarks,
   setFollowing,
   setLikes,
   setManagerProjects,
@@ -47,6 +49,7 @@ import {
 import {
   Application,
   Chat,
+  EventBookmark,
   GroupChat,
   Membership,
   OpeningBookmark,
@@ -103,7 +106,8 @@ const useUserStateFetcher = () => {
     if (
       moment().utc().diff(config.lastFetchedPostBookmarks, 'minute') < 30 &&
       moment().utc().diff(config.lastFetchedProjectBookmarks, 'minute') < 30 &&
-      moment().utc().diff(config.lastFetchedOpeningBookmarks, 'minute') < 30
+      moment().utc().diff(config.lastFetchedOpeningBookmarks, 'minute') < 30 &&
+      moment().utc().diff(config.lastFetchedEventBookmarks, 'minute') < 30
     )
       return;
 
@@ -114,12 +118,15 @@ const useUserStateFetcher = () => {
           const postBookmarksData: PostBookmark[] = res.data.postBookmarks || [];
           const projectBookmarksData: ProjectBookmark[] = res.data.projectBookmarks || [];
           const openingBookmarksData: OpeningBookmark[] = res.data.openingBookmarks || [];
+          const eventBookmarksData: EventBookmark[] = res.data.eventBookmarks || [];
           dispatch(setPostBookmarks(postBookmarksData));
           dispatch(setProjectBookmarks(projectBookmarksData));
           dispatch(setOpeningBookmarks(openingBookmarksData));
+          dispatch(setEventBookmarks(eventBookmarksData));
           dispatch(setFetchedPostBookmarks(new Date().toUTCString()));
           dispatch(setFetchedProjectBookmarks(new Date().toUTCString()));
           dispatch(setFetchedOpeningBookmarks(new Date().toUTCString()));
+          dispatch(setFetchedEventBookmarks(new Date().toUTCString()));
         }
       })
       .catch(err => {

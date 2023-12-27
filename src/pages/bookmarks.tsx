@@ -11,6 +11,7 @@ import Protect from '@/utils/wrappers/protect';
 import Openings from '@/screens/bookmarks/openings';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
+import Events from '@/screens/bookmarks/events';
 
 const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
@@ -19,7 +20,11 @@ const Bookmarks = () => {
       <Sidebar index={6} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-4 py-20">
-          <TabMenu items={['Posts', 'Projects', 'Openings']} active={active} setReduxState={setBookmarksTab} />
+          <TabMenu
+            items={['Posts', 'Projects', 'Openings', 'Events']}
+            active={active}
+            setReduxState={setBookmarksTab}
+          />
           <div className={`w-full ${active === 0 ? 'block' : 'hidden'}`}>
             <Posts />
           </div>
@@ -28,6 +33,9 @@ const Bookmarks = () => {
           </div>
           <div className={`w-full ${active === 2 ? 'block' : 'hidden'}`}>
             <Openings />
+          </div>
+          <div className={`w-full ${active === 3 ? 'block' : 'hidden'}`}>
+            <Events />
           </div>
         </div>
       </MainWrapper>

@@ -47,7 +47,7 @@ const LowerPost = ({ post, setFeed }: Props) => {
 
   const user = useSelector(userSelector);
   const likes = user.likes;
-  const bookmarks = user.postBookmarks;
+  const bookmarks = user.postBookmarks || [];
 
   const dispatch = useDispatch();
 

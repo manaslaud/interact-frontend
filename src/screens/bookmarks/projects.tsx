@@ -90,6 +90,8 @@ const Projects = () => {
       });
       setBookmarks(updatedBookmarks);
       dispatch(setProjectBookmarks(updatedBookmarks));
+
+      Toaster.stopLoad(toaster, 'Bookmark Updated!', 1);
       setMutex(false);
       return 1;
     } else {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ReactSVG } from 'react-svg';
 import ArrowRight from '@phosphor-icons/react/dist/icons/ArrowRight';
 import Eye from '@phosphor-icons/react/dist/icons/Eye';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Toaster from '@/utils/toaster';
 import Cookies from 'js-cookie';
-import { BACKEND_URL, ORG_URL } from '@/config/routes';
+import { ORG_URL } from '@/config/routes';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/slices/userSlice';
 import Head from 'next/head';

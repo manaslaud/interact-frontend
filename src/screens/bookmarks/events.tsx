@@ -1,38 +1,38 @@
-import Bookmark from '@/components/bookmarks/opening_bookmark';
+import Bookmark from '@/components/bookmarks/event_bookmark';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import { BOOKMARK_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
-import { OpeningBookmark } from '@/types';
-import { initialOpeningBookmark } from '@/types/initials';
+import { EventBookmark } from '@/types';
+import { initialEventBookmark } from '@/types/initials';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import BookmarkOpenings from '@/sections/bookmarks/openings';
+import BookmarkEvents from '@/sections/bookmarks/events';
 import deleteHandler from '@/handlers/delete_handler';
-import { userSelector, setOpeningBookmarks } from '@/slices/userSlice';
+import { userSelector, setEventBookmarks } from '@/slices/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { configSelector } from '@/slices/configSlice';
 import { navbarOpenSelector } from '@/slices/feedSlice';
 import patchHandler from '@/handlers/patch_handler';
-import NoOpeningBookmarks from '@/components/empty_fillers/opening_bookmarks';
+import NoEventBookmarks from '@/components/empty_fillers/event_bookmarks';
 
-const Openings = () => {
-  const [bookmarks, setBookmarks] = useState<OpeningBookmark[]>([]);
+const Events = () => {
+  const [bookmarks, setBookmarks] = useState<EventBookmark[]>([]);
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
-  const [clickedBookmark, setClickedBookmark] = useState<OpeningBookmark>(initialOpeningBookmark);
+  const [clickedBookmark, setClickedBookmark] = useState<EventBookmark>(initialEventBookmark);
   const [loading, setLoading] = useState(true);
 
   const [mutex, setMutex] = useState(false);
 
   const open = useSelector(navbarOpenSelector);
-  const bookmarksRedux = useSelector(userSelector).openingBookmarks;
+  const bookmarksRedux = useSelector(userSelector).eventBookmarks;
   const updateBookmark = useSelector(configSelector).updateBookmark;
 
   const dispatch = useDispatch();
 
   const fetchBookmarks = async () => {
     setLoading(true);
-    const URL = `${BOOKMARK_URL}/opening`;
+    const URL = `${BOOKMARK_URL}/event`;
     const res = await getHandler(URL);
     if (res.statusCode == 200) {
       setBookmarks(res.data.bookmarks || []);
@@ -54,12 +54,12 @@ const Openings = () => {
 
     const toaster = Toaster.startLoad('Deleting Bookmark', bookmarkID);
 
-    const URL = `${BOOKMARK_URL}/opening/${bookmarkID}`;
+    const URL = `${BOOKMARK_URL}/event/${bookmarkID}`;
     const res = await deleteHandler(URL);
     if (res.statusCode === 204) {
       let updatedBookmarks = [...bookmarksRedux];
       updatedBookmarks = updatedBookmarks.filter(el => el.id != bookmarkID);
-      dispatch(setOpeningBookmarks(updatedBookmarks));
+      dispatch(setEventBookmarks(updatedBookmarks));
       setBookmarks(prev => prev.filter(el => el.id != bookmarkID));
       Toaster.stopLoad(toaster, 'Bookmark Deleted', 1);
     } else {
@@ -79,7 +79,7 @@ const Openings = () => {
     const formData = new FormData();
     formData.append('title', title);
 
-    const URL = `${BOOKMARK_URL}/opening/${bookmarkID}`;
+    const URL = `${BOOKMARK_URL}/event/${bookmarkID}`;
 
     const res = await patchHandler(URL, formData, 'multipart/form-data');
 
@@ -89,7 +89,7 @@ const Openings = () => {
         else return bookmark;
       });
       setBookmarks(updatedBookmarks);
-      dispatch(setOpeningBookmarks(updatedBookmarks));
+      dispatch(setEventBookmarks(updatedBookmarks));
 
       Toaster.stopLoad(toaster, 'Bookmark Updated!', 1);
       setMutex(false);
@@ -111,7 +111,7 @@ const Openings = () => {
   return (
     <div>
       {clickedOnBookmark ? (
-        <BookmarkOpenings
+        <BookmarkEvents
           bookmark={clickedBookmark}
           setClick={setClickedOnBookmark}
           fetchBookmarks={checkAndFetchBookmarks}
@@ -142,7 +142,7 @@ const Openings = () => {
                   })}
                 </div>
               ) : (
-                <NoOpeningBookmarks />
+                <NoEventBookmarks />
               )}
             </>
           )}
@@ -152,4 +152,4 @@ const Openings = () => {
   );
 };
 
-export default Openings;
+export default Events;

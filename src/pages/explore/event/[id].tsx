@@ -10,7 +10,16 @@ import { GetServerSidePropsContext } from 'next/types';
 import Loader from '@/components/common/loader';
 import { SERVER_ERROR } from '@/config/errors';
 import Image from 'next/image';
-import { ArrowUpRight, Buildings, CalendarBlank, MapPin, Rocket, Ticket, Users } from '@phosphor-icons/react';
+import {
+  ArrowUpRight,
+  BookmarkSimple,
+  Buildings,
+  CalendarBlank,
+  MapPin,
+  Rocket,
+  Ticket,
+  Users,
+} from '@phosphor-icons/react';
 import EventCard from '@/components/explore/event_card';
 import { Event } from '@/types';
 import Link from 'next/link';
@@ -21,6 +30,7 @@ import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import OrgSidebar from '@/components/common/org_sidebar';
 import LowerEvent from '@/components/lowers/lower_event';
+import EventBookmarkIcon from '@/components/lowers/event_bookmark';
 
 interface Props {
   id: string;
@@ -80,7 +90,10 @@ const Event = ({ id }: Props) => {
   const AboutEvent = () => {
     return (
       <div className="bg-white w-3/5 max-md:w-full border-[1px] rounded-md">
-        <div className="w-full p-4 border-b-[1px] font-medium">About the event</div>
+        <div className="w-full flex justify-between items-center p-4 border-b-[1px]">
+          <div className="font-medium">About the event</div>
+          <EventBookmarkIcon event={event} />
+        </div>
         <div className="p-4 whitespace-pre-wrap text-gray-600 text-sm">{event.description}</div>
 
         {event.tags && event.tags.length > 0 ? (
@@ -169,12 +182,12 @@ text-xs rounded-lg cursor-default"
           <Link
             href={`/explore/organisation/${event.organization.user.username}`}
             target="_blank"
-            className="w-full flex flex-col gap-2 py-2 hover:p-2 rounded-xl hover:shadow-xl hover:scale-105 transition-ease-300"
+            className="w-full flex flex-col gap-2 p-2 rounded-xl hover:shadow-xl hover:scale-105 transition-ease-300"
           >
             <div className="w-full flex gap-2">
               <Image
-                width={200}
-                height={200}
+                width={100}
+                height={100}
                 src={`${USER_PROFILE_PIC_URL}/${event.organization.user.profilePic}`}
                 alt=""
                 className="w-14 h-14 rounded-full"
@@ -189,7 +202,7 @@ text-xs rounded-lg cursor-default"
             </div>
             <div className="text-sm">{event.organization.user.tagline}</div>
           </Link>
-          <div className="text-sm">{event.organization.user.bio}</div>
+          <div className="text-sm p-2">{event.organization.user.bio}</div>
           <div className="w-full flex gap-4 items-center justify-center flex-wrap p-6">
             <div className="flex flex-col items-center gap-2 p-4 cursor-default">
               <Rocket size={24} />
@@ -238,6 +251,8 @@ text-xs rounded-lg cursor-default"
                   src={`${EVENT_PIC_URL}/${event.coverPic}`}
                   alt=""
                   className="w-full h-full object-cover rounded-xl absolute top-0 -z-10"
+                  placeholder="blur"
+                  blurDataURL={event.blurHash}
                 />
                 <div className="w-full h-full rounded-xl bg-white bg-opacity-25 absolute top-0 -z-[5]"></div>
                 <div className="w-1/2 max-md:w-full h-full p-8 flex flex-col justify-between">
@@ -246,7 +261,7 @@ text-xs rounded-lg cursor-default"
                       <div className="text-6xl max-md:text-2xl font-semibold">{event.title}</div>
                       <Link
                         href={`/explore/organisation/${event.organization.user.username}`}
-                        className="text-2xl font-medium pl-1"
+                        className="w-fit text-2xl font-medium pl-1 hover-underline-animation after:bg-black"
                       >
                         {event.organization.title}
                       </Link>
@@ -281,14 +296,18 @@ text-xs rounded-lg cursor-default"
                 <AboutEvent />
                 <AboutOrganisation />
               </div>
-              <div className="w-full flex flex-col gap-4">
-                <div className="font-medium text-gray-600 text-center">Similar Events</div>
-                <div className="w-full flex gap-6 flex-wrap justify-around">
-                  {similarEvents.map(e => (
-                    <EventCard key={e.id} event={e} size={80} />
-                  ))}
+              {similarEvents && similarEvents.length > 0 ? (
+                <div className="w-full flex flex-col gap-4">
+                  <div className="font-medium text-gray-600 text-center">Similar Events</div>
+                  <div className="w-full flex gap-6 flex-wrap justify-around">
+                    {similarEvents.map(e => (
+                      <EventCard key={e.id} event={e} size={80} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </div>

@@ -41,11 +41,13 @@ const EventCard = ({
           <Eye size={12} /> <div>{event.noImpressions}</div>
         </div>
         <Image
-          width={500}
-          height={500}
+          width={200}
+          height={200}
           src={`${EVENT_PIC_URL}/${event.coverPic}`}
           alt=""
           className={`w-full ${size == 96 ? 'h-56' : 'h-[218px]'} object-cover rounded-t-xl`}
+          placeholder="blur"
+          blurDataURL={event.blurHash}
         />
         {org && checkOrgAccess(ORG_SENIOR) ? (
           <div className="flex gap-2 absolute opacity-0 group-hover:opacity-100 top-2 left-2 transition-ease-300">

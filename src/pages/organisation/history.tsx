@@ -44,7 +44,7 @@ const History = () => {
     fetchHistory();
   }, []);
   return (
-    <BaseWrapper title="Notifications">
+    <BaseWrapper title="History">
       <OrgSidebar index={7} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding">

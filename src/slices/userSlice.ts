@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { OpeningBookmark, OrganizationMembership, PostBookmark, ProjectBookmark, User } from '@/types';
+import { EventBookmark, OpeningBookmark, OrganizationMembership, PostBookmark, ProjectBookmark, User } from '@/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -23,6 +23,7 @@ interface UserState {
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
   openingBookmarks: OpeningBookmark[];
+  eventBookmarks: EventBookmark[];
   ownerProjects: string[];
   memberProjects: string[];
   editorProjects: string[];
@@ -55,6 +56,7 @@ const initialState: UserState = {
   postBookmarks: [],
   projectBookmarks: [],
   openingBookmarks: [],
+  eventBookmarks: [],
   chats: [],
   personalChatSlices: [],
   ownerProjects: [],
@@ -98,6 +100,7 @@ export const userSlice = createSlice({
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];
+      state.eventBookmarks = [];
       state.organizationMemberships = [];
     },
     resetUser: state => {
@@ -126,6 +129,7 @@ export const userSlice = createSlice({
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];
+      state.eventBookmarks = [];
       state.organizationMemberships = [];
       state.isOnboardingComplete = false;
     },
@@ -161,6 +165,9 @@ export const userSlice = createSlice({
     },
     setOpeningBookmarks: (state, action: PayloadAction<OpeningBookmark[]>) => {
       state.openingBookmarks = action.payload;
+    },
+    setEventBookmarks: (state, action: PayloadAction<EventBookmark[]>) => {
+      state.eventBookmarks = action.payload;
     },
     setChats: (state, action: PayloadAction<string[]>) => {
       state.chats = action.payload;
@@ -221,6 +228,7 @@ export const {
   setPostBookmarks,
   setProjectBookmarks,
   setOpeningBookmarks,
+  setEventBookmarks,
   setChats,
   addToChats,
   setPersonalChatSlices,

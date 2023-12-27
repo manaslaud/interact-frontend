@@ -80,7 +80,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <BaseWrapper title="Posts">
+    <BaseWrapper title="Projects">
       <OrgSidebar index={3} />
       <MainWrapper>
         <div className="w-full max-md:w-full mx-auto flex flex-col items-center relative gap-6 max-md:px-2 p-base_padding">

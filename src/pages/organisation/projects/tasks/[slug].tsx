@@ -1,7 +1,7 @@
 import Loader from '@/components/common/loader';
 import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { EXPLORE_URL, ORG_URL, PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';

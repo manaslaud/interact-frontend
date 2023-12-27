@@ -49,7 +49,7 @@ const LowerProject = ({ project }: Props) => {
 
   const user = useSelector(userSelector);
   const likes = user.likes;
-  const bookmarks = user.projectBookmarks;
+  const bookmarks = user.projectBookmarks || [];
 
   const dispatch = useDispatch();
 

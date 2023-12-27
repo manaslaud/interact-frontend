@@ -367,9 +367,17 @@ const ProjectView = ({
                   ) : (
                     <></>
                   )}
-                  {user.managerProjects.includes(project.id) || user.id == project.userID ? (
+                  {user.managerProjects.includes(project.id) ? (
                     <Link
                       href={`/workspace/manage/${projectSlugs[clickedProjectIndex]}`}
+                      target="_blank"
+                      className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:active:bg-dark_primary_gradient_end dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
+                    >
+                      Manage Project
+                    </Link>
+                  ) : checkOrgAccess(ORG_SENIOR) ? (
+                    <Link
+                      href={`/organisation/projects/manage/${projectSlugs[clickedProjectIndex]}`}
                       target="_blank"
                       className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:active:bg-dark_primary_gradient_end dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >

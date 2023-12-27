@@ -1,29 +1,29 @@
 import { BOOKMARK_URL } from '@/config/routes';
 import deleteHandler from '@/handlers/delete_handler';
-import BookmarkOpening from '@/sections/lowers/bookmark_opening';
+import BookmarkEvent from '@/sections/lowers/bookmark_event';
 import { setUpdateBookmark } from '@/slices/configSlice';
-import { userSelector, setOpeningBookmarks, userIDSelector } from '@/slices/userSlice';
-import { Opening } from '@/types';
+import { userSelector, setEventBookmarks, userIDSelector } from '@/slices/userSlice';
+import { Event } from '@/types';
 import { BookmarkSimple } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { OpeningBookmark } from '@/types';
+import { EventBookmark } from '@/types';
 import SignUp from '../common/signup_box';
 
 interface Props {
-  opening: Opening;
+  event: Event;
 }
 
 interface bookMarkStatus {
   isBookmarked: boolean;
-  openingItemID: string;
+  eventItemID: string;
   bookmarkID: string;
 }
 
-const OpeningBookmarkIcon = ({ opening }: Props) => {
+const EventBookmarkIcon = ({ event }: Props) => {
   const [bookmarkStatus, setBookmarkStatus] = useState<bookMarkStatus>({
     isBookmarked: false,
-    openingItemID: '',
+    eventItemID: '',
     bookmarkID: '',
   });
   const [clickedOnBookmark, setClickedOnBookmark] = useState(false);
@@ -33,25 +33,25 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
 
   const userID = useSelector(userIDSelector) || '';
 
-  const bookmarks = useSelector(userSelector).openingBookmarks || [];
+  const bookmarks = useSelector(userSelector).eventBookmarks || [];
   const dispatch = useDispatch();
-  const setBookmark = (isBookmarked: boolean, openingItemID: string, bookmarkID: string) => {
+  const setBookmark = (isBookmarked: boolean, eventItemID: string, bookmarkID: string) => {
     setBookmarkStatus({
       isBookmarked,
-      openingItemID,
+      eventItemID,
       bookmarkID,
     });
   };
 
   function removePostItemFromBookmark(
-    bookmarks: OpeningBookmark[],
+    bookmarks: EventBookmark[],
     bookmarkId: string,
-    openingItemID: string
-  ): OpeningBookmark[] {
+    eventItemID: string
+  ): EventBookmark[] {
     const updatedBookmarks = bookmarks.map(bookmark => {
       if (bookmark.id === bookmarkId) {
-        const updatedPostItems = bookmark.openingItems.filter(item => item.id !== openingItemID);
-        return { ...bookmark, projectItems: updatedPostItems };
+        const updatedPostItems = bookmark.eventItems.filter(item => item.id !== eventItemID);
+        return { ...bookmark, eventItems: updatedPostItems };
       }
       return bookmark;
     });
@@ -61,35 +61,35 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
 
   useEffect(() => {
     bookmarks.forEach(bookmarksObj => {
-      if (bookmarksObj.openingItems)
-        bookmarksObj.openingItems.forEach(openingItem => {
-          if (openingItem.openingID == opening.id) setBookmark(true, openingItem.id, bookmarksObj.id);
+      if (bookmarksObj.eventItems)
+        bookmarksObj.eventItems.forEach(eventItem => {
+          if (eventItem.eventID == event.id) setBookmark(true, eventItem.id, bookmarksObj.id);
         });
     });
 
     return () => {
       setBookmark(false, '', '');
     };
-  }, [opening.id]);
+  }, [event.id]);
 
   const removeBookmarkItemHandler = async () => {
     if (mutex) return;
     setMutex(true);
-    setBookmark(false, bookmarkStatus.openingItemID, bookmarkStatus.bookmarkID);
+    setBookmark(false, bookmarkStatus.eventItemID, bookmarkStatus.bookmarkID);
 
-    const URL = `${BOOKMARK_URL}/opening/item/${bookmarkStatus.openingItemID}`;
+    const URL = `${BOOKMARK_URL}/event/item/${bookmarkStatus.eventItemID}`;
     const res = await deleteHandler(URL);
     if (res.statusCode === 204) {
       const updatedBookmarks = removePostItemFromBookmark(
         bookmarks,
         bookmarkStatus.bookmarkID,
-        bookmarkStatus.openingItemID
+        bookmarkStatus.eventItemID
       );
-      dispatch(setOpeningBookmarks(updatedBookmarks));
+      dispatch(setEventBookmarks(updatedBookmarks));
       setBookmark(false, '', '');
       dispatch(setUpdateBookmark(true));
     } else {
-      setBookmark(true, bookmarkStatus.openingItemID, bookmarkStatus.bookmarkID);
+      setBookmark(true, bookmarkStatus.eventItemID, bookmarkStatus.bookmarkID);
     }
     setMutex(false);
   };
@@ -98,7 +98,7 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
     <>
       {noUserClick ? <SignUp setShow={setNoUserClick} /> : <></>}
       {clickedOnBookmark ? (
-        <BookmarkOpening setShow={setClickedOnBookmark} opening={opening} setBookmark={setBookmark} />
+        <BookmarkEvent setShow={setClickedOnBookmark} event={event} setBookmark={setBookmark} />
       ) : (
         <></>
       )}
@@ -118,4 +118,4 @@ const OpeningBookmarkIcon = ({ opening }: Props) => {
   );
 };
 
-export default OpeningBookmarkIcon;
+export default EventBookmarkIcon;

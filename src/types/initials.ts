@@ -5,6 +5,7 @@ import {
   Comment,
   Education,
   Event,
+  EventBookmark,
   GroupChat,
   GroupChatMembership,
   GroupChatMessage,
@@ -356,6 +357,14 @@ export const initialOpeningBookmark: OpeningBookmark = {
   createdAt: new Date(),
 };
 
+export const initialEventBookmark: EventBookmark = {
+  id: '',
+  title: '',
+  userID: '',
+  eventItems: [],
+  createdAt: new Date(),
+};
+
 export const initialTask: Task = {
   id: '',
   title: '',
@@ -385,6 +394,7 @@ export const initialEvent: Event = {
   title: '',
   tagline: '',
   coverPic: '',
+  blurHash: '',
   description: '',
   noLikes: 0,
   noShares: 0,

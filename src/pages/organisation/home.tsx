@@ -8,7 +8,7 @@ import MainWrapper from '@/wrappers/main';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Onboarding from '@/components/common/onboarding';
-import { userIDSelector, userSelector } from '@/slices/userSlice';
+import { userSelector } from '@/slices/userSlice';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import OrgSidebar from '@/components/common/org_sidebar';
 import WidthCheck from '@/utils/wrappers/widthCheck';

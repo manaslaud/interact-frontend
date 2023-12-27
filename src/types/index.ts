@@ -54,6 +54,21 @@ export interface OpeningBookmarkItem {
   opening: Opening;
 }
 
+export interface EventBookmark {
+  id: string;
+  userID: string;
+  title: string;
+  createdAt: Date;
+  eventItems: EventBookmarkItem[];
+}
+
+export interface EventBookmarkItem {
+  id: string;
+  eventBookmarkID: string;
+  eventID: string;
+  event: Event;
+}
+
 export interface Achievement {
   id: string;
   title: string;
@@ -437,6 +452,7 @@ export interface Event {
   location: string;
   category: string;
   coverPic: string;
+  blurHash: string;
   noLikes: number;
   noShares: number;
   noComments: number;

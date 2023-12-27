@@ -18,7 +18,7 @@ const BookmarkPost = ({ setShow, post, setBookmark }: Props) => {
   const [mutex, setMutex] = useState(false);
   const dispatch = useDispatch();
 
-  const bookmarks = useSelector(userSelector).postBookmarks;
+  const bookmarks = useSelector(userSelector).postBookmarks || [];
 
   useEffect(() => {
     document.documentElement.style.overflowY = 'hidden';

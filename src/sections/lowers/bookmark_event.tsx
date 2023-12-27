@@ -1,6 +1,6 @@
 import postHandler from '@/handlers/post_handler';
-import { setProjectBookmarks, userSelector } from '@/slices/userSlice';
-import { Project, ProjectBookmark, ProjectBookmarkItem } from '@/types';
+import { setEventBookmarks, userSelector } from '@/slices/userSlice';
+import { Event, EventBookmark, EventBookmarkItem } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,16 +9,26 @@ import { SERVER_ERROR } from '@/config/errors';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  project: Project;
-  setBookmark: (isBookmarked: boolean, projectItemID: string, bookmarkID: string) => void;
+  event: Event;
+  setBookmark: (isBookmarked: boolean, eventItemID: string, bookmarkID: string) => void;
 }
 
-const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
+const BookmarkEvent = ({ setShow, event, setBookmark }: Props) => {
   const [bookmarkTitle, setBookmarkTitle] = useState('');
   const [mutex, setMutex] = useState(false);
   const dispatch = useDispatch();
 
-  const bookmarks = useSelector(userSelector).projectBookmarks || [];
+  const bookmarks = useSelector(userSelector).eventBookmarks || [];
+
+  useEffect(() => {
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.height = '100vh';
+
+    return () => {
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
 
   const addBookmarkHandler = async (el: FormEvent<HTMLFormElement>) => {
     el.preventDefault();
@@ -26,13 +36,13 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     setMutex(true);
     const toaster = Toaster.startLoad('Adding your Bookmark...');
 
-    const URL = `${BOOKMARK_URL}/project`;
+    const URL = `${BOOKMARK_URL}/event`;
     const res = await postHandler(URL, { title: bookmarkTitle });
 
     if (res.statusCode === 201) {
-      const bookmark: ProjectBookmark = res.data.bookmark;
+      const bookmark: EventBookmark = res.data.bookmark;
       const updatedBookmarks = [...bookmarks, bookmark];
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setEventBookmarks(updatedBookmarks));
       Toaster.stopLoad(toaster, 'Bookmark Added', 1);
       setBookmarkTitle('');
     } else {
@@ -44,27 +54,27 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
     setMutex(false);
   };
 
-  const addBookmarkItemHandler = async (bookmark: ProjectBookmark) => {
+  const addBookmarkItemHandler = async (bookmark: EventBookmark) => {
     if (mutex) return;
     setMutex(true);
 
-    const URL = `${BOOKMARK_URL}/project/item/${bookmark.id}`;
-    const res = await postHandler(URL, { itemID: project.id });
+    const URL = `${BOOKMARK_URL}/event/item/${bookmark.id}`;
+    const res = await postHandler(URL, { itemID: event.id });
 
     if (res.statusCode === 201) {
-      const bookmarkItem: ProjectBookmarkItem = res.data.bookmarkItem;
-      const updatedBookmarks = bookmarks.map(projectBookmark => {
-        if (projectBookmark.id === bookmark.id) {
-          const updatedProjectItems = projectBookmark.projectItems
-            ? [...projectBookmark.projectItems, bookmarkItem]
+      const bookmarkItem: EventBookmarkItem = res.data.bookmarkItem;
+      const updatedBookmarks = bookmarks.map(eventBookmark => {
+        if (eventBookmark.id === bookmark.id) {
+          const updatedEventItems = eventBookmark.eventItems
+            ? [...eventBookmark.eventItems, bookmarkItem]
             : [bookmarkItem];
-          return { ...projectBookmark, projectItems: updatedProjectItems };
+          return { ...eventBookmark, eventItems: updatedEventItems };
         }
-        return projectBookmark;
+        return eventBookmark;
       });
-      dispatch(setProjectBookmarks(updatedBookmarks));
+      dispatch(setEventBookmarks(updatedBookmarks));
       setShow(false);
-      setBookmark(true, bookmarkItem.id, bookmarkItem.projectBookmarkID);
+      setBookmark(true, bookmarkItem.id, bookmarkItem.eventBookmarkID);
     }
     setMutex(false);
   };
@@ -89,7 +99,7 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
             })}
           </div>
         ) : (
-          <>No Project Bookmarks found, Create One Now!</>
+          <>No Event Bookmarks found, Create One Now!</>
         )}
 
         <form className="w-fit mx-auto" onSubmit={addBookmarkHandler}>
@@ -111,4 +121,4 @@ const BookmarkProject = ({ setShow, project, setBookmark }: Props) => {
   );
 };
 
-export default BookmarkProject;
+export default BookmarkEvent;

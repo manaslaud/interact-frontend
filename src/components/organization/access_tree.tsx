@@ -355,7 +355,7 @@ const AccessTree = ({ type, setShow }: Props) => {
           </div>
           {accessArr.map((access, index) => (
             <div key={index} className="w-full grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-2 text-lg">{access.task}</div>
+              <div className="col-span-2">{access.task}</div>
               <div className="flex-center">{renderChecks(access.canMember)}</div>
               <div className="flex-center">{renderChecks(access.canSenior)}</div>
               <div className="flex-center">{renderChecks(access.canManager)}</div>

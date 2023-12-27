@@ -47,7 +47,7 @@ const Members = () => {
   const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   return (
-    <BaseWrapper title="Manage Project">
+    <BaseWrapper title="Memberships">
       <OrgSidebar index={6} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center">

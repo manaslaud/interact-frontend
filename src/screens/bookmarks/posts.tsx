@@ -91,6 +91,8 @@ const Posts = () => {
       });
       setBookmarks(updatedBookmarks);
       dispatch(setPostBookmarks(updatedBookmarks));
+
+      Toaster.stopLoad(toaster, 'Bookmark Updated!', 1);
       setMutex(false);
       return 1;
     } else {

@@ -143,7 +143,7 @@ const NewEvent = ({ setShow, setEvents }: Props) => {
     if (res.statusCode === 201) {
       const event: Event = res.data.event;
       event.organization.title = currentOrg.title;
-      setEvents(prev => [...prev, event]);
+      setEvents(prev => [event, ...prev]);
 
       await addCoordinators(toaster, event.id);
       setShow(false);
