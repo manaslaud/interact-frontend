@@ -98,7 +98,7 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
         else if (field == 'tagline') dispatch(setReduxTagline(tagline));
         else if (field == 'links') {
           if (links.length > 0) dispatch(setReduxLinks(links));
-          else dispatch(resetReduxLinks()); //TODO not working
+          else dispatch(resetReduxLinks());
         }
       }
       setUser(prev => ({
@@ -352,7 +352,7 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
           {clickedOnTags && checkOrgAccess(ORG_SENIOR) ? (
             <div className="w-full flex flex-col gap-2">
               <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length || 0}/10)</div>
-              <Tags tags={tags} setTags={setTags} maxTags={10} />
+              <Tags tags={tags} setTags={setTags} maxTags={10} suggestions={true} />
               <SaveBtn setter={setClickedOnTags} field="tags" />
             </div>
           ) : (

@@ -85,6 +85,7 @@ export const initialUser: User = {
   lastViewed: [],
   isVerified: false,
   isOrganization: false,
+  organization: null,
 };
 
 export const initialProject: Project = {
@@ -411,4 +412,5 @@ export const initialEvent: Event = {
   endTime: new Date(),
   location: '',
   createdAt: new Date(),
+  userID: '',
 };

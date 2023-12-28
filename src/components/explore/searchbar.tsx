@@ -94,7 +94,7 @@ const SearchBar = ({ initialValue = '' }: Props) => {
             weight="bold"
           />
         </form>
-        <SlidersHorizontal
+        {/* <SlidersHorizontal
           onClick={() => {
             setShowSearchSuggestions(false);
             setClickedOnFilters(true);
@@ -102,7 +102,7 @@ const SearchBar = ({ initialValue = '' }: Props) => {
           className="cursor-pointer text-gray-500 hover:bg-gray-100 rounded-full p-2 flex-center transition-ease-300"
           size={42}
           weight="duotone"
-        />
+        /> */}
       </div>
     </>
   );

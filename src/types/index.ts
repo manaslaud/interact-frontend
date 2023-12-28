@@ -150,6 +150,7 @@ export interface User {
   lastViewed: Project[];
   isVerified: boolean;
   isOrganization: boolean;
+  organization: Organization | null;
 }
 
 export interface OrganizationMembership {
@@ -459,6 +460,7 @@ export interface Event {
   noImpressions: number;
   noViews: number;
   createdAt: Date;
+  userID: string; //Dummy for type fixes in comment_box
 }
 
 export interface OrganizationHistory {

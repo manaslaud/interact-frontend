@@ -82,8 +82,6 @@ const About = ({ profile, setUser, org = false }: Props) => {
       else if (field == 'email') setClickedOnEmail(false);
       else if (field == 'phoneNo') setClickedOnPhoneNo(false);
       else if (field == 'location') setClickedOnLocation(false);
-    } else if (res.statusCode == 413) {
-      Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {

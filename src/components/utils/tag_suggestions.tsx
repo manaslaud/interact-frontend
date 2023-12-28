@@ -26,7 +26,7 @@ const TagSuggestions = ({ tags, setTags, maxTags = 5 }: Props) => {
   }, [page]);
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-2 mt-2">
       <div className="w-full flex items-center justify-between">
         <div className="font-semibold">Suggestions</div>
         <div className="flex items-center gap-1">

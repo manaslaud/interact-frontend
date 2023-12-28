@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
 import getDomainName from '@/utils/funcs/get_domain_name';
 import getIcon from '@/utils/funcs/get_icon';
-import { Camera, Plus, X } from '@phosphor-icons/react';
+import { Buildings, Camera, MapPin, Plus, X } from '@phosphor-icons/react';
 import Tags from '@/components/utils/edit_tags';
 import Links from '@/components/utils/edit_links';
 import { SERVER_ERROR } from '@/config/errors';
@@ -27,6 +27,7 @@ import { resizeImage } from '@/utils/resize_image';
 import Protect from '@/utils/wrappers/protect';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setOnboarding } from '@/slices/feedSlice';
+import { Id } from 'react-toastify';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -38,6 +39,10 @@ const Onboarding = () => {
   const [links, setLinks] = useState<string[]>([]);
   const [userPic, setUserPic] = useState<File | null>();
   const [userPicView, setUserPicView] = useState(USER_PROFILE_PIC_URL + '/' + user.profilePic);
+  const [school, setSchool] = useState('');
+  const [location, setLocation] = useState('');
+
+  const [mutex, setMutex] = useState(false);
 
   const [step, setStep] = useState(1);
 
@@ -56,10 +61,9 @@ const Onboarding = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (links.length < 1) {
-      Toaster.error('Add at least 1 Link');
-      return;
-    }
+    if (mutex) return;
+    setMutex(true);
+
     const toaster = Toaster.startLoad('Setting your Profile...');
     const formData = new FormData();
     if (userPic) formData.append('profilePic', userPic);
@@ -82,10 +86,33 @@ const Onboarding = () => {
       dispatch(setReduxLinks(links));
       dispatch(setOnboarding(true));
       dispatch(setOnboardingStatus(true));
-      router.replace('/home');
-      Toaster.stopLoad(toaster, 'Profile Ready!', 1);
+
+      await handleSubmitProfileDetails(toaster);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      }
+    }
+
+    setMutex(false);
+  };
+
+  const handleSubmitProfileDetails = async (toaster: Id) => {
+    const formData = new FormData();
+
+    if (school != '') formData.append('school', school);
+    formData.append('location', location);
+
+    const URL = `${USER_URL}/me/profile`;
+
+    const res = await patchHandler(URL, formData);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'Profile Ready!', 1);
+      router.replace('/home');
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
@@ -118,6 +145,13 @@ const Onboarding = () => {
       case 6:
         if (links.length < 1) Toaster.error('Add at least 1 Link');
         else setStep(prev => prev + 1);
+        break;
+      case 7:
+        if (location.trim() == '') Toaster.error('Location cannot be empty');
+        else setStep(prev => prev + 1);
+        break;
+      case 8:
+        setStep(prev => prev + 1);
         break;
       default:
     }
@@ -170,6 +204,10 @@ const Onboarding = () => {
                     ? 'Add a Profile Picture'
                     : step == 6
                     ? 'Attach Your Socials'
+                    : step == 7
+                    ? 'Pin Your Spot'
+                    : step == 8
+                    ? 'Your College?'
                     : ''}
                 </div>
                 <div className="text-base max-md:text-base font-medium">
@@ -185,6 +223,10 @@ const Onboarding = () => {
                     ? ''
                     : step == 6
                     ? `(${links.length}/3)`
+                    : step == 7
+                    ? `(${location.length}/25)`
+                    : step == 8
+                    ? `(${school.length}/25)`
                     : ''}
                 </div>
               </div>
@@ -294,10 +336,42 @@ const Onboarding = () => {
               ) : step == 6 ? (
                 <>
                   <div className="font-medium text-sm">
-                    Almost Done!, Just add <span className="underline underline-offset-2">at least one</span> link to
-                    your social and your are good to go!
+                    Almost Done!, Add <span className="underline underline-offset-2">at least one</span> link to your
+                    social.
                   </div>
                   <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
+                </>
+              ) : step == 7 ? (
+                <>
+                  <div className="font-medium text-sm">
+                    One Last Step!, Tell us where are are situated now to help build your recommendations.
+                  </div>
+                  <div className="w-full flex items-center gap-2 bg-[#ffffff40] border-[1px] border-black rounded-lg p-2">
+                    <MapPin size={24} weight="duotone" />
+                    <input
+                      className="grow bg-transparent text-lg max-md:text-base focus:outline-none"
+                      type="text"
+                      maxLength={25}
+                      value={location}
+                      onChange={el => setLocation(el.target.value)}
+                    />
+                  </div>
+                </>
+              ) : step == 8 ? (
+                <>
+                  <div className="font-medium text-sm">
+                    Tell us the name of your college to help us find your niche (optional)
+                  </div>
+                  <div className="w-full flex items-center gap-2 bg-[#ffffff40] border-[1px] border-black rounded-lg p-2">
+                    <Buildings size={24} weight="duotone" />
+                    <input
+                      className="grow bg-transparent text-lg max-md:text-base focus:outline-none"
+                      type="text"
+                      maxLength={25}
+                      value={school}
+                      onChange={el => setSchool(el.target.value)}
+                    />
+                  </div>
                 </>
               ) : (
                 <></>
@@ -313,7 +387,7 @@ const Onboarding = () => {
                 ) : (
                   <div></div>
                 )}
-                {step != 6 ? (
+                {step != 8 ? (
                   <div
                     onClick={handleIncrementStep}
                     className="w-fit text-lg py-2 font-medium px-4 shadow-md hover:bg-[#ffffff40] hover:shadow-lg transition-ease-500 rounded-xl cursor-pointer"

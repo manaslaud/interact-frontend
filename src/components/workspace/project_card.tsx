@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
 import { PROJECT_PIC_URL, PROJECT_URL } from '@/config/routes';
-import { CircleDashed, Eye, EyeSlash, HeartStraight } from '@phosphor-icons/react';
+import { CircleDashed, EyeSlash, HeartStraight } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setManagerProjects, setOwnerProjects, userSelector } from '@/slices/userSlice';
+import { setOwnerProjects, userSelector } from '@/slices/userSlice';
 import EditProject from '@/sections/workspace/edit_project';
 import Link from 'next/link';
 import patchHandler from '@/handlers/patch_handler';
@@ -37,33 +37,6 @@ const ProjectCard = ({
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
-
-  const handleUnPublish = async () => {
-    const toaster = Toaster.startLoad('Editing your project...');
-
-    const formData = {
-      isPrivate: !project.isPrivate,
-    };
-
-    const URL = `${PROJECT_URL}/${project.slug}`;
-
-    const res = await patchHandler(URL, formData, 'multipart/form-data');
-
-    if (res.statusCode === 200) {
-      if (setProjects)
-        setProjects(prev =>
-          prev.map(p => {
-            if (p.id == project.id) {
-              return { ...p, isPrivate: !p.isPrivate };
-            } else return p;
-          })
-        );
-      Toaster.stopLoad(toaster, 'Project Added', 1);
-    } else {
-      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
-      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-    }
-  };
 
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting your project...');
@@ -148,16 +121,6 @@ const ProjectCard = ({
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"
                 >
                   Delete
-                </div>
-              ) : (
-                <></>
-              )}
-              {project.userID == user.id || user.editorProjects.includes(project.id) ? (
-                <div
-                  onClick={handleUnPublish}
-                  className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
-                >
-                  {project.isPrivate ? 'Publish' : 'UnPublish'}
                 </div>
               ) : (
                 <></>

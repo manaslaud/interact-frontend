@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { USER_PROFILE_PIC_URL, USER_URL } from '@/config/routes';
 import getDomainName from '@/utils/funcs/get_domain_name';
 import getIcon from '@/utils/funcs/get_icon';
-import { Camera, Plus, X } from '@phosphor-icons/react';
+import { Camera, MapPin, Plus, X } from '@phosphor-icons/react';
 import Tags from '@/components/utils/edit_tags';
 import Links from '@/components/utils/edit_links';
 import { SERVER_ERROR } from '@/config/errors';
@@ -27,6 +27,7 @@ import { resizeImage } from '@/utils/resize_image';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { setOnboarding } from '@/slices/feedSlice';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
+import { Id } from 'react-toastify';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -38,6 +39,7 @@ const Onboarding = () => {
   const [links, setLinks] = useState<string[]>([]);
   const [userPic, setUserPic] = useState<File | null>();
   const [userPicView, setUserPicView] = useState(USER_PROFILE_PIC_URL + '/' + user.profilePic);
+  const [location, setLocation] = useState('');
 
   const [step, setStep] = useState(1);
 
@@ -83,11 +85,32 @@ const Onboarding = () => {
       dispatch(setReduxLinks(links));
       dispatch(setOnboarding(true));
       dispatch(setOnboardingStatus(true));
-      if (user.isOrganization) router.replace('/organisation/home');
-      else router.replace('/home');
-      Toaster.stopLoad(toaster, 'Profile Ready!', 1);
+
+      await handleSubmitProfileDetails(toaster);
     } else if (res.statusCode == 413) {
       Toaster.stopLoad(toaster, 'Image too large', 0);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      }
+    }
+  };
+
+  const handleSubmitProfileDetails = async (toaster: Id) => {
+    const formData = new FormData();
+
+    formData.append('location', location);
+
+    const URL = `${USER_URL}/me/profile`;
+
+    const res = await patchHandler(URL, formData);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'Profile Ready!', 1);
+
+      if (user.isOrganization) router.replace('/organisation/home');
+      else router.replace('/home');
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
@@ -119,6 +142,10 @@ const Onboarding = () => {
         break;
       case 6:
         if (links.length < 1) Toaster.error('Add at least 1 Link');
+        else setStep(prev => prev + 1);
+        break;
+      case 7:
+        if (location.trim() == '') Toaster.error('Location cannot be empty');
         else setStep(prev => prev + 1);
         break;
       default:
@@ -158,20 +185,41 @@ const Onboarding = () => {
         ) : (
           <div className="w-full h-full flex justify-between font-primary items-center absolute top-0 left-0 px-24 max-md:px-4 animate-fade_half">
             <div className="w-1/2 max-md:w-full flex flex-col gap-4 backdrop-blur-xl rounded-xl shadow-xl p-8 animate-fade_half">
-              <div className="text-5xl max-md:text-3xl font-bold">
-                {step == 1
-                  ? "What's your name?"
-                  : step == 2
-                  ? 'Add A Tagline'
-                  : step == 3
-                  ? 'Tell Us About Yourself'
-                  : step == 4
-                  ? 'Add Tags'
-                  : step == 5
-                  ? 'Add a Profile Picture'
-                  : step == 6
-                  ? 'Almost Done!'
-                  : ''}
+              <div className="w-full flex items-center justify-between flex-wrap">
+                <div className="text-5xl max-md:text-3xl font-bold">
+                  {step == 1
+                    ? "What's your name?"
+                    : step == 2
+                    ? 'Your One-Liner '
+                    : step == 3
+                    ? 'Tell Us About Yourself'
+                    : step == 4
+                    ? 'Your skills/interests'
+                    : step == 5
+                    ? 'Add a Profile Picture'
+                    : step == 6
+                    ? 'Attach Your Socials'
+                    : step == 7
+                    ? 'Pin Your Spot'
+                    : ''}
+                </div>
+                <div className="text-base max-md:text-base font-medium">
+                  {step == 1
+                    ? `(${name.trim().length}/25)`
+                    : step == 2
+                    ? `(${tagline.trim().length}/25)`
+                    : step == 3
+                    ? `(${bio.trim().length}/500)`
+                    : step == 4
+                    ? `(${tags.length}/10)`
+                    : step == 5
+                    ? ''
+                    : step == 6
+                    ? `(${links.length}/3)`
+                    : step == 7
+                    ? `(${location.length}/25)`
+                    : ''}
+                </div>
               </div>
 
               {step == 1 ? (
@@ -219,7 +267,11 @@ const Onboarding = () => {
                 </>
               ) : step == 4 ? (
                 <>
-                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} />
+                  <div className="font-medium text-sm">
+                    Add <span className="underline underline-offset-2">at least three</span> and help us build your
+                    recommendations!
+                  </div>
+                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} suggestions={true} />
                 </>
               ) : step == 5 ? (
                 <>
@@ -274,8 +326,27 @@ const Onboarding = () => {
                 </>
               ) : step == 6 ? (
                 <>
-                  <div>Add links to your social</div>
+                  <div className="font-medium text-sm">
+                    Almost Done!, Add <span className="underline underline-offset-2">at least one</span> link to your
+                    social.
+                  </div>
                   <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
+                </>
+              ) : step == 7 ? (
+                <>
+                  <div className="font-medium text-sm">
+                    One Last Step!, Tell us where are are situated now to help build your recommendations.
+                  </div>
+                  <div className="w-full flex items-center gap-2 bg-[#ffffff40] border-[1px] border-black rounded-lg p-2">
+                    <MapPin size={24} weight="duotone" />
+                    <input
+                      className="grow bg-transparent text-lg max-md:text-base focus:outline-none"
+                      type="text"
+                      maxLength={25}
+                      value={location}
+                      onChange={el => setLocation(el.target.value)}
+                    />
+                  </div>
                 </>
               ) : (
                 <></>
@@ -291,7 +362,7 @@ const Onboarding = () => {
                 ) : (
                   <div></div>
                 )}
-                {step != 6 ? (
+                {step != 7 ? (
                   <div
                     onClick={handleIncrementStep}
                     className="w-fit text-lg py-2 font-medium px-4 shadow-md hover:bg-[#ffffff40] hover:shadow-lg transition-ease-500 rounded-xl cursor-pointer"
@@ -308,7 +379,7 @@ const Onboarding = () => {
                 )}
               </div>
             </div>
-            <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center border-[1px] border-[#07070712] animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
+            <div className="w-1/3 h-fit p-10 gap-6 shadow-2xl font-primary flex flex-col items-center animate-fade_half backdrop-blur-xl max-md:hidden rounded-md">
               <Image
                 crossOrigin="anonymous"
                 width={500}
@@ -329,14 +400,17 @@ const Onboarding = () => {
                   <div className="w-full gap-2 flex flex-wrap items-center justify-center">
                     {tags.map(tag => {
                       return (
-                        <div className="flex-center text-sm px-4 py-1 border-[1px] border-black  rounded-md" key={tag}>
+                        <div
+                          className="flex-center text-xs text-primary_black px-2 py-1 border-[1px] border-primary_black  rounded-md"
+                          key={tag}
+                        >
                           {tag}
                         </div>
                       );
                     })}
                   </div>
                 ) : (
-                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-black rounded-md">
+                  <div className="w-fit flex-center gap-2 text-sm px-2 py-1 border-[1px] border-dashed border-primary_black rounded-md">
                     <Plus /> <div>Tags</div>
                   </div>
                 )}
@@ -348,7 +422,7 @@ const Onboarding = () => {
                           href={link}
                           target="_blank"
                           key={index}
-                          className="w-fit h-8 border-[1px] border-black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
+                          className="w-fit h-8 border-[1px] text-primary_black border-primary_black rounded-lg text-sm px-2 py-4 flex items-center gap-2"
                         >
                           {getIcon(getDomainName(link), 24)}
                           <div className="capitalize">{getDomainName(link)}</div>

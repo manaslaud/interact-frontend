@@ -207,7 +207,7 @@ const Profile = () => {
               {checkOrgAccess(ORG_SENIOR) ? (
                 <label
                   htmlFor="coverPic"
-                  className="w-12 h-12 absolute top-1 right-4 mt-navbar rounded-full z-20 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
+                  className="w-12 h-12 absolute top-1 right-4 mt-navbar rounded-full z-10 flex-center bg-white transition-ease-200 cursor-pointer opacity-50 hover:opacity-75"
                 >
                   <PencilSimple className="max-lg:hidden" color="black" size={24} />
                   <ImageSquare className="lg:hidden" color="black" size={24} />

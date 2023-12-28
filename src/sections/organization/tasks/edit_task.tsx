@@ -102,7 +102,7 @@ const EditTask = ({ setShow, organization, task, setTasks, setFilteredTasks }: P
     if (description != task.description) formData.append('description', description);
     if (!moment(deadline).isSame(moment(task.deadline), 'day')) {
       formData.append('deadline', moment(deadline).toISOString());
-    } //TODO Not working
+    }
     if (isArrEdited(tags, task.tags)) tags.forEach(tag => formData.append('tags', tag));
 
     const res = await patchHandler(URL, formData);

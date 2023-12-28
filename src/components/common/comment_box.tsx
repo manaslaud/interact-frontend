@@ -93,9 +93,8 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       setComments(newComments);
       setNoComments(prev => prev + 1);
       setCommentBody('');
-      //TODO
-      // if (item.userID != loggedInUser.id)
-      //   socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
+      if (item.userID && item.userID != loggedInUser.id)
+        socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
     } else {
       if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
       else {

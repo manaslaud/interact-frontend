@@ -97,7 +97,7 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
     if (description != subTask.description) formData.append('description', description);
     if (!moment(deadline).isSame(moment(subTask.deadline), 'day')) {
       formData.append('deadline', moment(deadline).toISOString());
-    } //TODO Not working
+    }
     if (isArrEdited(tags, subTask.tags)) tags.forEach(tag => formData.append('tags', tag));
 
     const res = await patchHandler(URL, formData);

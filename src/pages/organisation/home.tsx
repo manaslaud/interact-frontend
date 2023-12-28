@@ -7,12 +7,12 @@ import BaseWrapper from '@/wrappers/base';
 import MainWrapper from '@/wrappers/main';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Onboarding from '@/components/common/onboarding';
 import { userSelector } from '@/slices/userSlice';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 import OrgSidebar from '@/components/common/org_sidebar';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import { useRouter } from 'next/router';
+import OrgOnboarding from '@/components/common/org_onboarding';
 
 const Home = () => {
   const active = useSelector(homeTabSelector);
@@ -30,12 +30,7 @@ const Home = () => {
     <BaseWrapper title="Home">
       <OrgSidebar index={1} />
       <MainWrapper>
-        {onboarding && user.id != '' ? (
-          //TODO convert to OrgOnboarding
-          <Onboarding />
-        ) : (
-          <></>
-        )}
+        {onboarding && user.id != '' ? <OrgOnboarding /> : <></>}
         <div className="w-full flex flex-col items-center relative gap-4 px-9 max-md:px-2 pt-20 pb-base_padding">
           <TabMenu items={['Feed', 'Discover']} active={active} setReduxState={setHomeTab} />
           <div className={`${active === 0 ? 'block' : 'hidden'}`}>

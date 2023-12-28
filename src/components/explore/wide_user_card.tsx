@@ -68,7 +68,7 @@ const UserCard = ({ user }: Props) => {
                   );
                 })}
               {user.tags.length - 3 > 0 ? (
-                <div className="text-gray-600 flex-center p-2 text-xs border-[1px] border-gray-500 rounded-lg">
+                <div className="text-gray-600 flex-center px-2 py-1 text-xs border-[1px] border-gray-500 rounded-lg">
                   +{user.tags.length - 3}
                 </div>
               ) : (
