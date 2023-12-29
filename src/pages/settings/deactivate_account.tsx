@@ -13,26 +13,35 @@ import { ArrowArcLeft } from '@phosphor-icons/react';
 import { SERVER_ERROR } from '@/config/errors';
 import WidthCheck from '@/utils/wrappers/widthCheck';
 import NonOrgOnlyAndProtect from '@/utils/wrappers/non_org_only';
+import ConfirmOTP from '@/components/common/confirm_otp';
+import getHandler from '@/handlers/get_handler';
+import { USER_URL } from '@/config/routes';
+import postHandler from '@/handlers/post_handler';
 
-const Deactive = () => {
-  const [lockBtn, setLockBtn] = useState(false);
+const Deactivate = () => {
+  const [mutex, setMutex] = useState(false);
+
+  const [clickedConfirm, setClickedConfirm] = useState(false);
 
   const router = useRouter();
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async () => {
-    if (lockBtn) return;
-    setLockBtn(true);
-    const toaster = Toaster.startLoad('Deactiving your Account...');
+  const handleSubmit = async (otp: string) => {
+    if (otp == '') return;
 
-    const URL = `/users/deactive`;
+    if (mutex) return;
+    setMutex(true);
 
-    const res = await deleteHandler(URL);
+    const toaster = Toaster.startLoad('Deactivating your Account...');
+
+    const URL = `/users/deactivate`;
+
+    const res = await postHandler(URL, { otp });
 
     if (res.statusCode === 204) {
       Toaster.stopLoad(toaster, 'Account Deactivated', 1);
-      setLockBtn(false);
+      setMutex(false);
       Cookies.remove('token');
       Cookies.remove('id');
       dispatch(resetUser());
@@ -43,14 +52,39 @@ const Deactive = () => {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
+  };
+
+  const sendOTP = async () => {
+    if (mutex) return;
+    setMutex(true);
+
+    const toaster = Toaster.startLoad('Sending OTP');
+
+    const URL = `${USER_URL}/deactivate`;
+
+    const res = await getHandler(URL);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'OTP Sent to your registered mail', 1);
+      setClickedConfirm(true);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+
+    setMutex(false);
   };
 
   return (
     <BaseWrapper title="Settings">
       <Sidebar index={9} />
       <MainWrapper>
-        {/* {showDeactivate ? <ConfirmDeactiveAccount setShow={setShowDeactivate} handleSubmit={handleSubmit} /> : <></>} */}
+        {clickedConfirm ? (
+          <ConfirmOTP setShow={setClickedConfirm} handleSubmit={handleSubmit} confirmText="Deactivate My Account" />
+        ) : (
+          <></>
+        )}
         <div className="w-[50vw] max-md:w-full mx-auto dark:text-white flex flex-col gap-12 px-8 max-md:px-4 py-6 font-primary relative transition-ease-out-500">
           <div className="flex gap-3">
             <ArrowArcLeft
@@ -58,7 +92,7 @@ const Deactive = () => {
               className="w-10 h-10 p-2 dark:bg-dark_primary_comp_hover rounded-full cursor-pointer"
               size={40}
             />
-            <div className="text-4xl font-semibold dark:text-white">Deactive Account</div>
+            <div className="text-4xl font-semibold dark:text-white">Deactivate Account</div>
           </div>
           <div className="w-full text-center text-xl mb-16">
             <span className="font-bold">Note:</span> Your account will not be immediately deleted. If you log in within
@@ -66,10 +100,10 @@ const Deactive = () => {
             deletion.
           </div>
           <button
-            // onClick={() => setShowDeactivate(true)}
+            onClick={sendOTP}
             className="w-1/2 m-auto bg-slate-100 border-2 text-black border-[#1f1f1f] hover:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] cursor-pointer transition-ease-200"
           >
-            Deactive My Account
+            Deactivate My Account
           </button>
         </div>
       </MainWrapper>
@@ -77,4 +111,4 @@ const Deactive = () => {
   );
 };
 
-export default NonOrgOnlyAndProtect(Deactive);
+export default NonOrgOnlyAndProtect(Deactivate);

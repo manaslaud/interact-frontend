@@ -14,15 +14,15 @@ import WidthCheck from '@/utils/wrappers/widthCheck';
 import OrgOnlyAndProtect from '@/utils/wrappers/org_only';
 
 const Deactive = () => {
-  const [lockBtn, setLockBtn] = useState(false);
+  const [mutex, setMutex] = useState(false);
 
   const router = useRouter();
 
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    if (lockBtn) return;
-    setLockBtn(true);
+    if (mutex) return;
+    setMutex(true);
     const toaster = Toaster.startLoad('Deactiving your Account...');
 
     const URL = `/users/deactive`;
@@ -31,7 +31,7 @@ const Deactive = () => {
 
     if (res.statusCode === 204) {
       Toaster.stopLoad(toaster, 'Account Deactivated', 1);
-      setLockBtn(false);
+      setMutex(false);
       Cookies.remove('token');
       Cookies.remove('id');
       dispatch(resetUser());
@@ -42,7 +42,7 @@ const Deactive = () => {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
   };
 
   return (

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const UpdateResume = ({ setShow }: Props) => {
-  const [lockBtn, setLockBtn] = useState(false);
+  const [mutex, setMutex] = useState(false);
   const [newResume, setNewResume] = useState<File>();
 
   const user = useSelector(userSelector);
@@ -25,9 +25,9 @@ const UpdateResume = ({ setShow }: Props) => {
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    if (lockBtn || !newResume) return;
+    if (mutex || !newResume) return;
 
-    setLockBtn(true);
+    setMutex(true);
     const toaster = Toaster.startLoad('Updating your Resume...');
 
     const URL = `/users/update_resume`;
@@ -47,7 +47,7 @@ const UpdateResume = ({ setShow }: Props) => {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
   };
 
   useEffect(() => {

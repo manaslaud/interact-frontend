@@ -1,5 +1,5 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { MEMBERSHIP_URL, ORG_URL, PROJECT_PIC_URL, PROJECT_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Project } from '@/types';
 import { initialProject } from '@/types/initials';
@@ -11,8 +11,8 @@ import LowerProject from '@/components/organization/lower_project';
 import ProjectViewLoader from '@/components/loaders/workspace_project_view';
 import { useRouter } from 'next/router';
 import Collaborators from '@/components/explore/show_collaborator';
-import { useSelector } from 'react-redux';
-import { userSelector } from '@/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setManagerProjects, setOwnerProjects, userSelector } from '@/slices/userSlice';
 import EditProject from '@/sections/workspace/edit_project';
 import Links from '@/components/explore/show_links';
 import deleteHandler from '@/handlers/delete_handler';
@@ -22,6 +22,7 @@ import { currentOrgIDSelector } from '@/slices/orgSlice';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER, ORG_SENIOR } from '@/config/constants';
 import Link from 'next/link';
+import ConfirmOTP from '@/components/common/confirm_otp';
 
 interface Props {
   projectSlugs: string[];
@@ -50,11 +51,15 @@ const ProjectView = ({
   const [clickedOnLeave, setClickedOnLeave] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
+  const [clickedOnConfirmDelete, setClickedOnConfirmDelete] = useState(false);
+
   const router = useRouter();
 
   const user = useSelector(userSelector);
 
   const currentOrgID = useSelector(currentOrgIDSelector);
+
+  const dispatch = useDispatch();
 
   const fetchProject = async (abortController: AbortController) => {
     setLoading(true);
@@ -105,20 +110,44 @@ const ProjectView = ({
     }
   };
 
-  const handleDelete = async () => {
+  const sendOTP = async () => {
+    const toaster = Toaster.startLoad('Sending OTP');
+
+    const URL = checkOrgAccess(ORG_MANAGER)
+      ? `${ORG_URL}/${currentOrgID}/projects/delete/${project.id}`
+      : `${PROJECT_URL}/delete/${project.id}`;
+
+    const res = await getHandler(URL);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'OTP Sent to your registered mail', 1);
+      setClickedOnDelete(false);
+      setClickedOnConfirmDelete(true);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
+  const handleDelete = async (otp: string) => {
     const toaster = Toaster.startLoad('Deleting your project...');
 
-    const URL = `${ORG_URL}/${currentOrgID}/projects/${project.id}`;
+    const URL = checkOrgAccess(ORG_MANAGER)
+      ? `${ORG_URL}/${currentOrgID}/projects/${project.id}`
+      : `${PROJECT_URL}/${project.id}`;
 
-    const res = await deleteHandler(URL);
+    const res = await deleteHandler(URL, { otp });
 
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
-      setClickedOnDelete(false);
+      dispatch(setOwnerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
+      dispatch(setManagerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
+      setClickedOnConfirmDelete(false);
       setClickedOnProject(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
-      Toaster.stopLoad(toaster, 'Internal Server Error.', 0);
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 
@@ -134,15 +163,15 @@ const ProjectView = ({
     return () => {
       abortController.abort();
 
-      // const { query } = router;
-      // if (router.pathname == '/workspace') {
-      //   delete query.project;
+      const { query } = router;
+      if (router.pathname == '/organisation/projects') {
+        delete query.project;
 
-      //   router.push({
-      //     pathname: router.pathname,
-      //     query: { ...query },
-      //   });
-      // }
+        router.push({
+          pathname: router.pathname,
+          query: { ...query },
+        });
+      }
     };
   }, [clickedProjectIndex]);
 
@@ -202,7 +231,12 @@ const ProjectView = ({
           ) : (
             <></>
           )}
-          {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+          {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={sendOTP} /> : <></>}
+          {clickedOnConfirmDelete ? (
+            <ConfirmOTP setShow={setClickedOnConfirmDelete} handleSubmit={handleDelete} />
+          ) : (
+            <></>
+          )}
           <div className="max-lg:hidden w-16 h-screen flex flex-col items-center py-3 justify-between max-lg:fixed max-lg:top-0 max-lg:left-0">
             <div className="w-10 h-10 relative">
               <Image
@@ -225,7 +259,6 @@ const ProjectView = ({
               <></>
             )}
           </div>
-
           <div className="w-[calc(100vw-128px)] max-lg:w-screen h-screen overflow-hidden pt-3">
             <div className="w-full h-14 flex justify-between max-lg:px-3">
               <div className="grow flex gap-2 max-lg:gap-4">
@@ -410,7 +443,6 @@ const ProjectView = ({
               </div>
             </div>
           </div>
-
           <div className="max-lg:hidden w-16 h-screen flex flex-col items-center justify-between py-3 max-lg:fixed max-lg:top-0 max-lg:right-0">
             <div
               onClick={() => setClickedOnProject(false)}
@@ -434,7 +466,6 @@ const ProjectView = ({
               <div className="w-10 h-10 rounded-full"></div>
             )}
           </div>
-
           {clickedProjectIndex != 0 ? (
             <div
               onClick={() => {

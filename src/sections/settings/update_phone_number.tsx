@@ -11,7 +11,7 @@ interface Props {
 }
 
 const UpdatePhoneNumber = ({ setShow }: Props) => {
-  const [lockBtn, setLockBtn] = useState(false);
+  const [mutex, setMutex] = useState(false);
   const [phoneNo, setPhoneNo] = useState('');
 
   const dispatch = useDispatch();
@@ -22,8 +22,8 @@ const UpdatePhoneNumber = ({ setShow }: Props) => {
       Toaster.error('Enter a valid phone number');
       return;
     }
-    if (lockBtn) return;
-    setLockBtn(true);
+    if (mutex) return;
+    setMutex(true);
     const toaster = Toaster.startLoad('Updating your Phone Number...');
 
     const formData = {
@@ -36,7 +36,7 @@ const UpdatePhoneNumber = ({ setShow }: Props) => {
 
     if (res.statusCode === 200) {
       Toaster.stopLoad(toaster, 'Phone Number Updated!', 1);
-      setLockBtn(false);
+      setMutex(false);
       dispatch(setPhoneNumber(phoneNo));
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -44,7 +44,7 @@ const UpdatePhoneNumber = ({ setShow }: Props) => {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
   };
 
   const handleChange = (el: React.ChangeEvent<HTMLInputElement>) => {

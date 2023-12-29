@@ -12,6 +12,8 @@ import Toaster from '@/utils/toaster';
 import deleteHandler from '@/handlers/delete_handler';
 import ConfirmDelete from '../common/confirm_delete';
 import { SERVER_ERROR } from '@/config/errors';
+import getHandler from '@/handlers/get_handler';
+import ConfirmOTP from '../common/confirm_otp';
 
 interface Props {
   index: number;
@@ -34,21 +36,40 @@ const ProjectCard = ({
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
+  const [clickedOnConfirmDelete, setClickedOnConfirmDelete] = useState(false);
+
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
 
-  const handleDelete = async () => {
+  const sendOTP = async () => {
+    const toaster = Toaster.startLoad('Sending OTP');
+
+    const URL = `${PROJECT_URL}/delete/${project.id}`;
+
+    const res = await getHandler(URL);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'OTP Sent to your registered mail', 1);
+      setClickedOnDelete(false);
+      setClickedOnConfirmDelete(true);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
+  const handleDelete = async (otp: string) => {
     const toaster = Toaster.startLoad('Deleting your project...');
 
     const URL = `${PROJECT_URL}/${project.id}`;
 
-    const res = await deleteHandler(URL);
+    const res = await deleteHandler(URL, { otp });
 
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
       dispatch(setOwnerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
-      setClickedOnDelete(false);
+      setClickedOnConfirmDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -64,7 +85,8 @@ const ProjectCard = ({
       ) : (
         <></>
       )}
-      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={sendOTP} /> : <></>}
+      {clickedOnConfirmDelete ? <ConfirmOTP setShow={setClickedOnConfirmDelete} handleSubmit={handleDelete} /> : <></>}
 
       <div
         onClick={() => {

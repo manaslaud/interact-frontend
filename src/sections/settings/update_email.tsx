@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UpdateEmail = ({ setShow }: Props) => {
-  const [lockBtn, setLockBtn] = useState(false);
+  const [mutex, setMutex] = useState(false);
   const [newEmail, setNewEmail] = useState('');
 
   const router = useRouter();
@@ -25,8 +25,8 @@ const UpdateEmail = ({ setShow }: Props) => {
       Toaster.error('Enter a valid email');
       return;
     }
-    if (lockBtn) return;
-    setLockBtn(true);
+    if (mutex) return;
+    setMutex(true);
     const toaster = Toaster.startLoad('Updating your Email...');
 
     const formData = {
@@ -39,7 +39,7 @@ const UpdateEmail = ({ setShow }: Props) => {
 
     if (res.statusCode === 200) {
       Toaster.stopLoad(toaster, 'Email Updated!', 1);
-      setLockBtn(false);
+      setMutex(false);
       dispatch(setEmail(newEmail));
       dispatch(setVerificationStatus(false));
       router.push('/verification');
@@ -49,7 +49,7 @@ const UpdateEmail = ({ setShow }: Props) => {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
   };
 
   const currentEmail = useSelector(userSelector).email;

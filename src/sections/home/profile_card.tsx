@@ -71,7 +71,7 @@ const ProfileCard = () => {
             <>
               <div className="relative">
                 <Link
-                  href={'/profile?action=edit&tag=profilePic'}
+                  href={`/${user.isOrganization ? 'organisation/' : ''}profile?action=edit&tag=profilePic`}
                   className={`${
                     open ? 'w-44 h-44' : 'w-0 h-0'
                   } absolute top-0 right-0 rounded-full flex-center bg-white transition-ease-200 cursor-pointer opacity-0 hover:opacity-50`}
@@ -92,7 +92,7 @@ const ProfileCard = () => {
               </div>
 
               <Link
-                href={'/profile?action=edit&tag=name'}
+                href={`/${user.isOrganization ? 'organisation/' : ''}profile?action=edit&tag=name`}
                 className="w-full relative group rounded-lg flex-center p-2 hover:bg-primary_comp cursor-pointer transition-ease-300"
               >
                 <PencilSimple className="absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300" />
@@ -123,7 +123,7 @@ const ProfileCard = () => {
               <div className="w-full h-[1px] border-t-[1px] border-gray-500 border-dashed"></div>
 
               <Link
-                href={'/profile?action=edit&tag=bio'}
+                href={`/${user.isOrganization ? 'organisation/' : ''}profile?action=edit&tag=bio`}
                 className={`w-full relative group rounded-lg flex-center p-4 ${
                   user.bio.trim() == '' ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                 } cursor-pointer transition-ease-300`}
@@ -144,7 +144,7 @@ const ProfileCard = () => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Skills</div>
 
                 <Link
-                  href={'/profile?action=edit&tag=tags'}
+                  href={`/${user.isOrganization ? 'organisation/' : ''}profile?action=edit&tag=tags`}
                   className={`w-full relative group rounded-lg flex-center p-4 ${
                     !user.tags || user.tags?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                   } cursor-pointer transition-ease-300`}
@@ -193,7 +193,7 @@ const ProfileCard = () => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Links</div>
 
                 <Link
-                  href={'/profile?action=edit&tag=links'}
+                  href={`/${user.isOrganization ? 'organisation/' : ''}profile?action=edit&tag=links`}
                   className={`w-full relative group rounded-lg flex-center p-4 ${
                     !user.links || user.links?.length == 0 ? 'bg-primary_comp' : 'hover:bg-primary_comp'
                   } cursor-pointer transition-ease-300`}
@@ -238,15 +238,6 @@ const ProfileCard = () => {
                   )}
                 </Link>
               </div>
-
-              {/* <Link
-                href={'/profile?action=edit'}
-                className={`w-[120px] ${
-                  open ? 'mt-4' : 'mt-0'
-                } transition-ease-500 p-2 flex-center font-medium border-[1px] border-primary_btn dark:border-dark_primary_btn hover:bg-primary_comp_hover active:bg-primary_comp_active dark:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg`}
-              >
-                Edit
-              </Link> */}
             </>
           )}
         </div>

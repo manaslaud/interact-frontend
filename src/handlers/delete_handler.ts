@@ -1,6 +1,6 @@
 import configuredAxios from '@/config/axios';
 
-const deleteHandler = async (URL: string) => {
+const deleteHandler = async (URL: string, formData?: object) => {
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -11,7 +11,7 @@ const deleteHandler = async (URL: string) => {
     statusCode: 500,
   };
   await configuredAxios
-    .delete(URL, { headers })
+    .delete(URL, { headers, data: formData })
     .then(res => {
       response.status = 1;
       response.data = res.data;

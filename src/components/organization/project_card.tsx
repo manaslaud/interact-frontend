@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Project } from '@/types';
 import Image from 'next/image';
-import { PROJECT_PIC_URL, PROJECT_URL } from '@/config/routes';
+import { ORG_URL, PROJECT_PIC_URL, PROJECT_URL } from '@/config/routes';
 import { CircleDashed, EyeSlash, HeartStraight } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOwnerProjects, userSelector } from '@/slices/userSlice';
+import { setManagerProjects, setOwnerProjects, userSelector } from '@/slices/userSlice';
 import EditProject from '@/sections/workspace/edit_project';
 import Link from 'next/link';
 import patchHandler from '@/handlers/patch_handler';
@@ -14,6 +14,9 @@ import ConfirmDelete from '../common/confirm_delete';
 import { SERVER_ERROR } from '@/config/errors';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER, ORG_SENIOR } from '@/config/constants';
+import getHandler from '@/handlers/get_handler';
+import ConfirmOTP from '../common/confirm_otp';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
 
 interface Props {
   index: number;
@@ -36,21 +39,47 @@ const ProjectCard = ({
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
+  const [clickedOnConfirmDelete, setClickedOnConfirmDelete] = useState(false);
+
   const user = useSelector(userSelector);
+
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const dispatch = useDispatch();
 
-  const handleDelete = async () => {
+  const sendOTP = async () => {
+    const toaster = Toaster.startLoad('Sending OTP');
+
+    const URL = checkOrgAccess(ORG_MANAGER)
+      ? `${ORG_URL}/${currentOrgID}/projects/delete/${project.id}`
+      : `${PROJECT_URL}/delete/${project.id}`;
+
+    const res = await getHandler(URL);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'OTP Sent to your registered mail', 1);
+      setClickedOnDelete(false);
+      setClickedOnConfirmDelete(true);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
+  const handleDelete = async (otp: string) => {
     const toaster = Toaster.startLoad('Deleting your project...');
 
-    const URL = `${PROJECT_URL}/${project.id}`;
+    const URL = checkOrgAccess(ORG_MANAGER)
+      ? `${ORG_URL}/${currentOrgID}/projects/${project.id}`
+      : `${PROJECT_URL}/${project.id}`;
 
-    const res = await deleteHandler(URL);
+    const res = await deleteHandler(URL, { otp });
 
     if (res.statusCode === 204) {
       if (setProjects) setProjects(prev => prev.filter(p => p.id != project.id));
       dispatch(setOwnerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
-      setClickedOnDelete(false);
+      dispatch(setManagerProjects(user.ownerProjects.filter(projectID => projectID != project.id)));
+      setClickedOnConfirmDelete(false);
       Toaster.stopLoad(toaster, 'Project Deleted', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -66,8 +95,8 @@ const ProjectCard = ({
       ) : (
         <></>
       )}
-      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
-
+      {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={sendOTP} /> : <></>}
+      {clickedOnConfirmDelete ? <ConfirmOTP setShow={setClickedOnConfirmDelete} handleSubmit={handleDelete} /> : <></>}
       <div
         onClick={() => {
           setClickedOnProject(true);
@@ -96,7 +125,7 @@ const ProjectCard = ({
               onClick={el => el.stopPropagation()}
               className="w-1/2 h-fit flex flex-col absolute top-2 left-12 rounded-2xl glassMorphism p-2"
             >
-              {checkOrgAccess(ORG_SENIOR) ? (
+              {checkOrgAccess(ORG_SENIOR) || user.editorProjects.includes(project.id) ? (
                 <div
                   onClick={() => setClickedOnEdit(true)}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] transition-ease-100 rounded-lg"
@@ -127,7 +156,7 @@ const ProjectCard = ({
                 <></>
               )}
 
-              {checkOrgAccess(ORG_MANAGER) ? (
+              {checkOrgAccess(ORG_MANAGER) || user.managerProjects.includes(project.id) ? (
                 <div
                   onClick={() => setClickedOnDelete(true)}
                   className="w-full px-4 py-3 hover:bg-[#ffffff78] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg"

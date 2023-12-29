@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UpdatePassword = ({ setShow }: Props) => {
-  const [lockBtn, setLockBtn] = useState(false);
+  const [mutex, setMutex] = useState(false);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -42,8 +42,8 @@ const UpdatePassword = ({ setShow }: Props) => {
       Toaster.error('Passwords do not match!');
       return;
     }
-    if (lockBtn) return;
-    setLockBtn(true);
+    if (mutex) return;
+    setMutex(true);
     const toaster = Toaster.startLoad('Updating your Password...');
 
     const formData = {
@@ -61,14 +61,14 @@ const UpdatePassword = ({ setShow }: Props) => {
       Cookies.set('token', res.data.token, {
         expires: Number(process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_TIME),
       });
-      setLockBtn(false);
+      setMutex(false);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
       else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
     }
-    setLockBtn(false);
+    setMutex(false);
   };
 
   return (
