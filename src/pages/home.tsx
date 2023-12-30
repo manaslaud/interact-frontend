@@ -22,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     if (user.isOrganization) router.replace('/organisation/home');
-    else if (!user.isOnboardingComplete) router.replace('/onboarding');
+    else if (user.isLoggedIn && !user.isOnboardingComplete) router.replace('/onboarding');
   }, []);
 
   return (

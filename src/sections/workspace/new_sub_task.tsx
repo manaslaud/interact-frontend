@@ -1,6 +1,6 @@
 import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { Task, User } from '@/types';
+import { PRIORITY, Task, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -21,6 +21,7 @@ const NewSubTask = ({ setShow, task, setTasks, setFilteredTasks }: Props) => {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [deadline, setDeadline] = useState(new Date().toISOString());
+  const [priority, setPriority] = useState<PRIORITY>('low');
 
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
@@ -78,6 +79,7 @@ const NewSubTask = ({ setShow, task, setTasks, setFilteredTasks }: Props) => {
       tags,
       users: userIDs,
       deadline: moment(deadline),
+      priority,
     };
 
     const res = await postHandler(URL, formData);
@@ -139,7 +141,27 @@ const NewSubTask = ({ setShow, task, setTasks, setFilteredTasks }: Props) => {
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length}/5)</div>
                 <Tags tags={tags} setTags={setTags} maxTags={5} />
               </div>
-              <div className="w-full flex justify-between items-center px-4">
+              <div className="w-full flex justify-between items-center px-2">
+                <div className="text-xl">Priority: </div>
+                <select
+                  onChange={el => {
+                    if (el.target.value == 'low') setPriority(el.target.value);
+                    else if (el.target.value == 'medium') setPriority(el.target.value);
+                    else if (el.target.value == 'high') setPriority(el.target.value);
+                  }}
+                  value={priority}
+                  className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+                >
+                  {['low', 'medium', 'high'].map((c, i) => {
+                    return (
+                      <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
+                        {c}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="w-full flex justify-between items-center px-2">
                 <div className="text-xl">Deadline: </div>
                 <input
                   type="date"
@@ -224,7 +246,27 @@ const NewSubTask = ({ setShow, task, setTasks, setFilteredTasks }: Props) => {
                     value={description}
                     onChange={el => setDescription(el.target.value)}
                   ></textarea>
-                  <div className="w-full flex justify-between items-center px-4">
+                  <div className="w-full flex justify-between items-center px-2">
+                    <div className="text-xl">Priority: </div>
+                    <select
+                      onChange={el => {
+                        if (el.target.value == 'low') setPriority(el.target.value);
+                        else if (el.target.value == 'medium') setPriority(el.target.value);
+                        else if (el.target.value == 'high') setPriority(el.target.value);
+                      }}
+                      value={priority}
+                      className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+                    >
+                      {['low', 'medium', 'high'].map((c, i) => {
+                        return (
+                          <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
+                            {c}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="w-full flex justify-between items-center px-2">
                     <div className="text-xl">Deadline: </div>
                     <input
                       type="date"

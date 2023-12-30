@@ -206,12 +206,12 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
         <></>
       )}
       {task.isCompleted ? (
-        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#bffbbe] max-lg:fixed top-[168px] max-lg:top-navbar right-14 max-lg:right-0 z-[11]">
+        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#bffbbe] max-lg:fixed top-[160px] max-lg:top-navbar right-16 max-lg:right-0 z-[11]">
           Task Completed
           <CheckSquare weight="bold" size={16} />
         </div>
       ) : moment(task.deadline).isBefore(moment()) ? (
-        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#fbbebe] max-lg:fixed top-[168px] max-lg:top-navbar right-14 max-lg:right-0 z-[11]">
+        <div className="absolute flex gap-1 items-center px-2 py-1 rounded-xl text-xs bg-[#fbbebe] max-lg:fixed top-[160px] max-lg:top-navbar right-16 max-lg:right-0 z-[11]">
           Deadline Passed
           <CalendarX weight="bold" size={16} />
         </div>

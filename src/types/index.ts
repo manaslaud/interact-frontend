@@ -405,7 +405,10 @@ export interface SubTask {
   tags: string[];
   users: User[];
   isCompleted: boolean;
+  priority: PRIORITY;
 }
+
+export type PRIORITY = 'low' | 'medium' | 'high';
 export interface Task {
   id: string;
   projectID: string;
@@ -417,6 +420,7 @@ export interface Task {
   users: User[];
   isCompleted: boolean;
   subTasks: SubTask[];
+  priority: PRIORITY;
 }
 
 export interface ProjectHistory {

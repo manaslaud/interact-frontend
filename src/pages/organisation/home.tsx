@@ -22,8 +22,7 @@ const Home = () => {
   const router = useRouter(); //TODO use window.location instead of router
 
   useEffect(() => {
-    if (!user.isOrganization) router.replace('/home');
-    else if (!user.isOnboardingComplete) router.replace('/organisation/onboarding');
+    if (!user.isOnboardingComplete) router.replace('/organisation/onboarding');
   }, []);
 
   return (

@@ -20,6 +20,7 @@ import { useSwipeable } from 'react-swipeable';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import PlaceholderImg from '@/utils/optimised_img';
 import ConfirmOTP from '@/components/common/confirm_otp';
+import Link from 'next/link';
 
 interface Props {
   projectSlugs: string[];
@@ -391,12 +392,13 @@ const ProjectView = ({
                     <></>
                   )}
                   {project.userID == user.id || user.managerProjects.includes(project.id) ? (
-                    <div
-                      onClick={() => router.push(`/workspace/manage/${projectSlugs[clickedProjectIndex]}`)}
+                    <Link
+                      target="_blank"
+                      href={`/workspace/manage/${projectSlugs[clickedProjectIndex]}`}
                       className="w-full text-lg font-medium border-[1px] border-gray-400 hover:bg-primary_comp_hover active:bg-primary_comp_active dark:active:bg-dark_primary_gradient_end dark:border-dark_primary_btn py-2 flex-center hover:bg-gradient-to-r dark:hover:from-dark_secondary_gradient_start dark:hover:to-dark_secondary_gradient_end rounded-lg cursor-pointer transition-ease-300"
                     >
                       Manage Project
-                    </div>
+                    </Link>
                   ) : (
                     <></>
                   )}

@@ -22,7 +22,7 @@ const TaskCard = ({ task, index, clickedTaskID, clickedOnTask, setClickedOnTask,
       }}
       className={`w-full ${
         index == clickedTaskID ? 'bg-white' : 'hover:bg-gray-100'
-      } flex justify-between items-center gap-2 rounded-lg px-6 py-4 border-gray-800 border-dotted border-2 cursor-pointer transition-ease-300`}
+      } relative flex justify-between items-center gap-2 rounded-lg px-6 py-4 border-gray-800 border-dotted border-2 cursor-pointer transition-ease-300`}
     >
       <div className="grow flex flex-col gap-2">
         <div className="font-semibold text-xl">{task.title}</div>
@@ -45,6 +45,15 @@ const TaskCard = ({ task, index, clickedTaskID, clickedOnTask, setClickedOnTask,
           </div>
         </div>
       )}
+
+      <div
+        style={{
+          backgroundColor: task.priority == 'high' ? '#fbbebe' : task.priority == 'medium' ? '#fbf9be' : '#bffbbe',
+        }}
+        className="absolute px-3 py-1 rounded-xl text-xs uppercase top-0 right-0 -translate-y-1/2 z-5"
+      >
+        {task.priority}
+      </div>
     </div>
   );
 };

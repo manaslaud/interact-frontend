@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { TASK_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
-import { Project, SubTask, Task, User } from '@/types';
+import { PRIORITY, Project, SubTask, Task, User } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -29,6 +29,7 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
   const [description, setDescription] = useState(subTask.description);
   const [tags, setTags] = useState<string[]>(subTask.tags || []);
   const [deadline, setDeadline] = useState(moment(subTask.deadline).format('YYYY-MM-DD'));
+  const [priority, setPriority] = useState<PRIORITY>(subTask.priority);
 
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
@@ -99,6 +100,7 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
       formData.append('deadline', moment(deadline).toISOString());
     }
     if (isArrEdited(tags, subTask.tags)) tags.forEach(tag => formData.append('tags', tag));
+    if (priority != task.priority) formData.append('priority', priority);
 
     const res = await patchHandler(URL, formData);
     if (res.statusCode === 200) {
@@ -142,7 +144,15 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                     ...t,
                     subTasks: t.subTasks.map(s => {
                       if (s.id == subTask.id) {
-                        return { ...s, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                        return {
+                          ...s,
+                          title,
+                          description,
+                          tags,
+                          priority,
+                          users: selectedUsers,
+                          deadline: new Date(deadline),
+                        };
                       } else return s;
                     }),
                   };
@@ -157,7 +167,15 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                     ...t,
                     subTasks: t.subTasks.map(s => {
                       if (s.id == subTask.id) {
-                        return { ...s, title, description, tags, users: selectedUsers, deadline: new Date(deadline) };
+                        return {
+                          ...s,
+                          title,
+                          description,
+                          tags,
+                          priority,
+                          users: selectedUsers,
+                          deadline: new Date(deadline),
+                        };
                       } else return s;
                     }),
                   };
@@ -179,7 +197,7 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                   ...t,
                   subTasks: t.subTasks.map(s => {
                     if (s.id == subTask.id) {
-                      return { ...s, title, description, tags, deadline: new Date(deadline) };
+                      return { ...s, title, description, tags, priority, deadline: new Date(deadline) };
                     } else return s;
                   }),
                 };
@@ -194,7 +212,7 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                   ...t,
                   subTasks: t.subTasks.map(s => {
                     if (s.id == subTask.id) {
-                      return { ...s, title, description, tags, deadline: new Date(deadline) };
+                      return { ...s, title, description, tags, priority, deadline: new Date(deadline) };
                     } else return s;
                   }),
                 };
@@ -273,7 +291,27 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                 <div className="text-xs ml-1 font-medium uppercase text-gray-500">Tags ({tags.length}/5)</div>
                 <Tags tags={tags} setTags={setTags} maxTags={5} />
               </div>
-              <div className="w-full flex justify-between items-center px-4">
+              <div className="w-full flex justify-between items-center px-2">
+                <div className="text-xl">Priority: </div>
+                <select
+                  onChange={el => {
+                    if (el.target.value == 'low') setPriority(el.target.value);
+                    else if (el.target.value == 'medium') setPriority(el.target.value);
+                    else if (el.target.value == 'high') setPriority(el.target.value);
+                  }}
+                  value={priority}
+                  className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+                >
+                  {['low', 'medium', 'high'].map((c, i) => {
+                    return (
+                      <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
+                        {c}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="w-full flex justify-between items-center px-2">
                 <div className="text-xl">Deadline: </div>
                 <input
                   type="date"
@@ -358,13 +396,27 @@ const EditSubTask = ({ setShow, subTask, task, setTasks, setFilteredTasks }: Pro
                     value={description}
                     onChange={el => setDescription(el.target.value)}
                   ></textarea>
-                  {/* <ReactMarkdown
-                    className="markdown"
-                    children={description}
-                    remarkPlugins={[remarkGfm]}
-                    skipHtml={false}
-                  /> */}
-                  <div className="w-full flex justify-between items-center px-4">
+                  <div className="w-full flex justify-between items-center px-2">
+                    <div className="text-xl">Priority: </div>
+                    <select
+                      onChange={el => {
+                        if (el.target.value == 'low') setPriority(el.target.value);
+                        else if (el.target.value == 'medium') setPriority(el.target.value);
+                        else if (el.target.value == 'high') setPriority(el.target.value);
+                      }}
+                      value={priority}
+                      className="w-fit h-12 border-[1px] border-primary_btn dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-none text-sm rounded-lg block p-2"
+                    >
+                      {['low', 'medium', 'high'].map((c, i) => {
+                        return (
+                          <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
+                            {c}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="w-full flex justify-between items-center px-2">
                     <div className="text-xl">Deadline: </div>
                     <input
                       type="date"

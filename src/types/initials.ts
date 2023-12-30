@@ -377,6 +377,7 @@ export const initialTask: Task = {
   isCompleted: false,
   projectID: '',
   project: initialProject,
+  priority: 'low',
 };
 
 export const initialSubTask: SubTask = {
@@ -388,6 +389,7 @@ export const initialSubTask: SubTask = {
   deadline: new Date(),
   isCompleted: false,
   taskID: '',
+  priority: 'low',
 };
 
 export const initialEvent: Event = {
