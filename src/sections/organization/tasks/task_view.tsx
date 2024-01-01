@@ -258,6 +258,17 @@ const TaskView = ({ taskID, tasks, setShow, setTasks, setFilteredTasks, organiza
           <div className="font-semibold">{moment(task.deadline).format('DD-MMM-YY')}</div>
           <div className="text-xs">({moment(task.deadline).fromNow()})</div>
         </div>
+        <div className="flex gap-2 items-center">
+          <div> Priority:</div>
+          <div
+            style={{
+              backgroundColor: task.priority == 'high' ? '#fbbebe' : task.priority == 'medium' ? '#fbf9be' : '#bffbbe',
+            }}
+            className="uppercase px-3 py-1 rounded-lg text-sm font-medium"
+          >
+            {task.priority}
+          </div>
+        </div>
         {task.users.length > 0 ? (
           <div className="w-full flex flex-col gap-2">
             <div className="text-xl font-medium">Assigned To</div>

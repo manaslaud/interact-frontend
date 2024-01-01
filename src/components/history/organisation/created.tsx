@@ -24,8 +24,7 @@ const Created = ({ history }: Props) => {
       return (
         <OrganizationHistoryWrapper history={history}>
           <div className="w-fit text-center flex-center gap-4">
-            {' '}
-            Invited user :{history.invitation?.user.username}🎉
+            Invited user :{history.invitation?.user.username} 🎉
           </div>
         </OrganizationHistoryWrapper>
       );

@@ -43,7 +43,7 @@ const TagSuggestions = ({ tags, setTags, maxTags = 5 }: Props) => {
         </div>
       </div>
       <div className="w-full flex flex-wrap gap-2">
-        {suggestions.map(suggestion =>
+        {suggestions?.map(suggestion =>
           tags.includes(suggestion) || tags.length >= maxTags ? (
             <div
               key={suggestion}

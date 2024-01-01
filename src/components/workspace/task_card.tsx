@@ -1,6 +1,5 @@
 import { Task } from '@/types';
 import getCompletionPercentage from '@/utils/funcs/task_completion';
-import Users from '@phosphor-icons/react/dist/icons/Users';
 import moment from 'moment';
 import React from 'react';
 

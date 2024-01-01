@@ -486,3 +486,8 @@ export interface OrganizationHistory {
   createdAt: Date;
   deletedText: String;
 }
+
+export interface College {
+  name: string;
+  city: string;
+}

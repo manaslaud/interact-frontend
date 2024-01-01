@@ -10,12 +10,13 @@ interface Props {
 }
 
 const Collaborators = ({ memberships, workspace = false }: Props) => {
+  const maxIndex = workspace ? 5 : 10;
   return (
     <>
       {memberships && memberships.length > 0 ? (
         <div className="w-full flex flex-col gap-2">
           <div className="text-lg font-semibold">Collaborators</div>
-          <div className="grid grid-cols-5 gap-4">
+          <div className={`grid ${workspace ? 'grid-cols-5' : 'grid-cols-10'} gap-4`}>
             {memberships.map((membership, index) => {
               return (
                 <Link
@@ -25,8 +26,12 @@ const Collaborators = ({ memberships, workspace = false }: Props) => {
                   className="w-12 h-12 rounded-full relative group"
                 >
                   <div
-                    className={`w-36 absolute -top-24 ${
-                      index + (1 % 5) == 0 || index % 5 == 0 ? (index == 0 ? 'left-0' : 'right-0') : 'left-0'
+                    className={`${workspace ? 'w-36' : 'w-48'} absolute -top-24 ${
+                      index + (1 % maxIndex) == 0 || index % maxIndex == 0
+                        ? index == 0
+                          ? 'left-0'
+                          : 'right-0'
+                        : 'left-0'
                     } scale-0 px-3 rounded-lg border-2  border-gray-300 bg-white py-2 text-sm font-semibold shadow-2xl transition-ease-300 capitalize group-hover:scale-100`}
                   >
                     <div className="font-bold text-base text-gradient line-clamp-1">{membership.user.name}</div>

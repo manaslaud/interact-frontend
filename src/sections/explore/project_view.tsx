@@ -262,6 +262,9 @@ const ProjectView = ({
                       );
                     })}
                 </div>
+                {
+                  //TODO Project Owner Details
+                }
                 <Collaborators memberships={project.memberships} />
                 <Links links={project.links} />
                 <Openings openings={project.openings} slug={project.slug} projectCoverPic={project.coverPic} />
