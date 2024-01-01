@@ -212,7 +212,7 @@ const Onboarding = () => {
       <Head>
         <title>Onboarding | Interact</title>
       </Head>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-y-auto">
         {!clickedOnBuild ? (
           <div className="glassMorphism animate-fade_1 page w-fit max-md:w-[90%] h-64 max-md:h-72 px-8 py-10 font-primary flex flex-col justify-between rounded-lg shadow-xl hover:shadow-2xl transition-ease-300 absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
             <div className="flex flex-col gap-2">
@@ -238,8 +238,8 @@ const Onboarding = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full h-full flex justify-between font-primary items-center absolute top-0 left-0 px-24 max-md:px-4 animate-fade_half">
-            <div className="w-1/2 max-md:w-full flex flex-col gap-4 backdrop-blur-xl rounded-xl shadow-xl p-8 animate-fade_half">
+          <div className="w-full h-full flex justify-between font-primary items-center absolute top-0 left-0 px-24 py-4 max-md:px-4 animate-fade_half">
+            <div className="w-1/2 max-md:w-full max-md:max-h-full flex flex-col gap-4 backdrop-blur-xl rounded-xl shadow-xl p-8  overflow-y-auto animate-fade_half">
               <div className="w-full flex items-center justify-between flex-wrap">
                 <div className="text-5xl max-md:text-3xl font-bold">
                   {step == 1

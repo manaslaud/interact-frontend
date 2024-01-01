@@ -261,7 +261,7 @@ const ProjectView = ({
                   className={'lg:hidden w-10 h-10 rounded-full cursor-default'}
                 />
                 <div>
-                  <div className="w-fit font-bold cursor-default">{project.title}</div>
+                  <div className="w-fit font-bold cursor-default line-clamp-1">{project.title}</div>
                   <div // convert to link
                     className="w-fit flex gap-1 text-xs font-medium"
                   >

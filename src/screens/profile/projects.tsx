@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '@/components/common/loader';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_MANAGER } from '@/config/constants';
+import { userIDSelector } from '@/slices/userSlice';
 
 interface Props {
   userID: string;
@@ -27,6 +28,8 @@ const Projects = ({ userID, displayOnProfile = false, contributing = false }: Pr
   const [clickedOnNewProject, setClickedOnNewProject] = useState(false);
 
   const [fadeInProject, setFadeInProject] = useState(true);
+
+  const loggedInUserID = useSelector(userIDSelector);
 
   const navbarOpen = useSelector(navbarOpenSelector);
 
@@ -69,7 +72,7 @@ const Projects = ({ userID, displayOnProfile = false, contributing = false }: Pr
       {displayOnProfile ? (
         <>
           {clickedOnNewProject ? <NewProject setShow={setClickedOnNewProject} setProjects={setProjects} /> : <></>}
-          {checkOrgAccess(ORG_MANAGER) ? (
+          {checkOrgAccess(ORG_MANAGER) || loggedInUserID == userID ? (
             <div
               onClick={() => setClickedOnNewProject(true)}
               className={`mb-8 w-108 max-md:w-5/6 h-24 max-md:hover:scale-105 hover:scale-125 group relative overflow-clip bg-white hover:bg-[#f3f3f3] mx-auto border-[1px] pattern1 rounded-lg cursor-pointer flex-center flex-col transition-ease-300`}

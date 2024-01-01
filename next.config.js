@@ -5,8 +5,15 @@ const path = require('path')
 
 const nextConfig = {
   reactStrictMode: false,
-  images:{
-    domains:[process.env.NEXT_PUBLIC_BACKEND_URL, "storage.googleapis.com"]
+  images: {
+    remotePatterns: [
+        {
+            protocol: 'https',
+            hostname: 'storage.googleapis.com',
+            port: '',
+            pathname: '/interact-bucket/**',
+        },
+    ],
   },
   optimizeFonts:true,
   sassOptions: {
