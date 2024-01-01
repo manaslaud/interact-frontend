@@ -50,7 +50,7 @@ const UserCard = ({ user }: Props) => {
         </div>
       </div>
       <div className="w-full h-full flex flex-col justify-between p-4 pt-0 gap-4">
-        <div className="w-full flex flex-col gap-4">
+        <div>
           {user.tags && user.tags.length > 0 ? (
             <div className="w-full flex flex-wrap gap-2">
               {user.tags
@@ -78,53 +78,57 @@ const UserCard = ({ user }: Props) => {
           ) : (
             <></>
           )}
-          <div className="w-full flex flex-col gap-2 px-2 font-medium text-xs text-gray-700">
-            <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
-              <div className="flex gap-1 items-center">
-                <Users />{' '}
-                <div>
-                  {noFollowers} Follower{noFollowers != 1 ? 's' : ''}
-                </div>
-              </div>
-              <div className="flex gap-1 items-center">
-                <div>{user.noImpressions}</div> <Eye />
-              </div>
-            </div>
-
-            <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
-              {user.profile?.school ? (
-                <div className="flex gap-1 items-center">
-                  <Buildings /> <div className="text-xs">{user.profile.school}</div>
-                </div>
-              ) : (
-                <></>
-              )}
-
-              {user.profile?.location ? (
-                <div
-                  className={`flex gap-1 items-center ${
-                    !user.profile || user.profile.school == '' ? 'flex-row-reverse' : ''
-                  }`}
-                >
-                  <div className="text-xs">{user.profile.location}</div>
-                  <MapPin />
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-
-          <div className="border-t-[1px] border-gray-500 border-dashed"></div>
-          {user.tagline != '' ? <div className="text-sm text-gray-600 text-center">{user.tagline}</div> : <></>}
         </div>
-        <div
-          onClick={el => {
-            el.preventDefault();
-          }}
-          className="w-full flex-center"
-        >
-          <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} />
+        <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col gap-4">
+            <div className="w-full flex flex-col gap-2 px-2 font-medium text-xs text-gray-700">
+              <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
+                <div className="flex gap-1 items-center">
+                  <Users />{' '}
+                  <div>
+                    {noFollowers} Follower{noFollowers != 1 ? 's' : ''}
+                  </div>
+                </div>
+                <div className="flex gap-1 items-center">
+                  <div>{user.noImpressions}</div> <Eye />
+                </div>
+              </div>
+
+              <div className="w-full flex justify-between flex-wrap gap-2 font-medium text-xs text-gray-700">
+                {user.profile?.school ? (
+                  <div className="flex gap-1 items-center">
+                    <Buildings /> <div className="text-xs">{user.profile.school}</div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                {user.profile?.location ? (
+                  <div
+                    className={`flex gap-1 items-center ${
+                      !user.profile || user.profile.school == '' ? 'flex-row-reverse' : ''
+                    }`}
+                  >
+                    <div className="text-xs">{user.profile.location}</div>
+                    <MapPin />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+
+            <div className="border-t-[1px] border-gray-500 border-dashed"></div>
+            {user.tagline != '' ? <div className="text-sm text-gray-600 text-center">{user.tagline}</div> : <></>}
+          </div>
+          <div
+            onClick={el => {
+              el.preventDefault();
+            }}
+            className="w-full flex-center"
+          >
+            <FollowBtn toFollowID={user.id} setFollowerCount={setNoFollowers} />
+          </div>
         </div>
       </div>
     </Link>

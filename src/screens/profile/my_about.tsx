@@ -177,7 +177,11 @@ const About = ({ profile, setUser, org = false }: Props) => {
                 )}
               </div>
               {profile.school != '' ? (
-                <div className="flex gap-1 items-center max-md:flex-row-reverse">
+                <div
+                  className={`flex items-center ${
+                    yog == 0 ? 'flex-row-reverse gap-2' : 'gap-1 max-md:flex-row-reverse'
+                  }`}
+                >
                   {clickedOnYOG ? (
                     <div className="w-fit">
                       <div className="text-xs ml-1 font-medium uppercase text-gray-500">Graduation Year</div>
@@ -193,14 +197,18 @@ const About = ({ profile, setUser, org = false }: Props) => {
                   ) : (
                     <div
                       onClick={() => setClickedOnYOG(true)}
-                      className={`w-fit relative group rounded-lg p-2 pl-8 max-md:pr-8 max-md:pl-0 ${
-                        profile.yearOfGraduation == 0 ? 'bg-gray-100' : 'hover:bg-gray-100'
+                      className={`w-fit relative group rounded-lg p-2 ${
+                        profile.yearOfGraduation == 0
+                          ? 'bg-gray-100 pr-8'
+                          : 'hover:bg-gray-100 pl-8 max-md:pr-8 max-md:pl-0'
                       } cursor-pointer transition-ease-300`}
                     >
                       <PencilSimple
                         className={`absolute ${
-                          profile.yearOfGraduation == 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                        }  -translate-y-1/2 top-1/2 md:left-2 max-md:right-2 transition-ease-300`}
+                          profile.yearOfGraduation == 0
+                            ? 'opacity-100 right-2'
+                            : 'opacity-0 group-hover:opacity-100 md:left-2 max-md:right-2'
+                        } -translate-y-1/2 top-1/2 transition-ease-300`}
                       />
                       {profile.yearOfGraduation == 0 ? (
                         <div className="text-sm">Add Degree Completion Year</div>
@@ -210,7 +218,7 @@ const About = ({ profile, setUser, org = false }: Props) => {
                     </div>
                   )}
 
-                  <CalendarBlank weight="bold" size={20} />
+                  <CalendarBlank weight="bold" size={24} />
                 </div>
               ) : (
                 <></>
