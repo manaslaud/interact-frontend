@@ -88,7 +88,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
               <div className="flex gap-1">
                 <div>•</div>
                 <div>
-                  {opening.noOfApplications} application{opening.noOfApplications == 1 ? '' : 's'}
+                  {opening.noApplications} application{opening.noApplications == 1 ? '' : 's'}
                 </div>
               </div>
             </div>

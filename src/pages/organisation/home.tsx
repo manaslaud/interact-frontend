@@ -22,7 +22,10 @@ const Home = () => {
   const router = useRouter(); //TODO use window.location instead of router
 
   useEffect(() => {
-    if (!user.isOnboardingComplete) router.replace('/organisation/onboarding');
+    if (!user.isOnboardingComplete) {
+      sessionStorage.setItem('onboarding-redirect', 'organisation-home-callback');
+      router.replace('/organisation/onboarding');
+    }
   }, []);
 
   return (
