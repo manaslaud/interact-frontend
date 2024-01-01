@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -24,12 +24,15 @@ const Verification = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(userSelector);
-  if (!user.email || user.email == '') {
-    Toaster.error('Please Log in again');
-    Cookies.remove('token');
-    Cookies.remove('id');
-    router.replace('/login');
-  } else if (user.isVerified) router.back();
+
+  useEffect(() => {
+    if (!user.email || user.email == '') {
+      Toaster.error('Please Log in again');
+      Cookies.remove('token');
+      Cookies.remove('id');
+      router.replace('/login');
+    } else if (user.isVerified) router.back();
+  }, []);
 
   const sendOTP = () => {
     const toaster = Toaster.startLoad('Sending OTP');

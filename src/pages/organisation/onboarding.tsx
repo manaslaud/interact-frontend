@@ -49,12 +49,8 @@ const Onboarding = () => {
 
   useEffect(() => {
     if (process.env.NODE_ENV != 'development') {
-      const onboardingRedirect = sessionStorage.getItem('onboarding-redirect');
-      if (
-        !onboardingRedirect ||
-        !onboardingRedirect.startsWith('signup') ||
-        !onboardingRedirect.startsWith('organisation-home')
-      )
+      const onboardingRedirect = sessionStorage.getItem('onboarding-redirect') || '';
+      if (!onboardingRedirect.startsWith('signup') && !onboardingRedirect.startsWith('organisation-home'))
         router.replace('/organisation/home');
       return () => {
         if (onboardingRedirect) sessionStorage.removeItem('onboarding-redirect');

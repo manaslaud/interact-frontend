@@ -22,7 +22,9 @@ const Home = () => {
 
   useEffect(() => {
     if (user.isOrganization) router.replace('/organisation/home');
-    else if (user.isLoggedIn && !user.isOnboardingComplete) {
+    else if (user.isLoggedIn && !user.isVerified) {
+      router.replace('/verification');
+    } else if (user.isLoggedIn && !user.isOnboardingComplete) {
       sessionStorage.setItem('onboarding-redirect', 'home-callback');
       router.replace('/onboarding');
     }
