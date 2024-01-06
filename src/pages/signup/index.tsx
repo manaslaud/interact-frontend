@@ -55,13 +55,20 @@ const SignUp = () => {
       Toaster.error('Enter a Valid Email');
       return;
     }
-    if (username.trim().length < 4) {
+
+    const trimmedUsername = username.trim().toLowerCase();
+
+    if (trimmedUsername.length < 4) {
       Toaster.error('Username too short');
       return;
-    } else if (!/^([a-z][a-z0-9_]{4,})$/.test(username.trim().toLowerCase())) {
-      Toaster.error('Enter a Valid Username');
+    } else if (!/^[a-z]/.test(trimmedUsername)) {
+      Toaster.error('Username must start with a letter');
+      return;
+    } else if (!/^([a-z][a-z0-9_]{4,})$/.test(trimmedUsername)) {
+      Toaster.error('Username can only contain letters, numbers, and underscores');
       return;
     }
+
     if (
       !isStrongPassword(password, {
         minLength: 8,

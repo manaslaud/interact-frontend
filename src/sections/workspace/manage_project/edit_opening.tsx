@@ -22,6 +22,11 @@ const EditOpening = ({ setShow, opening, project, setProject }: Props) => {
   const [mutex, setMutex] = useState(false);
 
   const handleSubmit = async () => {
+    if (tags.length == 0) {
+      Toaster.error('Tags Cannot be Empty');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
 

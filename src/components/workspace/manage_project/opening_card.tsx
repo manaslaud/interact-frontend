@@ -74,7 +74,7 @@ const OpeningCard = ({ opening, project, setProject }: Props) => {
           src={`${PROJECT_PIC_URL}/${project.coverPic}`}
           className={'w-[120px] h-[120px] max-md:w-[90px] max-md:h-[90px] rounded-lg object-cover'}
           placeholder="blur"
-          blurDataURL={opening.project.blurHash}
+          blurDataURL={project.blurHash}
         />
 
         <div className="grow flex flex-col gap-4 max-md:gap-2">

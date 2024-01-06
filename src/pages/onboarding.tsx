@@ -153,8 +153,7 @@ const Onboarding = () => {
         else setStep(prev => prev + 1);
         break;
       case 3:
-        if (bio.trim() == '') Toaster.error('Bio cannot be empty');
-        else setStep(prev => prev + 1);
+        setStep(prev => prev + 1);
         break;
       case 4:
         if (tags.length < 3) Toaster.error('Add at least 3 Tags');
@@ -165,8 +164,9 @@ const Onboarding = () => {
         break;
       case 6:
         //TODO fix enter UX issue
-        if (links.length < 1) Toaster.error('Add at least 1 Link');
-        else setStep(prev => prev + 1);
+        // if (links.length < 1) Toaster.error('Add at least 1 Link');
+        // else
+        setStep(prev => prev + 1);
         break;
       case 7:
         if (clickedOnNewCollege) handleAddCollege();
@@ -367,8 +367,8 @@ const Onboarding = () => {
               ) : step == 6 ? (
                 <>
                   <div className="font-medium text-sm">
-                    Almost Done!, Add <span className="underline underline-offset-2">at least one</span> link to your
-                    social.
+                    Almost Done!, Add
+                    {/* <span className="underline underline-offset-2">at least one</span>  */} links to your socials.
                   </div>
                   <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
                 </>
@@ -421,7 +421,7 @@ const Onboarding = () => {
                   ) : (
                     <>
                       <div className="font-medium text-sm">
-                        Tell us the name of your college to help us find your niche (optional)
+                        Tell us the name of your college to help us find your niche!
                       </div>
                       <div className="w-full flex items-center gap-2 bg-[#ffffff40] border-[1px] border-black rounded-lg p-2">
                         <Buildings size={24} weight="duotone" />
