@@ -31,6 +31,8 @@ import { Id } from 'react-toastify';
 import { College } from '@/types';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
+import fuzzysort from 'fuzzysort'
+import { collegesData } from 'src/utils/colleges';
 
 const Onboarding = () => {
   const [clickedOnBuild, setClickedOnBuild] = useState(false);
@@ -62,27 +64,6 @@ const Onboarding = () => {
     const URL = `${EXPLORE_URL}/colleges`;
     postHandler(URL, { name: school, city: location }, 'multipart/form-data');
     setClickedOnNewCollege(false);
-  };
-
-  const fetchColleges = (search: string, abortController: AbortController) => {
-    if (search == '') setColleges([]);
-    else {
-      const URL = `${EXPLORE_URL}/colleges?search=${search}`;
-      getHandler(URL, abortController.signal)
-        .then(res => {
-          if (res.statusCode === 200) {
-            setColleges(res.data.colleges);
-          } else {
-            if (res.status != -1) {
-              if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
-              else Toaster.error(SERVER_ERROR, 'error_toaster');
-            }
-          }
-        })
-        .catch(err => {
-          Toaster.error(SERVER_ERROR, 'error_toaster');
-        });
-    }
   };
 
   useEffect(() => {
@@ -200,12 +181,11 @@ const Onboarding = () => {
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
-    fetchColleges(schoolSearch, abortController);
-
-    return () => {
-      abortController.abort();
-    };
+    if (schoolSearch == '') setColleges([]);
+    else {
+      const results = fuzzysort.go(schoolSearch, collegesData, { key: 'fuzzy' , limit: 10});
+      setColleges(results.map((result) => result.obj));
+    }
   }, [schoolSearch]);
 
   return (
