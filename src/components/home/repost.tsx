@@ -200,7 +200,7 @@ const RePost = ({ post, showLowerPost = true, setFeed, org = false }: Props) => 
         {clickedOnEdit ? (
           <div className="relative">
             <textarea
-              maxLength={500}
+              maxLength={2000}
               value={caption}
               autoFocus={true}
               onChange={el => setCaption(el.target.value)}

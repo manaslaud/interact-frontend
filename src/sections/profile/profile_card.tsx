@@ -58,6 +58,21 @@ const ProfileCard = ({ user, setUser, tagline, coverPic }: Props) => {
       return;
     }
 
+    if (bio.trim() == '') {
+      Toaster.error('Bio Cannot be empty', 'validation_toaster');
+      return;
+    }
+
+    if (tags.length == 0) {
+      Toaster.error('Skills Cannot be empty', 'validation_toaster');
+      return;
+    }
+
+    if (links.length == 0) {
+      Toaster.error('Links Cannot be empty', 'validation_toaster');
+      return;
+    }
+
     if (mutex) return;
     setMutex(true);
 

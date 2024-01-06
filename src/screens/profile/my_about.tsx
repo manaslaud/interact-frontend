@@ -4,11 +4,13 @@ import { SERVER_ERROR } from '@/config/errors';
 import { ORG_URL, USER_URL } from '@/config/routes';
 import patchHandler from '@/handlers/patch_handler';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
-import { Profile, User } from '@/types';
+import { College, Profile, User } from '@/types';
+import { collegesData } from '@/utils/colleges';
 import isArrEdited from '@/utils/funcs/check_array_edited';
 import Toaster from '@/utils/toaster';
-import { Buildings, CalendarBlank, Certificate, Envelope, MapPin, PencilSimple, Phone } from '@phosphor-icons/react';
-import React, { useState } from 'react';
+import { Buildings, CalendarBlank, Certificate, Envelope, MapPin, PencilSimple, Phone, X } from '@phosphor-icons/react';
+import fuzzysort from 'fuzzysort';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface Props {
@@ -41,6 +43,10 @@ const About = ({ profile, setUser, org = false }: Props) => {
   const [clickedOnEmail, setClickedOnEmail] = useState(false);
   const [clickedOnPhoneNo, setClickedOnPhoneNo] = useState(false);
   const [clickedOnLocation, setClickedOnLocation] = useState(false);
+
+  const [schoolSearch, setSchoolSearch] = useState('');
+
+  const [colleges, setColleges] = useState<College[]>([]);
 
   const currentOrgID = useSelector(currentOrgIDSelector);
 
@@ -91,6 +97,14 @@ const About = ({ profile, setUser, org = false }: Props) => {
     setMutex(false);
   };
 
+  useEffect(() => {
+    if (schoolSearch == '') setColleges([]);
+    else {
+      const results = fuzzysort.go(schoolSearch, collegesData, { key: 'fuzzy', limit: 10 });
+      setColleges(results.map(result => result.obj));
+    }
+  }, [schoolSearch]);
+
   interface SaveBtnProps {
     setter: React.Dispatch<React.SetStateAction<boolean>>;
     field: string;
@@ -139,7 +153,11 @@ const About = ({ profile, setUser, org = false }: Props) => {
         <>
           <div className="w-full flex flex-col gap-2">
             <div className="w-full flex justify-between items-center flex-wrap gap-4">
-              <div className="w-fit min-w-[80%] flex gap-2 items-center text-xl font-medium">
+              <div
+                className={`w-fit min-w-[80%] flex gap-2 ${
+                  clickedOnSchool ? 'items-start' : 'items-center'
+                } text-xl font-medium`}
+              >
                 <Buildings weight="bold" size={24} />
 
                 {clickedOnSchool ? (
@@ -147,14 +165,50 @@ const About = ({ profile, setUser, org = false }: Props) => {
                     <div className="text-xs ml-1 font-medium uppercase text-gray-500">
                       College Name ({school.trim().length}/25)
                     </div>
-                    <input
-                      maxLength={25}
-                      value={school}
-                      onChange={el => setSchool(el.target.value)}
-                      placeholder="Interact University"
-                      className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
-                    />
+                    {school != '' ? (
+                      <div className="w-full relative group rounded-lg p-2 flex justify-between items-center bg-gray-100">
+                        <div className="text-lg cursor-default">{school}</div>
+                        <X
+                          onClick={() => {
+                            setSchool('');
+                            setSchoolSearch('');
+                          }}
+                          className="cursor-pointer"
+                        />
+                      </div>
+                    ) : (
+                      <input
+                        className="w-full text-primary_black focus:outline-none border-[1px] border-primary_btn dark:border-dark_primary_btn rounded-lg p-2 font-semibold bg-transparent"
+                        type="text"
+                        maxLength={50}
+                        value={schoolSearch}
+                        onChange={el => setSchoolSearch(el.target.value)}
+                      />
+                    )}
                     <SaveBtn setter={setClickedOnSchool} field="school" />
+
+                    {school == '' && schoolSearch != '' && (
+                      <div className="w-full flex flex-col gap-2">
+                        <div className="w-fit h-5 text-sm font-medium cursor-default">Suggestions</div>
+
+                        <div className="w-full flex flex-wrap gap-2">
+                          {colleges?.map(college => (
+                            <div
+                              key={college.name}
+                              onClick={() => {
+                                setSchool(college.name);
+                                setSchoolSearch(college.name);
+                                setLocation(college.city);
+                                setColleges([]);
+                              }}
+                              className="border-[1px] border-primary_black rounded-lg px-2 py-1 text-xs cursor-pointer"
+                            >
+                              {college.name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div

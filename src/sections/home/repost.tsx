@@ -229,7 +229,7 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
               className="w-full mt-4 bg-transparent focus:outline-none min-h-[154px]"
               value={content}
               onChange={handleContentChange}
-              maxLength={1000}
+              maxLength={2000}
               placeholder="Add to conversation..."
             ></textarea>
           </div>

@@ -129,7 +129,7 @@ const Report = ({ userID, postID, projectID, openingID, chatID, setShow }: Props
               <textarea
                 className="border-[1px] border-primary_black rounded-lg p-2 max-h-36 min-h-[72px] focus:outline-none text-sm"
                 placeholder="Type here"
-                maxLength={1000}
+                maxLength={2000}
                 onChange={el => setContent(el.target.value)}
               ></textarea>
             </div>

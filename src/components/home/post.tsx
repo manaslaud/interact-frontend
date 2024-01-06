@@ -261,7 +261,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
         {clickedOnEdit ? (
           <div className="relative">
             <textarea
-              maxLength={500}
+              maxLength={1000}
               value={caption}
               autoFocus={true}
               onChange={el => setCaption(el.target.value)}

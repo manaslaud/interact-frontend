@@ -70,6 +70,11 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (field: string) => {
+    if (tagline.trim() == '') {
+      Toaster.error('Tagline Cannot be empty', 'validation_toaster');
+      return;
+    }
+
     const toaster = Toaster.startLoad('Updating the Organisation...');
     const formData = new FormData();
 

@@ -31,7 +31,7 @@ import { Id } from 'react-toastify';
 import { College } from '@/types';
 import getHandler from '@/handlers/get_handler';
 import postHandler from '@/handlers/post_handler';
-import fuzzysort from 'fuzzysort'
+import fuzzysort from 'fuzzysort';
 import { collegesData } from 'src/utils/colleges';
 
 const Onboarding = () => {
@@ -183,8 +183,8 @@ const Onboarding = () => {
   useEffect(() => {
     if (schoolSearch == '') setColleges([]);
     else {
-      const results = fuzzysort.go(schoolSearch, collegesData, { key: 'fuzzy' , limit: 10});
-      setColleges(results.map((result) => result.obj));
+      const results = fuzzysort.go(schoolSearch, collegesData, { key: 'fuzzy', limit: 10 });
+      setColleges(results.map(result => result.obj));
     }
   }, [schoolSearch]);
 

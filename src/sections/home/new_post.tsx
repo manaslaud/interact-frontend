@@ -202,7 +202,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
                     className="w-full bg-transparent focus:outline-none min-h-[154px]"
                     value={content}
                     onChange={handleContentChange}
-                    maxLength={1000}
+                    maxLength={2000}
                     placeholder="Start a conversation..."
                   ></textarea>
                 </div>
@@ -218,7 +218,7 @@ const NewPost = ({ setShow, setFeed, org = false }: Props) => {
                 className="w-full bg-transparent focus:outline-none min-h-[154px]"
                 value={content}
                 onChange={handleContentChange}
-                maxLength={1000}
+                maxLength={2000}
                 placeholder="Start a conversation..."
               ></textarea>
             </div>
