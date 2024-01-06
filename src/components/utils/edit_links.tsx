@@ -1,5 +1,5 @@
 import Toaster from '@/utils/toaster';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import isURL from 'validator/lib/isURL';
 import Link from 'next/link';
 import getIcon from '@/utils/funcs/get_icon';
@@ -18,8 +18,28 @@ const Links = ({ links, showTitle = false, setLinks, maxLinks = 5, title = 'Link
   const [newLink, setNewLink] = useState('');
   const [showURL, setShowURL] = useState(-1);
 
-  const addLink = (el: FormEvent<HTMLFormElement>) => {
-    el.preventDefault();
+  const newLinkRef = useRef<string>('');
+
+  useEffect(() => {
+    newLinkRef.current = newLink;
+  }, [newLink]);
+
+  useEffect(() => {
+    return () => {
+      const link = newLinkRef.current;
+
+      if (isURL(link)) {
+        if (link.startsWith('https://www.')) setLinks(prev => [...prev, link]);
+        else if (link.startsWith('https://')) setLinks(prev => [...prev, link.replace('https://', 'https://www.')]);
+        else if (link.startsWith('www.')) setLinks(prev => [...prev, 'https://' + link]);
+        else setLinks(prev => [...prev, 'https://www.' + link]);
+        setNewLink('');
+      }
+    };
+  }, []);
+
+  const addLink = (el?: FormEvent<HTMLFormElement>) => {
+    el?.preventDefault();
     if (links && links.length == maxLinks) {
       return;
     }

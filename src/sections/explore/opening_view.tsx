@@ -98,7 +98,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
           <div className="flex justify-between items-center">
             <div className="font-bold text-xl text-gradient">About this role</div>
           </div>
-          <div className="">{opening.description}</div>
+          <div className="whitespace-pre-wrap">{opening.description}</div>
           <div className="w-full flex flex-wrap gap-2">
             {opening.tags &&
               opening.tags.map(tag => {

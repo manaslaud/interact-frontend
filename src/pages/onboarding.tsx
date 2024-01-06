@@ -473,7 +473,7 @@ const Onboarding = () => {
               ) : step == 8 ? (
                 <>
                   <div className="font-medium text-sm">
-                    One Last Step!, Tell us where are are situated now to help build your recommendations.
+                    One Last Step!, Tell us where are are situated to help build your recommendations.
                   </div>
                   <div className="w-full flex items-center gap-2 bg-[#ffffff40] border-[1px] border-black rounded-lg p-2">
                     <MapPin size={24} weight="duotone" />

@@ -52,7 +52,7 @@ const NewOpening = ({ setShow, project, setProject }: Props) => {
       const opening = res.data.opening;
       if (setProject)
         setProject(prev => {
-          return { ...prev, openings: [...prev.openings, opening] };
+          return { ...prev, openings: [opening, ...prev.openings] };
         });
       Toaster.stopLoad(toaster, 'Opening Added', 1);
       setTitle('');
