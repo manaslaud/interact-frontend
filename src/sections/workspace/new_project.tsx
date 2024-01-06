@@ -70,8 +70,9 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     links.forEach(link => formData.append('links', link));
     formData.append('category', category);
     formData.append('isPrivate', String(isPrivate));
-    formData.append('coverPic', randomImage);
+
     if (image) formData.append('coverPic', image);
+    else formData.append('coverPic', randomImage);
 
     const URL = PROJECT_URL;
 
@@ -116,10 +117,6 @@ const NewProject = ({ setShow, setProjects }: Props) => {
 
   return (
     <>
-      {/* <div className="w-screen h-screen max-lg:overflow-auto flex max-lg:flex-col-reverse fixed top-0 left-0 bg-[#ffffff] z-50 animate-fade_third">
-        
-        </div> */}
-
       <div className="fixed top-14 max-lg:top-0 w-5/6 max-lg:w-screen h-5/6 max-lg:h-screen backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex max-lg:flex-col justify-between rounded-lg p-8 gap-8 max-lg:gap-4 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 translate-x-1/2 shadow-2xl animate-fade_third z-50">
         <X
           onClick={() => setShow(false)}

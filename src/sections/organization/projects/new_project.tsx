@@ -129,7 +129,9 @@ const NewProject = ({ setShow, setProjects }: Props) => {
     links.forEach(link => formData.append('links', link));
     formData.append('category', category);
     formData.append('isPrivate', String(isPrivate));
+
     if (image) formData.append('coverPic', image);
+    else formData.append('coverPic', randomImage);
 
     const URL = `${ORG_URL}/${currentOrg.id}/projects`;
 

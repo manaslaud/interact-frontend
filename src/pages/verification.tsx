@@ -32,6 +32,7 @@ const Verification = () => {
       Cookies.remove('id');
       router.replace('/login');
     } else if (user.isVerified) router.back();
+    else sendOTP();
   }, []);
 
   const sendOTP = () => {
@@ -104,18 +105,10 @@ const Verification = () => {
           </div>
           <div className="w-3/5 max-md:w-full flex flex-col items-center gap-6">
             {!sentOTP ? (
-              <div className="flex flex-col gap-6 max-lg:px-8 py-12 max-lg:py-16">
-                <div className="text-2xl font-medium text-center">
-                  Your profile won&apos;t be <span className="font-bold">discoverable</span> until you verify your
-                  account.
-                </div>
-                <div className="text-xl text-center">
-                  An OTP will be sent to <b>{user.email}</b> for the verification of your account.
-                </div>
-                <div onClick={sendOTP} className="mx-auto underline-offset-2 cursor-pointer hover:underline">
-                  Click Here to send OTP
-                </div>
-              </div>
+              //TODO add UI
+              <>
+                Sending OTP to <b>{user.email}</b>
+              </>
             ) : (
               <div className="w-full flex flex-col items-center gap-2 px-16 max-lg:px-8 py-24 max-lg:py-16">
                 <div className="text-xl text-center">

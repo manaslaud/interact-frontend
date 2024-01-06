@@ -6,6 +6,7 @@ import Base from '@/screens/base_template';
 
 const Protect = <Props extends Object>(Component: ComponentType<Props>) => {
   const ProtectedComponent = (props: Props) => {
+    //TODO do verification redirect here only
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(0);
     useEffect(() => {

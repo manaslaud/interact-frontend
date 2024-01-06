@@ -56,7 +56,7 @@ const Organisations = () => {
   }, [window.location.search]);
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6 pt-2">
       {loading ? (
         <Loader />
       ) : (
