@@ -70,21 +70,6 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
       return;
     }
 
-    if (bio.trim() == '') {
-      Toaster.error('Bio Cannot be empty', 'validation_toaster');
-      return;
-    }
-
-    if (tags.length == 0) {
-      Toaster.error('Tags Cannot be empty', 'validation_toaster');
-      return;
-    }
-
-    if (links.length == 0) {
-      Toaster.error('Links Cannot be empty', 'validation_toaster');
-      return;
-    }
-
     if (mutex) return;
     setMutex(true);
 
@@ -151,10 +136,10 @@ const OrgCard = ({ user, setUser, tagline, coverPic }: Props) => {
 
   const SaveBtn = ({ setter, field }: SaveBtnProps) => {
     const checker = () => {
-      if (field == 'name') return name == user.name;
-      else if (field == 'bio') return bio == user.bio;
-      else if (field == 'tags') return !isArrEdited(tags, user.tags);
-      else if (field == 'links') return !isArrEdited(links, user.links);
+      if (field == 'name') return name == user.name || name.trim() == '';
+      else if (field == 'bio') return bio == user.bio || bio.trim() == '';
+      else if (field == 'tags') return !isArrEdited(tags, user.tags) || tags.length == 0;
+      else if (field == 'links') return !isArrEdited(links, user.links) || links.length == 0;
       return true;
     };
     return (

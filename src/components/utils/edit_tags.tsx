@@ -19,11 +19,25 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false, suggestions = f
   const handleTagInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      if (tags.length == maxTags) return;
-      const newTag = tagInput.trim();
-      if (!tags.includes(newTag) && newTag !== '') {
-        setTags([...tags, newTag.toLowerCase()]);
+      if (tagInput.trim() !== '') {
+        // Split the input value by commas, trim each part, and add to tags
+        const newTags = tagInput
+          .split(',')
+          .map(tag => tag.trim().toLowerCase())
+          .filter(tag => tag !== '');
+
+        // Add unique new tags to the existing tags
+        const uniqueNewTags = Array.from(new Set(newTags));
+        const updatedTags = [...tags, ...uniqueNewTags.slice(0, maxTags - tags.length)];
+
+        setTags(updatedTags);
         setTagInput('');
+      }
+    } else if (event.key === 'Backspace' && tagInput === '') {
+      event.preventDefault();
+      const lastTag = tags[tags.length - 1];
+      if (lastTag) {
+        handleTagRemove(lastTag);
       }
     }
   };
