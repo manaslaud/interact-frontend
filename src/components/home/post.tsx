@@ -62,6 +62,24 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'b' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      wrapSelectedText('**', '**');
+    }
+  };
+
+  const wrapSelectedText = (prefix: string, suffix: string) => {
+    const textarea = document.getElementById('textarea_id') as HTMLTextAreaElement;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = caption.substring(start, end);
+    const newText = caption.substring(0, start) + prefix + selectedText + suffix + caption.substring(end);
+    setCaption(newText);
+    textarea.focus();
+    textarea.setSelectionRange(start + prefix.length, end + prefix.length);
+  };
+
   const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleEdit = async () => {
@@ -261,10 +279,12 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
         {clickedOnEdit ? (
           <div className="relative">
             <textarea
-              maxLength={1000}
+              id="textarea_id"
+              maxLength={2000}
               value={caption}
               autoFocus={true}
               onChange={el => setCaption(el.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full text-sm whitespace-pre-wrap rounded-md focus:outline-none dark:bg-dark_primary_comp p-2 my-2 max-h-72"
             />
 

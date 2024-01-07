@@ -18,10 +18,13 @@ import { initialOrganizationMembership } from '@/types/initials';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import deleteHandler from '@/handlers/delete_handler';
 import WidthCheck from '@/utils/wrappers/widthCheck';
+import ConfirmOTP from '@/components/common/confirm_otp';
 
 const Organizations = () => {
   const [memberships, setMemberships] = useState<OrganizationMembership[]>([]);
   const [clickedOnLeaveOrg, setClickedOnLeaveOrg] = useState(false);
+  const [clickedOnConfirmLeave, setClickedOnConfirmLeave] = useState(false);
+
   const [clickedMembership, setClickedMembership] = useState(initialOrganizationMembership);
 
   const router = useRouter();
@@ -53,17 +56,34 @@ const Organizations = () => {
     router.push('/organisation/posts');
   };
 
-  const handleLeaveOrg = async () => {
+  const sendOTP = async () => {
+    const toaster = Toaster.startLoad('Sending OTP');
+
+    const URL = `${ORG_URL}/${clickedMembership.organizationID}/membership/delete`;
+
+    const res = await getHandler(URL);
+
+    if (res.statusCode === 200) {
+      Toaster.stopLoad(toaster, 'OTP Sent to your registered mail', 1);
+      setClickedOnLeaveOrg(false);
+      setClickedOnConfirmLeave(true);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+    }
+  };
+
+  const handleLeaveOrg = async (otp: string) => {
     const toaster = Toaster.startLoad('Leaving Organisation...');
 
     const URL = `${ORG_URL}/${clickedMembership.organizationID}/membership`;
 
-    const res = await deleteHandler(URL);
+    const res = await deleteHandler(URL, { otp });
 
     if (res.statusCode === 204) {
       setMemberships(prev => prev.filter(m => m.id != clickedMembership.id));
       setClickedMembership(initialOrganizationMembership);
-      setClickedOnLeaveOrg(false);
+      setClickedOnConfirmLeave(false);
       Toaster.stopLoad(toaster, 'Left Organisation', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -77,10 +97,16 @@ const Organizations = () => {
       <MainWrapper>
         <div className="w-full flex flex-col gap-8 px-32 py-10">
           {clickedOnLeaveOrg ? (
-            <ConfirmDelete handleDelete={handleLeaveOrg} setShow={setClickedOnLeaveOrg} title="Leave Organisation?" />
+            <ConfirmDelete setShow={setClickedOnLeaveOrg} handleDelete={sendOTP} title="Leave Organisation?" />
           ) : (
             <></>
           )}
+          {clickedOnConfirmLeave ? (
+            <ConfirmOTP setShow={setClickedOnConfirmLeave} handleSubmit={handleLeaveOrg} />
+          ) : (
+            <></>
+          )}
+
           <div className="text-5xl font-semibold dark:text-white font-primary">Memberships</div>
 
           <div className="w-full flex justify-between flex-wrap">

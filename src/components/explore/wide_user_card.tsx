@@ -37,8 +37,8 @@ const UserCard = ({ user }: Props) => {
         <div className="w-full flex gap-4 p-4">
           <Image
             crossOrigin="anonymous"
-            width={200}
-            height={200}
+            width={100}
+            height={100}
             alt={'User Pic'}
             src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
             className="w-24 h-24 rounded-full z-[1]"

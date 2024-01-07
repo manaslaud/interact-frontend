@@ -109,8 +109,26 @@ const AddMembers = ({ setShow, organization, setOrganization }: Props) => {
       if (res.statusCode === 201) {
         const invitation: Invitation = res.data.invitation;
         if (setOrganization)
+          // setOrganization(prev => {
+          //   return { ...prev, invitations: [...prev.invitations, invitation] };
+          // });
+
           setOrganization(prev => {
-            return { ...prev, invitations: [...prev.invitations, invitation] };
+            // Check if the invitation already exists in the array
+            const existingInvitationIndex = prev.invitations.findIndex(inv => inv.id === invitation.id);
+
+            if (existingInvitationIndex !== -1) {
+              // If the invitation exists, update it in the array
+              const updatedInvitations = [...prev.invitations];
+              updatedInvitations[existingInvitationIndex] = invitation;
+
+              updatedInvitations.unshift(updatedInvitations.splice(existingInvitationIndex, 1)[0]);
+
+              return { ...prev, invitations: updatedInvitations };
+            } else {
+              // If the invitation doesn't exist, add it to the array
+              return { ...prev, invitations: [invitation, ...prev.invitations] };
+            }
           });
         completeCount++;
         if (completeCount == invitationSlices.length) {
