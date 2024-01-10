@@ -16,7 +16,6 @@ interface Props {
 
 const Events = ({ orgID, displayOnProfile = false }: Props) => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [clickedOnNewEvent, setClickedOnNewEvent] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 

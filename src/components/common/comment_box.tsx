@@ -96,7 +96,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       if (item.userID && item.userID != loggedInUser.id)
         socketService.sendNotification(item.userID, `${loggedInUser.name} commented on your ${type}!`);
     } else {
-      if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
+      if (res.data.message != "") Toaster.stopLoad(toaster, res.data.message, 0);
       else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
@@ -116,7 +116,7 @@ const CommentBox = ({ type, item, setNoComments }: Props) => {
       setComments(newComments);
       setNoComments(prev => prev - 1);
     } else {
-      if (res.data.message == 1) Toaster.stopLoad(toaster, res.data.message, 0);
+      if (res.data.message != "") Toaster.stopLoad(toaster, res.data.message, 0);
       else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }

@@ -21,6 +21,7 @@ import {
   Profile,
   Project,
   ProjectBookmark,
+  Review,
   SubTask,
   Task,
   User,
@@ -163,6 +164,7 @@ export const initialPost: Post = {
   noComments: 0,
   noImpressions: 0,
   noReposts: 0,
+  isRePost: false,
   comments: [],
   postedAt: new Date(),
   tags: [],
@@ -415,4 +417,17 @@ export const initialEvent: Event = {
   location: '',
   createdAt: new Date(),
   userID: '',
+};
+
+export const initialReview: Review = {
+  id: '',
+  organizationID: '',
+  userID: '',
+  user: initialUser,
+  content: '',
+  noUpVotes: 0,
+  noDownVotes: 0,
+  rating: 0,
+  isAnonymous: false,
+  createdAt: new Date(),
 };

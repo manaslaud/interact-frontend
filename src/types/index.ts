@@ -496,3 +496,16 @@ export interface College {
   longitude: number;
   fuzzy: string;
 }
+
+export interface Review {
+  id: string;
+  userID: string;
+  user: User;
+  organizationID: string;
+  content: string;
+  rating: number;
+  noUpVotes: number;
+  noDownVotes: number;
+  isAnonymous: boolean;
+  createdAt: Date;
+}
