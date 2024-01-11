@@ -19,6 +19,7 @@ interface UserState {
   resume: string;
   following: string[];
   likes: string[];
+  dislikes: string[];
   links: string[];
   postBookmarks: PostBookmark[];
   projectBookmarks: ProjectBookmark[];
@@ -52,6 +53,7 @@ const initialState: UserState = {
   profilePic: '',
   following: [],
   likes: [],
+  dislikes: [],
   links: [],
   postBookmarks: [],
   projectBookmarks: [],
@@ -97,6 +99,7 @@ export const userSlice = createSlice({
       state.applications = [];
       state.following = [];
       state.likes = [];
+      state.dislikes = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
       state.openingBookmarks = [];
@@ -125,6 +128,7 @@ export const userSlice = createSlice({
       state.applications = [];
       state.following = [];
       state.likes = [];
+      state.dislikes = [];
       state.links = [];
       state.postBookmarks = [];
       state.projectBookmarks = [];
@@ -150,6 +154,9 @@ export const userSlice = createSlice({
     },
     setLikes: (state, action: PayloadAction<string[]>) => {
       state.likes = action.payload;
+    },
+    setDisLikes: (state, action: PayloadAction<string[]>) => {
+      state.dislikes = action.payload;
     },
     setReduxLinks: (state, action: PayloadAction<string[]>) => {
       state.links = action.payload;
@@ -223,6 +230,7 @@ export const {
   setReduxBio,
   setFollowing,
   setLikes,
+  setDisLikes,
   setReduxLinks,
   resetReduxLinks,
   setPostBookmarks,

@@ -11,7 +11,7 @@ const nextConfig = {
             protocol: 'https',
             hostname: 'storage.googleapis.com',
             port: '',
-            pathname: '/interact-bucket/**',
+            pathname: `/${process.env.NEXT_PUBLIC_GCP_BUCKET}/**`,
         },
     ],
   },

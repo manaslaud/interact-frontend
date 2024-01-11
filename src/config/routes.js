@@ -2,7 +2,7 @@ export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
 export const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 export const GC_API = 'https://storage.googleapis.com'
-export const BUCKET = 'interact-bucket'
+export const BUCKET = process.env.NEXT_PUBLIC_GCP_BUCKET;
 
 export const LOGIN_URL = `/login`
 export const SIGNUP_URL = `/signup`

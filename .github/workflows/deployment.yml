@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Stash Changes
+        run: git stash
+        working-directory: /home/prathammishra/interact/interact-frontend
+
       - name: Pull Changes
         run: git pull origin main
         working-directory: /home/prathammishra/interact/interact-frontend

@@ -18,7 +18,6 @@ interface Props {
 
 const Reviews = ({ orgID }: Props) => {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [clickedOnNewReview, setClickedOnNewReview] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
@@ -62,7 +61,7 @@ const Reviews = ({ orgID }: Props) => {
           next={getReviews}
           hasMore={hasMore}
           loader={<Loader />}
-          className="w-full flex flex-wrap justify-center px-4 pb-12 gap-6"
+          className="w-full flex flex-wrap justify-center px-4 pb-12 gap-4"
         >
           {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
             //TODO not show if review is already added

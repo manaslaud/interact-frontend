@@ -38,7 +38,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
 
     const toaster = Toaster.startLoad('Adding your review...');
 
-    const formData = { content, rating };
+    const formData = { content, rating, isAnonymous };
 
     const URL = `${ORG_URL}/${orgID}/reviews`;
 
@@ -46,7 +46,9 @@ const NewReview = ({ orgID, setReviews }: Props) => {
     if (res.statusCode === 201) {
       const review = res.data.review;
       setReviews(prev => [review, ...prev]);
-
+      setContent('');
+      setRating(0);
+      setIsAnonymous(false);
       Toaster.stopLoad(toaster, 'Review Added!', 1);
     } else {
       if (res.data.message != '') Toaster.stopLoad(toaster, res.data.message, 0);
@@ -59,7 +61,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-4">
+    <div className="w-full flex flex-col items-center gap-4 z-10">
       <div className="w-5/6 flex justify-between gap-2">
         <Image
           crossOrigin="anonymous"
@@ -71,12 +73,13 @@ const NewReview = ({ orgID, setReviews }: Props) => {
         />
         <textarea
           value={content}
+          maxLength={500}
           onChange={el => setContent(el.target.value)}
           onKeyDown={el => {
             if (el.key === 'Enter') submitHandler();
           }}
           className="w-[calc(100%-32px)] max-md:text-sm border-[1px] border-dashed p-2 rounded-lg dark:text-white dark:bg-dark_primary_comp focus:outline-none min-h-[3rem] max-h-64 max-md:w-full"
-          placeholder="Add a Review"
+          placeholder="Add a Review (500 characters)"
         />
       </div>
 
@@ -138,7 +141,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
         </div>
 
         <div
-          className="h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-3  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
+          className="h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-6  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300"
           onClick={submitHandler}
         >
           Submit

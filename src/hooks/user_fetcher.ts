@@ -33,6 +33,7 @@ import {
   ChatSlice,
   setApplications,
   setChats,
+  setDisLikes,
   setEditorProjects,
   setEventBookmarks,
   setFollowing,
@@ -88,12 +89,25 @@ const useUserStateFetcher = () => {
 
   const fetchLikes = () => {
     if (moment().utc().diff(config.lastFetchedLikes, 'minute') < 30) return;
-    const URL = `${USER_URL}/me/likes`;
-    getHandler(URL)
+    const LIKES_URL = `${USER_URL}/me/likes`;
+    getHandler(LIKES_URL)
       .then(res => {
         if (res.statusCode == 200) {
           const likesData: string[] = res.data.likes || [];
           dispatch(setLikes(likesData));
+          dispatch(setFetchedLikes(new Date().toUTCString()));
+        }
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+
+    const DISLIKES_URL = `${USER_URL}/me/dislikes`;
+    getHandler(DISLIKES_URL)
+      .then(res => {
+        if (res.statusCode == 200) {
+          const likesData: string[] = res.data.dislikes || [];
+          dispatch(setDisLikes(likesData));
           dispatch(setFetchedLikes(new Date().toUTCString()));
         }
       })
