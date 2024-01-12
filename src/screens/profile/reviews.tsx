@@ -96,39 +96,59 @@ const Reviews = ({ orgID }: Props) => {
     getReviewData();
   }, []);
 
+  interface ReviewBarProps {
+    index: number;
+  }
+
+  const ReviewBar = ({ index }: ReviewBarProps) => {
+    const barWidth = ((reviewData.counts as any)[index] * 100) / reviewData.total;
+
+    return (
+      <div className="w-full flex gap-2 items-center">
+        {index} Star
+        <div className="grow h-3 max-md:hidden border-dark_primary_btn border-2 rounded-lg">
+          <div
+            style={{ width: `${barWidth}%` }}
+            className={`h-full bg-dark_primary_btn rounded-lg ${barWidth != 1 ? 'rounded-r-none' : ''}`}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="w-[50vw] max-md:w-full mx-auto max-md:pb-2 z-50">
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-full flex flex-col gap-2">
-          <div className="w-5/6 mx-auto flex justify-between items-center border-[1px] border-primary_black rounded-xl px-4 py-2 gap-4">
-            <div className="flex flex-col items-center">
-              <Star size={32} />
-              <div>Average Rating: {reviewData.average}</div>
-              <div>Total Reviews: {reviewData.total}</div>
+        <div className="w-full flex flex-col gap-6">
+          <div className="w-5/6 bg-white mx-auto flex justify-between items-center rounded-xl p-6 gap-6">
+            <div className="flex flex-col items-center gap-2">
+              <div className="relative flex-center">
+                <Star className="text-dark_primary_btn" size={108} />
+                <div className="absolute text-dark_primary_btn font-semibold">{reviewData.average}</div>
+              </div>
+              <div>From {reviewData.total} Reviews</div>
             </div>
             <div className="grow flex flex-col gap-2">
-              <div>5 Star: {reviewData.counts[5]}</div>
-              <div>4 Star: {reviewData.counts[4]}</div>
-              <div>3 Star: {reviewData.counts[3]}</div>
-              <div>2 Star: {reviewData.counts[2]}</div>
-              <div>1 Star: {reviewData.counts[1]}</div>
+              {[5, 4, 3, 2, 1].map(index => (
+                <ReviewBar key={index} index={index} />
+              ))}
             </div>
           </div>
+          {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
+            //TODO not show if review is already added
+            <NewReview orgID={orgID} setReviews={setReviews} />
+          ) : (
+            <></>
+          )}
           <InfiniteScroll
             dataLength={reviews.length}
             next={getReviews}
             hasMore={hasMore}
             loader={<Loader />}
-            className="w-full flex flex-wrap justify-center px-4 pb-12 gap-4"
+            className="w-full flex flex-wrap justify-center pb-12 gap-4"
           >
-            {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
-              //TODO not show if review is already added
-              <NewReview orgID={orgID} setReviews={setReviews} />
-            ) : (
-              <></>
-            )}
             {reviews.length > 0 ? (
               reviews.map(review => <ReviewCard key={review.id} review={review} setReviews={setReviews} />)
             ) : (

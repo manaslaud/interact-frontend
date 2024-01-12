@@ -29,7 +29,7 @@ const Feed = () => {
   const open = useSelector(navbarOpenSelector);
 
   const getFeed = () => {
-    const URL = `/feed?page=${page}&limit=${5}`;
+    const URL = `/feed?page=${page}&limit=${10}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {

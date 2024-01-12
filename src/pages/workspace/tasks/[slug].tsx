@@ -2,7 +2,7 @@ import Loader from '@/components/common/loader';
 import Sidebar from '@/components/common/sidebar';
 import TaskCard from '@/components/workspace/task_card';
 import { SERVER_ERROR } from '@/config/errors';
-import { ORG_URL, PROJECT_URL } from '@/config/routes';
+import { PROJECT_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import NewTask from '@/sections/workspace/new_task';
 import TaskView from '@/sections/workspace/task_view';
