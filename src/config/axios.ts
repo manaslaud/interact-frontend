@@ -1,7 +1,7 @@
 import Toaster from '@/utils/toaster';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import { TOKEN_EXPIRATION_ERROR } from './errors';
+import { TOKEN_EXPIRATION_ERROR, VERIFICATION_ERROR } from './errors';
 import { BACKEND_URL, FRONTEND_URL } from './routes';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
@@ -41,6 +41,23 @@ configuredAxios.interceptors.request.use(
     return config;
   },
   error => {
+    return Promise.reject(error);
+  }
+);
+
+configuredAxios.interceptors.response.use(
+  (response: AxiosResponse) => {
+    // Check if the response contains the specific message you are looking for
+    if (response.data.message === VERIFICATION_ERROR) {
+      Toaster.error(VERIFICATION_ERROR);
+      window.location.replace('/verification');
+    }
+
+    // If the message is not VERIFICATION_ERROR, simply return the response
+    return response;
+  },
+  (error: AxiosError) => {
+    // Handle errors here if needed
     return Promise.reject(error);
   }
 );

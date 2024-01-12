@@ -5,9 +5,8 @@ import { INVITATION_URL, PROJECT_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import Toaster from '@/utils/toaster';
-import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
-import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMemberProjects, userSelector } from '@/slices/userSlice';
 import ConfirmDelete from '../common/confirm_delete';
@@ -49,10 +48,7 @@ const ProjectInvitationCard = ({ invitation, setInvitations }: Props) => {
       Toaster.stopLoad(toaster, 'Invitation Accepted', 1);
     } else {
       if (res.data.message) {
-        if (res.data.message == VERIFICATION_ERROR) {
-          Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
-          router.push('/verification');
-        } else Toaster.stopLoad(toaster, res.data.message, 0);
+        Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }

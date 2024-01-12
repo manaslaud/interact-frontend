@@ -1,4 +1,4 @@
-import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL, ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import Toaster from '@/utils/toaster';
@@ -75,10 +75,7 @@ const RePost = ({ post, setShow, setFeed, org = false }: Props) => {
       setShow(false);
     } else {
       if (res.data.message) {
-        if (res.data.message == VERIFICATION_ERROR) {
-          Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
-          window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verification`;
-        } else Toaster.stopLoad(toaster, res.data.message, 0);
+        Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }

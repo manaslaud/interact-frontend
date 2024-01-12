@@ -1,5 +1,5 @@
 import Links from '@/components/utils/edit_links';
-import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR } from '@/config/errors';
 import { APPLICATION_URL, PROJECT_PIC_URL } from '@/config/routes';
 import socketService from '@/config/ws';
 import postHandler from '@/handlers/post_handler';
@@ -72,14 +72,8 @@ const ApplyOpening = ({ opening, setShow, setOpening, setAddResume }: Props) => 
       Toaster.stopLoad(toaster, 'Applied to the Opening!', 1);
       setShow(false);
     } else {
-      if (res.data.content) {
-        if (res.data.content == VERIFICATION_ERROR) {
-          Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
-          router.push('/verification');
-        } else Toaster.stopLoad(toaster, res.data.content, 0);
-      } else {
-        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
-      }
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else Toaster.stopLoad(toaster, SERVER_ERROR, 0);
     }
   };
 

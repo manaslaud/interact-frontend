@@ -1,7 +1,7 @@
 import Links from '@/components/utils/edit_links';
 import Tags from '@/components/utils/edit_tags';
 import CoverPic from '@/components/utils/new_cover';
-import { SERVER_ERROR, VERIFICATION_ERROR } from '@/config/errors';
+import { SERVER_ERROR } from '@/config/errors';
 import { PROJECT_URL } from '@/config/routes';
 import postHandler from '@/handlers/post_handler';
 import { userSelector } from '@/slices/userSlice';
@@ -9,7 +9,6 @@ import { Project } from '@/types';
 import categories from '@/utils/categories';
 import Toaster from '@/utils/toaster';
 import { X } from '@phosphor-icons/react';
-import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -94,10 +93,7 @@ const NewProject = ({ setShow, setProjects }: Props) => {
       Toaster.stopLoad(toaster, 'Image too large', 0);
     } else {
       if (res.data.message) {
-        if (res.data.message == VERIFICATION_ERROR) {
-          Toaster.stopLoad(toaster, VERIFICATION_ERROR, 0);
-          router.push('/verification'); //TODO use window location instead
-        } else Toaster.stopLoad(toaster, res.data.message, 0);
+        Toaster.stopLoad(toaster, res.data.message, 0);
       } else {
         Toaster.stopLoad(toaster, SERVER_ERROR, 0);
       }
