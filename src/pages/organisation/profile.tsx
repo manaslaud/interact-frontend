@@ -30,6 +30,7 @@ import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import { ORG_SENIOR } from '@/config/constants';
 import OrgCard from '@/sections/profile/org_card';
+import Reviews from '@/screens/profile/reviews';
 
 const Profile = () => {
   const [active, setActive] = useState(0);
@@ -286,10 +287,10 @@ const Profile = () => {
             )}
 
             <TabMenu
-              items={['About', 'Posts', 'Projects', 'Events']}
+              items={['About', 'Posts', 'Projects', 'Events', 'Reviews']}
               active={active}
               setState={setActive}
-              width={'640px'}
+              width={open ? '640px' : '720px'}
               sticky={true}
             />
 
@@ -316,6 +317,9 @@ const Profile = () => {
             </div>
             <div className={`${active === 3 ? 'block' : 'hidden'} `}>
               {loading ? <Loader /> : <Events orgID={currentOrgID} />}
+            </div>
+            <div className={`${active === 4 ? 'block' : 'hidden'} `}>
+              {loading ? <Loader /> : <Reviews orgID={currentOrgID} />}
             </div>
           </div>
         </div>

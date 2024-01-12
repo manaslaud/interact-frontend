@@ -61,7 +61,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-4 z-10">
+    <div className="w-full flex flex-col items-center gap-4 z-[1]">
       <div className="w-5/6 flex justify-between gap-2">
         <Image
           crossOrigin="anonymous"
