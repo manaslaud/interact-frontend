@@ -127,8 +127,8 @@ const LowerReview = ({ review }: Props) => {
           else likeHandler();
         }}
         className={`flex items-center gap-1 ${
-          liked ? 'shadow-xl' : 'hover:shadow-xl'
-        } px-2 py-1 rounded-lg cursor-pointer transition-ease-300`}
+          liked ? 'shadow-xl text-white bg-primary_text' : 'hover:shadow-xl'
+        } px-2 py-1 rounded-lg cursor-pointer transition-ease-300 font-medium`}
       >
         <CaretUp size={20} weight="bold" />
         <div>{numUpVotes}</div>
@@ -139,7 +139,7 @@ const LowerReview = ({ review }: Props) => {
           else dislikeHandler();
         }}
         className={`flex items-center gap-1 ${
-          disliked ? 'shadow-xl' : 'hover:shadow-xl'
+          disliked ? 'shadow-xl text-white bg-red-400' : 'hover:shadow-xl'
         } px-2 py-1 rounded-lg cursor-pointer transition-ease-300`}
       >
         <CaretDown size={20} weight="bold" />

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import LowerReview from '../lowers/lower_review';
 import { ORG_MANAGER } from '@/config/constants';
+import StarRating from '../organization/star_rating';
 
 interface Props {
   review: Review;
@@ -98,11 +99,13 @@ const ReviewCard = ({ review, setReviews }: Props) => {
         <div className="w-full flex justify-between items-center">
           <LowerReview review={review} />
           <div className="w-fit flex gap-1">
-            <Star size={20} weight={review.rating >= 1 ? 'fill' : 'regular'} />
-            <Star size={20} weight={review.rating >= 2 ? 'fill' : 'regular'} />
-            <Star size={20} weight={review.rating >= 3 ? 'fill' : 'regular'} />
-            <Star size={20} weight={review.rating >= 4 ? 'fill' : 'regular'} />
-            <Star size={20} weight={review.rating == 5 ? 'fill' : 'regular'} />
+            <StarRating
+              fixRating={true}
+              defaultRating={Math.floor(review.rating)}
+              color={'#9275b9ba'}
+              strokeColor={'#633267'}
+              size={25}
+            />
           </div>
         </div>
 
