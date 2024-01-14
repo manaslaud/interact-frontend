@@ -509,3 +509,21 @@ export interface Review {
   isAnonymous: boolean;
   createdAt: Date;
 }
+
+export interface Option {
+  id: string;
+  pollID: string;
+  content: string;
+  noVotes: string;
+  votedBy: User[];
+}
+
+export interface Poll {
+  id: string;
+  organizationID: string;
+  title: string;
+  content: string;
+  options: Option;
+  isMultiAnswer: boolean;
+  createdAt: Date;
+}
