@@ -8,11 +8,12 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '@/components/common/loader';
 import ReviewCard from '@/components/explore/review_card';
 import NoUserItems from '@/components/empty_fillers/user_items';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import NewReview from '@/sections/organization/reviews/new_review';
-import { Star } from '@phosphor-icons/react';
-
+import { Star, Plus } from '@phosphor-icons/react';
+import StarRating from '@/components/organization/star_rating';
+import { reviewModalOpenSelector, setReviewModalOpen } from '@/slices/feedSlice';
 interface Props {
   orgID: string;
 }
@@ -99,13 +100,14 @@ const Reviews = ({ orgID }: Props) => {
   interface ReviewBarProps {
     index: number;
   }
-
+  const dispatch = useDispatch();
+  const reviewModalOpen = useSelector(reviewModalOpenSelector);
   const ReviewBar = ({ index }: ReviewBarProps) => {
     const barWidth = ((reviewData.counts as any)[index] * 100) / reviewData.total;
 
     return (
-      <div className="w-full flex gap-2 items-center">
-        {index} Star
+      <div className="w-full flex gap-2 items-center font-bold">
+        {index}
         <div className="grow h-3 max-md:hidden border-dark_primary_btn border-2 rounded-lg">
           <div
             style={{ width: `${barWidth}%` }}
@@ -122,11 +124,31 @@ const Reviews = ({ orgID }: Props) => {
         <Loader />
       ) : (
         <div className="w-full flex flex-col gap-6">
+          {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
+            <div
+              className="AddReview fixed z-[50] bottom-28 right-0 lg:bottom-12 lg:right-12 bg-primary_text text-white dark:text-white dark:bg-[#0e0c2a59] px-6 py-3 rounded-full flex gap-2 shadow-xl font-medium cursor-pointer scale-75 md:scale-100 "
+              onClick={() => dispatch(setReviewModalOpen(!reviewModalOpen))}
+            >
+              <Plus size={25} /> <span>Add Review</span>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <div className="w-5/6 bg-white mx-auto flex justify-between items-center rounded-xl p-6 gap-6">
             <div className="flex flex-col items-center gap-2">
               <div className="relative flex-center">
-                <Star className="text-dark_primary_btn" size={108} />
-                <div className="absolute text-dark_primary_btn font-semibold">{reviewData.average}</div>
+                <div className=" text-dark_primary_btn font-bold text-5xl flex flex-col items-center gap-2">
+                  {/* <Star className="text-dark_primary_btn" size={18} */}
+                  {reviewData.average}
+                  <StarRating
+                    defaultRating={Math.floor(reviewData.average)}
+                    color={'#9275b9ba'}
+                    strokeColor={'#633267'}
+                    size={15}
+                    fixRating={true}
+                  />
+                </div>
               </div>
               <div>From {reviewData.total} Reviews</div>
             </div>
