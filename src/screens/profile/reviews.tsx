@@ -48,6 +48,7 @@ const Reviews = ({ orgID }: Props) => {
   const [hasMore, setHasMore] = useState(true);
 
   const [loading, setLoading] = useState(true);
+  const [reviewDataLoading, setReviewDataLoading] = useState(true);
 
   const user = useSelector(userSelector);
 
@@ -79,7 +80,7 @@ const Reviews = ({ orgID }: Props) => {
       .then(res => {
         if (res.statusCode === 200) {
           setReviewData(res.data.reviewData);
-          setLoading(false);
+          setReviewDataLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
           else {
@@ -126,38 +127,44 @@ const Reviews = ({ orgID }: Props) => {
         <div className="w-full flex flex-col gap-6">
           {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
             <div
-              className="AddReview fixed z-[50] bottom-28 right-0 lg:bottom-12 lg:right-12 bg-primary_text text-white dark:text-white dark:bg-[#0e0c2a59] px-6 py-3 rounded-full flex gap-2 shadow-xl font-medium cursor-pointer scale-75 md:scale-100 "
+              className="fixed z-50 bottom-28 right-0 lg:bottom-12 lg:right-12 flex-center text-sm bg-primary_text text-white px-4 py-3 rounded-full flex gap-2 shadow-lg hover:shadow-2xl font-medium cursor-pointer transition-ease-300"
               onClick={() => dispatch(setReviewModalOpen(!reviewModalOpen))}
             >
-              <Plus size={25} /> <span>Add Review</span>
+              <Plus size={20} /> <div className="h-fit">Add Review</div>
             </div>
           ) : (
             <></>
           )}
 
-          <div className="w-5/6 bg-white mx-auto flex justify-between items-center rounded-xl p-6 gap-6">
-            <div className="flex flex-col items-center gap-2">
-              <div className="relative flex-center">
-                <div className=" text-dark_primary_btn font-bold text-5xl flex flex-col items-center gap-2">
-                  {/* <Star className="text-dark_primary_btn" size={18} */}
-                  {reviewData.average}
-                  <StarRating
-                    defaultRating={Math.floor(reviewData.average)}
-                    color={'#9275b9ba'}
-                    strokeColor={'#633267'}
-                    size={15}
-                    fixRating={true}
-                  />
+          {reviewDataLoading ? (
+            //TODO add Review Data Card Loader
+            <></>
+          ) : (
+            <div className="w-5/6 bg-white mx-auto flex justify-between items-center rounded-xl p-6 gap-8">
+              <div className="flex flex-col items-center gap-2">
+                <div className="relative flex-center">
+                  <div className=" text-dark_primary_btn font-bold text-5xl flex flex-col items-center gap-2">
+                    {/* <Star className="text-dark_primary_btn" size={18} */}
+                    {reviewData.average}
+                    <StarRating
+                      defaultRating={Math.floor(reviewData.average)}
+                      color={'#9275b9ba'}
+                      strokeColor={'#633267'}
+                      size={15}
+                      fixRating={true}
+                    />
+                  </div>
                 </div>
+                <div className="text-sm font-medium">From {reviewData.total} Reviews</div>
               </div>
-              <div>From {reviewData.total} Reviews</div>
+              <div className="grow flex flex-col gap-2">
+                {[5, 4, 3, 2, 1].map(index => (
+                  <ReviewBar key={index} index={index} />
+                ))}
+              </div>
             </div>
-            <div className="grow flex flex-col gap-2">
-              {[5, 4, 3, 2, 1].map(index => (
-                <ReviewBar key={index} index={index} />
-              ))}
-            </div>
-          </div>
+          )}
+
           {user.organizationMemberships.map(m => m.organizationID).includes(orgID) ? (
             //TODO not show if review is already added
             <NewReview orgID={orgID} setReviews={setReviews} />

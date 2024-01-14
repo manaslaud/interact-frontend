@@ -6,7 +6,7 @@ import { profilePicSelector } from '@/slices/userSlice';
 import Toaster from '@/utils/toaster';
 import postHandler from '@/handlers/post_handler';
 import { SERVER_ERROR } from '@/config/errors';
-import { Star, X } from '@phosphor-icons/react';
+import { X } from '@phosphor-icons/react';
 import { Review } from '@/types';
 import StarRating from '@/components/organization/star_rating';
 import { reviewModalOpenSelector, setReviewModalOpen } from '@/slices/feedSlice';
