@@ -98,11 +98,13 @@ const Reviews = ({ orgID }: Props) => {
     getReviewData();
   }, []);
 
+  const dispatch = useDispatch();
+  const reviewModalOpen = useSelector(reviewModalOpenSelector);
+
   interface ReviewBarProps {
     index: number;
   }
-  const dispatch = useDispatch();
-  const reviewModalOpen = useSelector(reviewModalOpenSelector);
+
   const ReviewBar = ({ index }: ReviewBarProps) => {
     const barWidth = ((reviewData.counts as any)[index] * 100) / reviewData.total;
 
@@ -144,7 +146,6 @@ const Reviews = ({ orgID }: Props) => {
               <div className="flex flex-col items-center gap-2">
                 <div className="relative flex-center">
                   <div className=" text-dark_primary_btn font-bold text-5xl flex flex-col items-center gap-2">
-                    {/* <Star className="text-dark_primary_btn" size={18} */}
                     {reviewData.average}
                     <StarRating
                       defaultRating={Math.floor(reviewData.average)}

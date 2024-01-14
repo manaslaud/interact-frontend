@@ -67,7 +67,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
   }
   return (
     <>
-      <div className="w-[90%] lg:w-[40%] flex flex-col items-center gap-4  fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] bg-navbar rounded-xl py-6 px-8 shadow-xl">
+      <div className="w-[90%] lg:w-[40%] flex flex-col items-center gap-4  fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] bg-navbar rounded-xl py-6 px-8 shadow-xl animate-fade_third">
         <X
           size={20}
           className="absolute top-4 right-4 cursor-pointer"
@@ -81,7 +81,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
             width={50}
             height={50}
             alt="user"
-            src={`${USER_PROFILE_PIC_URL}/${profilePic}`}
+            src={`${USER_PROFILE_PIC_URL}/${isAnonymous ? 'default.jpg' : profilePic}`}
           />
           <textarea
             value={content}
@@ -135,7 +135,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
         </div>
       </div>
       <div
-        className="overlay w-full h-full fixed top-0 left-0 bg-backdrop z-[80]"
+        className="overlay w-full h-full fixed top-0 left-0 bg-backdrop z-[80] animate-fade_third"
         onClick={() => dispatch(setReviewModalOpen(!open))}
       ></div>
     </>
