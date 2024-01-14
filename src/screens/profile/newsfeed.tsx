@@ -1,9 +1,11 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { ORG_URL } from '@/config/routes';
+import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Poll } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import PollCard from '@/components/organization/poll_card';
 
 interface Props {
   orgID: string;
@@ -36,7 +38,12 @@ const NewsFeed = ({ orgID }: Props) => {
     getPolls();
   }, []);
 
-  return <div>NewsFeed</div>;
+  return (
+    <div className="w-4/5 mx-auto pb-base_padding flex flex-col gap-4">
+      <PollCard />
+      <PollCard />
+    </div>
+  );
 };
 
 export default NewsFeed;

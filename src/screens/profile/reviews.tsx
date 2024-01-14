@@ -114,7 +114,7 @@ const Reviews = ({ orgID }: Props) => {
         <div className="grow h-3 max-md:hidden border-dark_primary_btn border-2 rounded-lg">
           <div
             style={{ width: `${barWidth}%` }}
-            className={`h-full bg-dark_primary_btn rounded-lg ${barWidth != 1 ? 'rounded-r-none' : ''}`}
+            className={`h-full bg-dark_primary_btn rounded-lg ${barWidth != 100 ? 'rounded-r-none' : ''}`}
           ></div>
         </div>
       </div>

@@ -514,16 +514,18 @@ export interface Option {
   id: string;
   pollID: string;
   content: string;
-  noVotes: string;
+  noVotes: number;
   votedBy: User[];
 }
 
 export interface Poll {
   id: string;
   organizationID: string;
+  organization: Organization | null;
   title: string;
   content: string;
-  options: Option;
+  options: Option[];
   isMultiAnswer: boolean;
+  totalVotes: number;
   createdAt: Date;
 }

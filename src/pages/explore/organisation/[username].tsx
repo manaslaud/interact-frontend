@@ -24,6 +24,7 @@ import Events from '@/screens/profile/events';
 import OrgSidebar from '@/components/common/org_sidebar';
 import { userSelector } from '@/slices/userSlice';
 import Reviews from '@/screens/profile/reviews';
+import NewsFeed from '@/screens/profile/newsfeed';
 
 interface Props {
   username: string;
@@ -97,7 +98,7 @@ const User = ({ username }: Props) => {
             )}
 
             <TabMenu
-              items={['About', 'Posts', 'Projects', 'Events', 'Reviews']}
+              items={['About', 'Posts', 'Projects', 'Events', 'Reviews', 'News']}
               active={active}
               setState={setActive}
               width={open ? '640px' : '720px'}
@@ -128,6 +129,9 @@ const User = ({ username }: Props) => {
             </div>
             <div className={`${active === 4 ? 'block' : 'hidden'} `}>
               {loading ? <Loader /> : <Reviews orgID={organisation.id} />}
+            </div>
+            <div className={`${active === 5 ? 'block' : 'hidden'} `}>
+              {loading ? <Loader /> : <NewsFeed orgID={organisation.id} />}
             </div>
           </div>
         </div>
