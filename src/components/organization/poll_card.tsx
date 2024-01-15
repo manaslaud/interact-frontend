@@ -125,20 +125,20 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
 
     useEffect(() => {
       setBarWidth(poll.totalVotes == 0 ? 0 : (option.noVotes * 100) / poll.totalVotes);
-    }, [option]);
+    }, [poll, option]);
 
     return (
       <div
         onClick={() => {
           isVoted ? handleUnVoteOption(option, setIsVoted) : handleVoteOption(option, setIsVoted);
         }}
-        className="w-full h-3 max-md:hidden border-dark_primary_btn border-2 rounded-lg cursor-pointer"
+        className="w-full h-3 group max-md:hidden border-dark_primary_btn border-2 rounded-lg cursor-pointer"
       >
         <div
           style={{ width: `${barWidth}%` }}
-          className={`h-full ${isVoted ? 'bg-[#9275b9]' : 'bg-[#e7d5ffba]'}  rounded-lg ${
+          className={`h-full ${isVoted ? 'bg-[#9275b9]' : 'bg-[#e7d5ffba] group-hover:bg-[#cca5ffba]'} rounded-lg ${
             barWidth != 100 ? 'rounded-r-none' : ''
-          }`}
+          } transition-ease-300`}
         ></div>
       </div>
     );
@@ -159,18 +159,31 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex justify-between">
           <div>{option.content}</div>
-          <div className="flex gap-1">
-            {option.votedBy?.map(user => (
-              <Image
-                key={user.id}
-                crossOrigin="anonymous"
-                width={100}
-                height={100}
-                alt={'User Pic'}
-                src={`${USER_PROFILE_PIC_URL}/${user.profilePic}`}
-                className="rounded-full w-6 h-6"
-              />
-            ))}
+          <div className="w-32 flex gap-1 relative">
+            {option.votedBy
+              ?.filter((u, index) => {
+                return index >= 0 && index < 3;
+              })
+              .map((u, index) => {
+                return (
+                  <Image
+                    key={index}
+                    crossOrigin="anonymous"
+                    width={50}
+                    height={50}
+                    alt={'User Pic'}
+                    src={`${USER_PROFILE_PIC_URL}/${u.profilePic}`}
+                    className={`w-6 h-6 rounded-full cursor-default absolute top-0 right-${index * 3}`}
+                  />
+                );
+              })}
+            {option.noVotes > 3 ? (
+              <div className="bg-gray-100 flex-center border-[1px] border-primary_black text-xs text-medium w-6 h-6 rounded-full cursor-default absolute top-0 right-[36px]">
+                +{option.noVotes - 3}
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <OptionBar option={option} isVoted={isVoted} setIsVoted={setIsVoted} />
@@ -207,46 +220,49 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
             <Option key={option.id} option={option} />
           ))}
         </div>
-        <div className="flex justify-end items-center gap-4 text-sm text-gray-400 font-medium">
-          <div className="flex-center gap-1">
-            {poll.isOpen ? (
-              <>
-                <LockOpen /> <div>Open</div>
-              </>
-            ) : (
-              <>
-                <Lock /> <div>Only for members</div>
-              </>
-            )}
-          </div>
-          <div className="flex-center gap-1">
-            {poll.isMultiAnswer ? (
-              <>
-                <ListChecks /> <div>Multiple Options</div>
-              </>
-            ) : (
-              <>
-                <RadioButton /> <div>Single Option</div>
-              </>
-            )}
-          </div>
-        </div>{' '}
-        <div className="w-full flex justify-between">
-          <div className="text-sm text-gray-400 font-medium">
-            {poll.totalVotes} Vote{poll.totalVotes != 1 ? 's' : ''}
-          </div>
 
-          {(user.isOrganization && user.id == organisation.userID) ||
-          user.organizationMemberships
-            .filter(m => m.role == ORG_SENIOR)
-            .map(m => m.organizationID)
-            .includes(organisation.id) ? (
-            <div onClick={() => setClickedOnDelete(true)} className="text-sm text-primary_danger cursor-pointer">
-              Delete
+        <div className="w-full flex flex-col gap-1">
+          <div className="flex justify-end items-center gap-4 text-sm text-gray-400 font-medium">
+            <div className="flex-center gap-1">
+              {poll.isOpen ? (
+                <>
+                  <LockOpen /> <div>Open</div>
+                </>
+              ) : (
+                <>
+                  <Lock /> <div>Only for members</div>
+                </>
+              )}
             </div>
-          ) : (
-            <></>
-          )}
+            <div className="flex-center gap-1">
+              {poll.isMultiAnswer ? (
+                <>
+                  <ListChecks /> <div>Multiple Options</div>
+                </>
+              ) : (
+                <>
+                  <RadioButton /> <div>Single Option</div>
+                </>
+              )}
+            </div>
+          </div>{' '}
+          <div className="w-full flex justify-between">
+            <div className="text-sm text-gray-400 font-medium">
+              {poll.totalVotes} Vote{poll.totalVotes != 1 ? 's' : ''}
+            </div>
+
+            {(user.isOrganization && user.id == organisation.userID) ||
+            user.organizationMemberships
+              .filter(m => m.role == ORG_SENIOR)
+              .map(m => m.organizationID)
+              .includes(organisation.id) ? (
+              <div onClick={() => setClickedOnDelete(true)} className="text-sm text-primary_danger cursor-pointer">
+                Delete
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </>

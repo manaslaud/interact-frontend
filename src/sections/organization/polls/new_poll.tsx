@@ -29,6 +29,10 @@ const NewPoll = ({ orgID, setPolls, setShow, organisation }: Props) => {
       Toaster.error('Content cannot be empty');
       return;
     }
+    if (options.length < 2) {
+      Toaster.error('Add at least 2 options');
+      return;
+    }
 
     if (mutex) return;
     setMutex(true);
@@ -42,7 +46,7 @@ const NewPoll = ({ orgID, setPolls, setShow, organisation }: Props) => {
     const res = await postHandler(URL, formData);
     if (res.statusCode === 201) {
       const poll: Poll = res.data.poll;
-      poll.organisation = organisation;
+      poll.organization = organisation;
       setPolls(prev => [poll, ...prev]);
       setContent('');
       setIsOpen(false);
@@ -95,7 +99,7 @@ const NewPoll = ({ orgID, setPolls, setShow, organisation }: Props) => {
         </div>
 
         <div className="w-full flex flex-col gap-4 lg:flex-row justify-between items-center">
-          <div className="w-fit flex gap-6">
+          <div className="w-fit flex gap-4 flex-wrap">
             <label className="flex w-fit cursor-pointer select-none items-center text-sm gap-2">
               <div className="font-semibold">Open for All</div>
               <div className="relative">
@@ -134,13 +138,17 @@ const NewPoll = ({ orgID, setPolls, setShow, organisation }: Props) => {
               </div>
             </label>
           </div>
-          <div
-            className="h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover hover:border-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-6  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300 hover:text-primary_text self-end"
-            onClick={() => {
-              submitHandler();
-            }}
-          >
-            Submit
+
+          <div className="flex flex-col gap-2">
+            <div
+              className="w-full h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover hover:border-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-6  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300 hover:text-primary_text self-end"
+              onClick={() => {
+                submitHandler();
+              }}
+            >
+              Submit
+            </div>
+            <div className="text-gray-400 text-xs font-semibold">*cannot be changed later</div>
           </div>
         </div>
       </div>
