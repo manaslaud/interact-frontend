@@ -10,6 +10,7 @@ import { X } from '@phosphor-icons/react';
 import { Review } from '@/types';
 import StarRating from '@/components/organization/star_rating';
 import { reviewModalOpenSelector, setReviewModalOpen } from '@/slices/feedSlice';
+
 interface Props {
   orgID: string;
   setReviews: React.Dispatch<React.SetStateAction<Review[]>>;
@@ -50,6 +51,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
       setContent('');
       setRating(0);
       setIsAnonymous(false);
+      dispatch(setReviewModalOpen(!open));
       Toaster.stopLoad(toaster, 'Review Added!', 1);
     } else {
       if (res.data.message != '') Toaster.stopLoad(toaster, res.data.message, 0);
@@ -73,7 +75,7 @@ const NewReview = ({ orgID, setReviews }: Props) => {
           className="absolute top-4 right-4 cursor-pointer"
           onClick={() => dispatch(setReviewModalOpen(!open))}
         />
-        <h1 className="heading self-start text-xl lg:text-3xl font-medium">Add a review</h1>
+        <h1 className="heading self-start text-2xl lg:text-3xl font-semibold text-gradient">Add a review</h1>
         <div className="w-full flex justify-between gap-4">
           <Image
             crossOrigin="anonymous"
@@ -127,7 +129,6 @@ const NewReview = ({ orgID, setReviews }: Props) => {
             className="h-fit text-sm max-md:text-xs dark:bg-dark_primary_comp hover:bg-primary_comp_hover hover:border-primary_comp_hover active:bg-primary_comp_active dark:hover:bg-dark_primary_comp_hover dark:active:bg-dark_primary_comp_active font-medium border-[1px] border-primary_btn  dark:border-dark_primary_btn rounded-md py-2 px-6  flex-center cursor-pointer max-md:h-10 max-md:w-fit transition-ease-300 hover:text-primary_text self-end"
             onClick={() => {
               submitHandler();
-              dispatch(setReviewModalOpen(!open));
             }}
           >
             Submit

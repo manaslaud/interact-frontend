@@ -5,11 +5,23 @@ interface Props {
   tags: string[];
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
   maxTags?: number;
-  blackBorder?: boolean;
   suggestions?: boolean;
+  onboardingDesign?: boolean;
+  borderStyle?: string;
+  borderColor?: string;
+  lowerOnly?: boolean;
 }
 
-const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false, suggestions = false }: Props) => {
+const Tags = ({
+  tags,
+  setTags,
+  maxTags = 5,
+  onboardingDesign = false,
+  suggestions = false,
+  borderStyle = 'solid',
+  borderColor,
+  lowerOnly = true,
+}: Props) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +35,7 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false, suggestions = f
         // Split the input value by commas, trim each part, and add to tags
         const newTags = tagInput
           .split(',')
-          .map(tag => tag.trim().toLowerCase())
+          .map(tag => (lowerOnly ? tag.trim().toLowerCase() : tag.trim()))
           .filter(tag => tag !== '');
 
         // Add unique new tags to the existing tags
@@ -49,18 +61,21 @@ const Tags = ({ tags, setTags, maxTags = 5, blackBorder = false, suggestions = f
   return (
     <>
       <div
+        style={{
+          borderStyle: `${borderStyle} `,
+          borderColor: `${borderColor ? borderColor : onboardingDesign ? 'black' : '#9ca3af'}`,
+        }}
         className={`w-full ${
-          blackBorder
-            ? 'p-4 border-black placeholder:text-[#202020c6] bg-[#ffffff40]'
-            : 'p-2 bg-transparent border-primary_btn dark:border-dark_primary_btn'
+          onboardingDesign ? 'p-4 placeholder:text-[#202020c6] bg-[#ffffff40]' : 'p-2 bg-transparent'
         } border-[1px] flex flex-wrap items-center gap-2 rounded-md`}
       >
         {tags.map(tag => (
           <div
+            style={{
+              borderColor: `${borderColor ? borderColor : onboardingDesign ? 'black' : '#9ca3af'}`,
+            }}
             key={tag}
-            className={`flex-center px-3 py-2 border-[1px] ${
-              blackBorder ? 'border-black bg-[#ffffff40]' : 'border-gray-400 dark:border-dark_primary_btn'
-            } text-sm rounded-full cursor-default`}
+            className={`flex-center px-3 py-2 border-[1px] text-sm rounded-full cursor-default`}
           >
             {tag}
             <svg

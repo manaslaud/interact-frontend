@@ -37,6 +37,7 @@ interface UserState {
   isVerified: boolean;
   isOnboardingComplete: boolean;
   organizationMemberships: OrganizationMembership[];
+  votedOptions: string[];
 }
 
 const initialState: UserState = {
@@ -69,6 +70,7 @@ const initialState: UserState = {
   isVerified: false,
   isOnboardingComplete: false,
   organizationMemberships: [],
+  votedOptions: [],
 };
 
 export const userSlice = createSlice({
@@ -105,6 +107,7 @@ export const userSlice = createSlice({
       state.openingBookmarks = [];
       state.eventBookmarks = [];
       state.organizationMemberships = [];
+      state.votedOptions = [];
     },
     resetUser: state => {
       state.id = '';
@@ -136,6 +139,7 @@ export const userSlice = createSlice({
       state.eventBookmarks = [];
       state.organizationMemberships = [];
       state.isOnboardingComplete = false;
+      state.votedOptions = [];
     },
     setReduxName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
@@ -218,6 +222,9 @@ export const userSlice = createSlice({
     setOrganizationMemberships: (state, action: PayloadAction<OrganizationMembership[]>) => {
       state.organizationMemberships = action.payload;
     },
+    setVotedOptions: (state, action: PayloadAction<string[]>) => {
+      state.votedOptions = action.payload;
+    },
   },
 });
 
@@ -251,6 +258,7 @@ export const {
   setVerificationStatus,
   setOnboardingStatus,
   setOrganizationMemberships,
+  setVotedOptions,
 } = userSlice.actions;
 
 export default userSlice.reducer;

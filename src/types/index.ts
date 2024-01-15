@@ -526,6 +526,7 @@ export interface Poll {
   content: string;
   options: Option[];
   isMultiAnswer: boolean;
+  isOpen: boolean;
   totalVotes: number;
   createdAt: Date;
 }

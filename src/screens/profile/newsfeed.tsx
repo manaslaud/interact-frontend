@@ -6,6 +6,7 @@ import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import PollCard from '@/components/organization/poll_card';
+import { initialOrganization } from '@/types/initials';
 
 interface Props {
   orgID: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const NewsFeed = ({ orgID }: Props) => {
   const [polls, setPolls] = useState<Poll[]>([]);
+  const [organisation, setOrganisation] = useState(initialOrganization);
   const [loading, setLoading] = useState(true);
 
   const getPolls = () => {
@@ -21,6 +23,7 @@ const NewsFeed = ({ orgID }: Props) => {
       .then(res => {
         if (res.statusCode === 200) {
           setPolls(res.data.polls || []);
+          setOrganisation(res.data.organization);
           setLoading(false);
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -40,8 +43,9 @@ const NewsFeed = ({ orgID }: Props) => {
 
   return (
     <div className="w-4/5 mx-auto pb-base_padding flex flex-col gap-4">
-      <PollCard />
-      <PollCard />
+      {polls.map(poll => (
+        <PollCard key={poll.id} poll={poll} setPolls={setPolls} organisation={organisation} />
+      ))}
     </div>
   );
 };

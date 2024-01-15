@@ -331,7 +331,7 @@ const Onboarding = () => {
                     Almost Done!, Add <span className="underline underline-offset-2">at least one</span> link to your
                     social.
                   </div>
-                  <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
+                  <Links links={links} setLinks={setLinks} maxLinks={3} onboardingDesign={true} />
                 </>
               ) : step == 7 ? (
                 <>

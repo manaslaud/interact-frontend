@@ -4,6 +4,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface ConfigState {
   updatingFollowing: boolean;
   updatingLikes: boolean;
+  updatingOptions: boolean;
   updateBookmark: boolean;
   lastFetchedFollowing: string;
   lastFetchedLikes: string;
@@ -19,6 +20,7 @@ interface ConfigState {
   lastFetchedUnreadInvitations: string;
   lastFetchedUnreadChats: string;
   lastFetchedOrganizationMemberships: string;
+  lastFetchedVotedOptions: string;
 }
 
 const getInitialDate = (): string => {
@@ -41,6 +43,7 @@ const getInitialInvitationDate = (): string => {
 const initialState: ConfigState = {
   updatingFollowing: false,
   updatingLikes: false,
+  updatingOptions: false,
   updateBookmark: false,
   lastFetchedFollowing: getInitialDate(),
   lastFetchedLikes: getInitialDate(),
@@ -56,6 +59,7 @@ const initialState: ConfigState = {
   lastFetchedUnreadInvitations: getInitialInvitationDate(),
   lastFetchedUnreadChats: getInitialInvitationDate(),
   lastFetchedOrganizationMemberships: getInitialDate(),
+  lastFetchedVotedOptions: getInitialDate(),
 };
 
 export const configSlice = createSlice({
@@ -65,6 +69,7 @@ export const configSlice = createSlice({
     resetConfig: state => {
       state.updatingFollowing = false;
       state.updatingLikes = false;
+      state.updatingOptions = false;
       state.updateBookmark = false;
       state.lastFetchedFollowing = getInitialDate();
       state.lastFetchedLikes = getInitialDate();
@@ -80,12 +85,16 @@ export const configSlice = createSlice({
       state.lastFetchedUnreadInvitations = getInitialInvitationDate();
       state.lastFetchedUnreadChats = getInitialInvitationDate();
       state.lastFetchedOrganizationMemberships = getInitialDate();
+      state.lastFetchedVotedOptions = getInitialDate();
     },
     setUpdatingFollowing: (state, action: PayloadAction<boolean>) => {
       state.updatingFollowing = action.payload;
     },
     setUpdatingLikes: (state, action: PayloadAction<boolean>) => {
       state.updatingLikes = action.payload;
+    },
+    setUpdatingOptions: (state, action: PayloadAction<boolean>) => {
+      state.updatingOptions = action.payload;
     },
     setUpdateBookmark: (state, action: PayloadAction<boolean>) => {
       state.updateBookmark = action.payload;
@@ -103,6 +112,7 @@ export const configSlice = createSlice({
       state.lastFetchedUnreadNotifications = new Date().toUTCString();
       state.lastFetchedUnreadInvitations = new Date().toUTCString();
       state.lastFetchedOrganizationMemberships = new Date().toUTCString();
+      state.lastFetchedVotedOptions = new Date().toUTCString();
     },
     setFetchedFollowing: (state, action: PayloadAction<string>) => {
       state.lastFetchedFollowing = action.payload;
@@ -146,6 +156,9 @@ export const configSlice = createSlice({
     setLastFetchedOrganizationMemberships: (state, action: PayloadAction<string>) => {
       state.lastFetchedOrganizationMemberships = action.payload;
     },
+    setLastFetchedVotedOptions: (state, action: PayloadAction<string>) => {
+      state.lastFetchedVotedOptions = action.payload;
+    },
   },
 });
 
@@ -153,6 +166,7 @@ export const {
   resetConfig,
   setUpdatingFollowing,
   setUpdatingLikes,
+  setUpdatingOptions,
   setUpdateBookmark,
   setConfig,
   setFetchedChats,
@@ -169,6 +183,7 @@ export const {
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadChats,
   setLastFetchedOrganizationMemberships,
+  setLastFetchedVotedOptions,
 } = configSlice.actions;
 
 export default configSlice.reducer;
