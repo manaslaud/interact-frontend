@@ -272,7 +272,7 @@ const Onboarding = () => {
                     Add <span className="underline underline-offset-2">at least three</span> and help us build your
                     recommendations!
                   </div>
-                  <Tags tags={tags} setTags={setTags} blackBorder={true} maxTags={10} suggestions={true} />
+                  <Tags tags={tags} setTags={setTags} onboardingDesign={true} maxTags={10} suggestions={true} />
                 </>
               ) : step == 5 ? (
                 <>
@@ -331,7 +331,7 @@ const Onboarding = () => {
                     Almost Done!, Add <span className="underline underline-offset-2">at least one</span> link to your
                     social.
                   </div>
-                  <Links links={links} setLinks={setLinks} maxLinks={3} onboardingDesign={true} />
+                  <Links links={links} setLinks={setLinks} maxLinks={3} blackBorder={true} />
                 </>
               ) : step == 7 ? (
                 <>

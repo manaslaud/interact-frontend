@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
-import { Option, Organization, Poll } from '@/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { setVotedOptions, userSelector } from '@/slices/userSlice';
-import patchHandler from '@/handlers/patch_handler';
+import { Organization, Poll } from '@/types';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/slices/userSlice';
 import { SERVER_ERROR } from '@/config/errors';
 import Toaster from '@/utils/toaster';
-import { initialUser } from '@/types/initials';
 import deleteHandler from '@/handlers/delete_handler';
 import ConfirmDelete from '../common/confirm_delete';
 import { ORG_SENIOR } from '@/config/constants';
 import { ListChecks, Lock, LockOpen, RadioButton } from '@phosphor-icons/react';
+import OptionComponent from './poll_option';
 
 interface Props {
   poll: Poll;
@@ -23,13 +22,6 @@ interface Props {
 const PollCard = ({ poll, setPolls, organisation }: Props) => {
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
   const user = useSelector(userSelector);
-
-  const votedOptions = user.votedOptions || [];
-
-  const dispatch = useDispatch();
-
-  const userID = user.id;
-
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting Poll...');
 
@@ -47,149 +39,6 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
     }
   };
 
-  const handleVoteOption = async (option: Option, setIsVoted: React.Dispatch<React.SetStateAction<boolean>>) => {
-    const URL = `${ORG_URL}/${organisation.id}/polls/vote/${poll.id}/${option.id}`;
-
-    const res = await patchHandler(URL, {});
-    if (res.statusCode == 200) {
-      setPolls(prev =>
-        prev.map(p => {
-          if (p.id == poll.id) {
-            const newUser = initialUser;
-            newUser.id = user.id;
-            newUser.name = user.name;
-            newUser.username = user.username;
-            newUser.profilePic = user.profilePic;
-
-            return {
-              ...p,
-              totalVotes: p.totalVotes + 1,
-              options: p.options.map(o => {
-                if (o.id == option.id) return { ...o, noVotes: o.noVotes + 1, votedBy: [...o.votedBy, newUser] };
-                return o;
-              }),
-            };
-          } else return p;
-        })
-      );
-      dispatch(setVotedOptions([...votedOptions, option.id]));
-      setIsVoted(true);
-    } else {
-      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
-      else {
-        Toaster.error(SERVER_ERROR, 'error_toaster');
-      }
-    }
-  };
-
-  const handleUnVoteOption = async (option: Option, setIsVoted: React.Dispatch<React.SetStateAction<boolean>>) => {
-    const URL = `${ORG_URL}/${organisation.id}/polls/unvote/${poll.id}/${option.id}`;
-
-    const res = await patchHandler(URL, {});
-    if (res.statusCode == 200) {
-      setPolls(prev =>
-        prev.map(p => {
-          if (p.id == poll.id)
-            return {
-              ...p,
-              totalVotes: p.totalVotes - 1,
-              options: p.options.map(o => {
-                if (o.id == option.id)
-                  return { ...o, noVotes: o.noVotes - 1, votedBy: o.votedBy.filter(u => u.id != userID) };
-                return o;
-              }),
-            };
-          else return p;
-        })
-      );
-      const newVotedOptions = [...votedOptions];
-      newVotedOptions.splice(newVotedOptions.indexOf(option.id), 1);
-      dispatch(setVotedOptions(newVotedOptions));
-      setIsVoted(false);
-    } else {
-      if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
-      else {
-        Toaster.error(SERVER_ERROR, 'error_toaster');
-      }
-    }
-  };
-
-  interface OptionBarProps {
-    option: Option;
-    isVoted: boolean;
-    setIsVoted: React.Dispatch<React.SetStateAction<boolean>>;
-  }
-
-  const OptionBar = ({ option, isVoted, setIsVoted }: OptionBarProps) => {
-    const [barWidth, setBarWidth] = useState(0);
-
-    useEffect(() => {
-      setBarWidth(poll.totalVotes == 0 ? 0 : (option.noVotes * 100) / poll.totalVotes);
-    }, [poll, option]);
-
-    return (
-      <div
-        onClick={() => {
-          isVoted ? handleUnVoteOption(option, setIsVoted) : handleVoteOption(option, setIsVoted);
-        }}
-        className="w-full h-3 group max-md:hidden border-dark_primary_btn border-2 rounded-lg cursor-pointer"
-      >
-        <div
-          style={{ width: `${barWidth}%` }}
-          className={`h-full ${isVoted ? 'bg-[#9275b9]' : 'bg-[#e7d5ffba] group-hover:bg-[#cca5ffba]'} rounded-lg ${
-            barWidth != 100 ? 'rounded-r-none' : ''
-          } transition-ease-300`}
-        ></div>
-      </div>
-    );
-  };
-
-  interface OptionProps {
-    option: Option;
-  }
-
-  const Option = ({ option }: OptionProps) => {
-    const [isVoted, setIsVoted] = useState(false);
-
-    useEffect(() => {
-      if (votedOptions.includes(option.id)) setIsVoted(true);
-    }, [option]);
-
-    return (
-      <div className="w-full flex flex-col gap-1">
-        <div className="w-full flex justify-between">
-          <div>{option.content}</div>
-          <div className="w-32 flex gap-1 relative">
-            {option.votedBy
-              ?.filter((u, index) => {
-                return index >= 0 && index < 3;
-              })
-              .map((u, index) => {
-                return (
-                  <Image
-                    key={index}
-                    crossOrigin="anonymous"
-                    width={50}
-                    height={50}
-                    alt={'User Pic'}
-                    src={`${USER_PROFILE_PIC_URL}/${u.profilePic}`}
-                    className={`w-6 h-6 rounded-full cursor-default absolute top-0 right-${index * 3}`}
-                  />
-                );
-              })}
-            {option.noVotes > 3 ? (
-              <div className="bg-gray-100 flex-center border-[1px] border-primary_black text-xs text-medium w-6 h-6 rounded-full cursor-default absolute top-0 right-[36px]">
-                +{option.noVotes - 3}
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
-        <OptionBar option={option} isVoted={isVoted} setIsVoted={setIsVoted} />
-      </div>
-    );
-  };
   return (
     <>
       {clickedOnDelete ? <ConfirmDelete handleDelete={handleDelete} setShow={setClickedOnDelete} /> : <></>}
@@ -217,7 +66,14 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
         </div>
         <div className="w-full flex flex-col gap-3">
           {poll.options?.map(option => (
-            <Option key={option.id} option={option} />
+            <OptionComponent
+              key={option.id}
+              option={option}
+              orgID={organisation.id}
+              pollID={poll.id}
+              setPolls={setPolls}
+              totalVotes={poll.totalVotes}
+            />
           ))}
         </div>
 
