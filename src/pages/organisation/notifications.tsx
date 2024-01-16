@@ -54,7 +54,7 @@ const Notifications = () => {
   };
   return (
     <BaseWrapper title="Notifications">
-      <OrgSidebar index={9} />
+      <OrgSidebar index={10} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-6 max-md:px-2 p-base_padding">
           <div className="w-full text-6xl font-semibold dark:text-white font-primary">Notifications</div>

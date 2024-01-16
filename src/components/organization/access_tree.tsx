@@ -1,7 +1,7 @@
 import { CheckSquare, X } from '@phosphor-icons/react';
 import React, { useEffect } from 'react';
 
-type ACCESS_TYPE = 'post' | 'project' | 'event' | 'task' | 'chat' | 'membership' | 'profile';
+type ACCESS_TYPE = 'post' | 'project' | 'event' | 'task' | 'chat' | 'membership' | 'profile' | 'resource';
 
 interface Props {
   type: ACCESS_TYPE;
@@ -306,7 +306,20 @@ const AccessTree = ({ type, setShow }: Props) => {
       canManager: true,
     },
   ];
-
+  const resourceAccess: Access[] = [
+    {
+      task: 'View Resources',
+      canMember: false,
+      canSenior: true,
+      canManager: true,
+    },
+    {
+      task: 'Edit Resources',
+      canMember: false,
+      canSenior: false,
+      canManager: true,
+    },
+  ];
   const accessArr: Access[] = ((): Access[] => {
     switch (type) {
       case 'post':
@@ -323,6 +336,8 @@ const AccessTree = ({ type, setShow }: Props) => {
         return projectAccess;
       case 'task':
         return taskAccess;
+      case 'resource':
+        return resourceAccess;
       default:
         return [];
     }

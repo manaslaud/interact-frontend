@@ -15,7 +15,7 @@ const Bookmarks = () => {
   const active = useSelector(bookmarksTabSelector);
   return (
     <BaseWrapper title="Bookmarks">
-      <OrgSidebar index={10} />
+      <OrgSidebar index={11} />
       <MainWrapper>
         <div className="w-full flex flex-col items-center gap-4 py-20">
           <TabMenu items={['Posts', 'Projects', 'Openings']} active={active} setReduxState={setBookmarksTab} />
