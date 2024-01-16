@@ -423,7 +423,22 @@ export interface Task {
   subTasks: SubTask[];
   priority: PRIORITY;
 }
-
+export interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  selectedFile: File;
+  users: User[];
+}
+export interface ResourceFile {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  resourceBucketID: string;
+  userID: string;
+  path: string;
+}
 export interface ProjectHistory {
   id: string;
   projectID: string;

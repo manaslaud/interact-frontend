@@ -15,6 +15,7 @@ import {
   RocketLaunch,
   Ticket,
   Wrench,
+  BookOpenText,
 } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { navbarOpenSelector, setNavbarOpen } from '@/slices/feedSlice';
@@ -118,6 +119,7 @@ const OrgSidebar = ({ index }: Props) => {
             setActive={setActive}
             open={open}
           />
+
           <SidebarItem
             index={7}
             org={true}
@@ -127,13 +129,22 @@ const OrgSidebar = ({ index }: Props) => {
             setActive={setActive}
             open={open}
           />
+          <SidebarItem
+            index={8}
+            org={true}
+            title="Resources"
+            icon={<BookOpenText size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
         </div>
 
-        <div className="w-fit py-8 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">
+        <div className="w-fit py-4 mt-4 border-y-2 border-gray-300 dark:border-dark_primary_btn flex flex-col gap-2">
           {user.isOrganization ? (
             <>
               <SidebarItem
-                index={8}
+                index={9}
                 org={true}
                 title="Profile"
                 icon={<Buildings size={24} />}
@@ -142,7 +153,7 @@ const OrgSidebar = ({ index }: Props) => {
                 open={open}
               />
               <SidebarItem
-                index={9}
+                index={10}
                 org={true}
                 title="Notifications"
                 icon={<Bell size={24} />}
@@ -151,7 +162,7 @@ const OrgSidebar = ({ index }: Props) => {
                 open={open}
               />
               <SidebarItem
-                index={10}
+                index={11}
                 org={true}
                 title="Bookmarks"
                 icon={<BookmarkSimple size={24} />}

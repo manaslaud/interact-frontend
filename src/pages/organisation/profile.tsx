@@ -156,7 +156,7 @@ const Profile = () => {
 
   return (
     <BaseWrapper title="Profile">
-      <OrgSidebar index={8} />
+      <OrgSidebar index={9} />
       <MainWrapper>
         <div className="w-full max-lg:w-full flex max-lg:flex-col transition-ease-out-500 font-primary">
           <input
