@@ -17,7 +17,7 @@ interface Props {
   totalVotes: number;
   orgID: string;
   pollID: string;
-  setPolls: React.Dispatch<React.SetStateAction<Poll[]>>;
+  setPolls?: React.Dispatch<React.SetStateAction<Poll[]>>;
 }
 
 const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
@@ -52,27 +52,28 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
 
     const res = await patchHandler(URL, {});
     if (res.statusCode == 200) {
-      setPolls(prev =>
-        prev.map(p => {
-          if (p.id == pollID) {
-            const newUser = initialUser;
-            newUser.id = user.id;
-            newUser.name = user.name;
-            newUser.username = user.username;
-            newUser.profilePic = user.profilePic;
+      if (setPolls)
+        setPolls(prev =>
+          prev.map(p => {
+            if (p.id == pollID) {
+              const newUser = initialUser;
+              newUser.id = user.id;
+              newUser.name = user.name;
+              newUser.username = user.username;
+              newUser.profilePic = user.profilePic;
 
-            return {
-              ...p,
-              totalVotes: p.totalVotes + 1,
-              options: p.options.map(o => {
-                if (o.id == option.id)
-                  return { ...o, noVotes: o.noVotes + 1, votedBy: [...(o.votedBy || []), newUser] };
-                return o;
-              }),
-            };
-          } else return p;
-        })
-      );
+              return {
+                ...p,
+                totalVotes: p.totalVotes + 1,
+                options: p.options.map(o => {
+                  if (o.id == option.id)
+                    return { ...o, noVotes: o.noVotes + 1, votedBy: [...(o.votedBy || []), newUser] };
+                  return o;
+                }),
+              };
+            } else return p;
+          })
+        );
       dispatch(setVotedOptions([...votedOptions, option.id]));
       setIsVoted(true);
     } else {
@@ -92,21 +93,22 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
 
     const res = await patchHandler(URL, {});
     if (res.statusCode == 200) {
-      setPolls(prev =>
-        prev.map(p => {
-          if (p.id == pollID)
-            return {
-              ...p,
-              totalVotes: p.totalVotes - 1,
-              options: p.options.map(o => {
-                if (o.id == option.id)
-                  return { ...o, noVotes: o.noVotes - 1, votedBy: (o.votedBy || []).filter(u => u.id != userID) };
-                return o;
-              }),
-            };
-          else return p;
-        })
-      );
+      if (setPolls)
+        setPolls(prev =>
+          prev.map(p => {
+            if (p.id == pollID)
+              return {
+                ...p,
+                totalVotes: p.totalVotes - 1,
+                options: p.options.map(o => {
+                  if (o.id == option.id)
+                    return { ...o, noVotes: o.noVotes - 1, votedBy: (o.votedBy || []).filter(u => u.id != userID) };
+                  return o;
+                }),
+              };
+            else return p;
+          })
+        );
       const newVotedOptions = [...votedOptions];
       newVotedOptions.splice(newVotedOptions.indexOf(option.id), 1);
       dispatch(setVotedOptions(newVotedOptions));

@@ -16,7 +16,7 @@ import OptionComponent from './poll_option';
 interface Props {
   poll: Poll;
   organisation: Organization;
-  setPolls: React.Dispatch<React.SetStateAction<Poll[]>>;
+  setPolls?: React.Dispatch<React.SetStateAction<Poll[]>>;
 }
 
 const PollCard = ({ poll, setPolls, organisation }: Props) => {
@@ -30,7 +30,7 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
     const res = await deleteHandler(URL);
 
     if (res.statusCode === 204) {
-      setPolls(prev => prev.filter(p => p.id != poll.id));
+      if (setPolls) setPolls(prev => prev.filter(p => p.id != poll.id));
       setClickedOnDelete(false);
       Toaster.stopLoad(toaster, 'Poll Deleted', 1);
     } else {
