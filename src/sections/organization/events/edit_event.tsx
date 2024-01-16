@@ -183,7 +183,6 @@ const EditEvent = ({ setShow, event, setEvents }: Props) => {
                   value={startTime}
                   onChange={el => {
                     setStartTime(el.target.value);
-                    alert(el.target.value);
                   }}
                   type="datetime-local"
                   className="w-full bg-transparent focus:outline-none border-[1px] border-gray-400 rounded-lg p-2"

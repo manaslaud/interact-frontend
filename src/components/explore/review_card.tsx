@@ -2,7 +2,7 @@ import { Review } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
-import { CaretDown, CaretUp, Star, Trash, WarningCircle } from '@phosphor-icons/react';
+import { Trash, WarningCircle } from '@phosphor-icons/react';
 import moment from 'moment';
 import Toaster from '@/utils/toaster';
 import deleteHandler from '@/handlers/delete_handler';
@@ -13,6 +13,8 @@ import { userSelector } from '@/slices/userSlice';
 import LowerReview from '../lowers/lower_review';
 import { ORG_MANAGER } from '@/config/constants';
 import StarRating from '../organization/star_rating';
+import { currentOrgIDSelector } from '@/slices/orgSlice';
+import Report from '../common/report';
 
 interface Props {
   review: Review;
@@ -21,10 +23,12 @@ interface Props {
 
 const ReviewCard = ({ review, setReviews }: Props) => {
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
+  const [clickedOnReport, setClickedOnReport] = useState(false);
 
   const [mutex, setMutex] = useState(false);
 
   const user = useSelector(userSelector);
+  const currentOrgID = useSelector(currentOrgIDSelector);
 
   const handleDelete = async () => {
     if (mutex) return;
@@ -52,6 +56,7 @@ const ReviewCard = ({ review, setReviews }: Props) => {
   return (
     <>
       {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
+      {clickedOnReport ? <Report setShow={setClickedOnReport} reviewID={review.id} /> : <></>}
       <div
         key={review.id}
         className="w-5/6 flex flex-col gap-4 bg-white relative group hover:shadow-xl p-6 rounded-xl transition-ease-300"
@@ -66,13 +71,13 @@ const ReviewCard = ({ review, setReviews }: Props) => {
         ) : user.organizationMemberships
             .filter(m => m.role == ORG_MANAGER)
             .map(m => m.organizationID)
-            .includes(review.organizationID) ? (
-          //TODO Report Review
+            .includes(review.organizationID) ||
+          (user.isOrganization && currentOrgID == review.organizationID) ? (
           <div
-            onClick={el => setClickedOnDelete(true)}
+            onClick={el => setClickedOnReport(true)}
             className=" hover:shadow-lg text-gray-500 text-xxs px-2 py-1 flex gap-2 absolute opacity-0 group-hover:opacity-100 top-2 right-2 transition-ease-300 rounded-lg "
           >
-            <WarningCircle onClick={() => setClickedOnDelete(true)} className="cursor-pointer" size={18} />
+            <WarningCircle className="cursor-pointer" size={18} />
           </div>
         ) : (
           <></>

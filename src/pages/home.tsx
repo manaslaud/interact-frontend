@@ -59,6 +59,9 @@ const Home = () => {
           <div className={`${active === 1 ? 'block' : 'hidden'}`}>
             <Discover />
           </div>
+          {
+            //TODO Profile Completion for Organisations
+          }
           <ProfileCompletion />
         </div>
       </MainWrapper>

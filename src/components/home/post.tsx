@@ -212,7 +212,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
             {post.user.isOrganization ? <Buildings weight="duotone" /> : <></>}
           </Link>
           <div className="flex gap-2 font-light text-xs">
-            {post.edited ? <div>(edited)</div> : <></>}
+            {post.isEdited ? <div>(edited)</div> : <></>}
             <div>{moment(post.postedAt).fromNow()}</div>
             {clickedOnEdit || (post.userID == loggedInUser.id && isRepost) ? (
               <></>
@@ -297,7 +297,7 @@ const Post = ({ post, showLowerPost = true, showImage = true, isRepost = false, 
               </div>
               {caption == post.content ? (
                 <div className="bg-primary_black bg-opacity-50 text-white flex-center rounded-full w-16 max-md:w-12 max-md:text-xxs p-1 cursor-default">
-                  Save
+                  save
                 </div>
               ) : (
                 <div

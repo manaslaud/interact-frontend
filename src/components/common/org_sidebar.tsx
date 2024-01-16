@@ -8,9 +8,9 @@ import {
   ChatTeardrop,
   ClockCounterClockwise,
   DoorOpen,
-  Gear,
   HouseLine,
   IdentificationCard,
+  Newspaper,
   NoteBlank,
   RocketLaunch,
   Ticket,
@@ -120,6 +120,15 @@ const OrgSidebar = ({ index }: Props) => {
             open={open}
           />
 
+          <SidebarItem
+            index={13}
+            org={true}
+            title="News"
+            icon={<Newspaper size={24} />}
+            active={active}
+            setActive={setActive}
+            open={open}
+          />
           <SidebarItem
             index={7}
             org={true}

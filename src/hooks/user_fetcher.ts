@@ -27,6 +27,7 @@ import {
   setLastFetchedUnreadChats,
   setLastFetchedUnreadInvitations,
   setLastFetchedUnreadNotifications,
+  setLastFetchedVotedOptions,
 } from '@/slices/configSlice';
 import { setUnreadChats, setUnreadInvitations, setUnreadNotifications } from '@/slices/feedSlice';
 import {
@@ -46,6 +47,7 @@ import {
   setPersonalChatSlices,
   setPostBookmarks,
   setProjectBookmarks,
+  setVotedOptions,
 } from '@/slices/userSlice';
 import {
   Application,
@@ -316,6 +318,22 @@ const useUserStateFetcher = () => {
       });
   };
 
+  const fetchVotedOptions = () => {
+    if (moment().utc().diff(config.lastFetchedVotedOptions, 'minute') < 5) return;
+    const URL = `${USER_URL}/me/polls/options`;
+    getHandler(URL)
+      .then(res => {
+        if (res.statusCode === 200) {
+          const votedOptions: string[] = res.data.options;
+          dispatch(setVotedOptions(votedOptions));
+          dispatch(setLastFetchedVotedOptions(new Date().toUTCString()));
+        } else Toaster.error(res.data.message, 'error_toaster');
+      })
+      .catch(err => {
+        Toaster.error(SERVER_ERROR, 'error_toaster');
+      });
+  };
+
   const fetchUserState = () => {
     fetchFollowing();
     fetchLikes();
@@ -328,6 +346,7 @@ const useUserStateFetcher = () => {
     fetchUnreadInvitations();
     fetchUnreadChats();
     fetchOrganizationMemberships();
+    fetchVotedOptions();
   };
 
   return fetchUserState;
