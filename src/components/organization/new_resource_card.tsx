@@ -4,39 +4,64 @@ import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { useSelector } from 'react-redux';
 import postHandler from '@/handlers/post_handler';
 import { ResourceFile } from '@/types';
+import Toaster from '@/utils/toaster';
+import { SERVER_ERROR } from '@/config/errors';
 interface Props {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  resourceBucketID: string | null;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  resourceBucketID: string;
   resourceFiles: ResourceFile[];
   setResourceFiles: React.Dispatch<React.SetStateAction<ResourceFile[]>>;
 }
-const NewResource = ({ showModal, setShowModal, resourceBucketID, resourceFiles, setResourceFiles }: Props) => {
+const NewResource = ({ setShow, resourceBucketID, resourceFiles, setResourceFiles }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState<string>('No File Selected');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [mutex, setMutex] = useState(false);
+
   const currentOrgID = useSelector(currentOrgIDSelector);
+
   const handleAddFile = async () => {
+    if (title == '') {
+      Toaster.error('Title cannot be empty');
+      return;
+    }
+    if (!selectedFile) {
+      Toaster.error('File cannot be empty');
+      return;
+    }
+
+    if (mutex) return;
+    setMutex(true);
+
+    const toaster = Toaster.startLoad('Uploading File to the Bucket..');
+
     const URL = `${ORG_URL}/${currentOrgID}/resource/${resourceBucketID}/file`;
+
     const formData = new FormData();
+
     formData.append('title', title);
     formData.append('description', description);
-    if (selectedFile) {
-      formData.append('file', selectedFile);
-    }
+    formData.append('file', selectedFile);
+
     const res = await postHandler(URL, formData, 'multipart/form-data');
-    console.log(res);
-    setShowModal(false);
-    setResourceFiles([res, ...resourceFiles]);
+    if (res.statusCode === 201) {
+      setResourceFiles([res.data.resourceFile, ...resourceFiles]);
+
+      Toaster.stopLoad(toaster, 'File Uploaded to the Bucket!', 1);
+      setShow(false);
+    } else {
+      if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
+      else {
+        Toaster.stopLoad(toaster, SERVER_ERROR, 0);
+      }
+      setMutex(false);
+    }
   };
 
-  if (!showModal) {
-    return <></>;
-  }
   return (
     <>
-      <div className="w-[60%] absolute bg-white border-2 border-primary_text shadow-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[150] p-6 rounded-xl flex flex-col gap-4">
+      <div className="w-[60%] absolute bg-white border-2 border-primary_text shadow-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[150] p-6 rounded-xl flex flex-col gap-4 animate-fade_third">
         <h1 className="text-2xl font-bold">Add File</h1>
         <div className="w-full h-fit flex flex-col gap-4">
           <div className="w-full flex flex-col gap-4">
@@ -93,7 +118,10 @@ const NewResource = ({ showModal, setShowModal, resourceBucketID, resourceFiles,
           </div>
         </div>
       </div>
-      <div className="overlay w-full h-full fixed top-0 left-0 bg-backdrop" onClick={() => setShowModal(false)}></div>
+      <div
+        className="overlay w-full h-full fixed top-0 left-0 bg-backdrop rounded-xl animate-fade_third"
+        onClick={() => setShow(false)}
+      ></div>
     </>
   );
 };

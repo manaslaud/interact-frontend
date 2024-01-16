@@ -308,15 +308,21 @@ const AccessTree = ({ type, setShow }: Props) => {
   ];
   const resourceAccess: Access[] = [
     {
-      task: 'View Resources',
+      task: 'Create Resource Buckets',
       canMember: false,
       canSenior: true,
       canManager: true,
     },
     {
-      task: 'Edit Resources',
+      task: 'Edit Resource Buckets',
       canMember: false,
-      canSenior: false,
+      canSenior: true,
+      canManager: true,
+    },
+    {
+      task: 'Delete Resource Buckets',
+      canMember: false,
+      canSenior: true,
       canManager: true,
     },
   ];
@@ -361,29 +367,35 @@ const AccessTree = ({ type, setShow }: Props) => {
     <>
       <div className="fixed top-24 max-md:top-20 w-1/2 max-lg:w-5/6 h-2/3 max-lg:h-5/6 bg-white dark:bg-[#ffe1fc22] flex flex-col gap-4 rounded-lg p-8 pt-0 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 shadow-lg translate-x-1/2 animate-fade_third z-50 max-lg:z-[60]">
         <div className="font-semibold text-5xl text-gray-800 mt-8">Access Tree</div>
-        <div className="w-full flex flex-col gap-4">
-          <div className="w-full grid grid-cols-5 gap-2 text-center sticky top-0 bg-white pt-4 pb-2">
-            <div className="col-span-2"></div>
-            <div className="font-medium text-xl">Member</div>
-            <div className="font-medium text-xl">Senior</div>
-            <div className="font-medium text-xl">Manager</div>
-          </div>
-          {accessArr.map((access, index) => (
-            <div key={index} className="w-full grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-2">{access.task}</div>
-              <div className="flex-center">{renderChecks(access.canMember)}</div>
-              <div className="flex-center">{renderChecks(access.canSenior)}</div>
-              <div className="flex-center">{renderChecks(access.canManager)}</div>
+        <div className="w-full h-full flex flex-col justify-between gap-4">
+          <div className="w-full flex flex-col gap-4">
+            <div className="w-full grid grid-cols-5 gap-2 text-center sticky top-0 bg-white pt-4 pb-2">
+              <div className="col-span-2"></div>
+              <div className="font-medium text-xl">Member</div>
+              <div className="font-medium text-xl">Senior</div>
+              <div className="font-medium text-xl">Manager</div>
             </div>
-          ))}
-        </div>
-        {type == 'project' ? (
-          <div className="w-full text-center mt-8 text-sm font-medium">
-            Individual Project Memberships are also taken into account.
+            {accessArr.map((access, index) => (
+              <div key={index} className="w-full grid grid-cols-5 gap-2 items-center">
+                <div className="col-span-2">{access.task}</div>
+                <div className="flex-center">{renderChecks(access.canMember)}</div>
+                <div className="flex-center">{renderChecks(access.canSenior)}</div>
+                <div className="flex-center">{renderChecks(access.canManager)}</div>
+              </div>
+            ))}
           </div>
-        ) : (
-          <></>
-        )}
+          {type == 'project' ? (
+            <div className="w-full text-center mt-8 text-sm font-medium">
+              Individual Project Memberships are also taken into account.
+            </div>
+          ) : type == 'resource' ? (
+            <div className="w-full text-center mt-8 text-sm font-medium">
+              Individual Resource Bucket Permissions are taken into account.
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <div
         onClick={() => setShow(false)}

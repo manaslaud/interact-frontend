@@ -303,7 +303,7 @@ export interface Message {
   profileID: string;
   profile: User;
   announcementID: string;
-  announcement: Announcement;
+  announcement: Announcement | null;
   messageID: string;
   message: Message | null;
   createdAt: Date;
@@ -326,7 +326,7 @@ export interface GroupChatMessage {
   profileID: string;
   profile: User;
   announcementID: string;
-  announcement: Announcement;
+  announcement: Announcement | null;
   messageID: string;
   message: GroupChatMessage | null;
   createdAt: Date;
@@ -425,12 +425,16 @@ export interface Task {
   subTasks: SubTask[];
   priority: PRIORITY;
 }
-export interface Resource {
+export interface ResourceBucket {
   id: string;
   title: string;
   description: string;
-  selectedFile: File;
-  users: User[];
+  organizationID: string;
+  noFiles: number;
+  viewAccess: string;
+  editAccess: string;
+  resourceFiles: ResourceFile[];
+  createdAt: Date;
 }
 export interface ResourceFile {
   id: string;
@@ -440,6 +444,7 @@ export interface ResourceFile {
   resourceBucketID: string;
   userID: string;
   path: string;
+  type: string;
 }
 export interface ProjectHistory {
   id: string;

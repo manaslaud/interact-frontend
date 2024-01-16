@@ -9,8 +9,8 @@ import getHandler from '@/handlers/get_handler';
 import NewResource from '@/sections/organization/resources/new_resource';
 import ResourceView from '@/sections/organization/resources/resource_view';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
-import { Resource } from '@/types';
-import { initialOrganization } from '@/types/initials';
+import { ResourceBucket } from '@/types';
+import { initialOrganization, initialResourceBucket, initialReview } from '@/types/initials';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import Toaster from '@/utils/toaster';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
@@ -22,18 +22,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const Resources = () => {
-  const [resources, setResources] = useState<Resource[]>([]);
+  const [resources, setResources] = useState<ResourceBucket[]>([]);
   const [loading, setLoading] = useState(true);
   const [organization, setOrganization] = useState(initialOrganization);
 
-  const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
-  const [filterStatus, setFilterStatus] = useState(false);
-
   const [clickedOnResource, setClickedOnResource] = useState(false);
-  const [clickedResource, setClickedResource] = useState<Resource | null>(null);
-  const [clickedResourceID, setClickedResourceID] = useState(-1);
+  const [clickedResource, setClickedResource] = useState<ResourceBucket>(initialResourceBucket);
 
-  const [clickedOnNewResource, setclickedOnNewResource] = useState(false);
+  const [clickedOnNewResource, setClickedOnNewResource] = useState(false);
   const [clickedOnInfo, setClickedOnInfo] = useState(false);
 
   const currentOrgID = useSelector(currentOrgIDSelector);
@@ -43,17 +39,12 @@ const Resources = () => {
       .then(res => {
         if (res.statusCode === 200) {
           const resourceData = res.data.resourceBuckets || [];
-          console.log(resourceData);
           setOrganization(res.data.organization);
           setResources(resourceData);
-          setFilteredResources(resourceData);
           const rid = new URLSearchParams(window.location.search).get('rid');
           if (rid && rid != '') {
-            resourceData.forEach((resource: Resource, i: number) => {
-              if (rid == resource.id) {
-                setClickedResourceID(i);
-                setClickedOnResource(true);
-              }
+            resourceData.forEach((resource: ResourceBucket, i: number) => {
+              if (rid == resource.id) setClickedOnResource(true);
             });
           }
           setLoading(false);
@@ -65,7 +56,6 @@ const Resources = () => {
         }
       })
       .catch(err => {
-        console.log('Error');
         Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
@@ -74,37 +64,12 @@ const Resources = () => {
     getResourceBuckets();
   }, []);
 
-  const filterAccessible = (status: boolean) => {
-    setFilterStatus(status);
-    if (status) {
-      const accessibleResources: Resource[] = [];
-      resources.forEach(resource => {
-        var check = false;
-        resource.users.forEach(user => {
-          if (user.id == user.id) {
-            check = true;
-            return;
-          }
-        });
-        if (check) {
-          accessibleResources.push(resource);
-        }
-      });
-      setFilteredResources(accessibleResources);
-    } else setFilteredResources(resources);
-  };
-
   return (
     <BaseWrapper title="Tasks">
       <OrgSidebar index={8} />
       <MainWrapper>
         {clickedOnNewResource ? (
-          <NewResource
-            setShow={setclickedOnNewResource}
-            organization={organization}
-            setResources={setResources}
-            setFilteredResources={setFilteredResources}
-          />
+          <NewResource setShow={setClickedOnNewResource} organization={organization} setResources={setResources} />
         ) : (
           <></>
         )}
@@ -116,7 +81,7 @@ const Resources = () => {
             <div className="flex items-center gap-2">
               {checkOrgAccess(ORG_SENIOR) ? (
                 <Plus
-                  onClick={() => setclickedOnNewResource(true)}
+                  onClick={() => setClickedOnNewResource(true)}
                   size={42}
                   className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
                   weight="regular"
@@ -137,26 +102,28 @@ const Resources = () => {
               <Loader />
             ) : (
               <>
-                {filteredResources.length > 0 ? (
+                {resources.length > 0 ? (
                   <div className="flex justify-evenly px-4">
                     <div className={`w-full flex-wrap max-lg:w-[720px] flex flex-row gap-4`}>
-                      {filteredResources.map((resource, i) => {
+                      {resources.map(resource => {
                         return (
                           <ResourceCard
                             key={resource.id}
                             resource={resource}
-                            index={i}
-                            clickedResourceID={clickedResourceID}
-                            clickedOnResource={clickedOnResource}
                             setClickedOnResource={setClickedOnResource}
-                            setClickedResourceID={setClickedResourceID}
                             setClickedResource={setClickedResource}
                           />
                         );
                       })}
                     </div>
                     {clickedOnResource && checkOrgAccess(ORG_SENIOR) ? (
-                      <ResourceView setShow={setClickedOnResource} resourceBucket={clickedResource} />
+                      <ResourceView
+                        setShow={setClickedOnResource}
+                        resourceBucket={clickedResource}
+                        setResources={setResources}
+                        setClickedResourceBucket={setClickedResource}
+                        setClickedOnResourceBucket={setClickedOnResource}
+                      />
                     ) : (
                       <></>
                     )}

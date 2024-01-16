@@ -1,10 +1,9 @@
 import { SERVER_ERROR } from '@/config/errors';
-import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { ORG_URL } from '@/config/routes';
 import getHandler from '@/handlers/get_handler';
 import { Announcement, Organization, Poll } from '@/types';
 import Toaster from '@/utils/toaster';
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import PollCard from '@/components/organization/poll_card';
 import { initialOrganization } from '@/types/initials';
 import AnnouncementCard from '@/components/organization/announcement';

@@ -1,5 +1,6 @@
 import {
   Achievement,
+  Announcement,
   Application,
   Chat,
   Comment,
@@ -21,6 +22,7 @@ import {
   Profile,
   Project,
   ProjectBookmark,
+  ResourceBucket,
   Review,
   SubTask,
   Task,
@@ -158,18 +160,16 @@ export const initialPost: Post = {
   images: [],
   content: '',
   user: initialUser,
-  likedBy: [],
   noLikes: 0,
   noShares: 0,
   noComments: 0,
   noImpressions: 0,
   noReposts: 0,
   isRePost: false,
-  comments: [],
   postedAt: new Date(),
   tags: [],
   hashes: [],
-  edited: false,
+  isEdited: false,
   taggedUsers: [],
 };
 
@@ -246,6 +246,8 @@ export const initialMessage: Message = {
   profile: initialUser,
   messageID: '',
   message: null,
+  announcementID: '',
+  announcement: null,
 };
 
 export const initialGroupChatMessage: GroupChatMessage = {
@@ -267,6 +269,8 @@ export const initialGroupChatMessage: GroupChatMessage = {
   profile: initialUser,
   messageID: '',
   message: null,
+  announcementID: '',
+  announcement: null,
 };
 
 export const initialChat: Chat = {
@@ -429,5 +433,33 @@ export const initialReview: Review = {
   noDownVotes: 0,
   rating: 0,
   isAnonymous: false,
+  createdAt: new Date(),
+};
+
+export const initialAnnouncement: Announcement = {
+  id: '',
+  userID: '',
+  title: '',
+  content: '',
+  noLikes: 0,
+  noShares: 0,
+  noComments: 0,
+  createdAt: new Date(),
+  isEdited: false,
+  taggedUsers: [],
+  isOpen: true,
+  organizationID: '',
+  organization: initialOrganization,
+};
+
+export const initialResourceBucket: ResourceBucket = {
+  id: '',
+  organizationID: '',
+  title: '',
+  description: '',
+  noFiles: 0,
+  viewAccess: '',
+  editAccess: '',
+  resourceFiles: [],
   createdAt: new Date(),
 };

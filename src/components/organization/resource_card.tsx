@@ -1,44 +1,28 @@
-import { Resource } from '@/types';
+import { ResourceBucket } from '@/types';
 import React from 'react';
 
 interface Props {
-  resource: Resource;
-  index: number;
-  clickedResourceID: number;
-  clickedOnResource: boolean;
+  resource: ResourceBucket;
   setClickedOnResource?: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedResourceID?: React.Dispatch<React.SetStateAction<number>>;
-  setClickedResource?: React.Dispatch<React.SetStateAction<Resource | null>>;
+  setClickedResource?: React.Dispatch<React.SetStateAction<ResourceBucket>>;
 }
 
-const ResourceCard = ({
-  resource,
-  index,
-  clickedResourceID,
-  clickedOnResource,
-  setClickedOnResource,
-  setClickedResourceID,
-  setClickedResource,
-}: Props) => {
+const ResourceCard = ({ resource, setClickedOnResource, setClickedResource }: Props) => {
   return (
     <div
       onClick={() => {
         if (setClickedOnResource) setClickedOnResource(true);
-        if (setClickedResourceID) setClickedResourceID(index);
         if (setClickedResource) setClickedResource(resource);
       }}
-      className={`w-[32%] ${
-        index == clickedResourceID ? 'bg-white' : 'hover:bg-gray-100 w-[32%]'
-      } relative flex justify-between items-center gap-2 rounded-lg px-6 py-4 border-gray-800 border-dashed border-2 cursor-pointer transition-ease-300`}
+      className="w-72 bg-white relative flex flex-col items-center gap-2 rounded-lg px-6 py-8 border-gray-400 border-[1px] hover:shadow-xl cursor-pointer transition-ease-300"
     >
-      <div className="grow flex flex-col gap-2">
-        <div className="font-semibold text-xl">{resource.title}</div>
-        <div className="text-sm text-gray-600">{resource.description}</div>
+      <div className="w-24 h-24 flex-center flex-col items-center gap-1 border-dark_primary_btn border-4 rounded-full">
+        <div className="text-5xl max-md:text-2xl font-bold text-gradient">{resource.noFiles}</div>
+        <div className="w-40 text-center">files</div>
       </div>
-
-      <div className="flex flex-col items-center gap-2">
-        <div className="text-5xl max-md:text-2xl font-bold text-gradient">10</div>
-        <div className="w-40 text-center">Files Available</div>
+      <div className="w-full flex flex-col items-center text-center gap-1">
+        <div className="font-semibold text-3xl line-clamp-1">{resource.title}</div>
+        <div className="text-sm text-gray-600 line-clamp-2">{resource.description}</div>
       </div>
     </div>
   );
