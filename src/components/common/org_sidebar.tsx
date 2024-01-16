@@ -121,7 +121,7 @@ const OrgSidebar = ({ index }: Props) => {
           <SidebarItem
             index={13}
             org={true}
-            title="Announcements"
+            title="News"
             icon={<Newspaper size={24} />}
             active={active}
             setActive={setActive}

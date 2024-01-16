@@ -5,6 +5,7 @@ import SharedProjectMessage from '@/components/messaging/shared_project_message'
 import SharedOpeningMessage from '@/components/messaging/shared_opening_message';
 import SharedProfileMessage from '@/components/messaging/shared_profile_message';
 import Cookies from 'js-cookie';
+import SharedAnnouncementMessage from '@/components/messaging/shared_announcement_message';
 
 interface Props {
   date: string;
@@ -29,6 +30,8 @@ const MessageGroup = ({ date, messages, chat }: Props) => {
                 <SharedOpeningMessage message={message} />
               ) : message.profileID != null ? (
                 <SharedProfileMessage message={message} />
+              ) : message.announcementID != null ? (
+                <SharedAnnouncementMessage message={message} />
               ) : (
                 <RegularMessage message={message} />
               )}

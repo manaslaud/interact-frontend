@@ -50,7 +50,7 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
               width={100}
               height={100}
               alt={'User Pic'}
-              src={`${USER_PROFILE_PIC_URL}/default.jpg`}
+              src={`${USER_PROFILE_PIC_URL}/${organisation.user.profilePic}`}
               className="rounded-full w-10 h-10"
             />
             <div className="w-fit">

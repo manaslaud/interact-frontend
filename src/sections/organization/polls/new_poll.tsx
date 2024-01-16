@@ -49,7 +49,7 @@ const NewPoll = ({ orgID, setPolls, setShow, organisation }: Props) => {
       poll.organization = organisation;
       setPolls(prev => [poll, ...prev]);
       setContent('');
-      setIsOpen(false);
+      setShow(false);
       Toaster.stopLoad(toaster, 'Poll Added!', 1);
     } else {
       if (res.data.message != '') Toaster.stopLoad(toaster, res.data.message, 0);

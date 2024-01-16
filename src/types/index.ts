@@ -224,18 +224,16 @@ export interface Post {
   images: string[];
   content: string;
   user: User;
-  likedBy: string[];
   noLikes: number;
   noShares: number;
   noComments: number;
   noImpressions: number;
   noReposts: number;
   isRePost: boolean;
-  comments: string[];
   postedAt: Date;
   tags: string[];
   hashes: string[];
-  edited: boolean;
+  isEdited: boolean;
   taggedUsers: User[];
 }
 
@@ -304,6 +302,8 @@ export interface Message {
   opening: Opening;
   profileID: string;
   profile: User;
+  announcementID: string;
+  announcement: Announcement;
   messageID: string;
   message: Message | null;
   createdAt: Date;
@@ -325,6 +325,8 @@ export interface GroupChatMessage {
   opening: Opening;
   profileID: string;
   profile: User;
+  announcementID: string;
+  announcement: Announcement;
   messageID: string;
   message: GroupChatMessage | null;
   createdAt: Date;
@@ -529,4 +531,20 @@ export interface Poll {
   isOpen: boolean;
   totalVotes: number;
   createdAt: Date;
+}
+
+export interface Announcement {
+  id: string;
+  organizationID: string;
+  organization: Organization | null;
+  title: string;
+  content: string;
+  noLikes: number;
+  noShares: number;
+  noComments: number;
+  createdAt: Date;
+  isEdited: boolean;
+  isOpen: boolean;
+  taggedUsers: User[];
+  userID: string; //Dummy for type fixes in comment_box
 }

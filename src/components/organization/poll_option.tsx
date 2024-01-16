@@ -65,7 +65,8 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
               ...p,
               totalVotes: p.totalVotes + 1,
               options: p.options.map(o => {
-                if (o.id == option.id) return { ...o, noVotes: o.noVotes + 1, votedBy: [...o.votedBy, newUser] };
+                if (o.id == option.id)
+                  return { ...o, noVotes: o.noVotes + 1, votedBy: [...(o.votedBy || []), newUser] };
                 return o;
               }),
             };
@@ -99,7 +100,7 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
               totalVotes: p.totalVotes - 1,
               options: p.options.map(o => {
                 if (o.id == option.id)
-                  return { ...o, noVotes: o.noVotes - 1, votedBy: o.votedBy.filter(u => u.id != userID) };
+                  return { ...o, noVotes: o.noVotes - 1, votedBy: (o.votedBy || []).filter(u => u.id != userID) };
                 return o;
               }),
             };
@@ -138,7 +139,7 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
                   height={50}
                   alt={'User Pic'}
                   src={`${USER_PROFILE_PIC_URL}/${u.profilePic}`}
-                  className={`w-6 h-6 rounded-full cursor-default absolute top-0 right-${index * 3}`}
+                  className={`w-6 h-6 rounded-full cursor-default absolute top-0 right-${index * 3} animate-fade_third`}
                 />
               );
             })}
@@ -155,7 +156,7 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
         onClick={() => {
           isVoted ? handleUnVoteOption(option, setIsVoted) : handleVoteOption(option, setIsVoted);
         }}
-        className="w-full h-3 group max-md:hidden border-dark_primary_btn border-2 rounded-lg cursor-pointer"
+        className="w-full h-[15px] group max-md:hidden border-dark_primary_btn border-2 rounded-lg cursor-pointer"
       >
         <div
           style={{ width: `${barWidth}%` }}
