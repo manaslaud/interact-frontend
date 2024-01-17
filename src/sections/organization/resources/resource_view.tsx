@@ -347,10 +347,14 @@ const ResourceView = ({
                       className="hover:bg-gray-100 transition-ease-200 cursor-pointer"
                     >
                       <td className="font-medium">{file.title}</td>
-                      <td className="line-clamp-1 uppercase">{file.type}</td>
+                      <td className="line-clamp-1 uppercase">{file.type != '' ? file.type : '-'}</td>
                       <td>{moment(file.createdAt).format('DD MMM, YY')}</td>
                       <td>
-                        <Link target="_blank" href={`${RESOURCE_URL}/${file.path}`} className="flex-center h-full">
+                        <Link
+                          target="_blank"
+                          href={file.isFileUploaded ? `${RESOURCE_URL}/${file.path}` : file.path}
+                          className="flex-center h-full"
+                        >
                           <ArrowUpRight />
                         </Link>
                       </td>

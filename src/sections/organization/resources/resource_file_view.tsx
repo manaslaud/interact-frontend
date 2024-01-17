@@ -133,7 +133,7 @@ const ResourceFileView = ({
           <div className="w-[40%] aspect-[500/333] font-primary bg-white rounded-xl fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] shadow-lg p-4 animate-fade_third">
             <Link
               target="_blank"
-              href={`${RESOURCE_URL}/${resourceFile.path}`}
+              href={resourceFile.isFileUploaded ? `${RESOURCE_URL}/${resourceFile.path}` : resourceFile.path}
               className="flex-center absolute top-3 right-3"
             >
               <ArrowUpRight size={30} />
@@ -182,9 +182,11 @@ const ResourceFileView = ({
               <div className="w-full h-full flex-center flex-col gap-2">
                 <div className="text-3xl font-semibold text-center">{resourceFile.title}</div>
                 <div className="text-gray-500 text-center">{resourceFile.description}</div>
-                <div className="text-sm">
-                  Type- <span className="uppercase font-medium">{resourceFile.type}</span>
-                </div>
+                {resourceFile.type != '' && (
+                  <div className="text-sm">
+                    Type- <span className="uppercase font-medium">{resourceFile.type}</span>
+                  </div>
+                )}
               </div>
             )}
 

@@ -446,6 +446,7 @@ export interface ResourceFile {
   user: User;
   path: string;
   type: string;
+  isFileUploaded: boolean;
 }
 export interface ProjectHistory {
   id: string;

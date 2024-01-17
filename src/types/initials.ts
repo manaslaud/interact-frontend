@@ -474,5 +474,6 @@ export const initialResourceFile: ResourceFile = {
   type: '',
   userID: '',
   user: initialUser,
+  isFileUploaded: false,
   createdAt: new Date(),
 };

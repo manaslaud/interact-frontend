@@ -6,6 +6,8 @@ import postHandler from '@/handlers/post_handler';
 import { ResourceBucket, ResourceFile } from '@/types';
 import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
+import { X } from '@phosphor-icons/react';
+import isURL from 'validator/lib/isURL';
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   resourceBucketID: string;
@@ -24,8 +26,9 @@ const NewResourceFile = ({
 }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fileName, setFileName] = useState<string>('No File Selected');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileLink, setFileLink] = useState('');
+
   const [mutex, setMutex] = useState(false);
 
   const currentOrgID = useSelector(currentOrgIDSelector);
@@ -35,8 +38,13 @@ const NewResourceFile = ({
       Toaster.error('Title cannot be empty');
       return;
     }
-    if (!selectedFile) {
+    if (!selectedFile && fileLink == '') {
       Toaster.error('File cannot be empty');
+      return;
+    }
+
+    if (fileLink != '' && !isURL(fileLink)) {
+      Toaster.error('Enter a valid Link');
       return;
     }
 
@@ -51,7 +59,8 @@ const NewResourceFile = ({
 
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('file', selectedFile);
+    if (selectedFile) formData.append('file', selectedFile);
+    formData.append('link', fileLink);
 
     const res = await postHandler(URL, formData, 'multipart/form-data');
     if (res.statusCode === 201) {
@@ -110,22 +119,57 @@ const NewResourceFile = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             const files = e.target.files;
             if (files && files.length > 0) {
-              setFileName(files[0].name);
               setSelectedFile(files[0]);
             }
           }}
         />
-        <div className="upload-container flex gap-4 items-center">
+        <div className="flex flex-col gap-4 items-center mt-4">
           <div
-            className="upload-file-btn  text-primary_text rounded-lg p-2 px-6 border-2 border-primary_text hover:bg-primary_text hover:text-white cursor-pointer w-fit"
+            className={`${selectedFile ? 'w-1/2 scale-110' : 'w-1/3'} ${
+              fileLink == '' ? 'cursor-pointer hover:bg-primary_text hover:text-white' : 'cursor-default opacity-60'
+            } flex-center text-center text-primary_text rounded-lg p-2 px-6 border-2 border-primary_text transition-ease-300`}
             onClick={() => {
-              const input_el = document.querySelector('.resource-input-field') as HTMLInputElement | HTMLElement;
-              input_el?.click();
+              if (fileLink == '') {
+                const input_el = document.querySelector('.resource-input-field') as HTMLInputElement | HTMLElement;
+                input_el?.click();
+              }
             }}
           >
-            Select File
+            <div className="w-full">
+              {selectedFile
+                ? selectedFile.name.length > 30
+                  ? `${selectedFile.name.substring(0, 25)}...`
+                  : `${selectedFile.name}`
+                : 'Upload a File'}
+            </div>
+            {selectedFile && (
+              <X
+                onClick={el => {
+                  el.stopPropagation();
+                  setSelectedFile(null);
+                }}
+              />
+            )}
           </div>
-          <div className="filename">{fileName.length > 25 ? `${fileName.substring(0, 20)}...` : `${fileName}`}</div>
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[45%] h-[1px] bg-gray-200"></div>
+            <div className="w-[10%] text-center text-sm max-lg:text-xs text-gray-400">or</div>
+            <div className="w-[45%] h-[1px] bg-gray-200"></div>
+          </div>
+          {selectedFile ? (
+            <div className="w-1/3 text-primary_text text-center rounded-lg p-2 px-6 border-2 border-primary_text opacity-60 cursor-default">
+              Enter Link to the file
+            </div>
+          ) : (
+            <input
+              type="text"
+              className="w-1/3 focus:w-1/2 focus:scale-110 bg-transparent focus:outline-none text-primary_text text-center rounded-lg p-2 px-6 border-2 border-primary_text transition-ease-300"
+              placeholder="Enter Link to the file"
+              maxLength={25}
+              value={fileLink}
+              onChange={el => setFileLink(el.target.value)}
+            />
+          )}
         </div>
         <div className="w-full flex justify-end self-end">
           <div

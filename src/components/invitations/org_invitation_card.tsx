@@ -1,14 +1,14 @@
 import { Invitation, OrganizationMembership } from '@/types';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { INVITATION_URL, PROJECT_PIC_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
+import { INVITATION_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
 import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMemberProjects, setOrganizationMemberships, userSelector } from '@/slices/userSlice';
+import { setOrganizationMemberships, userSelector } from '@/slices/userSlice';
 import ConfirmDelete from '../common/confirm_delete';
 import { setExploreTab, setUnreadInvitations, unreadInvitationsSelector } from '@/slices/feedSlice';
 import { ORG_MEMBER } from '@/config/constants';
@@ -107,7 +107,7 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
       <Link
         onClick={() => dispatch(setExploreTab(3))}
         target="_blank"
-        href={`/explore?uid=${invitation.organization.title}`}
+        href={`/explore/organisation/${invitation.organization.user.username}`}
       >
         <Image
           crossOrigin="anonymous"
@@ -121,7 +121,7 @@ const OrgInvitationCard = ({ invitation, setInvitations }: Props) => {
       <Link
         target="_blank"
         onClick={() => dispatch(setExploreTab(3))}
-        href={`/explore?orgId=${invitation.organization.title}`}
+        href={`/explore/organisation/${invitation.organization.user.username}`}
         className="grow flex max-md:flex-col max-md:text-center max-md:gap-4 items-center justify-between"
       >
         <div className="grow flex flex-col gap-2">
