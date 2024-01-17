@@ -12,7 +12,7 @@ interface Props {
   resourceFiles: ResourceFile[];
   setResourceFiles: React.Dispatch<React.SetStateAction<ResourceFile[]>>;
 }
-const NewResource = ({ setShow, resourceBucketID, resourceFiles, setResourceFiles }: Props) => {
+const NewResourceFile = ({ setShow, resourceBucketID, resourceFiles, setResourceFiles }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState<string>('No File Selected');
@@ -62,7 +62,7 @@ const NewResource = ({ setShow, resourceBucketID, resourceFiles, setResourceFile
   return (
     <>
       <div className="w-[60%] absolute bg-white border-2 border-primary_text shadow-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[150] p-6 rounded-xl flex flex-col gap-4 animate-fade_third">
-        <h1 className="text-2xl font-bold">Add File</h1>
+        <h1 className="text-2xl font-bold">Upload File</h1>
         <div className="w-full h-fit flex flex-col gap-4">
           <div className="w-full flex flex-col gap-4">
             <div className="w-full flex gap-4 px-4 py-2 dark:bg-dark_primary_comp_hover rounded-lg ">
@@ -93,7 +93,6 @@ const NewResource = ({ setShow, resourceBucketID, resourceFiles, setResourceFile
             if (files && files.length > 0) {
               setFileName(files[0].name);
               setSelectedFile(files[0]);
-              console.log(selectedFile);
             }
           }}
         />
@@ -126,4 +125,4 @@ const NewResource = ({ setShow, resourceBucketID, resourceFiles, setResourceFile
   );
 };
 
-export default NewResource;
+export default NewResourceFile;

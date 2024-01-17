@@ -130,7 +130,7 @@ const OrgSidebar = ({ index }: Props) => {
             open={open}
           />
           <SidebarItem
-            index={8}
+            index={14}
             org={true}
             title="Resources"
             icon={<BookOpenText size={24} />}

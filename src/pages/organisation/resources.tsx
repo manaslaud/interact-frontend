@@ -65,8 +65,8 @@ const Resources = () => {
   }, []);
 
   return (
-    <BaseWrapper title="Tasks">
-      <OrgSidebar index={8} />
+    <BaseWrapper title="Resources">
+      <OrgSidebar index={14} />
       <MainWrapper>
         {clickedOnNewResource ? (
           <NewResource setShow={setClickedOnNewResource} organization={organization} setResources={setResources} />
@@ -116,7 +116,7 @@ const Resources = () => {
                         );
                       })}
                     </div>
-                    {clickedOnResource && checkOrgAccess(ORG_SENIOR) ? (
+                    {clickedOnResource ? (
                       <ResourceView
                         setShow={setClickedOnResource}
                         resourceBucket={clickedResource}

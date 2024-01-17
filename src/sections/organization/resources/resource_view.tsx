@@ -14,19 +14,20 @@ import {
 import { ORG_MANAGER, ORG_MEMBER, ORG_SENIOR } from '@/config/constants';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import getHandler from '@/handlers/get_handler';
-import { GC_API, ORG_URL, RESOURCE_URL } from '@/config/routes';
+import { ORG_URL, RESOURCE_URL } from '@/config/routes';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { useSelector } from 'react-redux';
 import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
-import NewResource from '@/components/organization/new_resource_card';
+import NewResourceFile from '@/sections/organization/resources/new_resource_file';
 import Loader from '@/components/common/loader';
 import moment from 'moment';
 import patchHandler from '@/handlers/patch_handler';
 import deleteHandler from '@/handlers/delete_handler';
-import { initialResourceBucket } from '@/types/initials';
+import { initialResourceBucket, initialResourceFile } from '@/types/initials';
 import ConfirmDelete from '@/components/common/confirm_delete';
 import Link from 'next/link';
+import ResourceFileView from './resource_file_view';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,6 +56,9 @@ const ResourceView = ({
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
 
+  const [clickedOnFile, setClickedOnFile] = useState(false);
+  const [clickedFile, setClickedFile] = useState(initialResourceFile);
+
   const currentOrgID = useSelector(currentOrgIDSelector);
 
   const getResourceBucketFiles = () => {
@@ -78,7 +82,7 @@ const ResourceView = ({
       return;
     }
 
-    const toaster = Toaster.startLoad('Edit Bucket Details');
+    const toaster = Toaster.startLoad('Editing Bucket Details');
 
     const URL = `${ORG_URL}/${currentOrgID}/resource/${resourceBucket.id}`;
 
@@ -134,7 +138,7 @@ const ResourceView = ({
     <>
       <div className="w-[75%] aspect-[500/333] font-primary bg-white rounded-xl fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] shadow-lg p-4 animate-fade_third">
         {clickedOnUploadFile ? (
-          <NewResource
+          <NewResourceFile
             setShow={setClickedOnUploadFile}
             resourceBucketID={resourceBucket.id}
             setResourceFiles={setResourceFiles}
@@ -145,6 +149,18 @@ const ResourceView = ({
         )}
         {clickedOnDelete ? <ConfirmDelete setShow={setClickedOnDelete} handleDelete={handleDelete} /> : <></>}
 
+        {clickedOnFile ? (
+          <ResourceFileView
+            resourceFile={clickedFile}
+            setShow={setClickedOnFile}
+            setResourceFiles={setResourceFiles}
+            setClickedResourceFile={setClickedFile}
+            setClickedOnResourceFile={setClickedOnFile}
+          />
+        ) : (
+          <></>
+        )}
+
         {loading ? (
           <Loader />
         ) : (
@@ -152,67 +168,60 @@ const ResourceView = ({
             <div className="w-1/3 h-full flex flex-col items-center gap-4 border-r-[1px] border-dashed p-2 ">
               {clickedOnEdit ? (
                 <div className="w-full flex justify-end items-center gap-1">
-                  <div className="addResource">
-                    <X
-                      size={42}
-                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                      weight="regular"
-                      onClick={() => setClickedOnEdit(false)}
-                    />
-                  </div>
-                  <div className="addResource">
-                    <Check
-                      size={42}
-                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                      weight="regular"
-                      onClick={handleEdit}
-                    />
-                  </div>
+                  <X
+                    size={42}
+                    className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                    weight="regular"
+                    onClick={() => setClickedOnEdit(false)}
+                  />
+
+                  <Check
+                    size={42}
+                    className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                    weight="regular"
+                    onClick={handleEdit}
+                  />
                 </div>
               ) : (
                 <div className="w-full flex justify-end items-center gap-1">
-                  <div className="addResource">
-                    {checkOrgAccess(ORG_SENIOR) ? (
-                      <Plus
-                        size={36}
-                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                        weight="regular"
-                        onClick={() => setClickedOnUploadFile(true)}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="addResource">
-                    {checkOrgAccess(resourceBucket.editAccess) ? (
-                      <PencilSimple
-                        size={36}
-                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                        weight="regular"
-                        onClick={() => setClickedOnEdit(true)}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="addResource">
-                    {checkOrgAccess(resourceBucket.editAccess) ? (
-                      <TrashSimple
-                        size={36}
-                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                        weight="regular"
-                        onClick={() => setClickedOnDelete(true)}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                  {checkOrgAccess(resourceBucket.editAccess) ? (
+                    <Plus
+                      size={40}
+                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                      weight="regular"
+                      onClick={() => setClickedOnUploadFile(true)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+
+                  {checkOrgAccess(ORG_SENIOR) ? (
+                    <PencilSimple
+                      size={40}
+                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                      weight="regular"
+                      onClick={() => setClickedOnEdit(true)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+
+                  {checkOrgAccess(ORG_SENIOR) ? (
+                    <TrashSimple
+                      size={40}
+                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                      weight="regular"
+                      onClick={() => setClickedOnDelete(true)}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
               )}
 
               <div className="w-36 h-36 flex-center flex-col items-center gap-1 border-dark_primary_btn border-4 rounded-full">
                 <div className="text-7xl font-bold text-gradient">{resourceBucket.noFiles}</div>
-                <div className="w-40 text-center">files</div>
+                <div className="w-40 text-center">file{resourceBucket.noFiles != 1 ? 's' : ''}</div>
               </div>
 
               {clickedOnEdit ? (
@@ -306,7 +315,7 @@ const ResourceView = ({
                       <div className="flex-center flex-col text-xs">
                         <div className="font-semibold">{resourceBucket.editAccess}s</div> can add files
                       </div>
-                    </div>{' '}
+                    </div>
                   </div>
                 </>
               )}
@@ -322,13 +331,20 @@ const ResourceView = ({
                     <th>Title</th>
                     <th>Type</th>
                     <th>Uploaded On</th>
-                    <th>Link</th>
+                    <th>View</th>
                   </thead>
                   {resourceFiles.map((file: ResourceFile, i) => (
-                    <tr key={i}>
+                    <tr
+                      key={i}
+                      onClick={() => {
+                        setClickedFile(file);
+                        setClickedOnFile(true);
+                      }}
+                      className="hover:bg-gray-100 transition-ease-200 cursor-pointer"
+                    >
                       <td className="font-medium">{file.title}</td>
                       <td className="line-clamp-1 uppercase">{file.type}</td>
-                      <td>{moment(file.createdAt).format('DD MMM, YYYY')}</td>
+                      <td>{moment(file.createdAt).format('DD MMM, YY')}</td>
                       <td>
                         <Link target="_blank" href={`${RESOURCE_URL}/${file.path}`} className="flex-center h-full">
                           <ArrowUpRight />

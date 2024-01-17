@@ -440,9 +440,10 @@ export interface ResourceFile {
   id: string;
   title: string;
   description: string;
-  createdAt: string;
+  createdAt: Date;
   resourceBucketID: string;
   userID: string;
+  user: User;
   path: string;
   type: string;
 }

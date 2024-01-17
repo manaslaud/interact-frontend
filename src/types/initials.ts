@@ -23,6 +23,7 @@ import {
   Project,
   ProjectBookmark,
   ResourceBucket,
+  ResourceFile,
   Review,
   SubTask,
   Task,
@@ -461,5 +462,17 @@ export const initialResourceBucket: ResourceBucket = {
   viewAccess: '',
   editAccess: '',
   resourceFiles: [],
+  createdAt: new Date(),
+};
+
+export const initialResourceFile: ResourceFile = {
+  id: '',
+  title: '',
+  description: '',
+  path: '',
+  resourceBucketID: '',
+  type: '',
+  userID: '',
+  user: initialUser,
   createdAt: new Date(),
 };
