@@ -1,7 +1,7 @@
 import PostComponent from '@/components/home/post';
 import getHandler from '@/handlers/get_handler';
 import { userSelector } from '@/slices/userSlice';
-import { Post } from '@/types';
+import { Announcement, Poll, Post } from '@/types';
 import Toaster from '@/utils/toaster';
 import { Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
@@ -16,9 +16,12 @@ import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import NoFeed from '@/components/empty_fillers/feed';
 import { SERVER_ERROR } from '@/config/errors';
 import PostsLoader from '@/components/loaders/posts';
+import PollCard from '@/components/organization/poll_card';
+import { initialOrganization } from '@/types/initials';
+import AnnouncementCard from '@/components/organization/announcement';
 
 const Feed = () => {
-  const [feed, setFeed] = useState<Post[]>([]);
+  const [feed, setFeed] = useState<(Post | Announcement | Poll)[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [clickedOnNewPost, setClickedOnNewPost] = useState(false);
@@ -29,11 +32,11 @@ const Feed = () => {
   const open = useSelector(navbarOpenSelector);
 
   const getFeed = () => {
-    const URL = `/feed?page=${page}&limit=${10}`;
+    const URL = `/feed/combined?page=${page}&limit=${5}`;
     getHandler(URL)
       .then(res => {
         if (res.statusCode === 200) {
-          const addedFeed = [...feed, ...res.data.feed];
+          const addedFeed = [...feed, ...(res.data.feed || [])];
           if (addedFeed.length === feed.length) setHasMore(false);
           setFeed(addedFeed);
           setPage(prev => prev + 1);
@@ -46,6 +49,7 @@ const Feed = () => {
         }
       })
       .catch(err => {
+        console.log(err);
         Toaster.error(SERVER_ERROR, 'error_toaster');
       });
   };
@@ -96,9 +100,15 @@ const Feed = () => {
                 hasMore={hasMore}
                 loader={<PostsLoader />}
               >
-                {feed.map(post => {
-                  if (post.isRePost) return <RePostComponent key={post.id} setFeed={setFeed} post={post} />;
-                  else return <PostComponent key={post.id} setFeed={setFeed} post={post} />;
+                {feed.map(item => {
+                  if ('noImpressions' in item) {
+                    if (item.isRePost) return <RePostComponent key={item.id} setFeed={setFeed} post={item} />;
+                    else return <PostComponent key={item.id} setFeed={setFeed} post={item} />;
+                  } else if ('totalVotes' in item) {
+                    return (
+                      <PollCard key={item.id} poll={item} organisation={item.organization || initialOrganization} />
+                    );
+                  } else return <AnnouncementCard key={item.id} announcement={item} />;
                 })}
               </InfiniteScroll>
             )}

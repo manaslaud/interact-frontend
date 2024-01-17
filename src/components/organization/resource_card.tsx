@@ -22,7 +22,7 @@ const ResourceCard = ({ resource, setClickedOnResource, setClickedResource }: Pr
     >
       {!checkOrgAccess(resource.viewAccess) && <Lock className="absolute top-4 right-4" size={24} />}
 
-      <div className="w-24 h-24 flex-center flex-col items-center gap-1 border-dark_primary_btn border-4 rounded-full">
+      <div className="w-24 h-24 flex-center flex-col items-center border-dark_primary_btn border-[5px] rounded-full">
         <div className="text-5xl max-md:text-2xl font-bold text-gradient">{resource.noFiles}</div>
         <div className="w-40 text-center">file{resource.noFiles != 1 ? 's' : ''}</div>
       </div>

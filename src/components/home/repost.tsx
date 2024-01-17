@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Post } from '@/types';
+import { Announcement, Poll, Post } from '@/types';
 import { ORG_URL, POST_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
 import Link from 'next/link';
@@ -24,7 +24,7 @@ import { Buildings } from '@phosphor-icons/react';
 interface Props {
   post: Post;
   showLowerPost?: boolean;
-  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
   org?: boolean;
 }
 

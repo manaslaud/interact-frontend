@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Post } from '@/types';
+import { Announcement, Poll, Post } from '@/types';
 import { USER_PROFILE_PIC_URL, POST_PIC_URL, POST_URL, ORG_URL } from '@/config/routes';
 import moment from 'moment';
 import { CarouselProvider, Slider, Slide, Dot } from 'pure-react-carousel';
@@ -28,7 +28,7 @@ interface Props {
   showLowerPost?: boolean;
   showImage?: boolean;
   isRepost?: boolean;
-  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
   org?: boolean;
 }
 

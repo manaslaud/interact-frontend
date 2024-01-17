@@ -8,14 +8,14 @@ import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
 import NewPostImages from '@/components/home/new_post_images';
 import NewPostHelper from '@/components/home/new_post_helper';
-import { Post, User } from '@/types';
+import { Announcement, Poll, Post, User } from '@/types';
 import { useWindowWidth } from '@react-hook/window-size';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import getHandler from '@/handlers/get_handler';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
   org?: boolean;
 }
 

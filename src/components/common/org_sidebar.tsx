@@ -161,7 +161,7 @@ const OrgSidebar = ({ index }: Props) => {
                 setActive={setActive}
                 open={open}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 index={10}
                 org={true}
                 title="Notifications"
@@ -169,7 +169,7 @@ const OrgSidebar = ({ index }: Props) => {
                 active={active}
                 setActive={setActive}
                 open={open}
-              />
+              /> */}
               <SidebarItem
                 index={11}
                 org={true}

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { userSelector } from '@/slices/userSlice';
 import { useSelector } from 'react-redux';
-import { Post, User } from '@/types';
+import { Announcement, Poll, Post, User } from '@/types';
 import getDisplayTime from '@/utils/funcs/get_display_time';
 import getHandler from '@/handlers/get_handler';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
@@ -14,7 +14,7 @@ import { currentOrgIDSelector } from '@/slices/orgSlice';
 interface Props {
   post: Post;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
   org?: boolean;
 }
 

@@ -158,6 +158,8 @@ const ResourceView = ({
             setResourceFiles={setResourceFiles}
             setClickedResourceFile={setClickedFile}
             setClickedOnResourceFile={setClickedOnFile}
+            setResourceBuckets={setResources}
+            setClickedResourceBucket={setClickedResourceBucket}
           />
         ) : (
           <></>
@@ -221,7 +223,7 @@ const ResourceView = ({
                 </div>
               )}
 
-              <div className="w-36 h-36 flex-center flex-col items-center gap-1 border-dark_primary_btn border-4 rounded-full">
+              <div className="w-36 h-36 flex-center flex-col items-center gap-1 border-dark_primary_btn border-[8px] rounded-full">
                 <div className="text-7xl font-bold text-gradient">{resourceBucket.noFiles}</div>
                 <div className="w-40 text-center">file{resourceBucket.noFiles != 1 ? 's' : ''}</div>
               </div>

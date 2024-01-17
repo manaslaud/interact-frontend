@@ -142,6 +142,20 @@ const Announcement = ({ announcement, setAnnouncements }: Props) => {
               ) : (
                 <></>
               )}
+              {!checkParticularOrgAccess(ORG_SENIOR, announcement.organization) ? (
+                <div
+                  onClick={el => {
+                    el.stopPropagation();
+                    if (userID == '') setNoUserClick(true);
+                    else setClickedOnReport(true);
+                  }}
+                  className="w-full px-4 py-2 max-md:p-1 max-md:text-center hover:bg-[#ffffff] dark:hover:bg-[#ffffff19] hover:text-primary_danger transition-ease-100 rounded-lg cursor-pointer"
+                >
+                  Report
+                </div>
+              ) : (
+                <></>
+              )}
 
               {!checkParticularOrgAccess(ORG_MEMBER, announcement.organization) ? (
                 <div

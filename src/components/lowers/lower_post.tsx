@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Post, PostBookmark } from '@/types';
+import { Announcement, Poll, Post, PostBookmark } from '@/types';
 import deleteHandler from '@/handlers/delete_handler';
 import getHandler from '@/handlers/get_handler';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ import SignUp from '../common/signup_box';
 
 interface Props {
   post: Post;
-  setFeed?: React.Dispatch<React.SetStateAction<Post[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
 }
 
 interface bookMarkStatus {
