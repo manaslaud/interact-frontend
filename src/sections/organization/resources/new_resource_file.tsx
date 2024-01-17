@@ -3,7 +3,7 @@ import { ORG_URL } from '@/config/routes';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { useSelector } from 'react-redux';
 import postHandler from '@/handlers/post_handler';
-import { ResourceFile } from '@/types';
+import { ResourceBucket, ResourceFile } from '@/types';
 import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
 interface Props {
@@ -11,8 +11,17 @@ interface Props {
   resourceBucketID: string;
   resourceFiles: ResourceFile[];
   setResourceFiles: React.Dispatch<React.SetStateAction<ResourceFile[]>>;
+  setResourceBuckets?: React.Dispatch<React.SetStateAction<ResourceBucket[]>>;
+  setClickedResourceBucket?: React.Dispatch<React.SetStateAction<ResourceBucket>>;
 }
-const NewResourceFile = ({ setShow, resourceBucketID, resourceFiles, setResourceFiles }: Props) => {
+const NewResourceFile = ({
+  setShow,
+  resourceBucketID,
+  resourceFiles,
+  setResourceFiles,
+  setResourceBuckets,
+  setClickedResourceBucket,
+}: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [fileName, setFileName] = useState<string>('No File Selected');
@@ -47,7 +56,17 @@ const NewResourceFile = ({ setShow, resourceBucketID, resourceFiles, setResource
     const res = await postHandler(URL, formData, 'multipart/form-data');
     if (res.statusCode === 201) {
       setResourceFiles([res.data.resourceFile, ...resourceFiles]);
-
+      if (setResourceBuckets)
+        setResourceBuckets(prev =>
+          prev.map(r => {
+            if (r.id == resourceBucketID) return { ...r, noFiles: r.noFiles + 1 };
+            else return r;
+          })
+        );
+      if (setClickedResourceBucket)
+        setClickedResourceBucket(prev => {
+          return { ...prev, noFiles: prev.noFiles + 1 };
+        });
       Toaster.stopLoad(toaster, 'File Uploaded to the Bucket!', 1);
       setShow(false);
     } else {

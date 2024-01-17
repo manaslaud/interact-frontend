@@ -35,6 +35,8 @@ interface Props {
   setResourceFiles?: React.Dispatch<React.SetStateAction<ResourceFile[]>>;
   setClickedResourceFile?: React.Dispatch<React.SetStateAction<ResourceFile>>;
   setClickedOnResourceFile?: React.Dispatch<React.SetStateAction<boolean>>;
+  setResourceBuckets?: React.Dispatch<React.SetStateAction<ResourceBucket[]>>;
+  setClickedResourceBucket?: React.Dispatch<React.SetStateAction<ResourceBucket>>;
 }
 
 const ResourceFileView = ({
@@ -43,6 +45,8 @@ const ResourceFileView = ({
   setResourceFiles,
   setClickedResourceFile,
   setClickedOnResourceFile,
+  setResourceBuckets,
+  setClickedResourceBucket,
 }: Props) => {
   const [title, setTitle] = useState(resourceFile.title);
   const [description, setDescription] = useState(resourceFile.description);
@@ -100,6 +104,17 @@ const ResourceFileView = ({
       if (setResourceFiles) setResourceFiles(prev => prev.filter(f => f.id != resourceFile.id));
       if (setClickedOnResourceFile) setClickedOnResourceFile(false);
       if (setClickedResourceFile) setClickedResourceFile(initialResourceFile);
+      if (setResourceBuckets)
+        setResourceBuckets(prev =>
+          prev.map(r => {
+            if (r.id == resourceFile.resourceBucketID) return { ...r, noFiles: r.noFiles - 1 };
+            else return r;
+          })
+        );
+      if (setClickedResourceBucket)
+        setClickedResourceBucket(prev => {
+          return { ...prev, noFiles: prev.noFiles - 1 };
+        });
       Toaster.stopLoad(toaster, 'Resource File Deleted', 1);
     } else {
       if (res.data.message) Toaster.stopLoad(toaster, res.data.message, 0);
@@ -208,7 +223,10 @@ const ResourceFileView = ({
                     src={`${USER_PROFILE_PIC_URL}/${resourceFile.user.profilePic}`}
                     className="w-4 h-4 rounded-full"
                   />
-                  <div className="font-semibold"> {resourceFile.user.name}</div>
+                  <div className="font-semibold hover-underline-animation after:bg-gray-500">
+                    {' '}
+                    {resourceFile.user.name}
+                  </div>
                 </Link>
                 <span>
                   on <span className="font-semibold">{moment(resourceFile.createdAt).format('DD MMMM, YYYY')}</span>

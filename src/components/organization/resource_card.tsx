@@ -1,4 +1,6 @@
 import { ResourceBucket } from '@/types';
+import checkOrgAccess from '@/utils/funcs/check_org_access';
+import { Lock } from '@phosphor-icons/react';
 import React from 'react';
 
 interface Props {
@@ -14,8 +16,12 @@ const ResourceCard = ({ resource, setClickedOnResource, setClickedResource }: Pr
         if (setClickedOnResource) setClickedOnResource(true);
         if (setClickedResource) setClickedResource(resource);
       }}
-      className="w-72 bg-white relative flex flex-col items-center gap-2 rounded-lg px-6 py-8 border-gray-400 border-[1px] hover:shadow-xl cursor-pointer transition-ease-300"
+      className={`w-72 bg-white relative flex flex-col items-center gap-2 rounded-lg px-6 py-8 border-gray-400 border-[1px] ${
+        checkOrgAccess(resource.viewAccess) ? 'cursor-pointer hover:shadow-xl' : 'cursor-default'
+      } transition-ease-300`}
     >
+      {!checkOrgAccess(resource.viewAccess) && <Lock className="absolute top-4 right-4" size={24} />}
+
       <div className="w-24 h-24 flex-center flex-col items-center gap-1 border-dark_primary_btn border-4 rounded-full">
         <div className="text-5xl max-md:text-2xl font-bold text-gradient">{resource.noFiles}</div>
         <div className="w-40 text-center">file{resource.noFiles != 1 ? 's' : ''}</div>

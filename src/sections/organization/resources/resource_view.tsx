@@ -143,6 +143,8 @@ const ResourceView = ({
             resourceBucketID={resourceBucket.id}
             setResourceFiles={setResourceFiles}
             resourceFiles={resourceFiles}
+            setResourceBuckets={setResources}
+            setClickedResourceBucket={setClickedResourceBucket}
           />
         ) : (
           <></>

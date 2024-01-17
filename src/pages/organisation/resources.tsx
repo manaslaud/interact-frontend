@@ -10,7 +10,7 @@ import NewResource from '@/sections/organization/resources/new_resource';
 import ResourceView from '@/sections/organization/resources/resource_view';
 import { currentOrgIDSelector } from '@/slices/orgSlice';
 import { ResourceBucket } from '@/types';
-import { initialOrganization, initialResourceBucket, initialReview } from '@/types/initials';
+import { initialOrganization, initialResourceBucket } from '@/types/initials';
 import checkOrgAccess from '@/utils/funcs/check_org_access';
 import Toaster from '@/utils/toaster';
 import OrgMembersOnlyAndProtect from '@/utils/wrappers/org_members_only';
@@ -116,7 +116,7 @@ const Resources = () => {
                         );
                       })}
                     </div>
-                    {clickedOnResource ? (
+                    {clickedOnResource && checkOrgAccess(clickedResource.viewAccess) ? (
                       <ResourceView
                         setShow={setClickedOnResource}
                         resourceBucket={clickedResource}
