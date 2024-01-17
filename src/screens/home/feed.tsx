@@ -106,7 +106,12 @@ const Feed = () => {
                     else return <PostComponent key={item.id} setFeed={setFeed} post={item} />;
                   } else if ('totalVotes' in item) {
                     return (
-                      <PollCard key={item.id} poll={item} organisation={item.organization || initialOrganization} />
+                      <PollCard
+                        key={item.id}
+                        poll={item}
+                        organisation={item.organization || initialOrganization}
+                        setPolls={setFeed}
+                      />
                     );
                   } else return <AnnouncementCard key={item.id} announcement={item} />;
                 })}

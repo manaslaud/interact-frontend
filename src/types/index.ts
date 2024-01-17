@@ -303,7 +303,7 @@ export interface Message {
   profileID: string;
   profile: User;
   announcementID: string;
-  announcement: Announcement | null;
+  announcement: Announcement;
   messageID: string;
   message: Message | null;
   createdAt: Date;
@@ -326,7 +326,7 @@ export interface GroupChatMessage {
   profileID: string;
   profile: User;
   announcementID: string;
-  announcement: Announcement | null;
+  announcement: Announcement;
   messageID: string;
   message: GroupChatMessage | null;
   createdAt: Date;

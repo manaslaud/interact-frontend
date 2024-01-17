@@ -57,7 +57,7 @@ const NewsFeed = ({ orgID }: Props) => {
       ) : (
         newsFeed.map(news =>
           'totalVotes' in news ? (
-            <PollCard key={news.id} poll={news} organisation={organisation} />
+            <PollCard key={news.id} poll={news} organisation={organisation} setPolls={setNewsFeed} />
           ) : (
             <AnnouncementCard key={news.id} announcement={news} />
           )

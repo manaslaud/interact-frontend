@@ -1,7 +1,7 @@
 import { USER_PROFILE_PIC_URL } from '@/config/routes';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Option, Poll } from '@/types';
+import { Announcement, Option, Poll, Post } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { SERVER_ERROR } from '@/config/errors';
 import { ORG_URL } from '@/config/routes';
@@ -17,7 +17,7 @@ interface Props {
   totalVotes: number;
   orgID: string;
   pollID: string;
-  setPolls?: React.Dispatch<React.SetStateAction<Poll[]>>;
+  setPolls?: React.Dispatch<React.SetStateAction<Poll[] | (Poll | Announcement)[] | (Post | Poll | Announcement)[]>>;
 }
 
 const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
@@ -55,7 +55,7 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
       if (setPolls)
         setPolls(prev =>
           prev.map(p => {
-            if (p.id == pollID) {
+            if (p.id == pollID && 'totalVotes' in p) {
               const newUser = initialUser;
               newUser.id = user.id;
               newUser.name = user.name;
@@ -96,7 +96,7 @@ const Option = ({ option, totalVotes, orgID, pollID, setPolls }: Props) => {
       if (setPolls)
         setPolls(prev =>
           prev.map(p => {
-            if (p.id == pollID)
+            if (p.id == pollID && 'totalVotes' in p)
               return {
                 ...p,
                 totalVotes: p.totalVotes - 1,

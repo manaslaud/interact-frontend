@@ -17,6 +17,7 @@ import { checkParticularOrgAccess } from '@/utils/funcs/check_org_access';
 import { ORG_MEMBER, ORG_SENIOR } from '@/config/constants';
 import isArrEdited from '@/utils/funcs/check_array_edited';
 import LowerAnnouncement from '../lowers/lower_announcement';
+import Link from 'next/link';
 
 interface Props {
   announcement: Announcement;
@@ -179,7 +180,15 @@ const Announcement = ({ announcement, setAnnouncements }: Props) => {
       )}
       <div className={`w-full flex flex-col gap-4 ${clickedOnEdit ? 'pb-8' : ''}`}>
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <Link
+            href={
+              userID == announcement.organization?.userID
+                ? '/organisation/profile'
+                : `/explore/organisation/${announcement.organization?.user.username}`
+            }
+            target="_blank"
+            className="flex items-center gap-2"
+          >
             <Image
               crossOrigin="anonymous"
               width={100}
@@ -192,7 +201,7 @@ const Announcement = ({ announcement, setAnnouncements }: Props) => {
               <div className="text-xl font-semibold">{announcement.organization?.user.name}</div>
               <div className="text-xs">@{announcement.organization?.user.username}</div>
             </div>
-          </div>
+          </Link>
           <div className="flex-center gap-2 font-medium text-xs">
             {announcement.isEdited ? <div>(edited)</div> : <></>}
             <div className="text-gray-400">{moment(announcement.createdAt).fromNow()}</div>

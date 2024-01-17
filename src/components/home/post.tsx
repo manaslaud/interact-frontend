@@ -28,7 +28,7 @@ interface Props {
   showLowerPost?: boolean;
   showImage?: boolean;
   isRepost?: boolean;
-  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<any[]>>;
   org?: boolean;
 }
 

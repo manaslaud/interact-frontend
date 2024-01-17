@@ -228,6 +228,22 @@ export const initialApplication: Application = {
   createdAt: new Date(),
 };
 
+export const initialAnnouncement: Announcement = {
+  id: '',
+  userID: '',
+  title: '',
+  content: '',
+  noLikes: 0,
+  noShares: 0,
+  noComments: 0,
+  createdAt: new Date(),
+  isEdited: false,
+  taggedUsers: [],
+  isOpen: true,
+  organizationID: '',
+  organization: initialOrganization,
+};
+
 export const initialMessage: Message = {
   id: '',
   content: '',
@@ -248,7 +264,7 @@ export const initialMessage: Message = {
   messageID: '',
   message: null,
   announcementID: '',
-  announcement: null,
+  announcement: initialAnnouncement,
 };
 
 export const initialGroupChatMessage: GroupChatMessage = {
@@ -271,7 +287,7 @@ export const initialGroupChatMessage: GroupChatMessage = {
   messageID: '',
   message: null,
   announcementID: '',
-  announcement: null,
+  announcement: initialAnnouncement,
 };
 
 export const initialChat: Chat = {
@@ -435,22 +451,6 @@ export const initialReview: Review = {
   rating: 0,
   isAnonymous: false,
   createdAt: new Date(),
-};
-
-export const initialAnnouncement: Announcement = {
-  id: '',
-  userID: '',
-  title: '',
-  content: '',
-  noLikes: 0,
-  noShares: 0,
-  noComments: 0,
-  createdAt: new Date(),
-  isEdited: false,
-  taggedUsers: [],
-  isOpen: true,
-  organizationID: '',
-  organization: initialOrganization,
 };
 
 export const initialResourceBucket: ResourceBucket = {

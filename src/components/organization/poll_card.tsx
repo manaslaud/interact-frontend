@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { ORG_URL, USER_PROFILE_PIC_URL } from '@/config/routes';
 import moment from 'moment';
-import { Organization, Poll } from '@/types';
+import { Announcement, Organization, Poll, Post } from '@/types';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/slices/userSlice';
 import { SERVER_ERROR } from '@/config/errors';
@@ -12,16 +12,18 @@ import ConfirmDelete from '../common/confirm_delete';
 import { ORG_SENIOR } from '@/config/constants';
 import { ListChecks, Lock, LockOpen, RadioButton } from '@phosphor-icons/react';
 import OptionComponent from './poll_option';
+import Link from 'next/link';
 
 interface Props {
   poll: Poll;
   organisation: Organization;
-  setPolls?: React.Dispatch<React.SetStateAction<Poll[]>>;
+  setPolls?: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const PollCard = ({ poll, setPolls, organisation }: Props) => {
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
   const user = useSelector(userSelector);
+
   const handleDelete = async () => {
     const toaster = Toaster.startLoad('Deleting Poll...');
 
@@ -44,7 +46,15 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
       {clickedOnDelete ? <ConfirmDelete handleDelete={handleDelete} setShow={setClickedOnDelete} /> : <></>}
       <div className="w-full max-w-3xl mx-auto bg-white flex flex-col gap-4 p-4 border-[1px] border-gray-300 rounded-xl hover:shadow-xl transition-ease-300 z-[1]">
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <Link
+            href={
+              user.id == organisation.userID
+                ? '/organisation/profile'
+                : `/explore/organisation/${organisation.user.username}`
+            }
+            target="_blank"
+            className="flex items-center gap-2"
+          >
             <Image
               crossOrigin="anonymous"
               width={100}
@@ -57,7 +67,7 @@ const PollCard = ({ poll, setPolls, organisation }: Props) => {
               <div className="text-xl font-semibold">{organisation.user.name}</div>
               <div className="text-xs">@{organisation.user.username}</div>
             </div>
-          </div>
+          </Link>
           <div className="text-gray-400 font-medium text-xs">{moment(poll.createdAt).fromNow()}</div>
         </div>
         <div className="w-full flex flex-col gap-2">

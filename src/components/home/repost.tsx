@@ -24,7 +24,7 @@ import { Buildings } from '@phosphor-icons/react';
 interface Props {
   post: Post;
   showLowerPost?: boolean;
-  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<any[]>>;
   org?: boolean;
 }
 

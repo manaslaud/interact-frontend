@@ -15,7 +15,7 @@ import getHandler from '@/handlers/get_handler';
 
 interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setFeed?: React.Dispatch<React.SetStateAction<(Post | Announcement | Poll)[]>>;
+  setFeed?: React.Dispatch<React.SetStateAction<any[]>>;
   org?: boolean;
 }
 
