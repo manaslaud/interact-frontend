@@ -24,7 +24,7 @@ const ResourceCard = ({ resource, setClickedOnResource, setClickedResource }: Pr
 
       <div className="w-24 h-24 flex-center flex-col items-center border-dark_primary_btn border-[5px] rounded-full">
         <div className="text-5xl max-md:text-2xl font-bold text-gradient">{resource.noFiles}</div>
-        <div className="w-40 text-center">file{resource.noFiles != 1 ? 's' : ''}</div>
+        <div className="w-40 text-center">File{resource.noFiles != 1 ? 's' : ''}</div>
       </div>
       <div className="w-full flex flex-col items-center text-center gap-1">
         <div className="font-semibold text-3xl line-clamp-1">{resource.title}</div>
