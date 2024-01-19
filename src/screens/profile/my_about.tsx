@@ -507,7 +507,7 @@ const About = ({ profile, setUser, org = false }: Props) => {
                       key={i}
                       className="border-gray-500 border-[1px] border-dashed p-2 text-sm rounded-lg flex-center"
                     >
-                      {el}
+                      <div className="" style={{ userSelect: "none" }}>{el}</div>
                     </div>
                   ))}
                 </div>
