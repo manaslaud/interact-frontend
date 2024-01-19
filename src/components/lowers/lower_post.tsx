@@ -172,6 +172,7 @@ const LowerPost = ({ post, setFeed }: Props) => {
             className="cursor-pointer max-md:w-6 max-md:h-6"
             size={24}
             weight={liked ? 'fill' : 'regular'}
+            fill={liked ? '#fe251b' : '#000000'}
           />
           <ChatCircleText
             onClick={() => {
@@ -217,6 +218,7 @@ const LowerPost = ({ post, setFeed }: Props) => {
             }}
             size={24}
             weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
+            fill={bookmarkStatus.isBookmarked ? '#478EE1' : '#000000'}
           />
         </div>
 

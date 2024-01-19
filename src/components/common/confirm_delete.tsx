@@ -25,11 +25,11 @@ const ConfirmDelete = ({
   }, []);
   return (
     <>
-      <div className="fixed top-48 max-md:top-20 w-1/3 max-lg:w-5/6 h-1/3 max-lg:h-fit backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-2 max-lg:gap-0 rounded-lg p-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 shadow-lg translate-x-1/2 animate-fade_third z-50 max-lg:z-[60]">
-        <div className="w-full flex justify-end">
-          <X className="cursor-pointer" onClick={() => setShow(false)} size={32} />
+      <div className="fixed top-48 max-md:top-20 w-1/3 max-lg:w-5/6 aspect-[4/3] backdrop-blur-2xl bg-white dark:bg-[#ffe1fc22] flex flex-col gap-2 max-lg:gap-0 rounded-lg p-8 dark:text-white font-primary overflow-y-auto border-[1px] border-primary_btn  dark:border-dark_primary_btn right-1/2 shadow-lg translate-x-1/2 animate-fade_third z-50 max-lg:z-[60]">
+        <div className="absolute top-3 right-3">
+          <X className="cursor-pointer" onClick={() => setShow(false)} size={24} />
         </div>
-        <div className="w-full max-lg:h-56 lg:flex-1 flex flex-col justify-between">
+        <div className="w-full max-lg:h-56 lg:flex-1 flex flex-col justify-between mt-4">
           <div className="w-full flex flex-col gap-2">
             <div className="font-semibold text-4xl text-gray-800 dark:text-white">{title}</div>
             <div className="font-medium text-sm">{subtitle}</div>
@@ -37,7 +37,7 @@ const ConfirmDelete = ({
 
           <div
             onClick={handleDelete}
-            className="w-1/3 max-lg:w-1/2 mx-auto text-center bg-primary_comp border-2 border-[#1f1f1f] dark:border-dark_primary_btn hover:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] cursor-pointer transition-ease-200"
+            className="mx-auto text-center  border-2 border-[#ea333e] dark:border-dark_primary_btn px-6 w-fit py-2 rounded-lg text-xl hover:bg-[#ea333e20] cursor-pointer transition-ease-200 text-[#ea333e] font-medium"
           >
             Confirm
           </div>

@@ -21,6 +21,7 @@ import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
 import NewResourceFile from '@/sections/organization/resources/new_resource_file';
 import Loader from '@/components/common/loader';
+import Mascot from '@/components/loaders/mascot';
 import moment from 'moment';
 import patchHandler from '@/handlers/patch_handler';
 import deleteHandler from '@/handlers/delete_handler';
@@ -55,6 +56,10 @@ const ResourceView = ({
   const [clickedOnUploadFile, setClickedOnUploadFile] = useState(false);
   const [clickedOnEdit, setClickedOnEdit] = useState(false);
   const [clickedOnDelete, setClickedOnDelete] = useState(false);
+
+  const [showDeleteTip, setShowDeleteTip] = useState<boolean>(false);
+  const [showEditTip, setShowEditTip] = useState<boolean>(false);
+  const [showAddNewTip, setShowAddNewTip] = useState<boolean>(false);
 
   const [clickedOnFile, setClickedOnFile] = useState(false);
   const [clickedFile, setClickedFile] = useState(initialResourceFile);
@@ -136,7 +141,7 @@ const ResourceView = ({
   useEffect(() => getResourceBucketFiles(), [resourceBucket]);
   return (
     <>
-      <div className="w-[75%] aspect-[500/333] font-primary bg-white rounded-xl fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] shadow-lg p-4 animate-fade_third">
+      <div className="w-[70%] aspect-[5/3] font-primary bg-white rounded-xl fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[100] shadow-lg p-4 animate-fade_third">
         {clickedOnUploadFile ? (
           <NewResourceFile
             setShow={setClickedOnUploadFile}
@@ -189,34 +194,67 @@ const ResourceView = ({
               ) : (
                 <div className="w-full flex justify-end items-center gap-1">
                   {checkOrgAccess(resourceBucket.editAccess) ? (
-                    <Plus
-                      size={40}
-                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                      weight="regular"
-                      onClick={() => setClickedOnUploadFile(true)}
-                    />
+                    <div className="relative">
+                      <Plus
+                        size={40}
+                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                        weight="regular"
+                        onClick={() => setClickedOnUploadFile(true)}
+                        onMouseEnter={() => setShowAddNewTip(true)}
+                        onMouseLeave={() => setShowAddNewTip(false)}
+                      />
+                      <div
+                        className={`${
+                          showAddNewTip ? 'block' : 'hidden'
+                        } tip absolute top-10 bg-dark_sidebar text-white px-4 rounded-lg py-2 w-max left-1/2 -translate-x-1/2 z-[100]`}
+                      >
+                        Add new file
+                      </div>
+                    </div>
                   ) : (
                     <></>
                   )}
 
                   {checkOrgAccess(ORG_SENIOR) ? (
-                    <PencilSimple
-                      size={40}
-                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                      weight="regular"
-                      onClick={() => setClickedOnEdit(true)}
-                    />
+                    <div className="relative">
+                      <PencilSimple
+                        size={40}
+                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                        weight="regular"
+                        onClick={() => setClickedOnEdit(true)}
+                        onMouseEnter={() => setShowEditTip(true)}
+                        onMouseLeave={() => setShowEditTip(false)}
+                      />
+                      <div
+                        className={`${
+                          showEditTip ? 'block' : 'hidden'
+                        } tip absolute top-10 bg-dark_sidebar text-white px-4 rounded-lg py-2 w-max left-1/2 -translate-x-1/2 z-[100]`}
+                      >
+                        Edit Details
+                      </div>
+                    </div>
                   ) : (
                     <></>
                   )}
 
                   {checkOrgAccess(ORG_SENIOR) ? (
-                    <TrashSimple
-                      size={40}
-                      className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
-                      weight="regular"
-                      onClick={() => setClickedOnDelete(true)}
-                    />
+                    <div className="relative">
+                      <TrashSimple
+                        size={40}
+                        className="flex-center rounded-full hover:bg-slate-100 p-2 transition-ease-300 cursor-pointer"
+                        weight="regular"
+                        onClick={() => setClickedOnDelete(true)}
+                        onMouseEnter={() => setShowDeleteTip(true)}
+                        onMouseLeave={() => setShowDeleteTip(false)}
+                      />
+                      <div
+                        className={`${
+                          showDeleteTip ? 'block' : 'hidden'
+                        } tip absolute top-10 bg-dark_sidebar text-white px-4 rounded-lg py-2 w-max left-1/2 -translate-x-1/2 z-[100]`}
+                      >
+                        Delete Bucket
+                      </div>
+                    </div>
                   ) : (
                     <></>
                   )}
@@ -225,7 +263,7 @@ const ResourceView = ({
 
               <div className="w-36 h-36 flex-center flex-col items-center gap-1 border-dark_primary_btn border-[8px] rounded-full">
                 <div className="text-7xl font-bold text-gradient">{resourceBucket.noFiles}</div>
-                <div className="w-40 text-center">file{resourceBucket.noFiles != 1 ? 's' : ''}</div>
+                <div className="w-40 text-center">File{resourceBucket.noFiles != 1 ? 's' : ''}</div>
               </div>
 
               {clickedOnEdit ? (
@@ -362,7 +400,12 @@ const ResourceView = ({
                   ))}
                 </table>
               ) : (
-                <div className="w-fit text-lg font-medium mx-auto mt-56">No Files in this Bucket :)</div>
+                <div className="w-full flex flex-col items-center justify-center">
+                  <div className="mascot w-fit scale-75 -mb-48 mt-4">
+                    <Mascot />
+                  </div>
+                  <div className="w-fit text-xl font-medium mx-auto mt-56">No Files in this Bucket :)</div>
+                </div>
               )}
             </div>
           </div>
