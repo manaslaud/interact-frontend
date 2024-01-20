@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState,useRef } from 'react';
 import TagSuggestions from './tag_suggestions';
 
 interface Props {
@@ -41,8 +41,8 @@ const Tags = ({
         // Add unique new tags to the existing tags
         const uniqueNewTags = Array.from(new Set(newTags));
         const updatedTags = [...tags, ...uniqueNewTags.slice(0, maxTags - tags.length)];
-
-        setTags(updatedTags);
+        const newtags = Array.from(new Set(updatedTags))
+        setTags(newtags);
         setTagInput('');
       }
     } else if (event.key === 'Backspace' && tagInput === '') {
@@ -53,7 +53,26 @@ const Tags = ({
       }
     }
   };
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+  const dragStart = (e: any, position: number) => {
+    dragItem.current = position;
+  };
+  const dragEnter = (e: any, position: number) => {
+    dragOverItem.current = position;
 
+  };
+  const drop = (e: any) => {
+    const copyListItems = [...tags];
+    const dragItemContent = copyListItems[dragItem.current as number];
+    copyListItems.splice(dragItem.current as number, 1);
+    copyListItems.splice(dragOverItem.current as number, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setTags(copyListItems);
+
+
+  };
   const handleTagRemove = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
@@ -69,14 +88,15 @@ const Tags = ({
           onboardingDesign ? 'p-4 placeholder:text-[#202020c6] bg-[#ffffff40]' : 'p-2 bg-transparent'
         } border-[1px] flex flex-wrap items-center gap-2 rounded-md`}
       >
-        {tags.map(tag => (
+        {tags.map((tag,i) => (
           <div
             style={{
               borderColor: `${borderColor ? borderColor : onboardingDesign ? 'black' : '#9ca3af'}`,
             }}
             key={tag}
-            className={`flex-center px-3 py-2 border-[1px] text-sm rounded-full cursor-default`}
-          >
+            className={`flex-center px-3 py-2 border-[1px] text-sm rounded-full cursor-default active:border-2 active:border-[#000000]`}
+            onDragStart={(e) => dragStart(e, i)} onDragEnter={(e) => dragEnter(e, i)} onDragEnd={drop}
+            draggable={true}>
             {tag}
             <svg
               onClick={() => handleTagRemove(tag)}
