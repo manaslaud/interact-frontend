@@ -142,7 +142,7 @@ const Report = ({ userID, postID, projectID, openingID, chatID, reviewID, announ
           </div>
           <div
             onClick={handleSubmit}
-            className="w-1/3 max-md:w-1/2 mx-auto text-center bg-primary_comp border-2 border-[#1f1f1f] dark:border-dark_primary_btn hover:text-white py-2 rounded-xl text-xl hover:bg-[#ab3232] cursor-pointer transition-ease-200"
+            className="w-1/3 max-md:w-1/2 mx-auto text-center border-2 border-primary_danger dark:border-dark_primary_btn text-primary_danger hover:bg-[#ea333e20] py-2 rounded-xl text-xl  cursor-pointer transition-ease-200"
           >
             Confirm
           </div>
