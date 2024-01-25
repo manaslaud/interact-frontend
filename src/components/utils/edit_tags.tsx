@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState,useRef } from 'react';
+import { ChangeEvent, KeyboardEvent, useState, useRef } from 'react';
 import TagSuggestions from './tag_suggestions';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   borderStyle?: string;
   borderColor?: string;
   lowerOnly?: boolean;
+  draggable?: boolean;
 }
 
 const Tags = ({
@@ -21,6 +22,7 @@ const Tags = ({
   borderStyle = 'solid',
   borderColor,
   lowerOnly = true,
+  draggable = true,
 }: Props) => {
   const [tagInput, setTagInput] = useState('');
 
@@ -41,7 +43,7 @@ const Tags = ({
         // Add unique new tags to the existing tags
         const uniqueNewTags = Array.from(new Set(newTags));
         const updatedTags = [...tags, ...uniqueNewTags.slice(0, maxTags - tags.length)];
-        const newtags = Array.from(new Set(updatedTags))
+        const newtags = Array.from(new Set(updatedTags));
         setTags(newtags);
         setTagInput('');
       }
@@ -53,16 +55,23 @@ const Tags = ({
       }
     }
   };
+
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
+
   const dragStart = (e: any, position: number) => {
+    if (e.currentTarget.classList) {
+      e.currentTarget.classList.add('dragged-tag');
+    }
     dragItem.current = position;
   };
   const dragEnter = (e: any, position: number) => {
     dragOverItem.current = position;
-
   };
   const drop = (e: any) => {
+    if (e.currentTarget.classList) {
+      e.currentTarget.classList.remove('dragged-tag');
+    }
     const copyListItems = [...tags];
     const dragItemContent = copyListItems[dragItem.current as number];
     copyListItems.splice(dragItem.current as number, 1);
@@ -70,9 +79,8 @@ const Tags = ({
     dragItem.current = null;
     dragOverItem.current = null;
     setTags(copyListItems);
-
-
   };
+
   const handleTagRemove = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
@@ -88,15 +96,18 @@ const Tags = ({
           onboardingDesign ? 'p-4 placeholder:text-[#202020c6] bg-[#ffffff40]' : 'p-2 bg-transparent'
         } border-[1px] flex flex-wrap items-center gap-2 rounded-md`}
       >
-        {tags.map((tag,i) => (
+        {tags.map((tag, i) => (
           <div
             style={{
               borderColor: `${borderColor ? borderColor : onboardingDesign ? 'black' : '#9ca3af'}`,
             }}
             key={tag}
             className={`flex-center px-3 py-2 border-[1px] text-sm rounded-full cursor-default active:border-2 active:border-[#000000]`}
-            onDragStart={(e) => dragStart(e, i)} onDragEnter={(e) => dragEnter(e, i)} onDragEnd={drop}
-            draggable={true}>
+            onDragStart={e => dragStart(e, i)}
+            onDragEnter={e => dragEnter(e, i)}
+            onDragEnd={drop}
+            draggable={draggable}
+          >
             {tag}
             <svg
               onClick={() => handleTagRemove(tag)}
