@@ -1,4 +1,4 @@
-const isArrEdited = (arr1: string[], arr2: string[]): boolean => {
+const isArrEdited = (arr1: string[], arr2: string[], checkSortedOnly: boolean = false): boolean => {
   if (!arr1) arr1 = [];
   if (!arr2) arr2 = [];
 
@@ -6,7 +6,10 @@ const isArrEdited = (arr1: string[], arr2: string[]): boolean => {
     return true;
   }
 
-  
+  if (checkSortedOnly) {
+    arr1.sort();
+    arr2.sort();
+  }
 
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
@@ -18,4 +21,3 @@ const isArrEdited = (arr1: string[], arr2: string[]): boolean => {
 };
 
 export default isArrEdited;
-

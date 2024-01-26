@@ -11,20 +11,20 @@ const Edited = ({ history }: Props) => {
     case 2:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated {history.event?.title}</div>
+          <div className="w-full text-center flex-center gap-4">Updated {history.event?.title}</div>
         </OrganizationHistoryWrapper>
       );
     case 8:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center line-clamp-1 flex-center gap-4">Updated {history.post?.content}</div>
+          <div className="w-full text-center line-clamp-1 flex-center gap-4">Updated {history.post?.content}</div>
         </OrganizationHistoryWrapper>
       );
 
     case 11:
       return (
         <OrganizationHistoryWrapper history={history}>
-          <div className="w-fit text-center flex-center gap-4">Updated {history.project?.title}</div>
+          <div className="w-full text-center flex-center gap-4">Updated {history.project?.title}</div>
         </OrganizationHistoryWrapper>
       );
 
