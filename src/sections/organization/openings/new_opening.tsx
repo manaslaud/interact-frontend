@@ -1,21 +1,47 @@
-import categories from "@/utils/categories";
-import {useState} from 'react'
-export default function NewOpening(){
-    const [category,setCategory]=useState<String>('');
-  return (
-    <div>
-         <select
-                      onChange={el => setCategory(el.target.value)}
-                      className="w-1/2 max-lg:w-full h-12 border-[1px] border-primary_btn  dark:border-dark_primary_btn dark:text-white bg-primary_comp dark:bg-[#10013b30] focus:outline-nonetext-sm rounded-lg block p-2"
-                    >
-                      {categories.map((c, i) => {
-                        return (
-                          <option className="bg-primary_comp_hover dark:bg-[#10013b30]" key={i} value={c}>
-                            {c}
-                          </option>
-                        );
-                      })}
-                    </select>
-    </div>
-  )  
+import BaseWrapper from "@/wrappers/base"
+import OrgSidebar from "@/components/common/org_sidebar"
+import MainWrapper from "@/wrappers/main"
+import getHandler from '@/handlers/get_handler';
+import { useSelector } from 'react-redux';
+import { currentOrgSelector } from '@/slices/orgSlice';
+import {useState,useEffect} from 'react'
+import NewOpening from "@/sections/organization/openings/new_opening";
+import checkOrgAccess from "@/utils/funcs/check_org_access";
+import { Plus } from "@phosphor-icons/react";
+export default function OpeningPage(){
+    const [loading,setLoading]=useState<boolean>(true);
+    const [openingData,setOpeningData]=useState();
+    const [openModal,setOpenModal]=useState<boolean>(false);
+
+    const currentOrg = useSelector(currentOrgSelector);
+    console.log(currentOrg)
+    const getOpenings= async()=>{
+        const URL= `/org/${currentOrg.id}/openings/`
+        console.log(URL)
+        const res= await getHandler(URL)
+        console.log(res)
+    }
+    useEffect(()=>{
+        getOpenings()
+    },[])
+    return(
+    <BaseWrapper title="Openings">
+        <OrgSidebar index={15}></OrgSidebar>
+        <MainWrapper>
+            {openModal?(<NewOpening/>):''}
+        <div className="w-full flex justify-between items-center p-base_padding ">
+        <div className="w-fit text-6xl font-semibold dark:text-white font-primary">Openings</div>
+
+        <Plus
+                  onClick={() => setOpenModal(!openModal)}
+                  size={42}
+                  className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer"
+                  weight="regular"
+                />
+        </div>
+        
+        </MainWrapper>
+    </BaseWrapper>)
+
+    
 }
