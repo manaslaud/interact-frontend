@@ -20,7 +20,7 @@ import MainWrapper from '@/wrappers/main';
 import { Info, Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import Mascot from '@/components/loaders/mascot';
 const Resources = () => {
   const [resources, setResources] = useState<ResourceBucket[]>([]);
   const [loading, setLoading] = useState(true);
@@ -129,7 +129,7 @@ const Resources = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="mx-auto font-medium text-xl mt-8">No Resources Found :)</div>
+                  <Mascot message={`We couldn't find any resources at the moment`} />
                 )}
               </>
             )}

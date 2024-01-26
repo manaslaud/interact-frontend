@@ -400,12 +400,7 @@ const ResourceView = ({
                   ))}
                 </table>
               ) : (
-                <div className="w-full flex flex-col items-center justify-center">
-                  <div className="mascot w-fit scale-75 -mb-48 mt-4">
-                    <Mascot />
-                  </div>
-                  <div className="w-fit text-xl font-medium mx-auto mt-56">No Files in this Bucket :)</div>
-                </div>
+                <Mascot message={'"Currently, this bucket is empty. Please check back later for updates.'} />
               )}
             </div>
           </div>
