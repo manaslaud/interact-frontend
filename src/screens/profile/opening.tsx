@@ -40,7 +40,7 @@ return (
     clickedOnOpening?(<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={openingClicked?.id ||'' } openingClicked={openingClicked} data={openings} setData={setOpenings} setOpeningClicked={setOpeningClicked}/>):''
   }
   {
-    clickedOnNewOpening?(<NewOpening setClickedOnNewOpening={setClickedOnNewOpening}/>):''
+    clickedOnNewOpening?(<NewOpening setClickedOnNewOpening={setClickedOnNewOpening} openings={openings} setOpenings={setOpenings}/>):''
   }
 <div className="w-full flex-row flex-wrap relative">
   

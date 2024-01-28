@@ -5,8 +5,11 @@ import { useSelector } from 'react-redux';
 import { currentOrgSelector } from '@/slices/orgSlice';
 import postHandler from '@/handlers/post_handler';
 import { Cross } from '@phosphor-icons/react';
+import { Opening } from '@/types';
 interface Props{
   setClickedOnNewOpening:React.Dispatch<React.SetStateAction<boolean>>;
+  openings:Opening[],
+  setOpenings:React.Dispatch<React.SetStateAction<Opening[]>>;
 }
 export default function NewOpening(props:Props){
     const [title,setTitle]= useState<string>('');
@@ -36,6 +39,8 @@ export default function NewOpening(props:Props){
         const URL= `org/${currentOrg.id}/openings`;
         const res= await postHandler(URL,formData,'multipart/form-data');
         if(res.status==1){
+          const addOpening=[...props.openings,res.data.opening]
+          props.setOpenings(addOpening)
           Toaster.stopLoad(t,'Opening created',1)
         }
         else{

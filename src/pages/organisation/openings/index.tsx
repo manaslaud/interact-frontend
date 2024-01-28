@@ -12,13 +12,15 @@ import { ORG_MANAGER } from "@/config/constants";
 import NoOpenings from "@/components/empty_fillers/no_openings";
 import OpeningCard from "@/components/organization/opening_card";
 import ViewOpening from "@/sections/organization/openings/opening_view";
+import { Opening } from "@/types";
 export default function OpeningPage() {
+    //todo: add loaders 
     const [loading, setLoading] = useState<boolean>(true);
     const [openingData, setOpeningData] = useState();
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<Opening[]>([]);
     const [clickedOnOpening, setClickedOnOpening] = useState<boolean>(false)
-    const [openingClicked,setOpeningClicked]= useState<any>()
+    const [openingClicked,setOpeningClicked]= useState<Opening>()
     const currentOrg = useSelector(currentOrgSelector);
     //change the name here maybe, its a string state
     const [clickedOnOpeningId, setClickedOnOpeningId] = useState<string>('')
@@ -43,7 +45,7 @@ export default function OpeningPage() {
             {clickedOnOpening?<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={clickedOnOpeningId} openingClicked={openingClicked} setOpeningClicked={setOpeningClicked} data={data} setData={setData}/>:''}
             <OrgSidebar index={15}></OrgSidebar>
             <MainWrapper>
-                {openModal ? (<NewOpening setClickedOnNewOpening={setOpenModal}/>) : ''}
+                {openModal ? (<NewOpening setClickedOnNewOpening={setOpenModal} openings={data} setOpenings={setData}/>) : ''}
                 <div className="w-full flex justify-between items-center p-base_padding f ">
 
                     <div className="w-fit text-6xl font-semibold dark:text-white font-primary ">Openings</div>
