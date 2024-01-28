@@ -14,7 +14,7 @@ const OpeningCard= (
     props:Props
 )=>{
     return(
-    <div className="flex text-wrap w-[30%] rounded-[1rem] bg-[#000000] text-white text-2xl h-3/6 relative" onClick={()=>{
+    <div className="flex text-wrap rounded-[1rem] bg-[#000000] text-white text-2xl h-3/6 w-fit" onClick={()=>{
         props.setClickedOnOpening(true)
         props.setOpeningClicked(props.opening)
         props.setClickedOnOpeningId(props.openingId)

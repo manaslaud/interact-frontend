@@ -13,6 +13,8 @@ import NoOpenings from "@/components/empty_fillers/no_openings";
 import OpeningCard from "@/components/organization/opening_card";
 import ViewOpening from "@/sections/organization/openings/opening_view";
 import { Opening } from "@/types";
+import Toaster from "@/utils/toaster";
+import { SERVER_ERROR } from "@/config/errors";
 export default function OpeningPage() {
     //todo: add loaders 
     const [loading, setLoading] = useState<boolean>(true);
@@ -26,11 +28,16 @@ export default function OpeningPage() {
     const [clickedOnOpeningId, setClickedOnOpeningId] = useState<string>('')
 
     const getOpenings = async () => {
-        const URL = `/org/${currentOrg.id}/openings`
-        console.log(URL)
+        const URL = `/org/${currentOrg.id}/orgopenings`
         const res = await getHandler(URL)
-        console.log(res.data.openings)
-        setData(res.data.openings);
+        if (res.statusCode === 200) {
+           setData(res.data.openings);
+          } else {
+            if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+            else {
+              Toaster.error(SERVER_ERROR, 'error_toaster');
+            }
+          }
     }
     useEffect(() => {
         getOpenings()

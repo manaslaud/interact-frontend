@@ -35,23 +35,19 @@ export default function NewOpening(props:Props){
         formData.append('title', title);
         formData.append('description', description);
         tags.forEach(tag => formData.append('tags', tag));
-        console.log(formData)
-        const URL= `org/${currentOrg.id}/openings`;
+        const URL= `org/${currentOrg.id}/orgopenings`;
         const res= await postHandler(URL,formData,'multipart/form-data');
-        if(res.status==1){
-          const addOpening=[...props.openings,res.data.opening]
-          props.setOpenings(addOpening)
-          Toaster.stopLoad(t,'Opening created',1)
+        if (res.statusCode === 201) {
+         const addOpening=[...props.openings,res.data.opening]
+        props.setOpenings(addOpening)
+        Toaster.stopLoad(t,'Opening created',1)
+        setDescription('')
+        setTitle('')
+        setTags([])  
+        } else {
+          Toaster.stopLoad(t,'Internal Server Error',0)
         }
-        else{
-          Toaster.stopLoad(t,'Error',0)
-        }
-        console.log(res)
-        if(res.statusCode==201){
-            setDescription('')
-            setTitle('')
-            setTags([])            
-        }
+       
 
     }
 
