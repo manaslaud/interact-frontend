@@ -2,7 +2,7 @@ import Toaster from '@/utils/toaster';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { TOKEN_EXPIRATION_ERROR, VERIFICATION_ERROR } from './errors';
-import { BACKEND_URL, FRONTEND_URL } from './routes';
+import { BACKEND_URL } from './routes';
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -101,7 +101,7 @@ configuredAxios.interceptors.response.use(
             Toaster.error('Session Expired, Log in again');
             refreshSubscribers = [];
             Cookies.remove('token');
-            window.location.assign(`${FRONTEND_URL}/login`);
+            window.location.replace('/login');
           }
           return Promise.reject(refreshError);
         } finally {

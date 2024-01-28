@@ -27,7 +27,7 @@ const Collaborators = ({ memberships, workspace = false }: Props) => {
                 >
                   <div
                     className={`${workspace ? 'w-36' : 'w-48'} absolute -top-24 ${
-                      index + (1 % maxIndex) == 0 || index % maxIndex == 0
+                      (index + 1) % maxIndex == 0 || index % maxIndex == 0
                         ? index == 0
                           ? 'left-0'
                           : 'right-0'

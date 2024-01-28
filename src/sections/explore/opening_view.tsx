@@ -79,7 +79,7 @@ const OpeningView = ({ opening, setShow, setOpening }: Props) => {
               className="hover-underline-animation after:bg-black font-semibold text-lg"
             >
               {opening.project.title}
-            </Link>
+            </Link>{' '}
             <div className="w-fit flex gap-2">
               <div className="flex gap-1">
                 <div>•</div>

@@ -390,7 +390,7 @@ const ResourceView = ({
                       <td>
                         <Link
                           target="_blank"
-                          href={file.isFileUploaded ? `${RESOURCE_URL}/${file.path}` : file.path}
+                          href={file.isFileUploaded ? `/organisation/resources/${file.id}` : file.path}
                           className="flex-center h-full"
                         >
                           <ArrowUpRight />
