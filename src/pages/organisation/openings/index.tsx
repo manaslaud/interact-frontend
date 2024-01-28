@@ -40,10 +40,10 @@ export default function OpeningPage() {
 
     return (
         <BaseWrapper title="Openings">
-            {clickedOnOpening?<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={clickedOnOpeningId} openingClicked={openingClicked}/>:''}
+            {clickedOnOpening?<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={clickedOnOpeningId} openingClicked={openingClicked} setOpeningClicked={setOpeningClicked} data={data} setData={setData}/>:''}
             <OrgSidebar index={15}></OrgSidebar>
             <MainWrapper>
-                {openModal ? (<NewOpening />) : ''}
+                {openModal ? (<NewOpening setClickedOnNewOpening={setOpenModal}/>) : ''}
                 <div className="w-full flex justify-between items-center p-base_padding f ">
 
                     <div className="w-fit text-6xl font-semibold dark:text-white font-primary ">Openings</div>

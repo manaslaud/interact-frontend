@@ -1,11 +1,14 @@
 import Tags from '@/components/utils/edit_tags';
-import {useState} from 'react'
+import React, {useState} from 'react'
 import Toaster from '@/utils/toaster';
 import { useSelector } from 'react-redux';
 import { currentOrgSelector } from '@/slices/orgSlice';
 import postHandler from '@/handlers/post_handler';
-
-export default function NewOpening(){
+import { Cross } from '@phosphor-icons/react';
+interface Props{
+  setClickedOnNewOpening:React.Dispatch<React.SetStateAction<boolean>>;
+}
+export default function NewOpening(props:Props){
     const [title,setTitle]= useState<string>('');
     const [description,setDescription]= useState<string>('');
     const [tags,setTags]= useState<string[]>([]);
@@ -52,6 +55,16 @@ export default function NewOpening(){
         <div className='w-full text-5xl max-lg:text-center max-lg:text-3xl font-bold bg-transparent focus:outline-none'>
             Add a new Opening
         </div>
+        <Cross size={42}
+        className="flex-center rounded-full hover:bg-white p-2 transition-ease-300 cursor-pointer  absolute top-0 right-0"
+        weight="regular"
+        onClick={()=>{props.setClickedOnNewOpening(false)
+          setDescription('')
+          setTitle('')
+          setTags([]) 
+        }
+      }
+        color="black "/>
          <div>
                       <div className="text-xs ml-1 font-medium uppercase text-gray-500">
                         Project Tagline ({title.trim().length}/40)
