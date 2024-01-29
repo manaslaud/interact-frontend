@@ -30,7 +30,7 @@ export default function OpeningPage() {
         const URL = `/org/${currentOrg.id}/orgopenings`
         const res = await getHandler(URL)
         if (res.statusCode === 200) {
-           setOpening(res.data.openings);
+           setOpening(res.data.openings|| []);
           } else {
             if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
             else {

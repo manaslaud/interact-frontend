@@ -23,7 +23,7 @@ export default function Openings(props:Props){
         const URL=`/org/${props.orgID}/orgopenings`
         const res= await getHandler(URL);
         if (res.statusCode === 200) {
-          setOpenings(res.data.openings) 
+          setOpenings(res.data.openings||[]) 
           return;
         } else {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
