@@ -37,7 +37,7 @@ export default function Openings(props:Props){
 return (
   <>
   {
-    clickedOnOpening && checkOrgAccess(ORG_MANAGER) ?(<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={openingClicked?.id ||'' } openingClicked={openingClicked} data={openings} setData={setOpenings} setOpeningClicked={setOpeningClicked}/>):''
+    clickedOnOpening && checkOrgAccess(ORG_MANAGER) ?(<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={openingClicked?.id ||'' } clickedOpening={openingClicked} opening={openings} setOpening={setOpenings} setClickedOpening={setOpeningClicked}/>):''
   }
   {
     clickedOnNewOpening && checkOrgAccess(ORG_MANAGER)?(<NewOpening setClickedOnNewOpening={setClickedOnNewOpening} openings={openings} setOpenings={setOpenings}/>):''
@@ -61,7 +61,7 @@ return (
 <div>
   {openings.map((opening:Opening,index:number)=>{
     return(<div>
-     <OpeningCard setClickedOnOpening={setClickedOnOpening} openingId={opening.id} key={index} isActive={opening.active} tags={opening.tags} title={opening.title} description={opening.description} clickedOnOpening={clickedOnOpening} setClickedOnOpeningId={setClickedOnOpeningId} opening={opening} setOpeningClicked={setOpeningClicked}/>
+     <OpeningCard setClickedOnOpening={setClickedOnOpening} openingId={opening.id} key={index} clickedOnOpening={clickedOnOpening} setClickedOnOpeningId={setClickedOnOpeningId} opening={opening} setOpeningClicked={setOpeningClicked}/>
     </div>)
   })}
 </div>

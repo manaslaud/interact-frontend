@@ -68,7 +68,7 @@ export default function NewOpening(props:Props){
         color="black "/>
          <div>
                       <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                        Project Tagline ({title.trim().length}/40)
+                        Opening Tagline ({title.trim().length}/40)
                       </div>
                       <input
                         value={title}
@@ -81,19 +81,19 @@ export default function NewOpening(props:Props){
          </div>
          <div>
                       <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                        Project Description ({description.trim().length}/1000)
+                      Opening Description ({description.trim().length}/1000)
                       </div>
                       <textarea
                         value={description}
                         onChange={el => setDescription(el.target.value)}
                         maxLength={1000}
                         className="w-full min-h-[80px] max-h-80 bg-transparent focus:outline-none border-[1px] border-gray-400 rounded-lg p-2"
-                        placeholder="Explain your project"
+                        placeholder="Explain your Opening"
                       />
          </div>
          <div>
                       <div className="text-xs ml-1 font-medium uppercase text-gray-500">
-                        Project Tags ({tags.length || 0}/10)
+                      Opening Tags ({tags.length || 0}/10)
                       </div>
                       <Tags tags={tags} setTags={setTags} maxTags={10} />
          </div>

@@ -1,9 +1,9 @@
 import { Opening } from "@/types"
 interface Props{
-    isActive:boolean,
-    description:string,
-    tags:string[],
-    title:string,
+    // isActive:boolean,
+    // description:string,
+    // tags:string[],
+    // title:string,
     openingId:string,
     setClickedOnOpening:React.Dispatch<React.SetStateAction<boolean>>,
     clickedOnOpening:boolean,
@@ -20,12 +20,12 @@ const OpeningCard= (
         props.setOpeningClicked(props.opening)
         props.setClickedOnOpeningId(props.openingId)
     }}>
-        <div>Active:{props.isActive.toString()}</div>
-        <div>Title:{props.title}</div>
-        <div>Description{props.description}</div>
+        <div>Active:{props.opening?.active.toString()}</div>
+        <div>Title:{props.opening?.title}</div>
+        <div>Description{props.opening?.description}</div>
         <div className="flex flex-row w-full">
         Tags
-        {props.tags?(props.tags.map((tag, index) => (
+        {props.opening?.tags?(props.opening.tags.map((tag, index) => (
             
         <div key={index}>{tag}</div>
       ))):''}

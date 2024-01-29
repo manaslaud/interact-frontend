@@ -18,9 +18,8 @@ import { SERVER_ERROR } from "@/config/errors";
 export default function OpeningPage() {
     //todo: add loaders 
     const [loading, setLoading] = useState<boolean>(true);
-    // const [openingData, setOpeningData] = useState();
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [data, setData] = useState<Opening[]>([]);
+    const [opening, setOpening] = useState<Opening[]>([]);
     const [clickedOnOpening, setClickedOnOpening] = useState<boolean>(false)
     const [openingClicked,setOpeningClicked]= useState<Opening>()
     const currentOrg = useSelector(currentOrgSelector);
@@ -31,7 +30,7 @@ export default function OpeningPage() {
         const URL = `/org/${currentOrg.id}/orgopenings`
         const res = await getHandler(URL)
         if (res.statusCode === 200) {
-           setData(res.data.openings);
+           setOpening(res.data.openings);
           } else {
             if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
             else {
@@ -46,10 +45,10 @@ export default function OpeningPage() {
 
     return (
         <BaseWrapper title="Openings">
-            {clickedOnOpening?<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={clickedOnOpeningId} openingClicked={openingClicked} setOpeningClicked={setOpeningClicked} data={data} setData={setData}/>:''}
+            {clickedOnOpening?<ViewOpening setClickedOnOpening={setClickedOnOpening} openingId={clickedOnOpeningId} clickedOpening={openingClicked} setClickedOpening={setOpeningClicked} opening={opening} setOpening={setOpening}/>:''}
             <OrgSidebar index={15}></OrgSidebar>
             <MainWrapper>
-                {openModal ? (<NewOpening setClickedOnNewOpening={setOpenModal} openings={data} setOpenings={setData}/>) : ''}
+                {openModal ? (<NewOpening setClickedOnNewOpening={setOpenModal} openings={opening} setOpenings={setOpening}/>) : ''}
                 <div className="w-full flex justify-between items-center p-base_padding f ">
 
                     <div className="w-fit text-6xl font-semibold dark:text-white font-primary ">Openings</div>
@@ -65,9 +64,9 @@ export default function OpeningPage() {
                 </div>
 
                 {
-                    data ? (data.map((data: any, index) => {
+                    opening ? (opening.map((data: Opening, index) => {
                         return (
-                            <OpeningCard setClickedOnOpening={setClickedOnOpening} openingId={data.id} key={index} isActive={data.active} tags={data.tags} title={data.title} description={data.description} clickedOnOpening={clickedOnOpening} setClickedOnOpeningId={setClickedOnOpeningId} opening={data} setOpeningClicked={setOpeningClicked}/>
+                            <OpeningCard setClickedOnOpening={setClickedOnOpening} openingId={data.id} key={index} clickedOnOpening={clickedOnOpening} setClickedOnOpeningId={setClickedOnOpeningId} opening={data} setOpeningClicked={setOpeningClicked}/>
                         )
                     })) : (<NoOpenings />)
                 }

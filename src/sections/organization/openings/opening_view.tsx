@@ -12,10 +12,10 @@ import { title } from "process"
 interface Props{
     setClickedOnOpening:React.Dispatch<React.SetStateAction<boolean>>
     openingId:string,
-    openingClicked:Opening | undefined,
-    data:Opening[],
-    setData:React.Dispatch<React.SetStateAction<any[]>>,
-    setOpeningClicked:React.Dispatch<React.SetStateAction<Opening| undefined>>
+    clickedOpening:Opening | undefined,
+    opening:Opening[],
+    setOpening:React.Dispatch<React.SetStateAction<any[]>>,
+    setClickedOpening:React.Dispatch<React.SetStateAction<Opening| undefined>>
 }
 const ViewOpening= (props:Props)=>{
   //todo: update data state on deletion and update openingClicked on editing
@@ -23,7 +23,7 @@ const ViewOpening= (props:Props)=>{
     const [tags,setTags]=useState<string[]>([])
     const [active,setActive]=useState<boolean>(false)
     const [deletedOpeningId,setDeletedOpeningId]=useState<string>("");
-    const orgId=props.openingClicked?.organizationID;
+    const orgId=props.clickedOpening?.organizationID;
     const handleButtonClick=async (e:any)=>{
         const type=e.target.dataset.type;
         const URL=`org/${orgId}/orgopenings/${props.openingId}`;
@@ -41,7 +41,7 @@ const ViewOpening= (props:Props)=>{
           }
         const res=await patchHandler(URL,formData,'multipart/formdata')
         if (res.statusCode === 200) {
-           props.setOpeningClicked(prev=>{
+           props.setClickedOpening(prev=>{
             if(prev){
               prev.description=description
               prev.title=title
@@ -63,8 +63,8 @@ const ViewOpening= (props:Props)=>{
         if (res.statusCode === 204) {
           Toaster.stopLoad(toaster, 'Deleted', 1);
           setDeletedOpeningId(props.openingId)
-          props.setOpeningClicked(undefined)
-          props.setData(prev=>(prev.map((opening:Opening,index:number)=>{
+          props.setClickedOpening(undefined)
+          props.setOpening(prev=>(prev.map((opening:Opening,index:number)=>{
             if(opening.id!=deletedOpeningId){
               return opening;
             }
@@ -88,15 +88,15 @@ return(
   
         <div className="font-semibold text-lg">
           <div>
-         Description: {props.openingClicked?.description}
+         Description: {props.clickedOpening?.description}
           </div>
           <div>
-          Title: {props.openingClicked?.title}
+          Title: {props.clickedOpening?.title}
           </div>
           <div className="flex flex-row flex-wrap w-full gap-[1rem] font-regular ">
             Tags:
           {
-            props.openingClicked?.tags.map((tag:any,index:number)=>{
+            props.clickedOpening?.tags.map((tag:any,index:number)=>{
               return(
                 <div className=" border-[2px] border-[#af7676] rounded-[0.2rem] p-[2px]">{tag}</div>
               )
@@ -107,7 +107,7 @@ return(
         <div className="w-[100%] flex flex-col justify-center gap-[1rem]">
         <div>
                       <div className="text-xs ml-1 font-medium uppercase">
-                        Project Description ({description.trim().length}/100)
+                        Opening Description ({description.trim().length}/100)
                       </div>
                       <input
                         value={description}
@@ -120,13 +120,13 @@ return(
          </div>
          <div>
                       <div className="text-xs ml-1 font-medium uppercase">
-                        Project Tags ({tags.length || 0}/10)
+                        Opening Tags ({tags.length || 0}/10)
                       </div>
                       <Tags tags={tags} setTags={setTags} maxTags={10} />
          </div>
          <div className="flex flex-row-reverse justify-end items-center">
                       <div className="text-xs ml-1 font-medium uppercase">
-                        Project Activity Status
+                        Opening Activity Status
                       </div>
                       <input type="checkbox" name="True?" value={active.toString()} onChange={(e)=> setActive(e.target.checked)}/>
          </div>
