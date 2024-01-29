@@ -12,6 +12,7 @@
   "dependencies": {
     "@next/env": "^13.4.13",
     "@phosphor-icons/react": "^2.0.10",
+    "@preact/signals-react": "^2.0.0",
     "@react-hook/window-size": "^3.1.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@splinetool/react-spline": "^2.2.6",

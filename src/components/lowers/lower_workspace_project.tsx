@@ -201,6 +201,7 @@ const LowerWorkspaceProject = ({ project }: Props) => {
             className="cursor-pointer rounded-full max-lg:w-6 max-lg:h-6"
             size={32}
             weight={liked ? 'fill' : 'regular'}
+            fill={liked ? '#fe251b' : '#000000'}
           />
           {/* <div className="text-xs">{numLikes}</div> */}
         </div>
@@ -229,6 +230,7 @@ const LowerWorkspaceProject = ({ project }: Props) => {
           }}
           size={48}
           weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
+          fill={bookmarkStatus.isBookmarked ? '#478EE1' : '#000000'}
         />
       </div>
     </>

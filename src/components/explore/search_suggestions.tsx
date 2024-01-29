@@ -5,16 +5,19 @@ import Toaster from '@/utils/toaster';
 import { SERVER_ERROR } from '@/config/errors';
 import { EXPLORE_URL } from '@/config/routes';
 import { ChartLineUp, X } from '@phosphor-icons/react';
+import { Signal, signal, effect } from '@preact/signals-react';
+import About from '@/screens/profile/my_about';
 
 interface Props {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  search: Signal<string>;
+  // setSearch: React.Dispatch<React.SetStateAction<string>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
-  const [searches, setSearches] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+const SearchSuggestions = ({ search, setShow }: Props) => {
+  const searches = signal([]);
+  // const [searches, setSearches] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   let oldAbortController: AbortController | null = null;
 
@@ -23,14 +26,19 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
     if (oldAbortController) oldAbortController.abort();
     oldAbortController = abortController;
     fetchSearches(abortController);
-  }, [search]);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [search.value]);
 
   const fetchSearches = (abortController: AbortController) => {
-    const URL = `${EXPLORE_URL}/trending_searches${search != '' ? '?search=' + search : ''}`;
+    const URL = `${EXPLORE_URL}/trending_searches${search.value != '' ? '?search=' + search.value : ''}`;
     getHandler(URL, abortController.signal)
       .then(res => {
         if (res.statusCode === 200) {
-          setSearches(res.data.searches || []);
+          searches.value = res.data.searches || [];
+          // setSearches(res.data.searches || []);
           setLoading(false);
         } else if (res.status != -1) {
           if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
@@ -50,22 +58,23 @@ const SearchSuggestions = ({ search, setSearch, setShow }: Props) => {
         <></>
       ) : (
         <>
-          {searches.length > 0 ? (
+          {searches.value.length > 0 ? (
             <div className="w-[640px] bg-white dark:bg-transparent backdrop-blur-lg shadow-xl dark:border-dark_primary_btn dark:border-[1px] dark:text-white fixed top-20 right-1/2 translate-x-1/2 max-md:top-14 flex flex-col gap-6 z-[52] rounded-md p-4">
               <div className="w-full flex items-center justify-between">
                 <div className="text-4xl max-md:text-3xl font-bold ">
-                  {search == '' ? 'Trending Searches' : 'Suggestions'}
+                  {search.value == '' ? 'Trending Searches' : 'Suggestions'}
                 </div>
                 <X onClick={() => setShow(false)} className="cursor-pointer max-md:w-6 max-md:h-6" size={32} />
               </div>
               <div className="w-full flex flex-wrap gap-2 text-lg">
-                {searches.map((str, i) => {
+                {searches.value.map((str, i) => {
                   return (
                     <Link
                       href={`/explore?search=${str}`}
                       key={i}
                       onClick={() => {
-                        setSearch(str);
+                        search.value = str;
+                        // setSearch(str);
                         setShow(false);
                       }}
                       className="w-fit flex items-center gap-2 bg-slate-100 dark:bg-[#ff9bff39] dark:border-dark_primary_btn dark:border-[1px] rounded-lg px-4 py-1"
