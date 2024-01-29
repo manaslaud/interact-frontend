@@ -26,6 +26,7 @@ const Projects = () => {
   const navbarOpen = useSelector(navbarOpenSelector);
 
   const dispatch = useDispatch();
+  const checkSet = new Set();
 
   const fetchProjects = async (search: string | null) => {
     const URL =
@@ -124,17 +125,22 @@ const Projects = () => {
             <></>
           )}
           {projects.map((project, index) => {
-            return (
-              <ProjectCard
-                key={project.id}
-                index={index}
-                // size={navbarOpen || projects.length < 4 ? '[21vw]' : '80'}
-                size={navbarOpen || projects.length < 4 ? '[22vw]' : '72'}
-                project={project}
-                setClickedOnProject={setClickedOnProject}
-                setClickedProjectIndex={setClickedProjectIndex}
-              />
-            );
+            if (checkSet.has(project.id)) {
+              return;
+            } else {
+              checkSet.add(project.id);
+              return (
+                <ProjectCard
+                  key={project.id}
+                  index={index}
+                  // size={navbarOpen || projects.length < 4 ? '[21vw]' : '80'}
+                  size={navbarOpen || projects.length < 4 ? '[22vw]' : '72'}
+                  project={project}
+                  setClickedOnProject={setClickedOnProject}
+                  setClickedProjectIndex={setClickedProjectIndex}
+                />
+              );
+            }
           })}
         </InfiniteScroll>
       ) : (

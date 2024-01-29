@@ -20,7 +20,7 @@ import MainWrapper from '@/wrappers/main';
 import { Info, Plus } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import Mascot from '@/components/loaders/mascot';
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
@@ -168,7 +168,7 @@ const Tasks = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="mx-auto font-medium text-xl mt-8">No Tasks found :)</div>
+                  <Mascot message={'There are no tasks available at this time'} />
                 )}
               </>
             )}

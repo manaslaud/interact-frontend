@@ -179,6 +179,7 @@ const LowerProject = ({ project }: Props) => {
           }}
           size={32}
           weight={bookmarkStatus.isBookmarked ? 'fill' : 'light'}
+          fill={bookmarkStatus.isBookmarked ? '#478EE1' : '#000000'}
         />
         <HeartStraight
           onClick={() => {
@@ -188,6 +189,7 @@ const LowerProject = ({ project }: Props) => {
           className="cursor-pointer max-lg:w-6 max-lg:h-6"
           size={32}
           weight={liked ? 'fill' : 'regular'}
+          fill={liked ? '#fe251b' : '#000000'}
         />
         <Export
           onClick={() => {

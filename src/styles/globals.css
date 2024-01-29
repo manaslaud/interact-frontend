@@ -137,7 +137,7 @@
 .checkBox div {
   width: 60px;
   height: 60px;
-  background-color: #ab3232;
+  background-color: #ea333e;
   top: -52px;
   left: -52px;
   position: absolute;
@@ -243,4 +243,8 @@ html {
 .file-table td {
   text-align: center;
   padding-block: 0.5rem;
+}
+
+.dragged-tag {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 }

@@ -73,7 +73,7 @@ const TrendingCard = () => {
           className={`${
             open
               ? 'w-[24vw] h-[75vh] pb-4 gap-4 pt-4 px-4 top-[150px] overflow-y-auto'
-              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg'
+              : 'w-[48px] h-[48px] pb-0 gap-0 pt-12 px-0 top-[90px] hover:shadow-lg overflow-y-hidden'
           } shadow-md dark:shadow-none transition-ease-500 sticky overflow-y-auto overflow-x-hidden font-primary flex flex-col dark:text-white bg-white dark:bg-[#84478023] backdrop-blur-md border-[1px] border-gray-300 dark:border-dark_primary_btn max-lg:hidden rounded-md`}
         >
           <ArrowDownLeft

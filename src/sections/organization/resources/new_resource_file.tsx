@@ -98,7 +98,6 @@ const NewResourceFile = ({
                 type="text"
                 className="grow bg-transparent focus:outline-none text-xl"
                 placeholder="File Title"
-                maxLength={25}
                 value={title}
                 onChange={el => setTitle(el.target.value)}
               />
