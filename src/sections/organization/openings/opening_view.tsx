@@ -1,4 +1,3 @@
-import checkOrgAccess from "@/utils/funcs/check_org_access"
 import deleteHandler from "@/handlers/delete_handler"
 import Toaster from "@/utils/toaster"
 import patchHandler from "@/handlers/patch_handler"
@@ -9,6 +8,7 @@ import Image from "next/image"
 import { SERVER_ERROR } from "@/config/errors"
 import { Opening } from "@/types"
 import { title } from "process"
+import { initialOpening } from "@/types/initials"
 interface Props{
     setClickedOnOpening:React.Dispatch<React.SetStateAction<boolean>>
     openingId:string,
@@ -63,7 +63,7 @@ const ViewOpening= (props:Props)=>{
         if (res.statusCode === 204) {
           Toaster.stopLoad(toaster, 'Deleted', 1);
           setDeletedOpeningId(props.openingId)
-          props.setClickedOpening(undefined)
+          props.setClickedOpening(initialOpening)
           props.setOpening(prev=>(prev.map((opening:Opening,index:number)=>{
             if(opening.id!=deletedOpeningId){
               return opening;
