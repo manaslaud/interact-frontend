@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react"
 import ViewOpening from "@/sections/organization/openings/opening_view"
 import getHandler from "@/handlers/get_handler"
-import { currentOrgSelector } from "@/slices/orgSlice"
-import { useSelector } from "react-redux"
 import Toaster from "@/utils/toaster"
 import { Opening } from "@/types"
 import OpeningCard from "@/components/organization/opening_card"
 import NewOpening from "@/sections/organization/openings/new_opening";
 import checkOrgAccess from "@/utils/funcs/check_org_access"
 import { ORG_MANAGER } from "@/config/constants"
+import { SERVER_ERROR } from "@/config/errors"
 interface Props{
     orgID:string
 }
-//copy from projects .tsx
 
 export default function Openings(props:Props){
     const[clickedOnNewOpening,setClickedOnNewOpening]=useState<boolean>(false) 
@@ -24,17 +22,17 @@ export default function Openings(props:Props){
       const getOpenings=async()=>{
         const URL=`/org/${props.orgID}/orgopenings`
         const res= await getHandler(URL);
-        console.log(res)
-        if(res.status==0){
-          Toaster.error('Error')
-          console.log(res)
+        if (res.statusCode === 200) {
+          setOpenings(res.data.openings) 
           return;
-        } 
-        setOpenings(res.data.openings) 
-        return;
+        } else {
+          if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
+          else {
+            Toaster.error(SERVER_ERROR, 'error_toaster');
+          }
+        }
       }
-      getOpenings();
-      
+      getOpenings();    
     },[])
 return (
   <>

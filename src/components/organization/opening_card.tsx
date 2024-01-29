@@ -1,3 +1,4 @@
+import { Opening } from "@/types"
 interface Props{
     isActive:boolean,
     description:string,
@@ -7,8 +8,8 @@ interface Props{
     setClickedOnOpening:React.Dispatch<React.SetStateAction<boolean>>,
     clickedOnOpening:boolean,
     setClickedOnOpeningId:React.Dispatch<React.SetStateAction<string>>,
-    opening:any,
-    setOpeningClicked:React.Dispatch<React.SetStateAction<any>>
+    opening:Opening |undefined,
+    setOpeningClicked:React.Dispatch<React.SetStateAction<Opening | undefined>>
 }
 const OpeningCard= (
     props:Props

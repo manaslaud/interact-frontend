@@ -18,7 +18,7 @@ import { SERVER_ERROR } from "@/config/errors";
 export default function OpeningPage() {
     //todo: add loaders 
     const [loading, setLoading] = useState<boolean>(true);
-    const [openingData, setOpeningData] = useState();
+    // const [openingData, setOpeningData] = useState();
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [data, setData] = useState<Opening[]>([]);
     const [clickedOnOpening, setClickedOnOpening] = useState<boolean>(false)
@@ -43,9 +43,6 @@ export default function OpeningPage() {
         getOpenings()
     }, [])
 
-    // const handleOpeningClick=()=>{
-
-    // }
 
     return (
         <BaseWrapper title="Openings">
