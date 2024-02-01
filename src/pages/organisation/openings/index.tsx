@@ -14,28 +14,31 @@ import OpeningCard from "@/components/organization/opening_card";
 import ViewOpening from "@/sections/organization/openings/opening_view";
 import { Opening } from "@/types";
 import Toaster from "@/utils/toaster";
+import Loader from "@/components/common/loader";
 import { SERVER_ERROR } from "@/config/errors";
+import { initialOpening } from "@/types/initials";
 export default function OpeningPage() {
-    //todo: add loaders 
     const [loading, setLoading] = useState<boolean>(true);
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [opening, setOpening] = useState<Opening[]>([]);
     const [clickedOnOpening, setClickedOnOpening] = useState<boolean>(false)
-    const [openingClicked,setOpeningClicked]= useState<Opening>()
+    const [openingClicked,setOpeningClicked]= useState<Opening>(initialOpening)
     const currentOrg = useSelector(currentOrgSelector);
-    //change the name here maybe, its a string state
     const [clickedOnOpeningId, setClickedOnOpeningId] = useState<string>('')
 
     const getOpenings = async () => {
+        setLoading(true)
         const URL = `/org/${currentOrg.id}/orgopenings`
         const res = await getHandler(URL)
         if (res.statusCode === 200) {
            setOpening(res.data.openings|| []);
+           setLoading(false)
           } else {
             if (res.data.message) Toaster.error(res.data.message, 'error_toaster');
             else {
               Toaster.error(SERVER_ERROR, 'error_toaster');
             }
+            setLoading(false)
           }
     }
     useEffect(() => {
@@ -64,11 +67,14 @@ export default function OpeningPage() {
                 </div>
 
                 {
-                    opening ? (opening.map((data: Opening, index) => {
+                    opening && !loading ? (opening.map((data: Opening, index) => {
                         return (
                             <OpeningCard setClickedOnOpening={setClickedOnOpening} openingId={data.id} key={index} clickedOnOpening={clickedOnOpening} setClickedOnOpeningId={setClickedOnOpeningId} opening={data} setOpeningClicked={setOpeningClicked}/>
                         )
                     })) : (<NoOpenings />)
+                }
+                {
+                    loading && !opening ?<Loader/>:''
                 }
 
             </MainWrapper>

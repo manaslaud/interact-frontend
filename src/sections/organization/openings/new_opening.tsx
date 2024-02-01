@@ -6,6 +6,7 @@ import { currentOrgSelector } from '@/slices/orgSlice';
 import postHandler from '@/handlers/post_handler';
 import { Cross } from '@phosphor-icons/react';
 import { Opening } from '@/types';
+import { SERVER_ERROR } from '@/config/errors';
 interface Props{
   setClickedOnNewOpening:React.Dispatch<React.SetStateAction<boolean>>;
   openings:Opening[],
@@ -45,7 +46,10 @@ export default function NewOpening(props:Props){
         setTitle('')
         setTags([])  
         } else {
-          Toaster.stopLoad(t,'Internal Server Error',0)
+          if (res.data.message) Toaster.stopLoad(t, res.data.message, 0);
+          else {
+            Toaster.stopLoad(t, SERVER_ERROR, 0);
+          }
         }
        
 

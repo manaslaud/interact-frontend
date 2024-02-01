@@ -12,10 +12,10 @@ import { initialOpening } from "@/types/initials"
 interface Props{
     setClickedOnOpening:React.Dispatch<React.SetStateAction<boolean>>
     openingId:string,
-    clickedOpening:Opening | undefined,
+    clickedOpening:Opening ,
     opening:Opening[],
     setOpening:React.Dispatch<React.SetStateAction<any[]>>,
-    setClickedOpening:React.Dispatch<React.SetStateAction<Opening| undefined>>
+    setClickedOpening:React.Dispatch<React.SetStateAction<Opening>>
 }
 const ViewOpening= (props:Props)=>{
   //todo: update data state on deletion and update openingClicked on editing
@@ -64,7 +64,7 @@ const ViewOpening= (props:Props)=>{
           Toaster.stopLoad(toaster, 'Deleted', 1);
           setDeletedOpeningId(props.openingId)
           props.setClickedOpening(initialOpening)
-          props.setOpening(prev=>(prev.map((opening:Opening,index:number)=>{
+          props.setOpening(prev=>(prev.map((opening,index)=>{
             if(opening.id!=deletedOpeningId){
               return opening;
             }

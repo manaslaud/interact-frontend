@@ -8,6 +8,7 @@ import NewOpening from "@/sections/organization/openings/new_opening";
 import checkOrgAccess from "@/utils/funcs/check_org_access"
 import { ORG_MANAGER } from "@/config/constants"
 import { SERVER_ERROR } from "@/config/errors"
+import { initialOpening } from "@/types/initials"
 interface Props{
     orgID:string
 }
@@ -17,7 +18,7 @@ export default function Openings(props:Props){
     const [openings,setOpenings]=useState<Opening[]>([]);
     const [clickedOnOpening,setClickedOnOpening]=useState<boolean>(false)
     const [clickedOnOpeningId,setClickedOnOpeningId]=useState<string>('');
-    const [openingClicked,setOpeningClicked]=useState<Opening>()
+    const [openingClicked,setOpeningClicked]=useState<Opening>(initialOpening)
     useEffect(()=>{
       const getOpenings=async()=>{
         const URL=`/org/${props.orgID}/orgopenings`
